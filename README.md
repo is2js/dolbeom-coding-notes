@@ -2,6 +2,8 @@
 
 **돌범이 풀어주는 AI 구독 전 코딩 필수 노하우** — Codex로 코딩해 봤지만 기초 개발 도구가 낯선 사람을 위한 7강 강의노트입니다.
 
+[강의 주소](https://is2js.github.io/dolbeom-coding-notes/#/lesson/terminal/case) · [발표 모드](https://is2js.github.io/dolbeom-coding-notes/#/present/terminal/case) · [원본 저장소](https://github.com/is2js/dolbeom-coding-notes)
+
 **실제 화면은 이미 Alpine.js와 Tailwind CSS로 구현되어 있습니다.** Vite는 로컬 개발 서버를 실행하고 배포할 정적 파일을 만드는 도구입니다. GitHub Pages는 빌드된 HTML·CSS·JavaScript·JSON을 제공하므로, 게시된 사이트에 Vite 서버나 Node.js 프로세스를 실행할 필요가 없습니다.
 
 로컬의 `npm run dev`에서는 **웹 편집기와 `public/data/course.json`이 자동으로 서로 반영됩니다.** GitHub Pages와 정적 미리보기의 편집 내용은 **현재 브라우저에만 저장**되며, 공개 강의 갱신에는 JSON 반영과 재배포가 필요합니다.
@@ -11,9 +13,9 @@
 | 1. 준비·로컬 수정 | 처음에 의존성을 준비하고 웹 편집기나 Codex로 수정합니다. | 처음 또는 `package-lock.json`의 의존성이 바뀐 뒤 `npm ci` → `npm run dev` → **http://127.0.0.1:5188** |
 | 2. 검증·빌드 | 저장된 원본을 검사해 `dist/`를 만듭니다. | `npm test` → `npm run check:content` → `npm run build` → `npm run check:dist` |
 | 3. 정적 미리보기 | 배포될 화면을 확인합니다. 여기서 편집하면 브라우저에만 저장됩니다. | 빌드 후 `npm run preview` → **http://127.0.0.1:4188** |
-| 4. 수동 게시 | 저장소 연결·Pages 설정 후 검증한 내용을 게시합니다. | 커밋·push → **Actions → Deploy GitHub Pages → Run workflow** |
+| 4. 수동 게시 | 검증한 내용을 공개 저장소에 반영하고 수동 게시합니다. | 커밋·push → **Actions → Deploy GitHub Pages → Run workflow** |
 
-소스 저장소는 [is2js/dolbeom-coding-notes](https://github.com/is2js/dolbeom-coding-notes)입니다. 강의 주소는 GitHub Pages 배포 성공 후 확인합니다. 기존 수동 배포 워크플로를 사용하며, 자세한 최초 설정은 아래 [GitHub Pages 수동 배포](#github-pages-수동-배포)를 따릅니다.
+공개 저장소 연결과 GitHub Pages의 수동 배포 설정을 마쳤습니다. 사이트 내용은 **Deploy GitHub Pages** 실행 결과에 따라 반영됩니다. 갱신 순서는 아래 [GitHub Pages 수동 배포](#github-pages-수동-배포)를 따릅니다.
 
 2026-10-26 개요에 맞춘 **7개 주제 · 본편 22개 절 · 180분** 초안입니다. 주제별 흐름, 바로잡은 개념, 다음 내용을 전달하는 방법은 [강의 흐름과 수정 안내](LECTURE_FLOW.md)에 정리했습니다.
 
@@ -45,7 +47,7 @@ npm run dev
 | --- | --- | --- | --- |
 | `npm run dev` | `http://127.0.0.1:5188` | 현재 브라우저 초안 + 로컬 강의 파일 | 지원 |
 | `npm run preview` | `http://127.0.0.1:4188` | 현재 브라우저 | 미지원 |
-| GitHub Pages | 배포 결과 주소 | 현재 브라우저 | 미지원 |
+| GitHub Pages | [is2js.github.io/dolbeom-coding-notes](https://is2js.github.io/dolbeom-coding-notes/) | 현재 브라우저 | 미지원 |
 
 검증·빌드 명령은 아래 [180분 커리큘럼과 확인 명령](#180분-커리큘럼과-확인-명령)에 있습니다. 빌드 결과는 `dist/`이며, 정적 미리보기는 빌드 후 실행합니다.
 
@@ -182,17 +184,19 @@ npm run check:dist
 
 ## GitHub Pages 수동 배포
 
-소스는 [is2js/dolbeom-coding-notes](https://github.com/is2js/dolbeom-coding-notes)에 연결합니다. 첫 게시 전에는 저장소 공개 범위·사용자 지정 도메인 여부와 해당 저장소의 Pages 사용 가능 여부 및 설정 권한을 확인합니다. 이 프로젝트가 저장소 루트에 오도록 준비하며, `.github/workflows/`도 **저장소 루트**에 있어야 합니다.
+소스 저장소 [is2js/dolbeom-coding-notes](https://github.com/is2js/dolbeom-coding-notes)는 **공개 상태**이며, Pages 게시 소스는 **GitHub Actions**로 설정되어 있습니다. 게시 주소는 **https://is2js.github.io/dolbeom-coding-notes/** 입니다. 프로젝트와 `.github/workflows/`는 저장소 루트에서 관리합니다.
 
 - `.github/workflows/checks.yml`: 모든 브랜치의 push와 pull request에서 테스트·콘텐츠·빌드·산출물을 검증합니다. `contents: read` 권한으로 검사하며 사이트를 배포하지 않습니다.
 - `.github/workflows/pages.yml`: **Deploy GitHub Pages** 워크플로입니다. `workflow_dispatch`로만 실행하므로 초안 커밋을 push해도 사이트는 공개·갱신되지 않습니다. 수동 실행에서도 검증을 거친 빌드 결과를 게시합니다.
 
-저장소가 준비되면 다음 순서로 한 번 설정하고 배포합니다.
+강의를 수정한 뒤에는 다음 순서로 갱신합니다.
 
-1. 프로젝트와 워크플로 파일을 저장소에 커밋·push합니다. 수동 실행 버튼을 사용하려면 워크플로 파일이 저장소의 **기본 브랜치**에 있어야 합니다. 특정 브랜치 이름은 가정하지 않습니다.
-2. 저장소의 **Settings → Pages → Build and deployment → Source**에서 **GitHub Actions**를 선택합니다. [게시 소스 설정 공식 안내](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)를 참고하세요.
-3. **Actions → Deploy GitHub Pages → Run workflow**에서 게시할 검증된 브랜치를 선택하고 **Run workflow**를 누릅니다. 저장소 쓰기 권한과 Pages 환경의 배포 허용 설정이 필요합니다. [수동 실행 공식 안내](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)에 버튼과 기본 브랜치 조건이 설명되어 있습니다.
-4. 실행이 성공하면 해당 실행의 `github-pages` 배포 결과에 표시된 주소를 열어 강의 진입·시연·편집기·JSON 다운로드를 확인합니다. 이후 강의를 갱신할 때도 검증과 push 후 **Run workflow**를 다시 실행합니다.
+1. 로컬에서 원고를 수정하고 **파일 저장 완료**를 확인한 뒤 위의 테스트·콘텐츠 검사·빌드·산출물 검사를 실행합니다. Pages나 4188 미리보기에서 수정했다면 먼저 JSON을 로컬 원본에 반영합니다.
+2. 변경 파일을 검토해 공개 저장소에 커밋·push합니다. 이 단계만으로 사이트가 자동 갱신되지는 않습니다.
+3. [Actions → Deploy GitHub Pages](https://github.com/is2js/dolbeom-coding-notes/actions/workflows/pages.yml)의 **Run workflow**에서 게시할 검증된 브랜치를 선택하고 실행합니다. 저장소 쓰기 권한과 Pages 환경의 배포 허용 설정이 필요합니다. [수동 실행 공식 안내](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)를 참고하세요.
+4. 실행이 성공하면 [강의 주소](https://is2js.github.io/dolbeom-coding-notes/)에서 강의 진입·시연·편집기·JSON 다운로드를 확인합니다. 이후 갱신할 때도 검증·push 후 **Run workflow**를 다시 실행합니다.
+
+Pages 설정을 확인하거나 변경할 때는 **Settings → Pages → Build and deployment → Source**의 **GitHub Actions** 항목을 봅니다. [게시 소스 설정 공식 안내](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)를 참고하세요. 수동 워크플로 파일은 저장소의 기본 브랜치에 유지합니다.
 
 배포 워크플로는 `actions/configure-pages`의 `base_path`를 `PAGES_BASE_PATH`로 빌드에 전달하고, 값이 비어 있으면 `/`를 사용합니다. 따라서 프로젝트 Pages의 `/저장소이름/` 경로와 사용자·조직 Pages 또는 연결 도메인의 루트 경로를 Pages 설정에 맞춰 처리합니다. 저장소 이름을 소스에 고정하지 않습니다. 로컬 빌드의 기본 경로는 `./`이며 개발 서버와 미리보기 포트는 각각 5188과 4188입니다.
 
@@ -213,4 +217,4 @@ Pages 배포 작업은 `pages: write`, `id-token: write` 권한과 `github-pages
 - 글꼴은 Pretendard, Barlow Semi Condensed, IBM Plex Mono를 외부 CDN에서 읽으며 연결되지 않으면 시스템 글꼴로 표시됩니다. 애플리케이션 코드와 스타일은 로컬 빌드에 포함됩니다.
 - 디자인 참고: [Learn Arduino](https://learn-arduino-red.vercel.app/), 원본 디자인 [Dilum Sanjaya](https://x.com/DilumSanjaya). 로고·원본 3D 모델·원본 코드는 사용하지 않고 도구 지도와 아이콘을 새 SVG로 작성했습니다.
 
-기존 PVP 프로젝트와 분리된 독립 프로젝트입니다. 실제 GitHub 저장소 게시와 배포는 위 수동 절차로 진행합니다.
+기존 PVP 프로젝트와 분리된 독립 프로젝트입니다. 강의 원본은 공개 저장소에서 관리하고 사이트는 위 수동 절차로 갱신합니다.

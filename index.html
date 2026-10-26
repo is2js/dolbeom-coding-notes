@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f6eddd" />
+  <meta name="description" content="돌범이 풀어주는 AI 구독 전 코딩 필수 노하우. 윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 3시간 강의." />
+  <title>돌범의 코딩 작업실 — AI 구독 전 코딩 필수 노하우</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app" x-data="courseApp" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn' }" x-cloak>
+    <a class="skip-link" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
+    <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
+      <button class="rail-toggle" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="icon('chevron')"></button>
+      <nav class="rail-links">
+        <button @click="goHome()" :class="{active: route === 'learn'}" aria-label="강의 홈" title="강의 홈" x-html="icon('home')"></button>
+        <button @click="drawer = !drawer" :class="{active: drawer}" aria-label="전체 목차" title="전체 목차" x-html="icon('book')"></button>
+        <button @click="route === 'editor' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="icon('chip')"></button>
+        <button @click="route === 'editor' ? goHome('demo') : showLearningDemo()" :class="{active: route === 'learn' && view === 'demo'}" aria-label="관련 예제" title="관련 예제" x-html="icon('play')"></button>
+        <button @click="openEditor()" :class="{active: route === 'editor'}" aria-label="강의 편집기" title="강의 편집기" x-html="icon('settings')"></button>
+      </nav>
+      <div class="rail-signature"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark">✳</span></div>
+    </aside>
+
+    <div class="workspace" x-show="route !== 'present'">
+      <header class="masthead" x-show="route !== 'editor'">
+        <a class="brand" href="#/lesson/terminal" @click.prevent="goHome()" aria-label="돌범의 코딩 작업실 홈">
+          <span class="brand-symbol" aria-hidden="true">&lt;∞&gt;</span>
+          <span><span class="brand-kicker">돌범이 풀어주는</span><h1>AI 구독 전 코딩 필수 노하우</h1><span class="brand-subtitle">EXPLORE · UNDERSTAND · BUILD</span></span>
+        </a>
+        <div class="course-meter" x-show="course">
+          <span class="meter-icon" x-html="icon('book')"></span>
+          <div><span class="eyebrow">CODING ESSENTIALS</span><div class="meter-row"><div class="meter-track" role="progressbar" :aria-valuenow="completed.length" aria-valuemin="0" :aria-valuemax="course ? course.lessons.length : 0" aria-label="완료한 강의"><i :style="'width:' + completed.length / Math.max(course?.lessons.length || 0, 1) * 100 + '%'"></i></div><b x-text="completed.length + '/' + (course?.lessons.length || 0)"></b></div></div>
+          <div class="course-time"><b x-text="course ? totalMinutes + ' MIN' : '180 MIN'"></b><span x-text="(course?.lessons.length || 0) + ' LESSONS · WINDOWS'"></span></div>
+        </div>
+      </header>
+
+      <div x-show="loading" class="loading-state"><span class="loading-mark">&lt; / &gt;</span><p>작업실을 준비하고 있습니다.</p></div>
+      <div x-show="error" class="error-state" role="alert"><h2>강의 파일을 불러오지 못했습니다.</h2><p x-text="error"></p><button class="solid-button" @click="location.reload()">다시 불러오기</button></div>
+
+      <template id="learning-template" x-if="course && !loading && route === 'learn'"></template>
+
+      <section id="editor-host" x-show="course && route==='editor' && !loading"></section>
+      <footer class="page-footer"><span>돌범의 코딩 작업실 <i>© 2026</i></span><span><span class="status-dot"></span><span x-text="hasDraft?'이 브라우저의 편집본 사용 중':'A LITTLE KNOWLEDGE. A LOT MORE POSSIBILITIES.'"></span></span><button @click="openEditor()">강의 편집 <span aria-hidden="true">↗</span></button></footer>
+    </div>
+
+    <section id="presentation-host"></section>
+
+    <div x-show="drawer" class="drawer-backdrop" @click.self="drawer=false" @keydown.escape.window="drawer=false" x-transition.opacity><aside class="contents-drawer" aria-label="전체 목차"><div class="drawer-header"><span class="eyebrow">YOUR LEARNING PATH</span><button @click="drawer=false" aria-label="목차 닫기" x-html="icon('close')"></button></div><h2>차근차근, 내 것으로.</h2><p x-text="'AI가 한 일을 이해하는 ' + (course?.lessons.length || 0) + '개의 주제.'"></p><template x-for="(l,i) in (course?.lessons || [])" :key="l.id"><button class="drawer-lesson" @click="showLesson(l.id);drawer=false" :aria-current="l.id===lessonId?'step':null"><span x-text="String(i+1).padStart(2,'0')"></span><div><b x-text="l.shortTitle"></b><small x-text="coreMinutes(l)+'분 · '+l.sections.filter(s=>!s.optional).length+'개 절'"></small></div><span x-html="icon(completed.includes(l.id)?'check':'arrow')"></span></button></template><div class="drawer-note"><span x-html="icon('bulb')"></span>모든 강의는 사례로 시작합니다.<br>위에서부터 순서대로 이어 가 보세요.</div></aside></div>
+
+    <dialog x-ref="reader" class="reader-dialog" @close="readerOpen=false" @click="if($event.target===$el)readerOpen=false" @keydown.escape="readerOpen=false">
+      <template x-if="course"><div class="reader-layout"><header><div><span class="eyebrow" x-text="'LESSON 0'+lesson.number+' / '+lessonDuration+' MIN'"></span><h2 x-text="lesson.title"></h2></div><button @click="readerOpen=false" aria-label="강의노트 닫기" x-html="icon('close')"></button></header><div class="reader-columns"><nav aria-label="본문 절 목록"><button @click="scrollReader('reader-case')">오늘의 개발 사례</button><template x-for="s in lesson.sections" :key="s.id"><button @click="scrollReader('section-'+s.id)"><span x-text="s.title"></span><small x-text="(s.optional?'보충 · ':'')+s.minutes+'분'"></small></button></template><button @click="scrollReader('reader-glossary')">용어와 참고 문서</button></nav><article class="reader-article" x-ref="readerArticle"><div id="reader-case" class="reader-case"><span class="case-label" x-text="lesson.case.kind==='example'?'교체용 예시 · 실제 대화 아님':'돌범의 실제 개발 사례'"></span><div class="reader-edit-heading"><h3 x-text="lesson.case.title"></h3><button type="button" class="reader-edit-link" @click="openEditor('case')">도입 수정 ↗</button></div><blockquote class="case-markdown" x-html="markdown(lesson.case.body)"></blockquote><p x-text="lesson.case.question"></p></div><template x-for="s in lesson.sections" :key="s.id"><section :id="'section-'+s.id" class="reader-section"><div class="reader-section-heading"><span class="eyebrow" x-text="s.optional?'OPTIONAL / 보충 설명':'LECTURE NOTES / 본편'"></span><span x-text="s.minutes+'분'"></span></div><div class="reader-edit-heading"><h3 x-text="s.title"></h3><button type="button" class="reader-edit-link" @click="openEditor(s.id)">이 절 수정 ↗</button></div><template x-if="sectionIllustrationId(s, lesson.id) !== lesson.id"><div class="reader-diagram workbench-illustration" :class="illustrationPaused || prefersReducedMotion || !artPageVisible || !readerOpen ? 'is-motion-paused' : ''" role="img" :aria-label="illustrationDescription(sectionIllustrationId(s, lesson.id))" x-html="lessonIllustration(sectionIllustrationId(s, lesson.id))"></div></template><div class="markdown-body" x-html="markdown(s.body)"></div></section></template><section id="reader-glossary" class="reader-section"><span class="eyebrow">KEEP THESE IN YOUR TOOLBOX</span><h3>용어와 참고 문서</h3><dl class="glossary-list"><template x-for="(g,glossaryIndex) in lesson.glossary" :key="glossaryIndex"><div><dt x-text="g.term"></dt><dd x-text="g.definition"></dd></div></template></dl><div class="reference-list"><template x-for="(r,referenceIndex) in lesson.references" :key="referenceIndex"><a :href="r.url" target="_blank" rel="noopener noreferrer"><span x-text="r.title"></span> ↗</a></template></div></section><button class="complete-button" @click="toggleComplete()" x-text="isComplete?'학습 완료 표시 취소':'이 강의 학습 완료'"></button></article></div></div></template>
+    </dialog>
+    <div class="toast" x-show="toast" x-transition role="status" x-text="toast"></div>
+  </div>
+  <noscript><p style="padding:40px">이 강의노트는 JavaScript를 켠 브라우저에서 사용할 수 있습니다.</p></noscript>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-web" aria-hidden="true" focusable="false">
+  <style>
+    .topic-art-web .web-request-pulse { stroke-dasharray: 12 88; stroke-dashoffset: 0; opacity: .85; animation: web-request-flow 6.4s linear infinite; }
+    .topic-art-web .web-response-pulse { stroke-dasharray: 12 88; stroke-dashoffset: 0; opacity: .85; animation: web-response-flow 6.4s linear infinite; }
+    .topic-art-web .web-server-activity { opacity: .65; animation: web-server-process 6.4s ease-in-out infinite; }
+    .topic-art-web .web-page-ready { opacity: .28; animation: web-page-update 6.4s ease-in-out infinite; }
+    @keyframes web-request-flow {
+      0% { stroke-dashoffset: 100; opacity: 0; }
+      8% { opacity: .95; }
+      41% { stroke-dashoffset: 0; opacity: .95; }
+      49%, 100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+    @keyframes web-response-flow {
+      0%, 49% { stroke-dashoffset: 100; opacity: 0; }
+      57% { opacity: .95; }
+      91% { stroke-dashoffset: 0; opacity: .95; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+    @keyframes web-server-process {
+      0%, 22%, 100% { opacity: .35; }
+      40%, 64% { opacity: 1; }
+      84% { opacity: .65; }
+    }
+    @keyframes web-page-update {
+      0%, 67%, 100% { opacity: .12; }
+      84%, 94% { opacity: .48; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .topic-art-web .art-motion { animation: none; }
+    }
+  </style>
+  <defs>
+    <filter id="web-ground-shadow" x="-25%" y="-90%" width="150%" height="280%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="web-browser-surface" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#aabbaa"/>
+      <stop offset="1" stop-color="#8aa395"/>
+    </linearGradient>
+    <linearGradient id="web-screen-glow" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#354b57"/>
+      <stop offset="1" stop-color="#283449"/>
+    </linearGradient>
+    <linearGradient id="web-server-face" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#607e77"/>
+      <stop offset="1" stop-color="#536e6d"/>
+    </linearGradient>
+    <marker id="web-request-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto">
+      <path d="m2 2 6 3-6 3" fill="none" stroke="#da9d77" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="web-response-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto">
+      <path d="m2 2 6 3-6 3" fill="none" stroke="#536e6d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <ellipse cx="385" cy="436" rx="211" ry="29" fill="#536e6d" opacity=".14" filter="url(#web-ground-shadow)"/>
+
+  <g stroke="#283449" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- All ground edges share the same two isometric axes. -->
+    <path d="m173 358 187-87 242 111-187 87Z" fill="#f5ead3"/>
+    <path d="m173 358 242 111v10L173 368Z" fill="#dfcfad"/>
+    <path d="m415 469 187-87v10l-187 87Z" fill="#a4b49e"/>
+    <path d="m191 359 169-78 224 102-169 78Z" fill="none" stroke="#dfcfad" stroke-width="1.2"/>
+    <path d="m216 390 26-12m272 52 25-12m-187 32 25-11" fill="none" stroke="#b7b89e" stroke-width="1.4"/>
+
+    <!-- Monitor pedestal sits on the shared platform. -->
+    <ellipse cx="266" cy="380" rx="49" ry="15" fill="#536e6d" opacity=".12" stroke="none"/>
+    <path d="m254 312 21-10v53l-21 10Z" fill="#8aa395"/>
+    <path d="m266 307 9-5v53l-9 5Z" fill="#536e6d" stroke="none"/>
+    <path d="m226 373 40-19 42 21-40 20Z" fill="#f5ead3"/>
+    <path d="m226 373 42 22v7l-42-22Z" fill="#dfcfad"/>
+    <path d="m268 395 40-20v7l-40 20Z" fill="#8aa395"/>
+
+    <!-- One coherent front plane keeps the browser frame, toolbar and cards aligned. -->
+    <g transform="matrix(1 -.46 0 1 185 180)">
+      <path d="m155 0 11 11v170l-11-11Z" fill="#dfcfad"/>
+      <path d="m0 170 155 0 11 11H11Z" fill="#536e6d"/>
+      <rect width="155" height="170" rx="5" fill="url(#web-browser-surface)"/>
+      <rect x="9" y="10" width="137" height="144" rx="2.5" fill="url(#web-screen-glow)" stroke-width="1.7"/>
+      <path d="M12 10h131a3 3 0 0 1 3 3v21H9V13a3 3 0 0 1 3-3Z" fill="#f5ead3" stroke-width="1.7"/>
+      <circle cx="20" cy="22" r="2.4" fill="#da9d77" stroke="none"/>
+      <circle cx="29" cy="22" r="2.4" fill="#8aa395" stroke="none"/>
+      <circle cx="38" cy="22" r="2.4" fill="#c5bc9f" stroke="none"/>
+      <rect x="51" y="17" width="80" height="9" rx="2" fill="#dfcfad" stroke="none"/>
+      <path d="M20 50h73" stroke="#dfcfad" stroke-width="4"/>
+      <path d="M20 61h111m-111 7h74" stroke="#8aa395" stroke-width="1.6"/>
+      <rect x="19" y="82" width="51" height="49" rx="2" fill="#f5ead3" stroke-width="1.5"/>
+      <rect x="82" y="82" width="51" height="49" rx="2" fill="#f5ead3" stroke-width="1.5"/>
+      <rect x="24" y="87" width="41" height="20" rx="1" fill="#8aa395" stroke="none"/>
+      <rect x="87" y="87" width="41" height="20" rx="1" fill="#da9d77" stroke="none"/>
+      <rect class="art-motion web-page-ready" x="87" y="87" width="41" height="20" rx="1" fill="#f5ead3" stroke="none"/>
+      <path d="M25 116h31m32 0h31m-94 6h20m43 0h20" stroke="#536e6d" stroke-width="1.5"/>
+      <path d="M20 142h87" stroke="#8aa395" stroke-width="1.6"/>
+      <circle class="art-motion web-server-activity" cx="133" cy="142" r="2.5" fill="#dfcfad" stroke="none"/>
+      <path d="M61 162h33" stroke="#dfcfad" stroke-width="1.6"/>
+      <path d="M151 17v130" stroke="#bdc9b2" stroke-width="1.1"/>
+    </g>
+
+    <!-- Separate, restrained channels: warm request out and sage response back. -->
+    <path d="m340 286 51 23q4 2 8 0l48-23 12 6-60 29q-4 2-8 0l-63-29Z" fill="#e6d7b8" stroke-width="1.6"/>
+    <path d="m328 292 63 29q4 2 8 0l60-29v6l-60 29q-4 2-8 0l-63-29Z" fill="#b7bba2" stroke-width="1.5"/>
+    <path d="m344 286 46 21q4 2 8 0l48-23" fill="none" stroke="#d6b496" stroke-width="2.7" marker-end="url(#web-request-arrow)"/>
+    <path d="m447 304-48 23q-5 2-10 0l-45-21" fill="none" stroke="#b2c1a8" stroke-width="2.7" marker-end="url(#web-response-arrow)"/>
+    <path class="art-motion web-request-pulse" d="m344 286 46 21q4 2 8 0l48-23" pathLength="100" fill="none" stroke="#da9d77" stroke-width="3.7"/>
+    <path class="art-motion web-response-pulse" d="m447 304-48 23q-5 2-10 0l-45-21" pathLength="100" fill="none" stroke="#536e6d" stroke-width="3.7"/>
+    <path d="m378 278 17-8 16 8-17 8Z" fill="#f5ead3" stroke-width="1.6"/>
+    <path d="m378 278 16 8 17-8v5l-17 8-16-8Z" fill="#dfcfad" stroke-width="1.4"/>
+    <path d="m377 340 18-8 16 8-18 8Z" fill="#f5ead3" stroke-width="1.6"/>
+    <path d="m377 340 16 8 18-8v5l-18 8-16-8Z" fill="#c2c9ae" stroke-width="1.4"/>
+
+    <!-- Server cabinet uses the same upright axis and front-plane skew as the browser. -->
+    <path d="m445 195 72-33 30 17-72 33Z" fill="#f5ead3"/>
+    <path d="m445 195 30 17v157l-30-17Z" fill="#8aa395"/>
+    <path d="m451 210 17 10m-17-2 17 10m-17-2 17 10m-17 66 17 10m-17-2 17 10m-17-2 17 10" fill="none" stroke="#536e6d" stroke-width="1.5"/>
+    <path d="m450 201 20 11m-20 137 20 11" fill="none" stroke="#b7c6ac" stroke-width="1.2"/>
+    <g transform="matrix(1 -.46 0 1 475 212)">
+      <rect width="72" height="157" rx="1" fill="url(#web-server-face)"/>
+      <rect x="7" y="12" width="58" height="36" rx="2" fill="#f5ead3" stroke-width="1.7"/>
+      <rect x="7" y="58" width="58" height="36" rx="2" fill="#f5ead3" stroke-width="1.7"/>
+      <rect x="7" y="104" width="58" height="32" rx="2" fill="#f5ead3" stroke-width="1.7"/>
+      <path d="M15 24h27m-27 8h17m-17 38h27m-27 8h17m-17 38h27m-27 8h17" stroke="#8aa395" stroke-width="1.6"/>
+      <circle class="art-motion web-server-activity" cx="55" cy="28" r="3.1" fill="#da9d77" stroke="none"/>
+      <circle class="art-motion web-server-activity" cx="55" cy="74" r="3.1" fill="#8aa395" stroke="none"/>
+      <circle cx="55" cy="119" r="3.1" fill="#8aa395" stroke="none"/>
+      <rect x="10" y="143" width="15" height="6" rx="1" fill="#283449" stroke-width="1.2"/>
+      <rect x="32" y="143" width="15" height="6" rx="1" fill="#283449" stroke-width="1.2"/>
+      <circle cx="58" cy="146" r="2" fill="#dfcfad" stroke="none"/>
+      <path d="M68 9v137" stroke="#8aa395" stroke-width="1.1"/>
+    </g>
+
+    <!-- Database body and rings share one cylinder instead of intersecting ellipses. -->
+    <path d="m492 365-16 8 39 19" fill="none" stroke="#7e9587" stroke-width="2.5"/>
+    <ellipse cx="555" cy="425" rx="43" ry="13" fill="#536e6d" opacity=".13" stroke="none"/>
+    <path d="M515 366v49c0 22 80 22 80 0v-49Z" fill="#8aa395"/>
+    <path d="M555 383v48c22 0 40-7 40-16v-49Z" fill="#536e6d" stroke="none"/>
+    <path d="M515 382c0 22 80 22 80 0m-80 16c0 22 80 22 80 0m-80 17c0 22 80 22 80 0" fill="none" stroke-width="1.8"/>
+    <ellipse cx="555" cy="366" rx="40" ry="17" fill="#f5ead3"/>
+    <ellipse cx="555" cy="366" rx="29" ry="10.5" fill="#dfcfad" stroke="#b5b79e" stroke-width="1.3"/>
+    <path d="M524 382v22" stroke="#b7c9ad" stroke-width="1.8"/>
+    <circle class="art-motion web-server-activity" cx="539" cy="414" r="2.5" fill="#da9d77" stroke="none"/>
+
+    <!-- Quiet hardware details, with no extra floating diagram objects. -->
+    <path d="m460 176 12 6 29-13" fill="none" stroke="#c0b899" stroke-width="1.3"/>
+    <path d="m568 322 11 5v12" fill="none" stroke="#b2b99f" stroke-width="1.4" stroke-dasharray="2 5"/>
+  </g>
+
+  <g fill="#283449" font-family="ui-monospace,Consolas,monospace" font-weight="700">
+    <text transform="matrix(1 -.46 0 1 243 179)" font-size="8.5" letter-spacing="1">WEB</text>
+    <text transform="matrix(.9 .49 -.9 .43 383 277)" font-size="9">GET</text>
+    <text transform="matrix(.9 .49 -.9 .43 382 339)" font-size="9">200</text>
+    <text transform="matrix(.9 -.43 .9 .49 480 190)" font-size="8" fill="#536e6d" letter-spacing=".7">API</text>
+    <text transform="matrix(.9 .49 -.9 .43 542 363)" font-size="9" letter-spacing=".5">DATA</text>
+  </g>
+</svg>

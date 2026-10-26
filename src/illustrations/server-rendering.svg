@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-server-rendering" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="sr-shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#344e48" flood-opacity=".1"/></filter>
+    <marker id="sr-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 8 5 1 9" fill="none" stroke="#638e7c" stroke-width="1.6"/></marker>
+  </defs>
+  <style>@keyframes sr-delivery{0%,12%{transform:translateY(0);opacity:0}28%{opacity:1}78%{opacity:1}92%,100%{transform:translateY(47px);opacity:0}}.sr-delivery{animation:sr-delivery 5s ease-in-out infinite}</style>
+  <g font-family="Pretendard Variable, Pretendard, sans-serif" fill="#314d49">
+    <text x="64" y="47" font-size="15" letter-spacing="3" fill="#7c917d">FROM TEMPLATE TO SCREEN</text>
+    <g filter="url(#sr-shadow)">
+      <rect x="64" y="75" width="632" height="184" rx="15" fill="#e0e8d7" stroke="#8fa995" stroke-width="1.5"/>
+      <text x="87" y="110" font-size="24" font-weight="700">서버 · HTML 만들기</text>
+      <rect x="87" y="133" width="368" height="70" rx="9" fill="#faf6e8" stroke="#bac8ae"/>
+      <text x="106" y="160" font-size="21" font-weight="650">Jinja2 / Django 템플릿</text>
+      <text x="106" y="185" font-size="17" fill="#7c8a73">HTML 뼈대 + 데이터를 넣을 자리</text>
+      <text x="475" y="176" font-size="27" fill="#7b947c">+</text>
+      <rect x="510" y="133" width="163" height="70" rx="9" fill="#d1ddc7" stroke="#a7b99d"/>
+      <text x="591" y="175" text-anchor="middle" font-size="23" font-weight="650">데이터</text>
+      <text x="88" y="236" font-size="21" fill="#627d67">예: title = "Git" → &lt;h1&gt;Git&lt;/h1&gt;</text>
+    </g>
+    <path d="M380 270V321" fill="none" stroke="#638e7c" stroke-width="2" marker-end="url(#sr-arrow)"/>
+    <circle cx="380" cy="273" r="4" class="art-motion sr-delivery" fill="#3c796f"/>
+    <text x="404" y="303" font-size="20" fill="#668270">HTML 응답</text>
+    <g filter="url(#sr-shadow)">
+      <rect x="64" y="335" width="632" height="142" rx="15" fill="#fbf7e9" stroke="#8fa995" stroke-width="1.5"/>
+      <path d="M79 335H681Q696 335 696 350V369H64V350Q64 335 79 335Z" fill="#dce6d3"/>
+      <g fill="#8ba58b"><circle cx="86" cy="352" r="4"/><circle cx="101" cy="352" r="4"/><circle cx="116" cy="352" r="4"/></g>
+      <text x="146" y="359" font-size="17" fill="#58765e">사용자의 브라우저</text>
+      <text x="88" y="411" font-size="27" font-weight="700">HTML을 해석해 화면 표시</text>
+      <text x="88" y="450" font-size="22">Tailwind → 스타일</text>
+      <text x="393" y="450" font-size="22">Alpine.js → 동작</text>
+    </g>
+    <text x="64" y="522" font-size="20" fill="#7c8a73">서버 템플릿과 브라우저의 역할을 나눠 봅니다.</text>
+  </g>
+</svg>

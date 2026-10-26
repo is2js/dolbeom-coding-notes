@@ -1,0 +1,239 @@
+<section class="editor-page" :class="{ 'is-focus-mode': editor.uiMode === 'focus' }" aria-labelledby="editor-title">
+  <header class="editor-heading">
+    <div>
+      <h1 id="editor-title">강의 수정</h1>
+      <p class="editor-intro" x-text="editor.uiMode === 'focus' ? '수정할 부분을 고르고, 왼쪽에서 고치면 오른쪽에 바로 보입니다.' : '시간·시연·발표·자료와 전체 강의 파일을 관리합니다.'"></p>
+    </div>
+    <div class="editor-heading-tools">
+      <div class="editor-mode-switch" role="group" aria-label="편집 모드">
+        <button type="button" :aria-pressed="editor.uiMode === 'focus'" @click="editor.setMode('focus')">본문 편집</button>
+        <button type="button" :aria-pressed="editor.uiMode === 'details'" @click="editor.setMode('details')">상세 설정</button>
+      </div>
+      <button type="button" class="editor-button editor-view-button" @click="goHome()" :disabled="editor.busy">이 내용으로 연습 <span aria-hidden="true">↗</span></button>
+    </div>
+    <div class="editor-actions" x-show="editor.uiMode === 'details'" x-cloak>
+      <button type="button" class="editor-button editor-button-primary" @click="editor.exportFile()" :disabled="editor.busy"><span aria-hidden="true">↗</span> JSON 내보내기</button>
+      <label class="editor-button editor-file-button" :class="{ 'is-disabled': editor.busy }"><span aria-hidden="true">↙</span> JSON 가져오기<input type="file" accept=".json,application/json" @change="editor.importFile($event)" :disabled="editor.busy" class="editor-file-input" aria-label="전체 강의 JSON 가져오기"></label>
+    </div>
+  </header>
+
+  <div class="editor-status-bar">
+    <p role="status" aria-live="polite"><span class="editor-status-dot" :class="{ 'is-error': editor.status === 'error', 'is-pending': editor.status === 'pending' }"></span><span x-text="editor.statusText"></span></p>
+    <span class="editor-save-destination" x-show="editor.uiMode === 'focus'" x-text="syncState.mode === 'local' ? (syncState.conflict ? '파일 충돌 확인 필요' : (editor.status === 'error' || syncState.status === 'offline' || syncState.status === 'error') ? '파일 저장 확인 필요' : syncState.status === 'synced' && editor.status === 'saved' ? '파일 저장 완료' : editor.status === 'pending' || syncState.status === 'saving' ? '파일에 저장 중…' : '파일 연결 확인 중…') : (editor.status === 'saved' ? '이 브라우저에 저장됨' : editor.status === 'pending' ? '이 브라우저에 저장 중…' : '브라우저 저장 확인 필요')"></span>
+    <p class="editor-total" x-show="editor.uiMode === 'details'" :class="{ 'is-warning': editor.coreMinutes !== 180 }">본편 <strong x-text="editor.coreMinutes"></strong> / 180분 <span>· 보충 <b x-text="editor.bonusMinutes"></b>분</span></p>
+  </div>
+  <aside class="editor-legacy-notice" x-show="legacyDraft && editor.uiMode === 'details'" x-cloak aria-label="이전 강의 초안 보존 안내"><p>기존 6강에서 저장되지 않은 초안이 보존되어 있습니다. 필요한 내용은 JSON으로 백업한 뒤 새 강의에 옮겨 주세요.</p><button type="button" class="editor-button editor-button-small" @click="exportLegacyDraft()">이전 6강 초안 JSON 받기</button></aside>
+  <section class="editor-sync-notice" x-show="editor.uiMode === 'details' || syncState.conflict || syncState.status === 'offline' || syncState.status === 'error'" :class="{ 'is-issue': syncState.status === 'offline' || syncState.status === 'error', 'is-conflict': syncState.conflict }" aria-label="강의 저장과 동기화 상태">
+    <div class="editor-sync-heading"><span class="editor-sync-icon" aria-hidden="true" x-text="syncState.mode === 'local' ? '⇄' : '◌'"></span><strong x-text="syncState.mode === 'local' ? '프로젝트 파일 + 브라우저 자동 저장' : '이 브라우저에만 자동 저장'"></strong></div>
+    <p role="status" aria-live="polite" x-text="syncState.message || (syncState.mode === 'local' ? '파일 저장 상태를 확인하고 있습니다.' : '공개 강의에 반영하려면 JSON을 프로젝트에 반영한 뒤 다시 배포해 주세요.')"></p>
+    <button type="button" class="editor-button editor-button-small" x-show="syncState.mode === 'local' && (syncState.status === 'offline' || syncState.status === 'error') && !syncState.conflict" @click="retrySync()" :disabled="editor.busy">파일 연결 다시 시도</button>
+    <div class="editor-sync-conflict" x-show="syncState.conflict" x-cloak role="alert">
+      <h3>프로젝트 파일과 편집 내용이 함께 바뀌었습니다.</h3>
+      <p>두 버전을 자동으로 덮어쓰지 않습니다. 현재 편집 내용을 남길지, 최신 파일을 불러올지 선택해 주세요.</p>
+      <div class="editor-sync-conflict-actions"><button type="button" class="editor-button" @click="useFileVersion()" :disabled="editor.busy">최신 프로젝트 파일 불러오기</button><button type="button" class="editor-button editor-button-primary" @click="keepBrowserVersion()" :disabled="editor.busy">내 편집본을 최신 파일에 저장</button></div>
+    </div>
+  </section>
+  <div class="editor-alert" role="alert" x-show="editor.error" x-cloak><strong>입력 내용을 확인해 주세요.</strong><span x-text="editor.error"></span><p>수정 중인 내용은 이 편집기에 유지됩니다. 오류를 고치면 자동으로 다시 저장합니다.</p></div>
+  <div class="editor-alert" role="alert" x-show="editor.importError" x-cloak><strong>파일을 가져오지 못했습니다.</strong><span x-text="editor.importError"></span><p>현재 편집 중인 강의는 그대로 유지되었습니다.</p></div>
+  <p class="editor-time-note" x-show="editor.coreMinutes !== 180" x-cloak>본편 합계가 180분과 다릅니다. <button type="button" class="editor-text-button" @click="editor.setMode('details'); editor.tab = 'sections'">상세 설정에서 시간 확인</button></p>
+
+  <fieldset class="editor-focus" x-show="editor.uiMode === 'focus'" :disabled="editor.busy" aria-label="본문과 미리보기">
+    <div class="editor-focus-selectors">
+      <div class="editor-field"><label for="focus-lesson">강의</label><select id="focus-lesson" x-model="editor.lessonId" @change="editor.selectLesson($event.target.value)"><template x-for="lesson in editor.working.lessons" :key="lesson.id"><option :value="lesson.id" :selected="editor.lessonId === lesson.id" x-text="`${String(lesson.number).padStart(2, '0')} · ${lesson.shortTitle || lesson.title}`"></option></template></select></div>
+      <div class="editor-field"><label for="focus-item">수정할 부분</label><select id="focus-item" x-model="editor.focusId" @change="editor.focusItem($event.target.value)"><option value="case" :selected="editor.focusId === 'case'">도입 사례</option><template x-for="(section, index) in editor.activeLesson.sections" :key="section.id"><option :value="section.id" :selected="editor.focusId === section.id" x-text="`${index + 1}. ${section.optional ? '보충 · ' : ''}${section.title || '제목 없는 본문'}`"></option></template></select></div>
+      <nav class="editor-focus-navigation" aria-label="수정할 부분 순서"><button type="button" class="editor-button editor-button-small" @click="editor.moveFocus(-1)" :disabled="editor.focusIndex === 0 || editor.busy" aria-label="이전 부분 수정">← 이전</button><span><b x-text="editor.focusIndex + 1"></b> / <span x-text="editor.focusItems.length"></span></span><button type="button" class="editor-button editor-button-small" @click="editor.moveFocus(1)" :disabled="editor.focusIndex === editor.focusItems.length - 1 || editor.busy" aria-label="다음 부분 수정">다음 →</button></nav>
+    </div>
+    <div class="editor-focus-course-title editor-field"><label for="focus-course-title">강의 제목</label><input id="focus-course-title" type="text" x-model="editor.activeLesson.title" @input="editor.changed()" maxlength="200"></div>
+    <div class="editor-focus-grid">
+      <section class="editor-focus-pane editor-focus-source" aria-labelledby="focus-source-title">
+        <div class="editor-focus-pane-heading"><h2 id="focus-source-title">수정</h2><span>입력하면 바로 반영됩니다</span></div>
+        <template x-if="editor.focusId === 'case'">
+          <div>
+            <div class="editor-field"><label for="focus-case-title">사례 제목</label><input id="focus-case-title" type="text" x-model="editor.activeLesson.case.title" @input="editor.changed()"></div>
+            <div class="editor-field"><label for="focus-case-body">상황과 경험</label><textarea id="focus-case-body" class="editor-focus-body-input" rows="10" x-model="editor.activeLesson.case.body" @input="editor.changed()"></textarea></div>
+            <div class="editor-field"><label for="focus-case-question">함께 생각할 질문</label><textarea id="focus-case-question" rows="2" x-model="editor.activeLesson.case.question" @input="editor.changed()"></textarea></div>
+          </div>
+        </template>
+        <template x-if="editor.focusedSection">
+          <div>
+            <div class="editor-field"><label for="focus-section-title">절 제목</label><input id="focus-section-title" type="text" x-model="editor.focusedSection.title" @input="editor.changed()"></div>
+            <div class="editor-field"><label for="focus-section-body">본문</label><textarea id="focus-section-body" class="editor-focus-body-input" rows="17" x-model="editor.focusedSection.body" @input="editor.changed()"></textarea></div>
+            <p class="editor-focus-markdown-help">그냥 문장으로 적어도 됩니다. 오른쪽은 수강생이 읽는 본문입니다.</p>
+          </div>
+        </template>
+      </section>
+      <section class="editor-focus-pane editor-focus-result" aria-labelledby="focus-preview-title">
+        <div class="editor-focus-pane-heading"><h2 id="focus-preview-title">즉시 미리보기</h2><span class="editor-focus-live">편집 중인 내용</span></div>
+        <p class="editor-focus-preview-lesson" x-text="editor.activeLesson.title"></p>
+        <template x-if="editor.focusId === 'case'">
+          <article class="editor-focus-rendered">
+            <span class="editor-case-badge" x-text="editor.activeLesson.case.kind === 'real' ? '나의 실제 경험' : '수업용 예시'"></span>
+            <h3 x-text="editor.activeLesson.case.title || '사례 제목'"></h3>
+            <div class="editor-markdown-preview editor-focus-preview-body" x-html="editor.preview(editor.activeLesson.case.body)"></div>
+            <p class="editor-focus-question" x-text="editor.activeLesson.case.question"></p>
+          </article>
+        </template>
+        <template x-if="editor.focusedSection">
+          <article class="editor-focus-rendered">
+            <h3 x-text="editor.focusedSection.title || '절 제목'"></h3><template x-if="sectionIllustrationId(editor.focusedSection, editor.lessonId) !== editor.lessonId"><div class="reader-diagram workbench-illustration is-motion-paused" role="img" :aria-label="illustrationDescription(sectionIllustrationId(editor.focusedSection, editor.lessonId))" x-html="lessonIllustration(sectionIllustrationId(editor.focusedSection, editor.lessonId))"></div></template>
+            <div class="editor-markdown-preview editor-focus-preview-body" x-html="editor.preview(editor.focusedSection.body)"></div>
+          </article>
+        </template>
+      </section>
+    </div>
+  </fieldset>
+
+  <fieldset class="editor-layout" x-show="editor.uiMode === 'details'" x-cloak :disabled="editor.busy" aria-label="강의 상세 설정">
+    <aside class="editor-sidebar" aria-label="편집할 강의 선택">
+      <div class="editor-sidebar-caption"><span>강의 선택</span><span x-text="editor.working.lessons.length + '개 강의'"></span></div>
+      <nav class="editor-lesson-list">
+        <template x-for="(lesson, index) in editor.working.lessons" :key="lesson.id">
+          <div class="editor-lesson-row" :class="{ 'is-active': editor.lessonId === lesson.id }">
+            <button type="button" class="editor-lesson" :class="{ 'is-active': editor.lessonId === lesson.id }" :aria-current="editor.lessonId === lesson.id ? 'true' : null" @click="editor.selectLesson(lesson.id)">
+              <span class="editor-lesson-number" x-text="String(index + 1).padStart(2, '0')"></span>
+              <span class="editor-lesson-name"><strong x-text="lesson.shortTitle || lesson.title"></strong><small><span x-text="editor.lessonMinutes(lesson)"></span>분 <span aria-hidden="true">↗</span></small></span>
+            </button>
+            <div class="editor-lesson-order"><button type="button" @click="editor.moveLesson(index, -1)" :disabled="index === 0 || editor.busy" :aria-label="`${lesson.shortTitle || lesson.title} 주제 위로 이동`" title="주제 위로 이동">↑</button><button type="button" @click="editor.moveLesson(index, 1)" :disabled="index === editor.working.lessons.length - 1 || editor.busy" :aria-label="`${lesson.shortTitle || lesson.title} 주제 아래로 이동`" title="주제 아래로 이동">↓</button></div>
+          </div>
+        </template>
+      </nav>
+      <p class="editor-order-help">화살표로 주제 순서를 바꾸면 강의 번호가 자동으로 정리됩니다.</p>
+      <div class="editor-sidebar-help"><span class="editor-help-icon" aria-hidden="true">i</span><p x-show="syncState.mode === 'local'">입력 중인 초안은 <strong>즉시 브라우저에 보관</strong>합니다. 유효한 수정 내용은 프로젝트 파일에도 자동 저장됩니다.</p><p x-show="syncState.mode !== 'local'">입력 중인 초안은 <strong>현재 브라우저</strong>에 보관합니다. GitHub Pages의 공개 강의는 JSON 반영 후 다시 배포해야 바뀝니다.</p></div>
+      <div class="editor-reset-box">
+        <button type="button" class="editor-reset-link" @click="editor.reset()" :disabled="editor.busy" x-text="editor.resetConfirm ? '네, 원본을 다시 불러옵니다' : (syncState.mode === 'local' ? '프로젝트 원본 다시 읽기' : '기본 콘텐츠 복원')"></button>
+        <div x-show="editor.resetConfirm" x-cloak><p x-text="syncState.mode === 'local' ? '현재 편집 내용을 프로젝트의 최신 파일로 바꿉니다. 프로젝트 파일 자체는 바꾸지 않습니다. 필요한 초안은 먼저 JSON으로 내보내세요.' : '이 브라우저의 강의 수정 내용을 게시된 기본 콘텐츠로 바꿉니다. 필요한 내용은 먼저 JSON으로 내보내세요.'"></p><button type="button" class="editor-reset-cancel" @click="editor.resetConfirm = false">취소</button></div>
+      </div>
+    </aside>
+
+    <main class="editor-workspace">
+      <div class="editor-workspace-heading"><span class="editor-chapter">CHAPTER <span x-text="String(editor.activeLesson.number).padStart(2, '0')"></span></span><span class="editor-working-label">EDITING YOUR NOTES</span></div>
+      <h2 class="editor-workspace-title" x-text="editor.activeLesson.title"></h2>
+      <div class="editor-tabs" role="tablist" aria-label="강의 편집 영역">
+        <button id="editor-overview-tab" type="button" role="tab" :aria-selected="editor.tab === 'overview'" aria-controls="editor-overview-panel" :tabindex="editor.tab === 'overview' ? 0 : -1" @click="editor.tab = 'overview'" @keydown.right.prevent="editor.tab = 'sections'; $nextTick(() => document.getElementById('editor-sections-tab').focus())" @keydown.left.prevent="editor.tab = 'presentation'; $nextTick(() => document.getElementById('editor-presentation-tab').focus())">01 강의 정보</button>
+        <button id="editor-sections-tab" type="button" role="tab" :aria-selected="editor.tab === 'sections'" aria-controls="editor-sections-panel" :tabindex="editor.tab === 'sections' ? 0 : -1" @click="editor.tab = 'sections'" @keydown.right.prevent="editor.tab = 'steps'; $nextTick(() => document.getElementById('editor-steps-tab').focus())" @keydown.left.prevent="editor.tab = 'overview'; $nextTick(() => document.getElementById('editor-overview-tab').focus())">02 본문</button>
+        <button id="editor-steps-tab" type="button" role="tab" :aria-selected="editor.tab === 'steps'" aria-controls="editor-steps-panel" :tabindex="editor.tab === 'steps' ? 0 : -1" @click="editor.tab = 'steps'" @keydown.right.prevent="editor.tab = 'resources'; $nextTick(() => document.getElementById('editor-resources-tab').focus())" @keydown.left.prevent="editor.tab = 'sections'; $nextTick(() => document.getElementById('editor-sections-tab').focus())">03 단계별 시연</button>
+        <button id="editor-resources-tab" type="button" role="tab" :aria-selected="editor.tab === 'resources'" aria-controls="editor-resources-panel" :tabindex="editor.tab === 'resources' ? 0 : -1" @click="editor.tab = 'resources'" @keydown.right.prevent="editor.tab = 'presentation'; $nextTick(() => document.getElementById('editor-presentation-tab').focus())" @keydown.left.prevent="editor.tab = 'steps'; $nextTick(() => document.getElementById('editor-steps-tab').focus())">04 정리와 자료</button>
+        <button id="editor-presentation-tab" type="button" role="tab" :aria-selected="editor.tab === 'presentation'" aria-controls="editor-presentation-panel" :tabindex="editor.tab === 'presentation' ? 0 : -1" @click="editor.tab = 'presentation'" @keydown.right.prevent="editor.tab = 'overview'; $nextTick(() => document.getElementById('editor-overview-tab').focus())" @keydown.left.prevent="editor.tab = 'resources'; $nextTick(() => document.getElementById('editor-resources-tab').focus())">05 발표</button>
+      </div>
+
+      <div id="editor-overview-panel" class="editor-panel" role="tabpanel" aria-labelledby="editor-overview-tab" x-show="editor.tab === 'overview'">
+        <div class="editor-section-heading"><div><p class="editor-eyebrow">LESSON DETAILS</p><h3>먼저, 강의의 첫인상부터</h3></div><span class="editor-small-tag">자동 저장</span></div>
+        <div class="editor-field"><label for="edit-lesson-title">강의 제목</label><input id="edit-lesson-title" type="text" x-model="editor.activeLesson.title" @input="editor.changed()" maxlength="200"></div>
+        <div class="editor-field-grid">
+          <div class="editor-field"><label for="edit-lesson-short">메뉴에 표시할 짧은 제목</label><input id="edit-lesson-short" type="text" x-model="editor.activeLesson.shortTitle" @input="editor.changed()" maxlength="80"></div>
+          <div class="editor-field"><label for="edit-lesson-duration">강의 예상 시간 (분)</label><input id="edit-lesson-duration" type="number" min="1" max="300" x-model.number="editor.activeLesson.durationMinutes" @input="editor.changed()"><small>본문 절별 시간 합계: <span x-text="editor.lessonMinutes(editor.activeLesson)"></span>분</small></div>
+        </div>
+        <div class="editor-field"><label for="edit-lesson-subtitle">강의 소개</label><textarea id="edit-lesson-subtitle" rows="2" x-model="editor.activeLesson.subtitle" @input="editor.changed()"></textarea></div>
+
+        <section class="editor-case-box" aria-labelledby="editor-case-title">
+          <div class="editor-section-heading"><div><p class="editor-eyebrow">START WITH A STORY</p><h3 id="editor-case-title">Codex를 쓰다가 만난 순간</h3></div><span class="editor-case-badge" x-text="editor.activeLesson.case.kind === 'real' ? '나의 실제 사례' : '교체용 예시'"></span></div>
+          <p class="editor-helper">강의 진입 시 가장 먼저 만나는 내용입니다. 실제 경험을 넣은 뒤 사례 구분을 바꿔 주세요.</p>
+          <div class="editor-field"><label for="edit-case-kind">사례 구분</label><select id="edit-case-kind" x-model="editor.activeLesson.case.kind" @change="editor.changed()"><option value="example">교체용 예시</option><option value="real">실제 경험</option></select></div>
+          <div class="editor-field"><label for="edit-case-title">사례 제목</label><input id="edit-case-title" type="text" x-model="editor.activeLesson.case.title" @input="editor.changed()"></div>
+          <div class="editor-field"><label for="edit-case-body">상황과 경험 <span>Markdown 지원</span></label><textarea id="edit-case-body" rows="6" x-model="editor.activeLesson.case.body" @input="editor.changed()"></textarea></div>
+          <div class="editor-field"><label for="edit-case-question">학습을 여는 핵심 질문</label><textarea id="edit-case-question" rows="2" x-model="editor.activeLesson.case.question" @input="editor.changed()"></textarea></div>
+        </section>
+
+        <div class="editor-section-heading"><div><p class="editor-eyebrow">LEARNING OBJECTIVES</p><h3>이 강의가 끝나면</h3></div><button type="button" class="editor-add-inline" @click="editor.activeLesson.objectives.push('새 학습 목표'); editor.changed()">+ 목표 추가</button></div>
+        <template x-for="(objective, index) in editor.activeLesson.objectives" :key="`${editor.lessonId}-objective-${index}`"><div class="editor-list-row"><span class="editor-row-counter" x-text="String(index + 1).padStart(2, '0')"></span><input type="text" x-model="editor.activeLesson.objectives[index]" @input="editor.changed()" :aria-label="`학습 목표 ${index + 1}`"><button type="button" class="editor-icon-button" @click="editor.activeLesson.objectives.splice(index, 1); editor.changed()" :aria-label="`학습 목표 ${index + 1} 삭제`" :disabled="editor.activeLesson.objectives.length <= 1">×</button></div></template>
+
+        <details class="editor-course-details"><summary>전체 강의 제목과 작성자 수정 <span aria-hidden="true">+</span></summary><div class="editor-course-fields"><div class="editor-field"><label for="edit-course-title">전체 강의 제목</label><input id="edit-course-title" type="text" x-model="editor.working.title" @input="editor.changed()"></div><div class="editor-field"><label for="edit-course-subtitle">전체 강의 소개</label><textarea id="edit-course-subtitle" rows="2" x-model="editor.working.subtitle" @input="editor.changed()"></textarea></div><div class="editor-field"><label for="edit-course-author">작성자</label><input id="edit-course-author" type="text" x-model="editor.working.author" @input="editor.changed()"></div></div></details>
+      </div>
+
+      <div id="editor-sections-panel" class="editor-panel" role="tabpanel" aria-labelledby="editor-sections-tab" x-show="editor.tab === 'sections'">
+        <div class="editor-section-heading"><div><p class="editor-eyebrow">WRITE YOUR LESSON</p><h3>설명은 차근차근, 한 절씩</h3></div><button type="button" class="editor-button editor-button-small" @click="editor.addSection()">+ 본문 추가</button></div>
+        <p class="editor-helper">본편 시간만 180분에 합산합니다. 보충 설명은 수업 상황에 따라 골라 쓰세요.</p>
+        <template x-for="(section, index) in editor.activeLesson.sections" :key="section.id">
+          <article class="editor-content-card" :class="{ 'is-expanded': editor.sectionId === section.id }">
+            <div class="editor-card-top"><button type="button" class="editor-card-toggle" @click="editor.sectionId = editor.sectionId === section.id ? '' : section.id" :aria-expanded="editor.sectionId === section.id" :aria-controls="`section-fields-${section.id}`"><span class="editor-row-counter" x-text="String(index + 1).padStart(2, '0')"></span><strong x-text="section.title || '제목 없는 본문'"></strong><span class="editor-card-meta"><span x-text="section.optional ? '보충' : '본편'"></span> · <span x-text="section.minutes"></span>분</span><span class="editor-chevron" aria-hidden="true">⌄</span></button></div>
+            <div class="editor-card-fields" :id="`section-fields-${section.id}`" x-show="editor.sectionId === section.id">
+              <div class="editor-field"><label :for="`section-title-${section.id}`">절 제목</label><input :id="`section-title-${section.id}`" type="text" x-model="section.title" @input="editor.changed()"></div>
+              <div class="editor-field"><label :for="`section-illustration-${section.id}`">본문·발표 개념 그림</label><select :id="`section-illustration-${section.id}`" :value="section.illustrationId || ''" @change="if ($event.target.value) section.illustrationId = $event.target.value; else delete section.illustrationId; editor.changed()"><option value="" :selected="!section.illustrationId">이 절에 맞는 자동 그림</option><option value="web-architecture" :selected="section.illustrationId === 'web-architecture'">프론트엔드·백엔드 역할</option><option value="server-rendering" :selected="section.illustrationId === 'server-rendering'">템플릿에서 화면까지</option></select></div>
+              <div class="editor-field-grid"><div class="editor-field"><label :for="`section-time-${section.id}`">예상 시간 (분)</label><input :id="`section-time-${section.id}`" type="number" min="1" max="300" x-model.number="section.minutes" @input="editor.changed()"></div><div class="editor-field"><label :for="`section-kind-${section.id}`">수업 구분</label><label class="editor-checkbox-label"><input :id="`section-kind-${section.id}`" type="checkbox" x-model="section.optional" @change="editor.changed()"><span>선택해서 읽는 보충 설명</span></label></div></div>
+              <div class="editor-markdown-heading"><label :for="`section-body-${section.id}`">Markdown 본문</label><button type="button" class="editor-add-inline" @click="editor.previewSectionId = editor.previewSectionId === section.id ? '' : section.id" :aria-pressed="editor.previewSectionId === section.id" x-text="editor.previewSectionId === section.id ? '편집으로 돌아가기' : '미리보기 ↗'"></button></div>
+              <textarea class="editor-markdown-input" :id="`section-body-${section.id}`" rows="16" x-model="section.body" @input="editor.changed()" x-show="editor.previewSectionId !== section.id" spellcheck="false"></textarea>
+              <div class="editor-markdown-preview prose" x-show="editor.previewSectionId === section.id" x-html="editor.preview(section.body)"></div>
+              <p class="editor-markdown-tip"># 제목 &nbsp; · &nbsp; **강조** &nbsp; · &nbsp; - 목록 &nbsp; · &nbsp; ``` 코드 블록</p>
+              <div class="editor-card-actions"><div><button type="button" class="editor-text-button" @click="editor.move(editor.activeLesson.sections, index, -1)" :disabled="index === 0" :aria-label="`${section.title} 본문을 위로 이동`">↑ 위로</button><button type="button" class="editor-text-button" @click="editor.move(editor.activeLesson.sections, index, 1)" :disabled="index === editor.activeLesson.sections.length - 1" :aria-label="`${section.title} 본문을 아래로 이동`">↓ 아래로</button></div><button type="button" class="editor-text-button editor-delete" @click="editor.removeSection(index)" :disabled="editor.activeLesson.sections.length <= 1">본문 삭제</button></div>
+            </div>
+          </article>
+        </template>
+      </div>
+
+      <div id="editor-steps-panel" class="editor-panel" role="tabpanel" aria-labelledby="editor-steps-tab" x-show="editor.tab === 'steps'">
+        <div class="editor-section-heading"><div><p class="editor-eyebrow">SHOW, STEP BY STEP</p><h3>따라가기 쉬운 시연 만들기</h3></div><button type="button" class="editor-button editor-button-small" @click="editor.addStep()">+ 단계 추가</button></div>
+        <p class="editor-helper">개념 지도와 도구 시연이 함께 따라갈 단계입니다. 코드는 학습용 화면에 표시됩니다.</p>
+        <template x-for="(step, index) in editor.activeLesson.steps" :key="step.id">
+          <article class="editor-content-card" :class="{ 'is-expanded': editor.stepId === step.id }">
+            <div class="editor-card-top"><button type="button" class="editor-card-toggle" @click="editor.stepId = editor.stepId === step.id ? '' : step.id" :aria-expanded="editor.stepId === step.id" :aria-controls="`step-fields-${step.id}`"><span class="editor-row-counter" x-text="String(index + 1).padStart(2, '0')"></span><strong x-text="step.title || '제목 없는 단계'"></strong><span class="editor-card-meta" x-text="step.scene"></span><span class="editor-chevron" aria-hidden="true">⌄</span></button></div>
+            <div class="editor-card-fields" :id="`step-fields-${step.id}`" x-show="editor.stepId === step.id">
+              <div class="editor-field"><label :for="`step-title-${step.id}`">단계 제목</label><input :id="`step-title-${step.id}`" type="text" x-model="step.title" @input="editor.changed()"></div>
+              <div class="editor-field"><label :for="`step-description-${step.id}`">단계 설명</label><textarea :id="`step-description-${step.id}`" rows="3" x-model="step.description" @input="editor.changed()"></textarea></div>
+              <div class="editor-field-grid"><div class="editor-field"><label :for="`step-scene-${step.id}`">시연 화면</label><select :id="`step-scene-${step.id}`" x-model="step.scene" @change="editor.changed()"><option value="terminal">터미널</option><option value="vscode">VS Code</option><option value="pycharm">PyCharm</option><option value="browser">브라우저</option><option value="code">코드 비교</option><option value="git">Git · GitHub</option><option value="architecture">요청과 응답 흐름</option></select></div><div class="editor-field"><label :for="`step-language-${step.id}`">코드 언어</label><input :id="`step-language-${step.id}`" type="text" x-model="step.language" @input="editor.changed()" placeholder="html, css, javascript, powershell…"></div></div>
+              <div class="editor-field-grid"><div class="editor-field"><label :for="`step-file-${step.id}`">파일 이름 / 탭 제목</label><input :id="`step-file-${step.id}`" type="text" x-model="step.fileName" @input="editor.changed()"></div><div class="editor-field"><label :for="`step-focus-${step.id}`">집중해서 볼 지점</label><input :id="`step-focus-${step.id}`" type="text" x-model="step.focus" @input="editor.changed()"></div></div>
+              <div class="editor-field"><label :for="`step-code-${step.id}`">보여 줄 코드 또는 명령어</label><textarea :id="`step-code-${step.id}`" class="editor-code-input" rows="10" x-model="step.code" @input="editor.changed()" spellcheck="false"></textarea></div>
+              <div class="editor-field"><label :for="`step-output-${step.id}`">실행 결과 / 화면 내용</label><textarea :id="`step-output-${step.id}`" class="editor-code-input" rows="5" x-model="step.output" @input="editor.changed()" spellcheck="false"></textarea></div>
+              <div class="editor-field"><label :for="`step-files-${step.id}`">파일 탐색기에 표시할 이름 <span>한 줄에 하나</span></label><textarea :id="`step-files-${step.id}`" rows="3" :value="editor.filesValue(step)" @input="editor.setFiles(step, $event.target.value)" spellcheck="false"></textarea></div>
+              <div class="editor-card-actions"><div><button type="button" class="editor-text-button" @click="editor.move(editor.activeLesson.steps, index, -1)" :disabled="index === 0" :aria-label="`${step.title} 시연을 위로 이동`">↑ 위로</button><button type="button" class="editor-text-button" @click="editor.move(editor.activeLesson.steps, index, 1)" :disabled="index === editor.activeLesson.steps.length - 1" :aria-label="`${step.title} 시연을 아래로 이동`">↓ 아래로</button></div><button type="button" class="editor-text-button editor-delete" @click="editor.removeStep(index)" :disabled="editor.activeLesson.steps.length <= 1">단계 삭제</button></div>
+            </div>
+          </article>
+        </template>
+      </div>
+
+      <div id="editor-resources-panel" class="editor-panel" role="tabpanel" aria-labelledby="editor-resources-tab" x-show="editor.tab === 'resources'">
+        <div class="editor-section-heading"><div><p class="editor-eyebrow">KEEP THE ESSENTIALS</p><h3>기억할 것과 다시 볼 자료</h3></div></div>
+        <div class="editor-resource-group"><div class="editor-subheading"><h4>자주 하는 실수</h4><button type="button" class="editor-add-inline" @click="editor.activeLesson.pitfalls.push({title:'새 실수', body:'확인 방법을 적어 주세요.'}); editor.changed()">+ 추가</button></div><template x-for="(pitfall, index) in editor.activeLesson.pitfalls" :key="`${editor.lessonId}-pitfall-${index}`"><div class="editor-resource-card"><div class="editor-list-row"><input type="text" x-model="pitfall.title" @input="editor.changed()" :aria-label="`자주 하는 실수 ${index + 1} 제목`"><button type="button" class="editor-icon-button" @click="editor.activeLesson.pitfalls.splice(index, 1); editor.changed()" :aria-label="`자주 하는 실수 ${index + 1} 삭제`">×</button></div><textarea rows="3" x-model="pitfall.body" @input="editor.changed()" :aria-label="`자주 하는 실수 ${index + 1} 설명`"></textarea></div></template></div>
+        <div class="editor-resource-group"><div class="editor-subheading"><h4>확인 목록</h4><button type="button" class="editor-add-inline" @click="editor.activeLesson.checklist.push('새 확인 항목'); editor.changed()">+ 추가</button></div><template x-for="(item, index) in editor.activeLesson.checklist" :key="`${editor.lessonId}-check-${index}`"><div class="editor-list-row"><span aria-hidden="true" class="editor-check-mark">✓</span><input type="text" x-model="editor.activeLesson.checklist[index]" @input="editor.changed()" :aria-label="`확인 항목 ${index + 1}`"><button type="button" class="editor-icon-button" @click="editor.activeLesson.checklist.splice(index, 1); editor.changed()" :aria-label="`확인 항목 ${index + 1} 삭제`" :disabled="editor.activeLesson.checklist.length <= 1">×</button></div></template></div>
+        <div class="editor-resource-group"><div class="editor-subheading"><h4>용어 사전</h4><button type="button" class="editor-add-inline" @click="editor.activeLesson.glossary.push({term:'새 용어', definition:'뜻을 적어 주세요.'}); editor.changed()">+ 추가</button></div><template x-for="(entry, index) in editor.activeLesson.glossary" :key="`${editor.lessonId}-glossary-${index}`"><div class="editor-resource-card"><div class="editor-list-row"><input type="text" x-model="entry.term" @input="editor.changed()" :aria-label="`용어 ${index + 1}`"><button type="button" class="editor-icon-button" @click="editor.activeLesson.glossary.splice(index, 1); editor.changed()" :aria-label="`용어 ${index + 1} 삭제`">×</button></div><textarea rows="2" x-model="entry.definition" @input="editor.changed()" :aria-label="`용어 ${index + 1} 정의`"></textarea></div></template></div>
+        <div class="editor-resource-group"><div class="editor-subheading"><h4>참고 자료</h4><button type="button" class="editor-add-inline" @click="editor.activeLesson.references.push({title:'새 참고 자료', url:'https://'}); editor.changed()">+ 추가</button></div><template x-for="(reference, index) in editor.activeLesson.references" :key="`${editor.lessonId}-reference-${index}`"><div class="editor-resource-card"><div class="editor-list-row"><input type="text" x-model="reference.title" @input="editor.changed()" :aria-label="`참고 자료 ${index + 1} 제목`"><button type="button" class="editor-icon-button" @click="editor.activeLesson.references.splice(index, 1); editor.changed()" :aria-label="`참고 자료 ${index + 1} 삭제`">×</button></div><input type="url" x-model="reference.url" @input="editor.changed()" :aria-label="`참고 자료 ${index + 1} 주소`" placeholder="https://"></div></template></div>
+        <div class="editor-field"><label for="edit-lesson-closing">강의를 마무리하는 한마디</label><textarea id="edit-lesson-closing" rows="4" x-model="editor.activeLesson.closing" @input="editor.changed()"></textarea></div>
+      </div>
+      <div id="editor-presentation-panel" class="editor-panel" role="tabpanel" aria-labelledby="editor-presentation-tab" x-show="editor.tab === 'presentation'">
+        <div class="editor-section-heading"><div><p class="editor-eyebrow">PRESENT WITH A CLEAR FLOW</p><h3>핵심은 짧게, 시연은 구체적으로</h3></div><button type="button" class="editor-button editor-button-small" @click="openPresentation(editor.lessonId, 'case')">발표 미리보기 ↗</button></div>
+        <p class="editor-helper">사례 → 절별 핵심 요점 → 실전 시연 → 복귀 요약으로 발표 내용을 준비합니다.</p>
+        <p class="editor-presentation-preview-note" x-show="editor.isDirty || editor.hasUnsaved">저장 중이거나 입력 오류가 있으면 발표 미리보기에는 마지막으로 적용된 강의가 표시됩니다. 변경 내용은 저장된 뒤 반영됩니다.</p>
+        <template x-if="!editor.activeLesson.presentation">
+          <div class="editor-presentation-empty"><span class="editor-presentation-empty-mark" aria-hidden="true">01 → 02 → 03</span><h4>발표 정보를 따로 준비해 보세요.</h4><p>현재 사례·시연·마무리 문장에서 시작할 수 있습니다. 각 절에는 본문을 바탕으로 핵심 요점 하나를 채웁니다.</p><p>발표 정보가 없으면 기존 사례와 본문을 사용합니다.</p><button type="button" class="editor-button editor-button-primary" @click="editor.preparePresentation()">발표 정보 준비</button></div>
+        </template>
+        <template x-if="editor.activeLesson.presentation">
+          <div class="editor-presentation-fields">
+            <section class="editor-presentation-block" aria-labelledby="edit-presentation-case-heading">
+              <div class="editor-subheading"><h4 id="edit-presentation-case-heading">01 사례 요약</h4><span class="editor-presentation-limit">최대 300자</span></div>
+              <div class="editor-field"><label for="edit-presentation-case">학생에게 보여 줄 개발 상황</label><textarea id="edit-presentation-case" rows="4" maxlength="300" x-model="editor.activeLesson.presentation.caseSummary" @input="editor.changed()"></textarea><small><span x-text="editor.activeLesson.presentation.caseSummary.length"></span> / 300자 · 전체 사례는 강의 정보 탭에서 수정합니다.</small></div>
+            </section>
+            <section class="editor-presentation-block" aria-labelledby="edit-presentation-points-heading">
+              <div class="editor-subheading"><h4 id="edit-presentation-points-heading">02 본문 절별 핵심 요점</h4><span class="editor-presentation-limit">각 80자 · 1~3개</span></div>
+              <p class="editor-helper">발표에서 크게 보여 줄 문장입니다. 요점을 삭제한 절은 원래 본문을 표시합니다. 보충 절도 편집할 수 있습니다.</p>
+              <template x-for="(section, sectionIndex) in editor.activeLesson.sections" :key="section.id">
+                <article class="editor-presentation-section">
+                  <div class="editor-presentation-section-heading"><span class="editor-row-counter" x-text="String(sectionIndex + 1).padStart(2, '0')"></span><h5 x-text="section.title"></h5><span class="editor-small-tag" x-text="section.optional ? '보충' : '본편'"></span></div>
+                  <template x-if="!section.presentationPoints"><div class="editor-presentation-point-empty"><p x-text="section.optional ? '보충 절은 발표 순서에서 제외하며 본문 보기에서 확인합니다.' : '발표에서 이 절의 본문을 표시합니다.'"></p><button type="button" class="editor-add-inline" @click="editor.prepareSectionPoints(section)">+ 핵심 요점 준비</button></div></template>
+                  <template x-if="section.presentationPoints">
+                    <div>
+                      <template x-for="(point, pointIndex) in section.presentationPoints" :key="`${section.id}-presentation-${pointIndex}`"><div class="editor-presentation-point-row"><label :for="`edit-presentation-point-${section.id}-${pointIndex}`" class="editor-row-counter" x-text="pointIndex + 1"></label><div class="editor-presentation-point-input"><input :id="`edit-presentation-point-${section.id}-${pointIndex}`" type="text" maxlength="80" x-model="section.presentationPoints[pointIndex]" @input="editor.changed()" :aria-label="`${section.title} 발표 핵심 요점 ${pointIndex + 1}`" placeholder="학생이 기억할 한 문장을 적어 주세요."><small><span x-text="point.length"></span> / 80</small></div><button type="button" class="editor-icon-button" @click="editor.removePresentationPoint(section, pointIndex)" :aria-label="`${section.title} 발표 핵심 요점 ${pointIndex + 1} 삭제`">×</button></div></template>
+                      <div class="editor-presentation-point-actions"><button type="button" class="editor-add-inline" @click="editor.addPresentationPoint(section)" :disabled="section.presentationPoints.length >= 3">+ 요점 추가 (<span x-text="section.presentationPoints.length"></span>/3)</button><button type="button" class="editor-text-button" @click="editor.clearSectionPoints(section)">요점 삭제 · 본문으로 표시</button></div>
+                    </div>
+                  </template>
+                </article>
+              </template>
+            </section>
+            <section class="editor-presentation-block" aria-labelledby="edit-presentation-demo-heading">
+              <div class="editor-subheading"><h4 id="edit-presentation-demo-heading">03 실전 시연 준비</h4><span class="editor-presentation-limit">강사가 직접 진행</span></div>
+              <div class="editor-field-grid"><div class="editor-field"><label for="edit-presentation-program">사용할 프로그램</label><input id="edit-presentation-program" type="text" maxlength="160" x-model="editor.activeLesson.presentation.demo.program" @input="editor.changed()" placeholder="예: Windows 터미널 · PowerShell"></div><div class="editor-field"><label for="edit-presentation-duration">시연 예상 시간 (분)</label><input id="edit-presentation-duration" type="number" min="0" max="60" step="any" x-model.number="editor.activeLesson.presentation.demo.durationMinutes" @input="editor.changed()"><small>0분 초과 60분 이하로 입력합니다.</small></div></div>
+              <div class="editor-field"><label for="edit-presentation-file">열어 둘 파일 <span>선택</span></label><input id="edit-presentation-file" type="text" maxlength="160" x-model="editor.activeLesson.presentation.demo.file" @input="editor.changed()" placeholder="예: src/main.js"></div>
+              <div class="editor-field"><label for="edit-presentation-command">명령·진행 순서 <span>선택 · 최대 4,000자</span></label><textarea id="edit-presentation-command" rows="6" maxlength="4000" class="editor-code-input" spellcheck="false" x-model="editor.activeLesson.presentation.demo.command" @input="editor.changed()"></textarea></div>
+              <div class="editor-field"><label for="edit-presentation-result">확인할 예상 결과 <span>최대 300자</span></label><textarea id="edit-presentation-result" rows="3" maxlength="300" x-model="editor.activeLesson.presentation.demo.expectedResult" @input="editor.changed()"></textarea></div>
+              <p class="editor-presentation-time-note">시연 시간은 기존 강의 안에서 진행할 예상 분량입니다. 본편 180분 합계에 중복해서 더하지 않습니다.</p>
+            </section>
+            <section class="editor-presentation-block" aria-labelledby="edit-presentation-return-heading">
+              <div class="editor-subheading"><h4 id="edit-presentation-return-heading">04 시연 뒤 복귀 요약</h4><span class="editor-presentation-limit">최대 240자</span></div>
+              <div class="editor-field"><label for="edit-presentation-return">시연을 마치고 다시 짚을 한마디</label><textarea id="edit-presentation-return" rows="4" maxlength="240" x-model="editor.activeLesson.presentation.returnSummary" @input="editor.changed()"></textarea><small>비워 두면 강의의 마무리 문장을 사용합니다.</small></div>
+            </section>
+            <div class="editor-presentation-remove"><p>발표 전용 정보를 삭제하면 기존 사례·본문·마무리 문장으로 표시합니다.</p><button type="button" class="editor-text-button editor-delete" @click="editor.removePresentation()">이 강의 발표 정보 삭제</button></div>
+          </div>
+        </template>
+      </div>
+      <footer class="editor-workspace-footer"><p><span aria-hidden="true">✳</span> 작은 경험이 좋은 설명이 됩니다.</p><button type="button" class="editor-button editor-button-small" @click="editor.save(true)" :disabled="editor.busy">지금 저장</button></footer>
+    </main>
+  </fieldset>
+</section>

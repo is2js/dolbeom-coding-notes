@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-templates" aria-hidden="true" focusable="false">
+  <style>
+    .topic-art-templates .templates-insert-motion { transform: translateY(18px); animation: templates-seat-card 6.4s cubic-bezier(.4,0,.2,1) infinite; }
+    .topic-art-templates .templates-card-edge { opacity: 0; animation: templates-card-depth 6.4s ease-in-out infinite; }
+    .topic-art-templates .templates-page-highlight { opacity: .18; animation: templates-page-color 6.4s ease-in-out infinite; }
+    .topic-art-templates .templates-page-result { stroke-dasharray: 100; stroke-dashoffset: 0; animation: templates-page-resolve 6.4s ease-in-out infinite; }
+    .topic-art-templates .templates-page-state { fill: #8aa395; animation: templates-page-confirm 6.4s ease-in-out infinite; }
+    @keyframes templates-seat-card {
+      0%, 18%, 100% { transform: translateY(18px); }
+      36%, 49% { transform: translateY(0); }
+      72%, 88% { transform: translateY(18px); }
+    }
+    @keyframes templates-page-color {
+      0%, 30%, 100% { opacity: .18; }
+      72%, 87% { opacity: .42; }
+    }
+    @keyframes templates-card-depth {
+      0%, 18%, 73%, 100% { opacity: 0; }
+      35%, 50% { opacity: 1; }
+    }
+    @keyframes templates-page-resolve {
+      0%, 18%, 100% { stroke-dashoffset: 0; opacity: .8; }
+      36%, 49% { stroke-dashoffset: 70; opacity: .35; }
+      76%, 88% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes templates-page-confirm {
+      0%, 28%, 100% { fill: #8aa395; }
+      72%, 87% { fill: #da9d77; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .topic-art-templates .art-motion { animation: none; }
+    }
+  </style>
+  <defs>
+    <filter id="templates-ground-shadow" x="-25%" y="-90%" width="150%" height="280%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="templates-board-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#dfcfad"/>
+      <stop offset="1" stop-color="#b8bda4"/>
+    </linearGradient>
+    <linearGradient id="templates-ready-page" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fbf0dc"/>
+      <stop offset="1" stop-color="#f5ead3"/>
+    </linearGradient>
+    <marker id="templates-insert-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="m2 2 6 3-6 3" fill="none" stroke="#536e6d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <ellipse cx="388" cy="436" rx="207" ry="29" fill="#536e6d" opacity=".14" filter="url(#templates-ground-shadow)"/>
+
+  <g stroke="#283449" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- One pair of isometric axes defines the bed, page, stencil and inserted card. -->
+    <path d="m201 360 212.4-101.5 171.9 93.6-212.4 101.5Z" fill="#dfcfad"/>
+    <path d="m201 360 171.9 93.6v11L201 371Z" fill="#b6bba2"/>
+    <path d="m372.9 453.6 212.4-101.5v11l-212.4 101.5Z" fill="#8aa395"/>
+    <path d="m214 360 200-95 158 87-199 94Z" fill="#f5ead3" stroke="#c6c7aa" stroke-width="1.3"/>
+    <path d="m215 378 9 5m-1-13 9 5m-1-13 9 5m299 32 10-5m-19 1 10-5m-19 1 10-5" fill="none" stroke="#8aa395" stroke-width="1.3"/>
+
+    <!-- The completed page is precisely the upper stencil translated down 110 units. -->
+    <path d="m220 356 153 83.3v7L220 363Z" fill="#dfcfad" stroke-width="1.8"/>
+    <path d="m373 439.3 189-90.3v7l-189 90.3Z" fill="#8aa395" stroke-width="1.8"/>
+    <g transform="matrix(.9 -.43 .9 .49 220 356)">
+      <rect width="210" height="170" rx="1" fill="url(#templates-ready-page)"/>
+      <rect x="15" y="15" width="180" height="28" rx="1.5" fill="#da9d77" stroke-width="1.6"/>
+      <path d="M25 25h81m-81 8h52" stroke="#f5ead3" stroke-width="2"/>
+      <circle cx="182" cy="29" r="4" fill="#dfcfad" stroke="none"/>
+      <rect x="15" y="58" width="84" height="64" rx="1.5" fill="#e2e5cf" stroke-width="1.7"/>
+      <rect x="111" y="58" width="84" height="64" rx="1.5" fill="#e8dfc6" stroke-width="1.7"/>
+      <rect class="art-motion templates-page-highlight" x="112" y="59" width="82" height="62" rx="1.5" fill="#da9d77" stroke="none"/>
+      <rect x="23" y="66" width="24" height="24" rx="1" fill="#8aa395" stroke-width="1.4"/>
+      <rect x="119" y="66" width="24" height="24" rx="1" fill="#da9d77" stroke-width="1.4"/>
+      <path d="M55 72h33m-33 8h25m63-8h33m-33 8h25M24 103h62m-62 8h40m56-8h62m-62 8h40" stroke="#536e6d" stroke-width="1.5"/>
+      <circle class="art-motion templates-page-state" cx="88" cy="110" r="3" fill="#8aa395" stroke="none"/>
+      <circle class="art-motion templates-page-state" cx="184" cy="110" r="3" fill="#8aa395" stroke="none"/>
+      <rect x="15" y="135" width="180" height="20" rx="1.5" fill="#536e6d" stroke-width="1.7"/>
+      <path d="M25 145h107" stroke="#8aa395" stroke-width="2" opacity=".5"/>
+      <path class="art-motion templates-page-result" d="M25 145h107" pathLength="100" stroke="#f5ead3" stroke-width="2"/>
+      <path d="m177 141 4 4-4 4m-5-4h8" fill="none" stroke="#dfcfad" stroke-width="1.6"/>
+      <path d="M22 162h43m116 0h9" stroke="#b8bda4" stroke-width="1.3"/>
+    </g>
+
+    <!-- Registration posts support the exploded plate and align every opening. -->
+    <path d="M220 254v96m189-186v96m153-13v96m-189-6v96" fill="none" stroke="#aab8a0" stroke-width="1.8"/>
+    <path d="M225 268v68m332-75v68" fill="none" stroke="#d0d0b4" stroke-width="1.1"/>
+    <ellipse cx="220" cy="350" rx="4.5" ry="2.5" fill="#536e6d" stroke="none"/>
+    <ellipse cx="409" cy="260" rx="4.5" ry="2.5" fill="#536e6d" stroke="none"/>
+    <ellipse cx="562" cy="343" rx="4.5" ry="2.5" fill="#536e6d" stroke="none"/>
+    <ellipse cx="373" cy="433" rx="4.5" ry="2.5" fill="#536e6d" stroke="none"/>
+
+    <!-- Matching cutouts, aligned bevels and a single 8-unit plate thickness. -->
+    <path d="m220 246 153 83.3v8L220 254Z" fill="url(#templates-board-edge)" stroke-width="1.8"/>
+    <path d="m373 329.3 189-90.3v8l-189 90.3Z" fill="#b6bda3" stroke-width="1.8"/>
+    <g transform="matrix(.9 -.43 .9 .49 220 246)">
+      <path d="M0 0H210V170H0Z
+        M15 15H195V43H15Z
+        M15 58H99V122H15Z
+        M111 58H195V122H111Z
+        M15 135H195V155H15Z" fill="#f5ead3" fill-rule="evenodd"/>
+      <path d="M17 41H193m-176 79h80m16 0h80m-176 33h176" fill="none" stroke="#a6b39c" stroke-width="2.5"/>
+      <path d="M193 17v24m-96 19v60m96-60v60m0 17v16" fill="none" stroke="#dfcfad" stroke-width="2"/>
+      <path d="M8 15v28m0 15v64m194-64v64" stroke="#dbd0b4" stroke-width="1.2" stroke-dasharray="2 4"/>
+      <circle cx="6" cy="6" r="2.1" fill="#8aa395" stroke="none"/>
+      <circle cx="204" cy="6" r="2.1" fill="#8aa395" stroke="none"/>
+      <circle cx="6" cy="164" r="2.1" fill="#8aa395" stroke="none"/>
+      <circle cx="204" cy="164" r="2.1" fill="#8aa395" stroke="none"/>
+      <text x="16" y="10.5" fill="#536e6d" stroke="none" font-family="ui-monospace,Consolas,monospace" font-weight="700" font-size="8">{{ title }}</text>
+      <text x="143" y="10.5" fill="#8c9c88" stroke="none" font-family="ui-monospace,Consolas,monospace" font-size="7.5">TEMPLATE</text>
+
+      <!-- Style/state chips are clipped onto the rim, no longer hovering over labels. -->
+      <path d="M210 42h7v8h-7m0 29h7v8h-7" fill="#dfcfad" stroke-width="1.4"/>
+      <rect x="216" y="36" width="47" height="22" rx="2" fill="#da9d77" stroke-width="1.7"/>
+      <rect x="216" y="73" width="47" height="22" rx="2" fill="#536e6d" stroke-width="1.7"/>
+      <path d="M220 54h38m-38 37h38" stroke="#dfcfad" stroke-width="1.2" opacity=".7"/>
+      <text x="226" y="50" fill="#283449" stroke="none" font-family="ui-monospace,Consolas,monospace" font-weight="700" font-size="10">CSS</text>
+      <text x="220" y="87" fill="#f5ead3" stroke="none" font-family="ui-monospace,Consolas,monospace" font-weight="700" font-size="8">Alpine</text>
+    </g>
+
+    <!-- A small paper feeder supplies structured values rather than another display. -->
+    <path d="m177 168 75.6-36.1 48.6 26.5-75.6 36.1Z" fill="#dfcfad" stroke-width="1.9"/>
+    <path d="m177 168 48.6 26.5v6L177 174Z" fill="#8aa395" stroke-width="1.7"/>
+    <path d="m225.6 194.5 75.6-36.1v6l-75.6 36.1Z" fill="#536e6d" stroke-width="1.7"/>
+    <g transform="matrix(.9 -.43 .9 .49 181 157)">
+      <path d="M0 0H78V48H0Z" fill="#dfcfad" stroke-width="1.7"/>
+      <path d="M0-8H78V40H0Z" fill="#f5ead3" stroke-width="1.7"/>
+      <path d="M0-16H78V32H0Z" fill="#fbf0dc" stroke-width="1.7"/>
+      <rect x="9" y="-7" width="15" height="15" rx="1" fill="#da9d77" stroke-width="1.3"/>
+      <path d="M32-2h34m-34 7h24m-48 12h57m-57 7h35" stroke="#8aa395" stroke-width="1.6"/>
+    </g>
+    <path d="m279 183 32 18q7 4 7 12v18" fill="none" stroke="#8aa395" stroke-width="1.8" stroke-dasharray="3 5" marker-end="url(#templates-insert-arrow)"/>
+
+    <!-- Only this seated card moves; the world-plane transform lives on an inner group. -->
+    <g transform="translate(0 -18)">
+      <g class="art-motion templates-insert-motion">
+        <g class="art-motion templates-card-edge">
+          <path d="m291.1 268.2 52.2 28.4v5l-52.2-28.4Z" fill="#536e6d" stroke-width="1.7"/>
+          <path d="m343.3 296.6 70.2-33.6v5l-70.2 33.6Z" fill="#a9bda5" stroke-width="1.7"/>
+        </g>
+        <g transform="matrix(.9 -.43 .9 .49 220 246)">
+          <rect x="18" y="61" width="78" height="58" rx="1.5" fill="#8aa395" stroke-width="1.8"/>
+          <rect x="26" y="69" width="21" height="21" rx="1" fill="#f5ead3" stroke-width="1.3"/>
+          <path d="M55 75h31m-31 8h22m-52 20h61m-61 8h40" stroke="#f5ead3" stroke-width="1.5"/>
+          <circle cx="86" cy="110" r="3" fill="#da9d77" stroke="none"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Small bed fittings establish consistent scale and material thickness. -->
+    <path d="m218 387 8 4v12l-8-4Zm17 9 8 4v12l-8-4Z" fill="#f5ead3" stroke-width="1.6"/>
+    <path d="m531 403 9-4v7l-9 4Zm16-7 9-4v7l-9 4Z" fill="#536e6d" stroke-width="1.6"/>
+  </g>
+
+  <g font-family="ui-monospace,Consolas,monospace" font-weight="700" fill="#283449" stroke="none">
+    <text transform="matrix(.9 .49 -.9 .43 203 184)" font-size="9" letter-spacing=".7">DATA</text>
+    <text transform="matrix(.9 .49 -.9 .43 272 414)" font-size="9" letter-spacing="1">HTML</text>
+  </g>
+</svg>

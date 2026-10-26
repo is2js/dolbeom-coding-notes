@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-web-architecture" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="wa-shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#344e48" flood-opacity=".1"/></filter>
+    <marker id="wa-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1 1 8 5 1 9" fill="none" stroke="#638e7c" stroke-width="1.6"/></marker>
+  </defs>
+  <style>@keyframes wa-request{0%,12%{transform:translateY(0);opacity:0}28%{opacity:1}78%{opacity:1}92%,100%{transform:translateY(62px);opacity:0}}@keyframes wa-response{0%,12%{transform:translateY(0);opacity:0}28%{opacity:1}78%{opacity:1}92%,100%{transform:translateY(-62px);opacity:0}}.wa-request{animation:wa-request 5s ease-in-out infinite}.wa-response{animation:wa-response 5s ease-in-out 1s infinite}</style>
+  <g font-family="Pretendard Variable, Pretendard, sans-serif" fill="#314d49">
+    <text x="64" y="47" font-size="15" letter-spacing="3" fill="#7c917d">WHERE DOES THE CODE RUN?</text>
+    <g filter="url(#wa-shadow)">
+      <rect x="64" y="75" width="632" height="150" rx="15" fill="#fbf7e9" stroke="#8fa995" stroke-width="1.5"/>
+      <path d="M79 75H681Q696 75 696 90V114H64V90Q64 75 79 75Z" fill="#dce6d3"/>
+      <g fill="#8ba58b"><circle cx="86" cy="95" r="4"/><circle cx="101" cy="95" r="4"/><circle cx="116" cy="95" r="4"/></g>
+      <text x="146" y="102" font-size="18" fill="#58765e">사용자의 브라우저</text>
+      <text x="90" y="156" font-size="29" font-weight="700">프론트엔드</text>
+      <text x="90" y="195" font-size="23">HTML · CSS · JavaScript</text>
+      <rect x="484" y="133" width="183" height="66" rx="9" fill="#e8eddd" stroke="#c3cfb5"/>
+      <text x="575" y="161" text-anchor="middle" font-size="22" font-weight="650">React · Svelte</text>
+      <text x="575" y="184" text-anchor="middle" font-size="15" fill="#70816c">화면을 만드는 도구의 예</text>
+    </g>
+    <g stroke="#638e7c" stroke-width="2" fill="none" marker-end="url(#wa-arrow)"><path d="M235 236V303"/><path d="M383 303V236"/></g>
+    <g fill="#3c796f"><circle class="art-motion wa-request" cx="235" cy="239" r="4"/><circle class="art-motion wa-response" cx="383" cy="301" r="4"/></g>
+    <text x="159" y="276" font-size="19" fill="#668270">요청</text><text x="402" y="276" font-size="19" fill="#668270">응답</text>
+    <text x="308" y="276" text-anchor="middle" font-size="14" fill="#8a9480">HTTP</text>
+    <g filter="url(#wa-shadow)">
+      <rect x="64" y="315" width="420" height="132" rx="14" fill="#e0e8d7" stroke="#8fa995" stroke-width="1.5"/>
+      <rect x="82" y="334" width="5" height="92" rx="2" fill="#7c9b83"/>
+      <text x="106" y="354" font-size="17" fill="#657e67">서버에서 실행하는 프로그램</text>
+      <text x="106" y="389" font-size="29" font-weight="700">백엔드</text>
+      <text x="106" y="425" font-size="23">FastAPI / Python · Spring / Java</text>
+    </g>
+    <path d="M485 380H524" fill="none" stroke="#9bac92" stroke-width="2" stroke-dasharray="5 5"/>
+    <g stroke="#9eac91" stroke-width="1.5" fill="#f4eddb">
+      <path d="M536 349V410C536 432 692 432 692 410V349"/>
+      <ellipse cx="614" cy="349" rx="78" ry="17"/>
+      <path d="M536 377C536 399 692 399 692 377" fill="none"/>
+    </g>
+    <text x="614" y="378" text-anchor="middle" font-size="24" font-weight="650">DB</text>
+    <text x="614" y="413" text-anchor="middle" font-size="18" fill="#827f68">필요할 때 연결</text>
+    <text x="64" y="489" font-size="22" fill="#617a65">정적 사이트 → 파일 호스팅으로 제공</text>
+    <text x="64" y="522" font-size="20" fill="#89927c">앱 백엔드와 DB는 서비스에 맞게 선택합니다.</text>
+  </g>
+</svg>

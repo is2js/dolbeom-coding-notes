@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" aria-hidden="true" focusable="false" class="topic-art-svg topic-art-markdown">
+  <style>
+    .markdown-source-heading { animation: markdown-source-heading 6.6s ease-in-out infinite; }
+    .markdown-render-heading { animation: markdown-render-heading 6.6s ease-in-out infinite; }
+    .markdown-source-list { animation: markdown-source-list 6.6s ease-in-out infinite; }
+    .markdown-render-list { animation: markdown-render-list 6.6s ease-in-out infinite; }
+    .markdown-source-code { animation: markdown-source-code 6.6s ease-in-out infinite; }
+    .markdown-render-code { animation: markdown-render-code 6.6s ease-in-out infinite; }
+    @keyframes markdown-source-heading { 0%, 28%, 100% { opacity: 0; } 8%, 18% { opacity: .18; } }
+    @keyframes markdown-render-heading { 0%, 10%, 42%, 100% { opacity: 0; } 20%, 31% { opacity: .65; } }
+    @keyframes markdown-source-list { 0%, 26%, 57%, 100% { opacity: 0; } 35%, 46% { opacity: .18; } }
+    @keyframes markdown-render-list { 0%, 37%, 70%, 100% { opacity: 0; } 47%, 59% { opacity: .8; } }
+    @keyframes markdown-source-code { 0%, 55%, 88%, 100% { opacity: 0; } 65%, 76% { opacity: .18; } }
+    @keyframes markdown-render-code { 0%, 67%, 100% { opacity: 0; } 78%, 90% { opacity: .65; } }
+  </style>
+  <defs>
+    <filter id="markdown-shadow" x="-25%" y="-80%" width="150%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+    <linearGradient id="markdown-left-page" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fbf1dc"/><stop offset=".8" stop-color="#f0e3c7"/><stop offset="1" stop-color="#dfcfad"/></linearGradient>
+    <linearGradient id="markdown-right-page" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#dfcfad"/><stop offset=".12" stop-color="#f6ecd6"/><stop offset="1" stop-color="#fff6e1"/></linearGradient>
+  </defs>
+  <ellipse cx="383" cy="449" rx="211" ry="28" fill="#536e6d" opacity=".18" filter="url(#markdown-shadow)"/>
+  <g stroke="#283449" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- The dark cloth cover and visible page block make this an open book. -->
+    <path d="M193 125 370 177 562 109 568 119V367L376 438 193 382Z" fill="#536e6d"/>
+    <path d="m193 125 177 52v252l-177-57Z" fill="#8aa395"/>
+    <path d="m370 177 192-68v258l-192 71Z" fill="#536e6d"/>
+    <path d="m204 126 166 51 182-64v242l-182 69-166-57Z" fill="#dfcfad"/>
+    <path d="m204 351 166 57 182-66v13l-182 69-166-57Z" fill="#f5ead3"/>
+    <path d="m211 359 159 55 174-65m-333 15 159 55 174-65" fill="none" stroke="#b1ad94" stroke-width="1.15"/>
+    <path d="M205 118c48 5 112 31 165 55v245c-55-25-111-46-165-56Z" fill="url(#markdown-left-page)"/>
+    <path d="M370 173c56-29 117-50 183-66v247c-65 19-127 41-183 64Z" fill="url(#markdown-right-page)"/>
+    <path d="M370 173v245" fill="none" stroke="#a3997e" stroke-width="3.5"/>
+    <path d="M361 180v224m18-227v225" fill="none" stroke="#c9bc9e" stroke-width=".9"/>
+    <!-- Source Markdown on the left page. -->
+    <g transform="matrix(1 .31 0 1 225 157)" stroke="none" font-family="'IBM Plex Mono',Consolas,monospace">
+      <text x="0" y="0" fill="#7d8d77" font-size="8.5" letter-spacing="1.5">MARKDOWN</text>
+      <rect x="-5" y="15" width="126" height="27" rx="3" fill="#536e6d" opacity="0" class="art-motion markdown-source-heading"/>
+      <text x="0" y="34" fill="#536e6d" font-size="19" font-weight="700"># Notes</text>
+      <path d="M0 49h115" stroke="#c7bba0" stroke-width="1.1"/>
+      <text x="0" y="74" fill="#7c846e" font-size="11">## Setup</text>
+      <rect x="-5" y="86" width="126" height="46" rx="3" fill="#536e6d" opacity="0" class="art-motion markdown-source-list"/>
+      <text x="0" y="103" fill="#536e6d" font-size="10.5">- Open folder</text>
+      <text x="0" y="123" fill="#536e6d" font-size="10.5">- Run project</text>
+      <rect x="-5" y="145" width="126" height="54" rx="3" fill="#536e6d" opacity="0" class="art-motion markdown-source-code"/>
+      <text x="0" y="157" fill="#b47859" font-size="12">```</text>
+      <text x="0" y="176" fill="#536e6d" font-size="11">npm run dev</text>
+      <text x="0" y="195" fill="#b47859" font-size="12">```</text>
+    </g>
+    <!-- A rendered page with a heading, list and code block on the right. -->
+    <g transform="matrix(1 -.35 0 1 389 192)" stroke="none">
+      <text x="0" y="0" fill="#8aa395" font-family="Consolas,monospace" font-size="8.5" letter-spacing="1.3">PREVIEW</text>
+      <text x="0" y="35" fill="#283449" font-family="Arial,sans-serif" font-size="27" font-weight="700">Notes</text>
+      <path d="M0 49h142" stroke="#c7bba0" stroke-width="1.1"/>
+      <path d="M0 49h82" stroke="#536e6d" stroke-width="2.5" opacity="0" class="art-motion markdown-render-heading"/>
+      <text x="0" y="77" fill="#536e6d" font-family="Arial,sans-serif" font-size="15" font-weight="700">Setup</text>
+      <circle cx="4" cy="101" r="2.7" fill="#8aa395"/>
+      <text x="15" y="105" fill="#6c7f6a" font-family="Arial,sans-serif" font-size="11.5">Open folder</text>
+      <circle cx="4" cy="124" r="2.7" fill="#8aa395"/>
+      <text x="15" y="128" fill="#6c7f6a" font-family="Arial,sans-serif" font-size="11.5">Run project</text>
+      <g opacity="0" class="art-motion markdown-render-list"><circle cx="4" cy="101" r="6" fill="#8aa395" fill-opacity=".2"/><circle cx="4" cy="124" r="6" fill="#8aa395" fill-opacity=".2"/><path d="m1 101 2 2 4-5m-6 26 2 2 4-5" fill="none" stroke="#536e6d" stroke-width="1.4"/></g>
+      <rect x="0" y="150" width="143" height="40" rx="4" fill="#e8ecd9" stroke="#b5c0a7" stroke-width="1.2"/>
+      <rect x="0" y="150" width="143" height="40" rx="4" fill="#8aa395" fill-opacity=".22" stroke="#789a84" stroke-width="1.5" opacity="0" class="art-motion markdown-render-code"/>
+      <path d="M10 161v18" stroke="#8aa395" stroke-width="2"/>
+      <text x="20" y="175" fill="#536e6d" font-family="Consolas,monospace" font-size="11">npm run dev</text>
+    </g>
+    <!-- Two restrained cloth ribbons follow the page edges. -->
+    <path d="m493 126 21-7v56l-10-7-11 15Z" fill="#da9d77"/>
+    <path d="m402 419 28-10v29l-13-3-15 12Z" fill="#da9d77"/>
+    <path d="m409 422 14-5" fill="none" stroke="#f5ead3" stroke-width="1.4"/>
+  </g>
+</svg>

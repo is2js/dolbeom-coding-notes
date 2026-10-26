@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" aria-hidden="true" focusable="false" class="topic-art-svg topic-art-ide">
+  <style>
+    .ide-file-trace { animation: ide-file-trace 6.4s ease-in-out infinite; }
+    .ide-line-trace { animation: ide-line-trace 6.4s ease-in-out infinite; }
+    .ide-cursor { animation: ide-cursor 6.4s ease-in-out infinite; }
+    .ide-run-trace { animation: ide-run-trace 6.4s ease-in-out infinite; }
+    .ide-run-progress { animation: ide-run-progress 6.4s ease-in-out infinite; }
+    .ide-run-success { animation: ide-run-success 6.4s ease-in-out infinite; }
+    @keyframes ide-file-trace { 0%, 34%, 100% { opacity: 0; } 8%, 23% { opacity: .24; } }
+    @keyframes ide-line-trace { 0%, 15%, 67%, 100% { opacity: 0; } 27%, 48% { opacity: .2; } }
+    @keyframes ide-cursor { 0%, 17%, 63%, 100% { opacity: .25; } 28%, 33%, 45%, 50% { opacity: .85; } 37%, 41%, 54% { opacity: .35; } }
+    @keyframes ide-run-trace { 0%, 41%, 76%, 100% { opacity: 0; } 50%, 64% { opacity: .26; } }
+    @keyframes ide-run-progress { 0%, 38% { stroke-dashoffset: 103; opacity: 0; } 46% { stroke-dashoffset: 103; opacity: .65; } 70%, 85% { stroke-dashoffset: 0; opacity: .65; } 98%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+    @keyframes ide-run-success { 0%, 61%, 100% { opacity: 0; } 73%, 88% { opacity: .8; } }
+  </style>
+  <defs>
+    <filter id="ide-shadow" x="-25%" y="-80%" width="150%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+    <linearGradient id="ide-screen" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#33455b"/><stop offset="1" stop-color="#283449"/></linearGradient>
+  </defs>
+  <ellipse cx="382" cy="450" rx="220" ry="28" fill="#536e6d" opacity=".18" filter="url(#ide-shadow)"/>
+  <g transform="translate(0 18) scale(1 .93)" stroke="#283449" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- A shallow work surface supports a standing editor, not a laptop. -->
+    <path d="m184 392 194-64 216 73-188 65Z" fill="#f5ead3"/>
+    <path d="m184 392 222 74v9l-222-74Z" fill="#dfcfad"/>
+    <path d="m406 466 188-65v9l-188 65Z" fill="#b6bba2"/>
+    <path d="m314 404 42-14 67 22-43 15Z" fill="#8aa395"/>
+    <path d="m345 361 24-8v52l-24 8Z" fill="#536e6d"/>
+    <path d="m369 353 12 5v43l-12 4Z" fill="#8aa395"/>
+    <!-- Thickness on the tall editor panel creates the main silhouette. -->
+    <path d="M183 149 514 77 537 88v261l-332 73-22-12Z" fill="#8aa395"/>
+    <path d="m183 149 22 12 332-73-23-11Z" fill="#dfcfad"/>
+    <path d="m183 149 22 12v261l-22-12Z" fill="#536e6d"/>
+    <g transform="matrix(1 -.22 0 1 205 161)">
+      <rect x="0" y="0" width="332" height="261" rx="7" fill="#dfcfad"/>
+      <rect x="10" y="10" width="312" height="238" rx="3" fill="url(#ide-screen)"/>
+      <path d="M10 39h312V13a3 3 0 0 0-3-3H13a3 3 0 0 0-3 3Z" fill="#f5ead3"/>
+      <circle cx="23" cy="25" r="3.5" fill="#da9d77" stroke="none"/><circle cx="36" cy="25" r="3.5" fill="#d2b788" stroke="none"/><circle cx="49" cy="25" r="3.5" fill="#8aa395" stroke="none"/>
+      <text x="68" y="29" fill="#536e6d" stroke="none" font-family="Consolas,monospace" font-size="9" letter-spacing="1">EDITOR / WORKSPACE</text>
+      <!-- File tree is a separate lighter panel. -->
+      <path d="M10 39h87v197H10Z" fill="#455b62"/>
+      <path d="M97 39v197" stroke="#83978b" stroke-width="1.2"/>
+      <g fill="#c9d4c0" stroke="none" font-family="Consolas,monospace" font-size="9">
+        <text x="20" y="60" font-size="7" letter-spacing="1">EXPLORER</text>
+        <path d="m21 76 4 4 4-4" fill="none" stroke="#a8c4ab" stroke-width="1.5"/>
+        <text x="35" y="82">src</text>
+        <path d="M25 91v64m0-54h8m-8 26h8m-8 26h8" fill="none" stroke="#78968b" stroke-width="1.2"/>
+        <path d="M35 91h56v20H35Z" fill="#6b8276"/>
+        <rect x="34" y="90" width="57" height="22" rx="2" fill="#d5dfbf" opacity="0" class="art-motion ide-file-trace"/>
+        <path d="M34 93v16" stroke="#da9d77" stroke-width="2"/>
+        <text x="39" y="104" fill="#f5ead3">app.js</text>
+        <text x="35" y="130">style.css</text>
+        <text x="35" y="156">data.json</text>
+        <text x="21" y="185">README.md</text>
+      </g>
+      <!-- Tab, syntax and gutter read as an IDE editor. -->
+      <path d="M98 39h98v28H98Z" fill="#536e6d"/>
+      <path d="M98 67h223" stroke="#657d79" stroke-width="1.2"/>
+      <text x="111" y="57" fill="#f5ead3" stroke="none" font-family="Consolas,monospace" font-size="10">app.js</text>
+      <circle cx="182" cy="53" r="2.5" fill="#da9d77" stroke="none"/>
+      <g stroke="none" font-family="Consolas,monospace" font-size="10">
+        <g fill="#788e92" text-anchor="end"><text x="119" y="88">1</text><text x="119" y="108">2</text><text x="119" y="128">3</text><text x="119" y="148">4</text><text x="119" y="168">5</text><text x="119" y="188">6</text><text x="119" y="208">7</text></g>
+        <text x="132" y="88" fill="#da9d77">const <tspan fill="#c3d9bf">notes</tspan> = [</text>
+        <text x="143" y="108" fill="#d9c5a2">'learn', 'build'</text>
+        <text x="132" y="128" fill="#c3d9bf">];</text>
+        <path d="M128 135h180v21H128Z" fill="#536e6d" opacity=".55"/>
+        <rect x="128" y="135" width="180" height="21" rx="2" fill="#b6d0b4" opacity="0" class="art-motion ide-line-trace"/>
+        <text x="132" y="148" fill="#a9c9bb">function <tspan fill="#ead8b3">start</tspan>() {</text>
+        <rect x="252" y="137" width="1.5" height="13" rx=".5" fill="#e9d9b6" opacity=".6" class="art-motion ide-cursor"/>
+        <text x="143" y="168" fill="#c3d9bf">return notes;</text>
+        <text x="132" y="188" fill="#c3d9bf">}</text>
+        <text x="132" y="212" fill="#718e8c" font-size="9">// ready to build</text>
+        <circle cx="108" cy="144" r="3.3" fill="#da9d77"/>
+      </g>
+      <path d="M10 236h312v9a3 3 0 0 1-3 3H13a3 3 0 0 1-3-3Z" fill="#8aa395" stroke-width="1.4"/>
+      <text x="21" y="244" fill="#283449" stroke="none" font-family="Consolas,monospace" font-size="7">main</text>
+      <path d="m60 240 2 2 4-4" stroke="#283449" stroke-width="1" fill="none"/>
+      <text x="73" y="244" fill="#283449" stroke="none" font-family="Consolas,monospace" font-size="7">0 errors</text>
+      <text x="267" y="244" fill="#283449" stroke="none" font-family="Consolas,monospace" font-size="7">JS / UTF-8</text>
+    </g>
+    <!-- One quiet cable connects the editor to its separate run panel. -->
+    <path d="m357 415 25 10 52-18v-34" fill="none" stroke="#536e6d" stroke-width="4"/>
+    <!-- Debugger / run output floats in front of the editor as another panel. -->
+    <path d="m409 331 174-38 15 9v120l-175 38-14-9Z" fill="#536e6d"/>
+    <path d="m409 331 14 8 175-37-15-9Z" fill="#dfcfad"/>
+    <g transform="matrix(1 -.22 0 1 423 339)">
+      <rect x="0" y="0" width="175" height="121" rx="5" fill="#f5ead3"/>
+      <path d="M1 29h173V5a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4Z" fill="#8aa395" stroke-width="1.4"/>
+      <rect x="6" y="5" width="23" height="19" rx="3" fill="#f5ead3" stroke="none" opacity="0" class="art-motion ide-run-trace"/>
+      <path d="m12 9 10 6-10 6Z" fill="#f5ead3" stroke-width="1.3"/>
+      <text x="31" y="19" fill="#283449" stroke="none" font-family="Consolas,monospace" font-size="9" font-weight="700">RUN / DEBUG</text>
+      <g stroke="none" font-family="Consolas,monospace" font-size="8.5">
+        <text x="12" y="48" fill="#738773" font-size="7.5" letter-spacing=".8">VARIABLES</text>
+        <text x="12" y="66" fill="#536e6d" font-size="9.5">notes <tspan fill="#a16f52">Array(2)</tspan></text>
+        <path d="M12 77h151" stroke="#c9c5ac" stroke-width="1"/>
+        <circle cx="17" cy="94" r="5.5" fill="#8aa395"/>
+        <path d="m14 94 2 2 4-5" fill="none" stroke="#f5ead3" stroke-width="1.3"/>
+        <g opacity="0" class="art-motion ide-run-success"><circle cx="17" cy="94" r="9" fill="#8aa395" fill-opacity=".18"/><circle cx="17" cy="94" r="7.5" fill="none" stroke="#789a84" stroke-width="1"/></g>
+        <text x="30" y="98" fill="#536e6d" font-size="9.5">3 checks passed</text>
+        <path d="M12 110h151" stroke="#d4d7c1" stroke-width="2.5"/>
+        <path d="M12 110h103" fill="none" stroke="#8aa395" stroke-width="2.5" stroke-dasharray="103" stroke-dashoffset="103" opacity="0" class="art-motion ide-run-progress"/>
+      </g>
+    </g>
+  </g>
+</svg>

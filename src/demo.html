@@ -1,0 +1,14 @@
+<div class="demo-window" :class="'scene-'+step.scene">
+                <div class="demo-titlebar"><div class="window-dots"><i></i><i></i><i></i></div><span x-text="sceneTitle"></span><span class="demo-badge">단계별 재현</span></div>
+                <template x-if="['vscode','pycharm','code','git'].includes(step.scene)"><div class="demo-filebar"><span x-html="icon(step.scene==='git'?'git':'code')"></span><span x-text="step.fileName || 'README.md'"></span><span class="file-status">M</span></div></template>
+                <div class="demo-content" :class="{'with-files': ['vscode','pycharm'].includes(step.scene)}">
+                  <template x-if="['vscode','pycharm'].includes(step.scene)"><aside class="demo-files"><span>EXPLORER</span><b>⌄ DOLBEOM-NOTES</b><template x-for="(file,fileIndex) in (step.files.length ? step.files : ['src/','index.html','README.md'])" :key="fileIndex"><div :class="{selected:file===step.fileName}" x-text="file"></div></template></aside></template>
+                  <div class="demo-editor-pane">
+                    <template x-if="step.scene === 'browser'"><div class="demo-browser" x-html="browserPreview()"></div></template>
+                    <div class="demo-code"><template x-for="(line,i) in codeLines" :key="i"><div class="code-line"><span class="line-number" x-text="i+1"></span><code x-text="line || ' '"></code></div></template></div>
+                    <div class="demo-output" x-show="step.output"><span>OUTPUT / 미리 작성된 결과</span><pre x-text="step.output"></pre></div>
+                  </div>
+                </div>
+                <div class="demo-statusbar"><span x-text="step.language || 'Plain Text'"></span><span>UTF-8</span><span x-text="route === 'learn' ? '예제 '+(learningExampleIndex+1)+' / '+learningExamples.length : 'STEP '+(stepIndex+1)+' / '+lesson.steps.length"></span></div>
+              </div>
+              <p class="demo-footnote">실제 PC에서 명령을 실행하지 않는 강의용 재현 화면입니다.</p>

@@ -1,0 +1,21 @@
+/* Keep precise SVG geometry intact; motion lives only on named detail layers. */
+.workbench-illustration .topic-art-svg { display: block; isolation: isolate; }
+.workbench-illustration.is-motion-paused .art-motion { animation-play-state: paused !important; }
+.reader-diagram.workbench-illustration { position: relative; inset: auto; width: 100%; height: auto; max-width: 760px; margin: 22px auto; border: 1px solid #d4d6c1; border-radius: 10px; background: #f2eedf; }
+.reader-diagram svg { width: 100%; height: auto; }
+.presentation-figure .presentation-illustration.is-concept-diagram { width: 110%; height: 100%; left: -5%; top: -5%; }
+.stage-art-actions { display: flex; align-items: center; justify-content: flex-end; gap: 14px; flex-wrap: wrap; }
+.art-motion-toggle { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border: 1px solid #c9ccba; border-radius: 4px; background: #faf6ec; color: #6b8275; font-size: 10px; white-space: nowrap; }
+.art-motion-toggle:hover:not(:disabled) { border-color: #8fa897; color: #377c7b; }
+.art-motion-toggle > span:first-child { font-size: 12px; line-height: 1; }
+.art-motion-toggle:disabled { opacity: .7; }
+@media (prefers-reduced-motion: reduce) {
+  .workbench-illustration .art-motion { animation: none !important; transition: none !important; }
+}
+@media (max-width: 720px) {
+  .stage-bottomline { flex-direction: column; gap: 7px; }
+  .stage-lesson-name { max-width: 100%; }
+  .stage-art-actions { width: 100%; justify-content: space-between; gap: 8px; flex-wrap: nowrap; }
+  .art-motion-toggle { padding: 4px 6px; font-size: 9px; }
+  .map-stage .workbench-illustration { width: 128%; left: -14%; height: 300px; }
+}

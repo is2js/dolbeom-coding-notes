@@ -1,0 +1,73 @@
+<div class="presentation-shell" x-ref="presentationShell" aria-label="강의 발표 모드">
+  <header class="presentation-header">
+    <div class="presentation-brand"><span aria-hidden="true">&lt;∞&gt;</span><div><small x-text="course.author + '이 풀어주는'"></small><strong x-text="brandTitle"></strong></div></div>
+    <div class="presentation-header-actions"><span class="presentation-mode-label">LECTURE MODE</span><button type="button" @click="togglePresentationFullscreen()" :aria-pressed="fullscreenActive"><span x-html="icon('expand')"></span><span x-text="fullscreenActive ? '전체화면 해제' : '전체화면'"></span></button><button type="button" @click="exitPresentation()"><span x-html="icon('close')"></span>발표 종료</button></div>
+  </header>
+
+  <nav class="presentation-topics" aria-label="발표 강의 순서">
+    <ol><template x-for="(topic,index) in course.lessons" :key="topic.id"><li><button type="button" @click="openPresentation(topic.id,'case')" :class="{ 'is-current': topic.id === lessonId }" :aria-current="topic.id === lessonId ? 'step' : null" :aria-label="(index + 1) + '강 ' + topic.shortTitle + ' 발표'"><span x-text="String(index + 1).padStart(2,'0')"></span><strong x-text="topic.shortTitle"></strong></button></li></template></ol>
+  </nav>
+
+  <main class="presentation-main" id="presentation-main" aria-labelledby="presentation-title">
+    <div class="presentation-page-heading"><p><span class="presentation-phase-mark"></span><span x-text="presentationPhase()"></span><span class="presentation-separator">/</span><span x-text="lesson.shortTitle"></span></p><span x-text="presentationPage?.kind === 'section' ? presentationPage.section.minutes + '분 · 본편' : ['demo','live'].includes(presentationPage?.kind) ? '시연 권장 ' + presentationData.demo.durationMinutes + '분' : 'LESSON ' + String(lesson.number).padStart(2,'0')"></span></div>
+
+    <div class="presentation-layout" :class="{ 'is-demonstration': ['demo','live'].includes(presentationPage?.kind) }">
+      <figure class="presentation-figure" x-show="['case','section','recap'].includes(presentationPage?.kind)">
+        <div class="presentation-figure-grid" aria-hidden="true"></div>
+        <div class="presentation-illustration workbench-illustration" :class="'topic-' + presentationIllustrationId + (presentationArtStopped() ? ' is-motion-paused' : '') + (presentationIllustrationId !== lesson.id ? ' is-concept-diagram' : '')" role="img" :aria-label="lesson.shortTitle + ': ' + illustrationDescription(presentationIllustrationId)" x-html="lessonIllustration(presentationIllustrationId)"></div>
+        <figcaption><span x-text="String(lesson.number).padStart(2,'0') + ' / ' + String(course.lessons.length).padStart(2,'0')"></span><span x-text="lesson.shortTitle"></span></figcaption>
+        <button class="presentation-motion" type="button" @click="illustrationPaused = !illustrationPaused" :disabled="prefersReducedMotion" :aria-pressed="illustrationPaused || prefersReducedMotion" :aria-label="prefersReducedMotion ? '시스템 설정에 따라 그림이 정지되어 있습니다' : illustrationPaused ? '발표 그림 움직임 재생' : '발표 그림 움직임 멈춤'"><span aria-hidden="true" x-text="illustrationPaused || prefersReducedMotion ? '▷' : 'Ⅱ'"></span><span x-text="prefersReducedMotion ? '정지 화면' : illustrationPaused ? '움직임 재생' : '움직임 멈춤'"></span></button>
+      </figure>
+
+      <section class="presentation-copy" :class="{ 'is-live': presentationPage?.kind === 'live' }">
+        <div class="presentation-title-row"><h1 id="presentation-title" tabindex="-1" x-text="presentationTitle()"></h1><span class="presentation-demo-badge" x-show="presentationPage?.kind === 'live'">실전 시연</span></div>
+
+        <template x-if="presentationPage?.kind === 'case'"><div class="presentation-case">
+          <span class="presentation-case-label" x-text="lesson.case.kind === 'real' ? '돌범의 실제 개발 사례' : '교체용 가상 사례 · 실제 대화 아님'"></span>
+          <p class="presentation-case-summary" x-show="presentationData.caseSummary" x-text="presentationData.caseSummary"></p>
+          <div class="presentation-prose" x-show="!presentationData.caseSummary" x-html="markdown(lesson.case.body)"></div>
+          <div class="presentation-question"><span x-html="icon('bulb')"></span><p x-text="lesson.case.question"></p></div>
+        </div></template>
+
+        <template x-if="presentationPage?.kind === 'section'"><div>
+          <ol class="presentation-points" x-show="presentationPage.points?.length"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-text="point"></p></li></template></ol>
+          <div class="presentation-prose" x-show="!presentationPage.points?.length" x-html="markdown(presentationPage.section.body)"></div>
+        </div></template>
+
+        <template x-if="['demo','live'].includes(presentationPage?.kind)"><div class="presentation-demo-content">
+          <div class="presentation-demo-intro" x-show="presentationPage.kind === 'live'">
+            <p>Alt+Tab으로 실제 화면을 보여주세요.<br>돌아오면 아래에서 정리로 이어갑니다.</p>
+            <div class="presentation-timer" x-show="presentationPage.kind === 'live'">
+              <div><span class="presentation-timer-label" x-text="presentationTimer.startedAt === null ? '시연 시간 · 일시 정지' : '시연 시간 · 진행 중'"></span><strong role="timer" aria-label="시연 경과시간" aria-live="off" x-text="presentationElapsed"></strong><small x-text="'권장 ' + presentationData.demo.durationMinutes + '분'"></small></div>
+              <div class="presentation-timer-actions"><button type="button" @click="togglePresentationTimer()" x-text="presentationTimer.startedAt === null ? '시간 계속' : '시간 멈춤'"></button><button type="button" @click="resetPresentationTimer()">처음부터</button></div>
+            </div>
+          </div>
+          <div class="presentation-demo-grid">
+            <dl class="presentation-demo-target"><div><dt>열 프로그램</dt><dd x-text="presentationData.demo.program"></dd></div><div><dt>살펴볼 파일·화면</dt><dd x-text="presentationData.demo.file || '현재 프로그램의 화면'"></dd></div></dl>
+            <div class="presentation-demo-command" x-show="presentationData.demo.command"><div><span>명령·진행 순서</span><button type="button" @click="copyPresentationCommand()"><span x-html="icon('copy')"></span>시연 내용 복사</button></div><pre><code x-text="presentationData.demo.command"></code></pre></div>
+            <div class="presentation-demo-result"><span x-html="icon('check')"></span><div><h2>이 결과를 함께 확인합니다</h2><p x-text="presentationData.demo.expectedResult"></p></div></div>
+          </div>
+        </div></template>
+
+        <template x-if="presentationPage?.kind === 'recap'"><div class="presentation-recap"><p class="presentation-return-summary" x-text="presentationData.returnSummary"></p><ul><template x-for="(item,index) in lesson.checklist.slice(0,3)" :key="lesson.id + '-recap-' + index"><li><span x-html="icon('check')"></span><span x-text="item"></span></li></template></ul><p class="presentation-next-topic" x-text="course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1] ? '다음 연결 · ' + course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1].shortTitle : '7개 주제를 하나의 개발 흐름으로 연결했습니다.'"></p></div></template>
+      </section>
+    </div>
+  </main>
+
+  <footer class="presentation-footer">
+    <div class="presentation-navigation"><button type="button" class="presentation-previous" @click="movePresentation(-1)" :disabled="presentationAtBoundary(-1)" aria-label="이전 발표 화면"><span x-html="icon('chevronLeft')"></span>이전</button><div class="presentation-position"><label for="presentation-page-select" class="sr-only">발표 단계 선택</label><select id="presentation-page-select" :value="presentationPageId" @change="goPresentationPage($event.target.value)"><template x-for="page in presentationPages" :key="page.id"><option :value="page.id" :selected="page.id === presentationPageId" x-text="presentationPageLabel(page)"></option></template></select><span x-text="(presentationPageIndex + 1) + ' / ' + presentationPages.length"></span><div class="presentation-progress" aria-hidden="true"><i :style="'width:' + (presentationPageIndex + 1) / presentationPages.length * 100 + '%'"></i></div></div></div>
+    <div class="presentation-resources"><span class="presentation-key-hint">← → / Space</span><button type="button" @click="openPresentationBody()"><span x-html="icon('book')"></span>본문 보기</button><button type="button" @click="rehearsalOpen = true"><span x-html="icon('play')"></span>준비된 재현 보기</button></div>
+    <button type="button" class="presentation-next" @click="movePresentation(1)" :disabled="presentationAtBoundary(1)"><span x-text="presentationNextLabel()"></span><span x-html="icon('arrow')"></span></button>
+  </footer>
+
+  <dialog class="presentation-rehearsal" x-ref="rehearsal" aria-labelledby="rehearsal-title" @close="rehearsalOpen=false" @cancel.prevent="rehearsalOpen=false" @click="if($event.target===$el)rehearsalOpen=false">
+    <header><div><span class="eyebrow">PREPARED WALKTHROUGH</span><h2 id="rehearsal-title">준비된 재현 · <span x-text="lesson.shortTitle"></span></h2></div><button type="button" @click="rehearsalOpen=false" aria-label="재현 닫고 발표로 돌아가기" x-html="icon('close')"></button></header>
+    <p class="presentation-rehearsal-notice">사전 작성된 코드와 결과를 보여 주는 강의용 재현입니다. 실제 명령을 실행하지 않습니다.</p>
+    <div class="presentation-rehearsal-picker"><label for="rehearsal-step-select">시연 단계</label><select id="rehearsal-step-select" :value="String(stepIndex)" @change="stepIndex = Number($event.target.value)"><template x-for="(item,index) in lesson.steps" :key="item.id"><option :value="String(index)" :selected="index === stepIndex" x-text="(index + 1) + '. ' + item.title"></option></template></select><button type="button" @click="copyStep()">현재 코드 복사</button></div>
+    <div class="demo-stage presentation-rehearsal-stage">
+      <!-- SHARED_DEMO -->
+    </div>
+    <div class="presentation-rehearsal-description"><strong x-text="step.title"></strong><p x-text="step.description"></p></div>
+    <footer><button type="button" @click="prevStep()" :disabled="stepIndex === 0">이전 시연 단계</button><span x-text="(stepIndex + 1) + ' / ' + lesson.steps.length"></span><button type="button" @click="nextStep()" :disabled="stepIndex === lesson.steps.length - 1">다음 시연 단계</button><button type="button" class="presentation-rehearsal-return" @click="rehearsalOpen=false">발표로 돌아가기</button></footer>
+  </dialog>
+</div>

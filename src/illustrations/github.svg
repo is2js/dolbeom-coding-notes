@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="topic-art-svg topic-art-github" viewBox="0 0 760 550" aria-hidden="true" focusable="false">
+  <style>
+    .github-left-signal{animation:github-left-flow 6.4s linear infinite}
+    .github-right-signal{animation:github-right-flow 6.4s linear infinite}
+    .github-review-signal{animation:github-review-flow 6.4s linear infinite}
+    .github-contributor-left{animation:github-left-ready 6.4s ease-in-out infinite}
+    .github-contributor-right{animation:github-right-ready 6.4s ease-in-out infinite}
+    .github-server-light{animation:github-server-ready 6.4s ease-in-out infinite}
+    .github-server-light-middle{animation-delay:.16s}.github-server-light-last{animation-delay:.32s}
+    .github-merge-light{animation:github-merge-confirm 6.4s ease-in-out infinite}
+    @keyframes github-left-flow{0%,7%{stroke-dashoffset:100;opacity:0}13%{opacity:.95}37%{stroke-dashoffset:0;opacity:.95}43%,100%{stroke-dashoffset:0;opacity:0}}
+    @keyframes github-right-flow{0%,18%{stroke-dashoffset:100;opacity:0}24%{opacity:.95}46%{stroke-dashoffset:0;opacity:.95}52%,100%{stroke-dashoffset:0;opacity:0}}
+    @keyframes github-review-flow{0%,49%{stroke-dashoffset:100;opacity:0}55%{opacity:.95}73%{stroke-dashoffset:0;opacity:.95}79%,100%{stroke-dashoffset:0;opacity:0}}
+    @keyframes github-left-ready{0%{opacity:0}7%,15%{opacity:.9}25%,100%{opacity:0}}
+    @keyframes github-right-ready{0%,10%{opacity:0}18%,26%{opacity:.9}36%,100%{opacity:0}}
+    @keyframes github-server-ready{0%,38%{opacity:0}48%,59%{opacity:.85}70%,100%{opacity:0}}
+    @keyframes github-merge-confirm{0%,70%{opacity:0}78%,88%{opacity:.9}99%,100%{opacity:0}}
+    @media(prefers-reduced-motion:reduce){.github-left-signal,.github-right-signal,.github-review-signal,.github-contributor-left,.github-contributor-right,.github-server-light,.github-merge-light{animation:none!important}}
+  </style>
+  <defs>
+    <linearGradient id="github-platform" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#faf2df"/><stop offset="1" stop-color="#eadcbe"/></linearGradient>
+    <linearGradient id="github-server-front" x1="0" y1="0" x2="1" y2=".5"><stop stop-color="#fbf2dd"/><stop offset="1" stop-color="#e3d3b3"/></linearGradient>
+    <linearGradient id="github-server-side" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7f9a8b"/><stop offset="1" stop-color="#536e6d"/></linearGradient>
+    <linearGradient id="github-card" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fcf5e6"/><stop offset="1" stop-color="#f0e5ce"/></linearGradient>
+    <filter id="github-ground-shadow" x="-25%" y="-80%" width="150%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+    <g id="github-person" stroke="#283449" stroke-width="1.8" stroke-linejoin="round">
+      <circle cy="0" r="8" fill="#da9d77"/>
+      <path d="M-13 24v-5c0-7 5-12 13-12s13 5 13 12v5z" fill="#8aa395"/>
+      <path d="M-5-5l5-3 5 3" fill="none" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M-7 14c3-2 10-2 14 0" fill="none" stroke="#afc0a8" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <ellipse cx="384" cy="431" rx="205" ry="19" fill="#9b907a" opacity=".18" filter="url(#github-ground-shadow)"/>
+  <g stroke="#283449" stroke-width="2.4" stroke-linejoin="round">
+    <path d="M169 311l211-122 220 127-211 122z" fill="url(#github-platform)"/>
+    <path d="M169 311v13l220 127v-13z" fill="#c5b48f"/>
+    <path d="M389 438v13l211-122v-13z" fill="#dfcfad"/>
+    <path d="M188 311l192-111 200 116-191 110z" fill="none" stroke="#cabd9d" stroke-width="1.2"/>
+    <path d="M172 310l217 125 207-120" fill="none" stroke="#fff6e1" stroke-width="1.7"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M272 365c21 0 24 10 47 10s46-16 71-16M489 365c-21 0-24 10-47 10s-27-16-52-16M390 359l44 25q6 4 9 20" stroke="#283449" stroke-width="8"/>
+    <path d="M272 365c21 0 24 10 47 10s46-16 71-16M489 365c-21 0-24 10-47 10s-27-16-52-16M390 359l44 25q6 4 9 20" stroke="#9baf99" stroke-width="4.5"/>
+    <path class="art-motion github-left-signal" d="M272 365c21 0 24 10 47 10s46-16 71-16" pathLength="100" stroke="#fff3ce" stroke-width="3.6" stroke-dasharray="7 93" stroke-dashoffset="100" opacity="0"/>
+    <path class="art-motion github-right-signal" d="M489 365c-21 0-24 10-47 10s-27-16-52-16" pathLength="100" stroke="#fff3ce" stroke-width="3.6" stroke-dasharray="7 93" stroke-dashoffset="100" opacity="0"/>
+    <path class="art-motion github-review-signal" d="M390 359l44 25q6 4 9 20" pathLength="100" stroke="#fff3ce" stroke-width="3.6" stroke-dasharray="9 91" stroke-dashoffset="100" opacity="0"/>
+  </g>
+  <ellipse cx="394" cy="332" rx="87" ry="23" fill="#697461" opacity=".10"/>
+  <g stroke="#283449" stroke-width="2.4" stroke-linejoin="round">
+    <path d="M310 304l85-49 85 49-85 49z" fill="#b4bea4"/>
+    <path d="M310 304v11l85 49v-11z" fill="#c7b795"/>
+    <path d="M395 353v11l85-49v-11z" fill="#7e9788"/>
+    <path d="M323 149l71-41 75 43v157l-71 41-75-43z" fill="url(#github-server-front)"/>
+    <path d="M398 192l71-41v157l-71 41z" fill="url(#github-server-side)"/>
+    <path d="M323 149l71-41 75 43-71 41z" fill="url(#github-card)"/>
+    <path d="M331 149l63-36 67 38-63 36z" fill="none" stroke="#d6c6a6" stroke-width="1.4"/>
+    <path d="M327 155v148l65 38" fill="none" stroke="#fff7e5" stroke-width="1.6"/>
+    <path d="M403 197v143" fill="none" stroke="#a0b49c" stroke-width="1.4"/>
+    <path d="M337 181l47 27v30l-47-27zM337 225l47 27v30l-47-27zM337 269l47 27v30l-47-27z" fill="#dfcfad" stroke-width="1.8"/>
+    <path d="M341 186l39 22m-39 22l39 22m-39 22l39 22" fill="none" stroke="#f9efd8" stroke-width="1.2"/>
+    <path d="M345 194l18 10m-18 34l18 10m-18 34l18 10" stroke="#536e6d" stroke-width="2.3" stroke-linecap="round"/>
+    <path d="M345 202l10 6m-10 38l10 6m-10 38l10 6" stroke="#a99b7e" stroke-width="1.5" stroke-linecap="round"/>
+    <ellipse cx="374" cy="215" rx="3" ry="4" fill="#8aa395" stroke-width="1.5"/>
+    <ellipse cx="374" cy="259" rx="3" ry="4" fill="#8aa395" stroke-width="1.5"/>
+    <ellipse cx="374" cy="303" rx="3" ry="4" fill="#8aa395" stroke-width="1.5"/>
+    <ellipse class="art-motion github-server-light" cx="374" cy="215" rx="2.5" ry="3.5" fill="#f9e2ac" stroke="none" opacity="0"/>
+    <ellipse class="art-motion github-server-light github-server-light-middle" cx="374" cy="259" rx="2.5" ry="3.5" fill="#f9e2ac" stroke="none" opacity="0"/>
+    <ellipse class="art-motion github-server-light github-server-light-last" cx="374" cy="303" rx="2.5" ry="3.5" fill="#f9e2ac" stroke="none" opacity="0"/>
+    <path d="M415 215l37-21m-37 34l37-21m-37 66l37-21m-37 34l37-21" stroke="#a6b69e" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M421 303l13-8v14l-13 8z" fill="#da9d77" stroke-width="1.8"/>
+    <path d="M442 291l8-5v14l-8 5z" fill="#dfcfad" stroke-width="1.8"/>
+    <path d="M360 145l19-11 10 6 24-14 22 13-43 25z" fill="#a2b5a0" stroke-width="2"/>
+    <path d="M360 145v10l32 19v-10z" fill="#dfcfad" stroke-width="2"/>
+    <path d="M392 164v10l43-25v-10z" fill="#6c887a" stroke-width="2"/>
+    <path d="M365 145l14-8 9 5m8 18l33-19" fill="none" stroke="#d1dcbf" stroke-width="1.4"/>
+  </g>
+  <g stroke="#283449" stroke-width="2.1" stroke-linejoin="round">
+    <path d="M214 331l8-5 57 33v6l-8 5-57-33z" fill="#dfcfad"/>
+    <path d="M271 364v6l8-5v-6z" fill="#8aa395"/>
+    <path d="M488 364l-8-5 61-35 8 5v6l-61 35z" fill="#dfcfad"/>
+    <path d="M488 364v6l-8-5v-6z" fill="#8aa395"/>
+    <path d="M211 247l6-4 61 35v82l-6 4z" fill="#dfcfad"/>
+    <path d="M489 282l-6-4 61-35 6 4v82l-61 35z" fill="#dfcfad"/>
+  </g>
+  <g transform="matrix(.866 .5 0 1 211 247)" stroke="#283449" stroke-linejoin="round">
+    <path d="M0 0h70v82H0z" fill="url(#github-card)" stroke-width="2.2"/>
+    <path d="M0 0h70v12H0z" fill="#8aa395" stroke-width="2.1"/>
+    <circle cx="11" cy="6" r="2" fill="#f5ead3" stroke="none"/>
+    <path d="M19 6h22" stroke="#d4dec4" stroke-width="1.4" stroke-linecap="round"/>
+    <circle class="art-motion github-contributor-left" cx="59" cy="6" r="2.7" fill="#fff1c8" stroke="none" opacity="0"/>
+    <use href="#github-person" transform="translate(35 29)"/>
+    <path d="M15 65h40m-34 8h28" stroke="#a79d84" stroke-width="1.7" stroke-linecap="round"/>
+  </g>
+  <g transform="matrix(.866 -.5 0 1 489 282)" stroke="#283449" stroke-linejoin="round">
+    <path d="M0 0h70v82H0z" fill="url(#github-card)" stroke-width="2.2"/>
+    <path d="M0 0h70v12H0z" fill="#da9d77" stroke-width="2.1"/>
+    <circle cx="11" cy="6" r="2" fill="#f5ead3" stroke="none"/>
+    <path d="M19 6h22" stroke="#efccb0" stroke-width="1.4" stroke-linecap="round"/>
+    <circle class="art-motion github-contributor-right" cx="59" cy="6" r="2.7" fill="#fff1c8" stroke="none" opacity="0"/>
+    <use href="#github-person" transform="translate(35 29)"/>
+    <path d="M15 65h40m-34 8h28" stroke="#a79d84" stroke-width="1.7" stroke-linecap="round"/>
+  </g>
+  <g stroke="#283449" stroke-width="2.2" stroke-linejoin="round">
+    <ellipse cx="272" cy="365" rx="5" ry="3" fill="#8aa395" stroke-width="1.7"/>
+    <ellipse cx="489" cy="365" rx="5" ry="3" fill="#8aa395" stroke-width="1.7"/>
+    <ellipse cx="390" cy="359" rx="6" ry="3.5" fill="#8aa395" stroke-width="1.8"/>
+    <path d="M333 400l58-34 58 34v9l-58 34-58-34z" fill="#dfcfad"/>
+    <path d="M391 434v9l58-34v-9z" fill="#8aa395"/>
+    <path d="M333 400l58-34 58 34-58 34z" fill="url(#github-card)"/>
+    <path d="M339 400l52-30 52 30" fill="none" stroke="#fff8e8" stroke-width="1.5"/>
+    <path d="M352 400l18-10 35 20m-23-29l-12 9" fill="none" stroke="#536e6d" stroke-width="3.1" stroke-linecap="round"/>
+    <ellipse cx="352" cy="400" rx="4.7" ry="2.8" fill="#da9d77" stroke-width="1.6"/>
+    <ellipse cx="382" cy="381" rx="4.7" ry="2.8" fill="#da9d77" stroke-width="1.6"/>
+    <ellipse cx="405" cy="410" rx="9" ry="5.4" fill="#8aa395" stroke-width="1.8"/>
+    <path d="M401 410l3 2 5-4" fill="none" stroke="#fbf4e3" stroke-width="2" stroke-linecap="round"/>
+    <ellipse class="art-motion github-merge-light" cx="405" cy="410" rx="12" ry="7.2" fill="none" stroke="#f6e7bb" stroke-width="2.2" opacity="0"/>
+    <ellipse cx="443" cy="404" rx="4" ry="2.5" fill="#8aa395" stroke-width="1.6"/>
+  </g>
+</svg>

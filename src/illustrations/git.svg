@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="topic-art-svg topic-art-git" viewBox="0 0 760 550" aria-hidden="true" focusable="false">
+  <style>
+    .git-main-signal{animation:git-main-flow 6.4s linear infinite}
+    .git-branch-signal{animation:git-branch-flow 6.4s linear infinite}
+    .git-merge-light{animation:git-merge-confirm 6.4s ease-in-out infinite}
+    @keyframes git-main-flow{0%,5%{stroke-dashoffset:100;opacity:0}10%{opacity:.9}43%{stroke-dashoffset:0;opacity:.9}49%,100%{stroke-dashoffset:0;opacity:0}}
+    @keyframes git-branch-flow{0%,22%{stroke-dashoffset:100;opacity:0}27%{opacity:.95}66%{stroke-dashoffset:0;opacity:.95}72%,100%{stroke-dashoffset:0;opacity:0}}
+    @keyframes git-merge-confirm{0%,62%{opacity:0}70%,81%{opacity:.85}92%,100%{opacity:0}}
+    @media(prefers-reduced-motion:reduce){.git-main-signal,.git-branch-signal,.git-merge-light{animation:none!important}}
+  </style>
+  <defs>
+    <linearGradient id="git-platform" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#faf2df"/><stop offset="1" stop-color="#eadcbe"/></linearGradient>
+    <linearGradient id="git-node-top" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fbf3e1"/><stop offset="1" stop-color="#e7d8b7"/></linearGradient>
+    <linearGradient id="git-node-side" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#dfcfad"/><stop offset=".5" stop-color="#cbb995"/><stop offset="1" stop-color="#bba985"/></linearGradient>
+    <linearGradient id="git-feature-top" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e5b592"/><stop offset="1" stop-color="#da9d77"/></linearGradient>
+    <filter id="git-ground-shadow" x="-25%" y="-80%" width="150%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+    <g id="git-commit" stroke="#283449" stroke-linejoin="round">
+      <path d="M-22 0v13c0 7 10 12 22 12s22-5 22-12V0" fill="url(#git-node-side)" stroke-width="2.3"/>
+      <path d="M0 12v13c12 0 22-5 22-12V0" fill="#8aa395" stroke-width="2.3"/>
+      <ellipse rx="22" ry="12" fill="url(#git-node-top)" stroke-width="2.3"/>
+      <path d="M-16-4c8-6 22-6 31 0" fill="none" stroke="#fff7e7" stroke-width="1.7" stroke-linecap="round"/>
+      <ellipse rx="7.5" ry="4.2" fill="#8aa395" stroke-width="1.8"/>
+    </g>
+    <g id="git-feature-commit" stroke="#283449" stroke-linejoin="round">
+      <path d="M-22 0v13c0 7 10 12 22 12s22-5 22-12V0" fill="#d5a381" stroke-width="2.3"/>
+      <path d="M0 12v13c12 0 22-5 22-12V0" fill="#bc8768" stroke-width="2.3"/>
+      <ellipse rx="22" ry="12" fill="url(#git-feature-top)" stroke-width="2.3"/>
+      <path d="M-16-4c8-6 22-6 31 0" fill="none" stroke="#efc9a9" stroke-width="1.7" stroke-linecap="round"/>
+      <ellipse rx="7.5" ry="4.2" fill="#f5ead3" stroke-width="1.8"/>
+    </g>
+    <g id="git-merge-commit" stroke="#283449" stroke-linejoin="round">
+      <path d="M-25 0v15c0 8 11 14 25 14s25-6 25-14V0" fill="#6e8a7f" stroke-width="2.3"/>
+      <path d="M0 14v15c14 0 25-6 25-14V0" fill="#536e6d" stroke-width="2.3"/>
+      <ellipse rx="25" ry="14" fill="#a2b7a5" stroke-width="2.3"/>
+      <path d="M-18-5c9-6 25-6 35 0" fill="none" stroke="#ced9bd" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M-10 0l7 4L11-4" fill="none" stroke="#f9f1df" stroke-width="3.2" stroke-linecap="round"/>
+    </g>
+    <g id="git-history-sheet" stroke="#283449" stroke-width="2.1" stroke-linejoin="round">
+      <path d="M428 342l51-29 51 29v8l-51 29-51-29z" fill="#dfcfad"/>
+      <path d="M479 371v8l51-29v-8z" fill="#8aa395"/>
+      <path d="M428 342l51-29 51 29-51 29z" fill="url(#git-node-top)"/>
+      <path d="M434 342l45-26 45 26" fill="none" stroke="#fff8e8" stroke-width="1.5"/>
+    </g>
+  </defs>
+  <ellipse cx="383" cy="431" rx="205" ry="19" fill="#9b907a" opacity=".18" filter="url(#git-ground-shadow)"/>
+  <g stroke="#283449" stroke-width="2.4" stroke-linejoin="round">
+    <path d="M166 311l215-124 220 127-215 124z" fill="url(#git-platform)"/>
+    <path d="M166 311v13l220 127v-13z" fill="#c5b48f"/>
+    <path d="M386 438v13l215-124v-13z" fill="#dfcfad"/>
+    <path d="M184 311l197-113 202 116-197 114z" fill="none" stroke="#cabd9d" stroke-width="1.2"/>
+    <path d="M169 310l217 125 211-122" fill="none" stroke="#fff6e1" stroke-width="1.7"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M245 358l69-40 70-40 69-40 62 36" stroke="#283449" stroke-width="12"/>
+    <path d="M245 358l69-40 70-40 69-40 62 36" stroke="#c9c6a8" stroke-width="8"/>
+    <path d="M245 358l69-40 70-40 69-40 62 36" stroke="#536e6d" stroke-width="3.5"/>
+    <path d="M314 318l-66-38 70-40 66-38 69 36" stroke="#283449" stroke-width="12"/>
+    <path d="M314 318l-66-38 70-40 66-38 69 36" stroke="#da9d77" stroke-width="8"/>
+    <path d="M314 318l-66-38 70-40 66-38 69 36" stroke="#efc7a6" stroke-width="2"/>
+    <path class="art-motion git-main-signal" d="M245 358l69-40 70-40 69-40" pathLength="100" stroke="#fff6d9" stroke-width="4" stroke-dasharray="5 95" stroke-dashoffset="100" opacity="0"/>
+    <path class="art-motion git-branch-signal" d="M314 318l-66-38 70-40 66-38 69 36" pathLength="100" stroke="#fff3d5" stroke-width="4" stroke-dasharray="5 95" stroke-dashoffset="100" opacity="0"/>
+  </g>
+  <g fill="#6d705c" opacity=".12">
+    <ellipse cx="384" cy="204" rx="24" ry="12"/><ellipse cx="318" cy="242" rx="24" ry="12"/>
+    <ellipse cx="248" cy="282" rx="24" ry="12"/><ellipse cx="453" cy="240" rx="27" ry="14"/>
+    <ellipse cx="384" cy="280" rx="24" ry="12"/><ellipse cx="314" cy="320" rx="24" ry="12"/>
+    <ellipse cx="245" cy="360" rx="24" ry="12"/><ellipse cx="515" cy="276" rx="24" ry="12"/>
+  </g>
+  <use href="#git-feature-commit" transform="translate(384 189)"/>
+  <use href="#git-feature-commit" transform="translate(318 227)"/>
+  <use href="#git-feature-commit" transform="translate(248 267)"/>
+  <use href="#git-merge-commit" transform="translate(453 223)"/>
+  <ellipse class="art-motion git-merge-light" cx="453" cy="223" rx="19" ry="10" fill="none" stroke="#f8f0d9" stroke-width="2.4" opacity="0"/>
+  <use href="#git-commit" transform="translate(384 265)"/>
+  <use href="#git-commit" transform="translate(314 305)"/>
+  <use href="#git-commit" transform="translate(245 345)"/>
+  <use href="#git-commit" transform="translate(515 261)"/>
+  <ellipse cx="480" cy="359" rx="55" ry="16" fill="#6d705c" opacity=".08"/>
+  <use href="#git-history-sheet"/>
+  <use href="#git-history-sheet" transform="translate(0 -10)"/>
+  <use href="#git-history-sheet" transform="translate(0 -20)"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M445 322l15-9 13 8-15 9z" fill="#8aa395" stroke="#283449" stroke-width="1.8"/>
+    <path d="M478 324l24-14m-15 19l24-14" stroke="#536e6d" stroke-width="2"/>
+    <path d="M444 332l13 7" stroke="#b2a384" stroke-width="1.5"/>
+  </g>
+  <g fill="#69766a" font-family="'Segoe UI',Arial,sans-serif" font-size="9" font-weight="600" letter-spacing="1.6">
+    <text transform="matrix(.866 -.5 .866 .5 288 367)">MAIN</text>
+    <text transform="matrix(.866 -.5 .866 .5 270 242)" fill="#a57759">FEATURE</text>
+  </g>
+</svg>

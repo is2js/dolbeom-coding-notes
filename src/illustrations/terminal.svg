@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-terminal" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="terminal-case" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbf4e5"/><stop offset="1" stop-color="#d9ccb4"/></linearGradient>
+    <linearGradient id="terminal-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#304b57"/><stop offset=".55" stop-color="#233b48"/><stop offset="1" stop-color="#1e303e"/></linearGradient>
+    <linearGradient id="terminal-keybed" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#eae7d8"/><stop offset="1" stop-color="#c7cdbb"/></linearGradient>
+    <filter id="terminal-shadow" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="10"/></filter>
+    <clipPath id="terminal-command-clip"><rect class="art-motion terminal-typed-mask" x="43" y="84" width="112" height="23"/></clipPath>
+  </defs>
+  <style>
+    .terminal-typed-mask { animation: terminal-type 6.4s steps(18, end) infinite; }
+    .terminal-caret { animation: terminal-caret 1.8s ease-in-out infinite, terminal-caret-position 6.4s steps(12, end) infinite; }
+    .terminal-result { animation: terminal-result 6.4s ease-in-out infinite; }
+    .terminal-indicator { animation: terminal-status 6.4s ease-in-out infinite; }
+    @keyframes terminal-type { 0%,12% { width:0px; } 48%,88% { width:112px; } 99%,100% { width:0px; } }
+    @keyframes terminal-caret { 0%,100% { opacity:.25; } 48%,60% { opacity:1; } }
+    @keyframes terminal-caret-position { 0%,12% { x:45px; } 48%,88% { x:149px; } 99%,100% { x:45px; } }
+    @keyframes terminal-result { 0%,45%,100% { opacity:.18; } 62%,88% { opacity:1; } }
+    @keyframes terminal-status { 0%,44%,100% { opacity:.45; } 63%,88% { opacity:1; } }
+  </style>
+  <ellipse cx="382" cy="455" rx="216" ry="23" fill="#536e6d" opacity=".18" filter="url(#terminal-shadow)"/>
+  <g stroke="#34464d" stroke-width="2.2" stroke-linejoin="round">
+    <!-- The keyboard shares the exact hinge axis and perspective of the display. -->
+    <path d="M205 394 534 322 586 374 257 447Z" fill="#d7d2bc"/>
+    <path d="M257 447 586 374v10l-329 73Z" fill="#9eaf9e"/>
+    <path d="m205 394 52 53v10l-52-53Z" fill="#bdc6b2"/>
+    <g transform="matrix(1 -.22 .6 .6 211 397)">
+      <rect width="320" height="76" rx="5" fill="url(#terminal-keybed)"/>
+      <rect x="11" y="7" width="296" height="54" rx="3" fill="#566f6a" stroke="#8fa294" stroke-width="1.4"/>
+      <g stroke="#3e5756" stroke-width=".7"><rect x="18" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="36" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="54" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="72" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="90" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="108" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="126" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="144" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="162" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="180" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="198" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="216" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="234" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="252" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="270" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="288" y="12" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="18" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="36" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="54" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="72" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="90" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="108" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="126" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="144" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="162" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="180" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="198" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="216" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="234" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="252" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="270" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="288" y="24" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="18" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="36" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="54" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="72" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="90" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="108" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="126" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="144" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="162" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="180" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="198" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="216" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="234" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="252" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="270" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="288" y="36" width="13" height="7" rx="1.2" fill="#b2b9a9"/><rect x="18" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="36" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="54" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="72" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="90" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="108" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="126" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="144" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="162" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="180" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="198" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="216" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="234" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="252" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="270" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/><rect x="288" y="48" width="13" height="7" rx="1.2" fill="#c7cbb9"/></g>
+      <rect x="100" y="64" width="112" height="7" rx="2" fill="#9dab9c" stroke-width="1"/>
+    </g>
+    <!-- A restrained bevel, a darker side and one light source establish volume. -->
+    <path d="M196 183 516 113 530 120 210 190Z" fill="#f5eddc"/>
+    <path d="m196 183 14 7v205l-14-7Z" fill="#8ba497"/>
+    <g transform="matrix(1 -.22 0 1 210 190)">
+      <rect width="320" height="205" rx="8" fill="url(#terminal-case)"/>
+      <path d="M9 9h302v185H9Z" fill="url(#terminal-glass)" stroke="#698478" stroke-width="1.5"/>
+      <path d="M12 12h296v28H12Z" fill="#3c5b61" stroke="none"/>
+      <path d="M13 40h294" fill="none" stroke="#759485" stroke-width="1" opacity=".55"/>
+      <g stroke="none"><circle cx="24" cy="26" r="3" fill="#d6a184"/><circle cx="36" cy="26" r="3" fill="#d9c595"/><circle cx="48" cy="26" r="3" fill="#9cbd9f"/></g>
+      <text x="67" y="29" fill="#e7e7d6" font-family="ui-monospace,Consolas,monospace" font-size="10" stroke="none" letter-spacing=".8">POWERSHELL</text>
+      <path d="M277 19h5v5h-5Zm8 0h5v5h-5Zm-8 8h5v5h-5Zm8 0h5v5h-5Z" fill="#aec8ad" stroke="none" opacity=".8"/>
+      <g font-family="ui-monospace,Consolas,monospace" stroke="none">
+        <text x="23" y="66" fill="#a4c4b3" font-size="11">PS C:\work\notes&gt;</text>
+        <text x="23" y="100" fill="#d8b08c" font-size="15">❯</text>
+        <g clip-path="url(#terminal-command-clip)"><text x="45" y="101" fill="#f0ebd8" font-size="15">npm run dev</text></g>
+        <rect class="art-motion terminal-caret" x="149" y="87" width="7" height="16" rx="1" fill="#abd1b5"/>
+        <g class="art-motion terminal-result">
+          <text x="24" y="135" fill="#9bc4ad" font-size="12">ready in 320 ms</text>
+          <text x="24" y="156" fill="#d9dfcf" font-size="11">Local: 127.0.0.1:5188</text>
+          <path d="M24 174h163" stroke="#5d7e79" stroke-width="2" opacity=".7"/>
+        </g>
+      </g>
+      <path d="M12 12h295" stroke="#fff5dd" stroke-width="1.1" opacity=".18"/>
+      <circle class="art-motion terminal-indicator" cx="300" cy="195" r="2.5" fill="#72a88d" stroke="none"/>
+    </g>
+  </g>
+  <g transform="matrix(1 -.22 .6 .6 415 408)" stroke="#405651" stroke-width="1.5">
+    <rect x="0" y="0" width="77" height="30" rx="4" fill="#f4efde"/>
+    <path d="M9 11h9m-9 7h9" stroke="#88a492"/>
+    <text x="26" y="19" fill="#536e6d" stroke="none" font-family="Consolas,monospace" font-size="9" letter-spacing=".8">LOCAL</text>
+  </g>
+</svg>

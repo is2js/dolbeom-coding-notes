@@ -5,7 +5,7 @@ import { sectionArtwork, sectionDescriptions } from './section-scenes.js';
 const sources = import.meta.glob('./illustrations/*.svg', { query: '?raw', import: 'default', eager: true });
 const artwork = { ...Object.fromEntries(Object.entries(sources).map(([path, svg]) => [path.split('/').pop().replace(/\.svg$/, ''), svg])), ...sectionArtwork };
 const descriptions = {
-  terminal: 'PowerShell 명령 창과 키보드가 있는 입체 작업대',
+  terminal: 'PowerShell에서 codex를 입력하고 Codex의 입력 대기를 보여 주는 입체 작업대',
   git: '커밋 기록이 브랜치로 갈라지고 다시 병합되는 입체 모형',
   github: '원격 저장소를 중심으로 작업 카드와 협업 흐름이 연결된 입체 모형',
   markdown: '제목과 목록, 코드가 문서 페이지로 정리되는 입체 노트',

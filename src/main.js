@@ -20,6 +20,7 @@ import './editor.css';
 import './illustrations.css';
 import './presentation.css';
 import './lesson.css';
+import './branding.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
 document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml);

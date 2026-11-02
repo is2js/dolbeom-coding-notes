@@ -10,28 +10,44 @@
 
 중앙 **관련 예제 재현**은 선택한 절의 코드·출력만 보여 줍니다. 세부절이 바뀌면 그림과 예제 묶음도 바뀝니다. **이 위치에서 발표**로 현재 절부터 발표를 시작할 수도 있습니다.
 
-첫 터미널 예제는 `Write-Output '안녕하세요, 돌범입니다.'`입니다. 입력 → 결과 확인 → 문구 교체를 연습합니다. 실제 명령은 별도의 PowerShell에서 실행합니다.
+터미널 도입은 **실제 Codex 프롬프트 입력 장면의 영상·시연 자리 표시**입니다. 아직 영상은 등록되지 않았으며 프롬프트는 강사가 실제 장면을 준비하며 교체합니다.
+
+터미널의 네 본편 절은 다음 순서로 연습합니다.
+
+1. **위치·GUI 전환·폴더:** `Get-Location`과 `pwd` → 실제 경로만 복사해 Win+R에 붙여 넣기 또는 PowerShell에서 `explorer.exe .` → `Get-ChildItem`과 `ls` → 실제 연습용 부모 폴더로 `Set-Location` 또는 `cd` → `Test-Path`가 False인지 확인 → `mkdir` 또는 `New-Item -ItemType Directory`로 생성 → `cd` 또는 `Set-Location`으로 이동 → `pwd`·`ls`·`explorer.exe .` → 탐색기 주소줄 `wt -d .` → 열린 Terminal의 프로필·위치 확인. `C:\work`는 예시이므로 실제 존재하는 연습용 경로로 바꿉니다. 같은 기능의 두 명령은 비교 예시로, 폴더를 생성할 때는 둘 중 하나만 실행합니다.
+2. **GUI·메모 파일:** 앞에서 만든 `dolbeom-demo` 폴더에서 `pwd`로 경로 확인 → `Test-Path .\memo.txt`가 False일 때 `New-Item -ItemType File -Path .\memo.txt` 또는 PowerShell 별칭 `ni` → 탐색기에서 메모장으로 열기 → `Hello, Codex!` 입력·저장 → `ls`와 `cat .\memo.txt` 또는 `Get-Content -LiteralPath .\memo.txt`로 같은 파일 확인. 기존 파일이 있다면 다른 이름을 사용합니다.
+3. **호스트·셸:** Terminal·PowerShell·cmd·설치된 Git Bash 구분 → Terminal의 테마·탭·분할·단축키·시작 위치 장점 → `$PSVersionTable.PSVersion` → 기본 5.1과 선택 설치 7의 공존 확인. 7 설치는 필수가 아닙니다.
+4. **설정·정리:** Ctrl+, → 앱 테마·프로필 색 구성표와 글꼴 확인 → 동작에서 연결 키 확인·변경 → 탭 → Alt+Shift+D → Alt+방향키 → 핵심 체크리스트. 테마와 키는 버전·설정·키보드 배열에 따라 달라질 수 있습니다.
+
+관련 예제 재현의 출력은 예상 예시이며 자동 실행이 아닙니다. 실제 실습은 강사가 앞에서 만든 연습 폴더와 PowerShell·탐색기·메모장을 오가며 진행합니다.
+
+PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도 같은 이름을 자주 사용하지만, Windows cmd에서는 `cd`·`dir`·`type` 등 셸별 명령을 확인합니다. `ni`는 PowerShell 전용이며 `Test-Path`에는 기본 별칭이 없습니다. macOS의 `test -e`, cmd의 `if exist`는 비슷한 존재 확인이지만 별개의 셸 문법입니다. macOS의 `touch`는 파일이 이미 있을 때 수정 시간을 바꿀 수 있으므로 먼저 이름을 확인합니다.
 
 ## 3시간 진행 순서
 
 | 순서 | 주제 | 본편 구성 | 시간 |
 | --- | --- | --- | ---: |
-| 01 | 윈도우 터미널 | Codex의 터미널 → 명령어를 쓰는 이유 → 터미널 앱과 셸 → 단축키 연습 | 25분 |
+| 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 실제 Codex 입력 장면 자리 → 현재 위치·탐색기 전환 → 폴더 생성·이동 → 같은 메모 파일을 GUI와 PowerShell로 확인 → 셸·테마·단축키 | 25분 |
 | 02 | Git | Codex의 변경 기록 → 버전 관리와 GitHub·PR 연결 → 수정·검증·커밋을 요청하는 프롬프트 | 25분 |
 | 03 | GitHub | 다른 프로젝트를 clone해서 분석 → 원격 보관·서버에서 받기·프로필·Pages | 20분 |
 | 04 | 마크다운 | Codex 요청 구조화 → README와 프로필 → Notion·Obsidian과 공통 문법 | 20분 |
-| 05 | IDE | Codex 변경을 PyCharm에서 확인 → VS Code 단축키 → PyCharm과 키맵 → 터미널·Git·문서 통합 | 20분 |
-| 06 | 프론트엔드·백엔드 | 로컬과 원격 실행 → 브라우저·백엔드·DB의 역할 → 서버가 HTML을 만드는 방식 | 25분 |
-| 07 | 템플릿 엔진 | Jinja2·Django 템플릿 비교 → HTML·CSS·JavaScript → Tailwind CSS·Alpine.js 조합 | 45분 |
-| 합계 | 7개 주제 · 본편 22개 절 | 사례·설명·시연·정리 포함 | 180분 |
+| 05 | IDE | Codex 변경 확인과 편집 도구 → 같은 강의 카드에 HTML·CSS·JavaScript를 차례로 적용 | 40분 |
+| 06 | 프론트엔드·백엔드 | 만든 카드와 프론트엔드의 관계 → 로컬·서버와 요청·응답 → 서버가 HTML을 만드는 방식 | 20분 |
+| 07 | 템플릿 엔진 | 같은 카드에 Jinja2 데이터 → Tailwind CSS로 꾸미기 → Alpine.js로 동작 연결 | 30분 |
+| 합계 | 7개 주제 · 본편 25개 절 | 사례·설명·시연·정리 포함 | 180분 |
 
-실전 전환 시간 **3·4·3·2·3·4·6분**은 위 시간에 포함됩니다. 보충 노트 30분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
+실전 전환 시간은 각 주제의 본편 시간에 포함됩니다. 보충 노트 30분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
+
+IDE의 HTML·CSS·JavaScript 실습은 가상의 강의 카드 예제입니다. 실습을 저장하고 브라우저를 새로고침하면서 구조, 모양, 버튼 동작을 차례로 확인합니다. 이어지는 프론트엔드 단원에서는 이 카드가 사용자에게 보이고 상호작용하는 프론트엔드의 한 예라는 점을 설명합니다. 템플릿 단원은 같은 카드의 역할을 다시 활용해 서버 데이터, Tailwind CSS, Alpine.js를 연결합니다.
+
+시연 준비용 완성본은 [강의 카드 예제](public/examples/ide-card/index.html)와 같은 폴더의 `style.css`, `script.js`입니다. VS Code에서 세 파일을 열어 비교하거나 [브라우저에서 완성 화면](http://127.0.0.1:5188/examples/ide-card/index.html)을 확인할 수 있습니다. 처음부터 만드는 수업에서는 별도 연습 폴더에 같은 파일을 차례로 작성합니다.
 
 ## 바로잡은 용어와 개념
 
 | 처음 표현 | 강의에서 사용할 설명 | 근거 |
 | --- | --- | --- |
 | PowerShell 대신 Windows Terminal을 쓴다 | Windows Terminal은 터미널 앱이고, 그 안에서 PowerShell·명령 프롬프트 같은 셸을 실행한다. | [Microsoft: Windows Terminal](https://learn.microsoft.com/en-us/windows/terminal/) |
+| PowerShell 7을 설치해야 시작할 수 있다 | Windows 기본 5.1로도 기본 실습이 가능하다. 7은 선택 설치하며 powershell.exe(5.1)와 pwsh(7)는 공존한다. | [Microsoft: PowerShell 설치와 공존](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows) |
 | Git을 쓰면 PR까지 할 수 있다 | Git은 변경을 기록한다. GitHub는 원격 저장소와 협업 기능을 제공하며, PR은 변경을 검토·병합하도록 제안하는 GitHub 기능이다. | [Git: 버전 관리](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control), [GitHub: PR](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) |
 | clone하면 다른 곳에서 바로 실행된다 | clone은 저장소를 가져오는 작업이다. 실행 환경·의존성·설정·DB 준비는 프로젝트에 따라 별도다. | [GitHub: 저장소 복제](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) |
 | README.md라는 약속 | 저장소 안내 문서로 널리 쓰는 관례다. README는 필수 파일이 아니며 프로필 README에는 별도 조건이 있다. | [GitHub: README](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes), [프로필 README](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme) |

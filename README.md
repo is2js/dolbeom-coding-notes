@@ -19,6 +19,8 @@
 
 2026-10-26 개요에 맞춘 **7개 주제 · 본편 22개 절 · 180분** 초안입니다. 주제별 흐름, 바로잡은 개념, 다음 내용을 전달하는 방법은 [강의 흐름과 수정 안내](LECTURE_FLOW.md)에 정리했습니다.
 
+촬영은 [촬영용 Windows 실습 환경과 OBS·Zoom 준비](recording/README.md)를 참고합니다. Sandbox의 Terminal·Git·VS Code 설치, Hyper-V VM 생성·체크포인트 도우미, [OBS 무료 녹화](recording/OBS.md)와 Zoom 클라우드 녹화 순서를 제공합니다.
+
 ## 강의처럼 진행하면서 수정하기
 
 1. [강의 연습 열기](http://127.0.0.1:5188/#/lesson/terminal/case)에서 주제를 고릅니다. **시작 사례 → 본문 절 → 핵심 정리** 순서로 진행합니다.

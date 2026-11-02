@@ -4,16 +4,16 @@
     <linearGradient id="terminal-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#304b57"/><stop offset=".55" stop-color="#233b48"/><stop offset="1" stop-color="#1e303e"/></linearGradient>
     <linearGradient id="terminal-keybed" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#eae7d8"/><stop offset="1" stop-color="#c7cdbb"/></linearGradient>
     <filter id="terminal-shadow" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="10"/></filter>
-    <clipPath id="terminal-command-clip"><rect class="art-motion terminal-typed-mask" x="43" y="84" width="112" height="23"/></clipPath>
+    <clipPath id="terminal-command-clip"><rect class="art-motion terminal-typed-mask" x="43" y="84" width="52" height="23"/></clipPath>
   </defs>
   <style>
-    .terminal-typed-mask { animation: terminal-type 6.4s steps(18, end) infinite; }
-    .terminal-caret { animation: terminal-caret 1.8s ease-in-out infinite, terminal-caret-position 6.4s steps(12, end) infinite; }
+    .terminal-typed-mask { animation: terminal-type 6.4s steps(5, end) infinite; }
+    .terminal-caret { animation: terminal-caret 1.8s ease-in-out infinite, terminal-caret-position 6.4s steps(5, end) infinite; }
     .terminal-result { animation: terminal-result 6.4s ease-in-out infinite; }
     .terminal-indicator { animation: terminal-status 6.4s ease-in-out infinite; }
-    @keyframes terminal-type { 0%,12% { width:0px; } 48%,88% { width:112px; } 99%,100% { width:0px; } }
+    @keyframes terminal-type { 0%,12% { width:0px; } 48%,88% { width:52px; } 99%,100% { width:0px; } }
     @keyframes terminal-caret { 0%,100% { opacity:.25; } 48%,60% { opacity:1; } }
-    @keyframes terminal-caret-position { 0%,12% { x:45px; } 48%,88% { x:149px; } 99%,100% { x:45px; } }
+    @keyframes terminal-caret-position { 0%,12% { x:45px; } 48%,88% { x:94px; } 99%,100% { x:45px; } }
     @keyframes terminal-result { 0%,45%,100% { opacity:.18; } 62%,88% { opacity:1; } }
     @keyframes terminal-status { 0%,44%,100% { opacity:.45; } 63%,88% { opacity:1; } }
   </style>
@@ -43,12 +43,12 @@
       <g font-family="ui-monospace,Consolas,monospace" stroke="none">
         <text x="23" y="66" fill="#a4c4b3" font-size="11">PS C:\work\notes&gt;</text>
         <text x="23" y="100" fill="#d8b08c" font-size="15">❯</text>
-        <g clip-path="url(#terminal-command-clip)"><text x="45" y="101" fill="#f0ebd8" font-size="15">npm run dev</text></g>
-        <rect class="art-motion terminal-caret" x="149" y="87" width="7" height="16" rx="1" fill="#abd1b5"/>
+        <g clip-path="url(#terminal-command-clip)"><text x="45" y="101" fill="#f0ebd8" font-size="15">codex</text></g>
+        <rect class="art-motion terminal-caret" x="94" y="87" width="7" height="16" rx="1" fill="#abd1b5"/>
         <g class="art-motion terminal-result">
-          <text x="24" y="135" fill="#9bc4ad" font-size="12">ready in 320 ms</text>
-          <text x="24" y="156" fill="#d9dfcf" font-size="11">Local: 127.0.0.1:5188</text>
-          <path d="M24 174h163" stroke="#5d7e79" stroke-width="2" opacity=".7"/>
+          <text x="24" y="135" fill="#9bc4ad" font-size="12">Codex</text>
+          <text x="24" y="161" fill="#d9dfcf" font-size="13">›</text>
+          <path d="M42 160h145" stroke="#5d7e79" stroke-width="2" opacity=".7"/>
         </g>
       </g>
       <path d="M12 12h295" stroke="#fff5dd" stroke-width="1.1" opacity=".18"/>

@@ -1,0 +1,31 @@
+/* The complete A illustration stays visible at every width. */
+.masthead { min-height: 142px; height: auto; }
+.brand-art {
+  display: block;
+  width: clamp(160px, 19vw, 240px);
+  height: auto;
+  flex: 0 0 auto;
+  border: 1px solid #d9d1b9;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px #56684712;
+}
+.zoom-background-link {
+  color: #557363;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .masthead { min-height: 120px; }
+  .brand-art { width: 150px; }
+}
+
+@media (max-width: 720px) {
+  .masthead { position: relative; min-height: 125px; padding: 10px 0; }
+  .brand { width: calc(100% - 126px); }
+  .brand-art { position: absolute; right: 0; bottom: 10px; width: 115px; }
+  .course-meter { position: absolute; right: 0; top: 4px; margin-top: 0; }
+  .zoom-background-link { font-size: 9px; }
+}

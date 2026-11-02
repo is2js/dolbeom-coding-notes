@@ -1,0 +1,7 @@
+<Configuration>
+  <MemoryInMB>4096</MemoryInMB>
+  <Networking>Enable</Networking>
+  <ClipboardRedirection>Enable</ClipboardRedirection>
+  <AudioInput>Disable</AudioInput>
+  <VideoInput>Disable</VideoInput>
+</Configuration>

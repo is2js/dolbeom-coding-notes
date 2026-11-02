@@ -111,97 +111,139 @@ function scene(prefix, contents) {
 function greetingScene() {
   const p = "section-terminal-example";
   return scene(p,
-    card(p, 102, 113, 556, 126,
-      text(126, 151, "입력", { weight: 650 }) + dot(626, 143, 5, C.sage)
-      + text(126, 199, "Write-Output '안녕하세요, 돌범입니다.'", { mono: true })
-      + '<rect x="615" y="179" width="5" height="25" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>')
-    + arrow(p, "M380 253v57") + text(403, 288, "Enter", { mono: true, fill: C.teal })
-    + signal(p, "M380 253v57")
-    + card(p, 145, 327, 470, 93,
-      text(170, 361, "출력", { weight: 650 })
-      + text(170, 398, "안녕하세요, 돌범입니다.", { size: 25, fill: C.teal }))
+    text(380, 74, "터미널과 탐색기를 오가며 같은 위치 확인", { anchor: "middle", size: 24, weight: 650 })
+    + card(p, 70, 106, 320, 330,
+      text(94, 143, "PowerShell", { size: 24, weight: 650 }) + dot(361, 135, 5, C.sage)
+      + line("M91 159h277", C.line, 1.5)
+      + rect(91, 171, 278, 47, "#e2e8d5", 6, 'stroke-opacity="0"')
+      + text(102, 201, "pwd", { mono: true, size: 23, weight: 700, fill: C.teal })
+      + text(167, 201, "= Get-Location", { mono: true, size: 17 })
+      + text(102, 250, "explorer.exe .", { mono: true, size: 22 })
+      + text(102, 300, "ls", { mono: true, size: 23, weight: 700, fill: C.teal })
+      + text(150, 300, "= Get-ChildItem", { mono: true, size: 17 })
+      + text(102, 351, "mkdir → cd", { mono: true, size: 22 })
+      + text(102, 374, "New-Item · Set-Location", { mono: true, size: 15, fill: C.teal })
+      + text(102, 400, "pwd", { mono: true, size: 22, fill: C.teal })
+      + text(165, 400, "이동한 위치 확인", { size: 18 })
+      + '<rect x="345" y="385" width="4" height="20" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>')
+    + arrow(p, "M400 232h30") + signal(p, "M400 232h30")
+    + card(p, 445, 106, 245, 174,
+      text(466, 143, "파일 탐색기", { size: 24, weight: 650 })
+      + line("M464 158h206", C.line, 1.5)
+      + rect(464, 171, 205, 36, C.light, 6)
+      + text(476, 195, "C:\\work", { mono: true, size: 19, fill: C.teal })
+      + text(466, 242, "Win + R → 경로 입력", { size: 19 })
+      + text(466, 264, "또는 explorer.exe .", { mono: true, size: 17 }))
+    + card(p, 445, 315, 245, 121,
+      text(466, 351, "탐색기 주소창", { size: 23, weight: 650 })
+      + rect(464, 365, 205, 42, "#e2e8d5", 6, 'stroke-opacity="0"')
+      + text(566, 393, "wt -d .", { anchor: "middle", mono: true, size: 23, fill: C.teal }))
+    + arrow(p, "M567 290v14") + signal(p, "M567 290v14")
+    + text(380, 485, "현재 폴더를 확인하고, 탐색기와 터미널을 전환", { anchor: "middle", size: 21 })
+    + text(380, 517, "표시된 경로는 예시 · 실제 존재하는 폴더로 연습", { anchor: "middle", size: 19, fill: C.teal })
   );
 }
 
 function guiCliScene() {
   const p = "section-terminal-gui-cli";
   return scene(p,
-    text(380, 101, "같은 작업, 두 가지 경로", { anchor: "middle", weight: 650 })
-    + card(p, 101, 140, 232, 183,
-      text(124, 176, "GUI", { weight: 650 })
-      + line("M115 191h204", C.line, 1.5)
-      + folder(124, 215, 63, 65)
-      + line("M205 228h91M205 246h70M205 264h82", C.teal, 3)
-      + '<path d="M282 272l-1 37 10-10 11 17 10-6-11-17 14-3z" fill="' + C.sage + '" stroke="' + C.ink + '" stroke-width="2.2"/>')
-    + card(p, 428, 140, 232, 183,
-      text(451, 176, "CLI", { weight: 650 })
-      + line("M442 191h204", C.line, 1.5)
-      + text(450, 237, "> Get-Content", { mono: true })
-      + text(450, 272, "package.json", { size: 22, mono: true, fill: C.teal }))
-    + arrow(p, "M218 337v18q0 12 16 12h112v15")
-    + arrow(p, "M546 337v18q0 12-16 12H414v15")
-    + signal(p, "M218 337v18q0 12 16 12h112v15")
-    + signal(p, "M546 337v18q0 12-16 12H414v15")
-    + card(p, 274, 386, 212, 57, text(380, 423, "같은 파일", { anchor: "middle", weight: 600 }))
+    text(380, 73, "하나의 메모 파일을 두 화면에서 확인", { anchor: "middle", size: 25, weight: 650 })
+    + card(p, 50, 113, 267, 278,
+      text(73, 150, "PowerShell · CLI", { size: 24, weight: 650 })
+      + line("M70 167h227", C.line, 1.5)
+      + text(73, 207, "pwd", { mono: true, size: 22, fill: C.teal })
+      + text(73, 240, "New-Item", { mono: true, size: 22 })
+      + text(73, 274, "memo.txt", { mono: true, size: 22 })
+      + line("M72 292h223", C.line, 1.5)
+      + text(73, 325, "Get-Content / cat", { mono: true, size: 18, fill: C.teal })
+      + text(73, 357, "memo.txt", { mono: true, size: 22 })
+      + '<rect x="244" y="338" width="4" height="21" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>')
+    + documentShape(337, 191, 86, 106, C.light)
+    + text(380, 326, "memo.txt", { mono: true, anchor: "middle", size: 17, fill: C.teal })
+    + arrow(p, "M325 239h4") + signal(p, "M325 239h4")
+    + arrow(p, "M430 239h10") + signal(p, "M430 239h10")
+    + card(p, 449, 113, 260, 278,
+      text(470, 150, "메모장 · GUI", { size: 24, weight: 650 })
+      + line("M468 167h222", C.line, 1.5)
+      + rect(467, 183, 224, 122, C.light, 6)
+      + text(480, 214, "memo.txt", { mono: true, size: 18, fill: C.teal })
+      + line("M480 229h196", C.line, 1.5)
+      + text(480, 260, "Hello, Codex!", { mono: true, size: 20 })
+      + '<rect x="647" y="242" width="4" height="20" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>'
+      + text(472, 344, "입력 후 Ctrl+S 저장", { size: 20 })
+      + text(472, 371, "탐색기에서 파일 확인", { size: 18, fill: C.teal }))
+    + arrow(p, "M563 409v26H194v-26") + signal(p, "M563 409v26H194v-26")
+    + text(380, 481, "메모장에서 저장 → 터미널에서 내용 읽기", { anchor: "middle", size: 22, fill: C.teal })
+    + text(380, 516, "앞에서 만든 연습 폴더를 그대로 사용", { anchor: "middle", size: 19 })
   );
 }
 
 function hostShellScene() {
   const p = "section-terminal-host-shell";
   return scene(p,
-    text(380, 104, "호스트", { anchor: "middle", weight: 650 })
-    + line("M380 114v22", C.teal, 2.5)
-    + card(p, 111, 147, 538, 247,
-      '<path d="M123 148h514v57H123z" fill="' + C.cream + '" stroke="none"/>'
-      + text(137, 184, "Windows Terminal", { size: 25, weight: 650 })
-      + dot(579, 174, 4, C.sage) + dot(599, 174, 4, C.cream) + dot(619, 174, 4, C.orange)
-      + rect(135, 220, 234, 145, C.ink, 9)
-      + rect(391, 220, 234, 145, C.teal, 9)
-      + text(156, 258, "PowerShell", { size: 25, fill: C.light, weight: 600 })
-      + text(156, 306, "PS >", { mono: true, size: 24, fill: "#c4d2b7" })
-      + text(412, 258, "cmd", { size: 25, fill: C.light, weight: 600 })
-      + text(412, 306, "C:\\>", { mono: true, size: 24, fill: "#e7dabd" })
-      + '<rect x="225" y="285" width="5" height="25" rx="2" fill="' + C.light + '" class="art-motion ' + p + '-cursor"/>'
-      + line("M153 337h148M410 337h148", "#92a594", 2))
-    + text(380, 442, "창과 탭 안에서, 셸이 명령을 해석합니다", { anchor: "middle", size: 22 })
+    text(380, 85, "호스트는 창과 탭, 셸은 명령 해석", { anchor: "middle", size: 25, weight: 650 })
+    + card(p, 88, 119, 584, 288,
+      '<path d="M100 120h560v58H100z" fill="' + C.cream + '" stroke="none"/>'
+      + text(111, 157, "Windows Terminal", { size: 28, weight: 650 })
+      + text(647, 156, "호스트", { anchor: "end", size: 20, fill: C.teal })
+      + rect(111, 190, 167, 32, C.sage, 7)
+      + rect(296, 190, 167, 32, C.paper, 7)
+      + rect(481, 190, 167, 32, C.paper, 7)
+      + text(194, 213, "탭 1", { anchor: "middle", size: 18 })
+      + text(379, 213, "탭 2", { anchor: "middle", size: 18 })
+      + text(564, 213, "탭 3", { anchor: "middle", size: 18 })
+      + rect(111, 235, 167, 147, C.ink, 8)
+      + rect(296, 235, 167, 147, C.teal, 8)
+      + rect(481, 235, 167, 147, "#384c52", 8)
+      + text(194, 271, "PowerShell 7", { anchor: "middle", size: 23, fill: C.light, weight: 650 })
+      + text(194, 304, "pwsh.exe", { anchor: "middle", mono: true, size: 19, fill: "#c4d2b7" })
+      + text(130, 354, "PS >", { mono: true, size: 24, fill: C.light })
+      + '<rect x="196" y="334" width="5" height="24" rx="2" fill="' + C.light + '" class="art-motion ' + p + '-cursor"/>'
+      + text(379, 266, "Windows", { anchor: "middle", size: 23, fill: C.light, weight: 650 })
+      + text(379, 293, "PowerShell 5.1", { anchor: "middle", size: 21, fill: C.light, weight: 650 })
+      + text(379, 322, "powershell.exe", { anchor: "middle", mono: true, size: 17, fill: "#d4ddc6" })
+      + text(315, 359, "PS >", { mono: true, size: 24, fill: C.light })
+      + text(564, 275, "명령 프롬프트", { anchor: "middle", size: 22, fill: C.light, weight: 650 })
+      + text(564, 311, "cmd.exe", { anchor: "middle", mono: true, size: 20, fill: "#e7dabd" })
+      + text(502, 359, "C:\\>", { mono: true, size: 24, fill: C.light }))
+    + text(380, 450, "탭의 프로필과 실행할 셸을 확인", { anchor: "middle", size: 23, fill: C.teal })
+    + text(380, 489, "git · codex는 셸에서 부르는 별도 프로그램", { anchor: "middle", size: 21 })
   );
 }
 
 function shortcutsScene() {
   const p = "section-terminal-shortcuts";
-  const keyboard = [];
-  const rows = [
-    { y: 303, keys: [["Tab", 60], ["Q", 38], ["W", 38], ["E", 38], ["R", 38], ["T", 38], ["Y", 38], ["↵", 48]] },
-    { y: 340, keys: [["Shift", 78], ["Z", 38], ["X", 38], ["C", 38], ["V", 38], ["B", 38], ["N", 38], ["↑", 38]] },
-    { y: 377, keys: [["Ctrl", 69], ["Alt", 55], ["", 160], ["←", 38], ["↓", 38], ["→", 38]] },
-  ];
-  for (const row of rows) {
-    let x = 172;
-    for (const [label, width] of row.keys) {
-      keyboard.push(key(x, row.y, width, label, ["Tab", "T", "C", "V", "Ctrl", "Shift"].includes(label)));
-      x += width + 6;
-    }
-  }
   return scene(p,
-    card(p, 120, 111, 159, 138,
-      text(199, 144, "새 탭", { anchor: "middle", weight: 650 })
-      + rect(141, 166, 116, 57, C.light, 5)
-      + '<path d="M151 166v-9h49l10 9" fill="' + C.sage + '" stroke="' + C.ink + '" stroke-width="2"/>'
-      + line("M194 185v21M184 195h20", C.teal, 3))
-    + card(p, 300, 111, 159, 138,
-      text(379, 144, "탭 전환", { anchor: "middle", weight: 650 })
-      + rect(320, 174, 92, 48, C.cream, 5) + rect(339, 162, 98, 48, C.sage, 5)
-      + arrow(p, "M328 230h97"))
-    + card(p, 480, 111, 159, 138,
-      text(559, 144, "복사", { anchor: "middle", weight: 650 })
-      + rect(528, 171, 62, 57, C.cream, 5) + rect(515, 159, 62, 57, C.light, 5)
-      + line("M529 179h33M529 192h26", C.teal, 3))
-    + '<path d="M150 287h454l20 130-14 17H163l-16-14z" fill="' + C.cream + '" stroke="' + C.ink + '" stroke-width="2.5" stroke-linejoin="round"/>'
-    + '<path d="M150 287h454l13 125H161z" fill="url(#' + p + '-paper)" stroke="' + C.ink + '" stroke-width="2.4" stroke-linejoin="round"/>'
-    + keyboard.join("")
-    + '<g class="art-motion ' + p + '-cursor" fill="none" stroke="' + C.orange + '" stroke-width="3">'
-    + '<rect x="172" y="303" width="60" height="29" rx="5"/><rect x="172" y="377" width="69" height="29" rx="5"/></g>'
-    + text(380, 472, "한 줄 입력 · 탭 전환 · 결과 확인", { anchor: "middle", size: 22 })
+    text(380, 82, "설정에서 준비하고, 나눈 창 사이로 이동", { anchor: "middle", size: 25, weight: 650 })
+    + card(p, 91, 124, 190, 278,
+      text(186, 162, "설정", { anchor: "middle", size: 26, weight: 650 })
+      + line("M113 183h145", C.line, 1.5)
+      + text(112, 216, "기본 프로필", { size: 21 })
+      + rect(111, 228, 148, 31, "#e2e8d5", 6)
+      + text(185, 251, "PowerShell 7", { anchor: "middle", size: 18 })
+      + text(112, 294, "테마 · 글꼴 · 키", { size: 18 })
+      + line("M115 316h133", C.teal, 2.5)
+      + dot(151, 316, 6, C.light)
+      + key(120, 350, 74, "Ctrl") + key(212, 350, 39, ","))
+    + arrow(p, "M295 254h20") + signal(p, "M295 254h20")
+    + card(p, 329, 124, 339, 278,
+      text(351, 161, "Windows Terminal", { size: 25, weight: 650 })
+      + rect(349, 180, 139, 29, C.sage, 5)
+      + text(418, 201, "한 탭 안의 패널", { anchor: "middle", size: 17 })
+      + line("M512 191v12M506 197h12", C.teal, 2.5)
+      + rect(350, 224, 142, 153, C.ink, 7)
+      + rect(509, 224, 137, 153, C.teal, 7)
+      + text(369, 273, "PS >", { mono: true, size: 25, fill: C.light })
+      + text(527, 273, "PS >", { mono: true, size: 25, fill: C.light })
+      + '<rect x="433" y="252" width="5" height="25" rx="2" fill="' + C.light + '" class="art-motion ' + p + '-cursor"/>'
+      + text(421, 344, "현재 포커스", { anchor: "middle", size: 18, fill: "#d4ddc6" })
+      + text(577, 344, "다른 패널", { anchor: "middle", size: 18, fill: "#d4ddc6" })
+      + '<rect x="346" y="220" width="150" height="161" rx="9" fill="none" stroke="' + C.orange + '" stroke-width="3" class="art-motion ' + p + '-cursor"/>')
+    + text(186, 441, "Ctrl + ,", { anchor: "middle", mono: true, size: 24, fill: C.teal })
+    + text(186, 475, "설정 열기", { anchor: "middle", size: 22 })
+    + text(499, 441, "Alt + Shift + D", { anchor: "middle", mono: true, size: 23, fill: C.teal })
+    + text(499, 475, "분할  ·  Alt + 방향키로 포커스", { anchor: "middle", size: 21 })
+    + text(380, 520, "기본 키 기준 · 바꾼 키는 설정에서 확인", { anchor: "middle", size: 20, fill: C.teal })
   );
 }
 
@@ -344,23 +386,23 @@ function remoteRolesScene() {
 
 export const toolSectionScenes = {
   "terminal-example": {
-    title: "첫 명령: 인사 한 줄 입력하고 결과 확인하기",
-    description: "입력 판에서 Write-Output으로 보낸 인사가 Enter를 거쳐 출력 판에 같은 문장으로 표시됩니다.",
+    title: "첫 명령: 현재 위치에서 폴더 만들고 열기",
+    description: "PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R에 경로를 입력하거나 explorer.exe .으로 같은 폴더를 엽니다. ls로 목록을 확인한 후 mkdir과 cd로 폴더를 만들고 이동한 뒤 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 여는 흐름입니다.",
     svg: greetingScene(),
   },
   "terminal-gui-cli": {
-    title: "GUI가 편한데도 명령을 알아야 하는 이유",
-    description: "파일을 클릭하는 GUI와 명령을 적는 CLI가 하나의 파일로 이어지는 두 경로를 보여 줍니다.",
+    title: "GUI와 CLI 연결: 같은 메모 파일 만들고 확인하기",
+    description: "앞에서 만든 연습 폴더의 memo.txt를 PowerShell에서 만들고 메모장에서 내용을 입력해 저장한 뒤, 탐색기와 Windows에서 쓰는 PowerShell의 Get-Content 또는 그 기본 별칭 cat으로 같은 파일을 확인합니다.",
     svg: guiCliScene(),
   },
   "terminal-host-shell": {
     title: "Windows Terminal과 PowerShell·cmd의 관계",
-    description: "Windows Terminal이라는 호스트 안에 PowerShell과 cmd 셸이 각각 들어 있는 구조를 보여 줍니다.",
+    description: "Windows Terminal 호스트 안의 탭별 프로필에서 PowerShell 7의 pwsh.exe, Windows PowerShell 5.1의 powershell.exe, 명령 프롬프트의 cmd.exe를 구분합니다.",
     svg: hostShellScene(),
   },
   "terminal-shortcuts": {
-    title: "단축키 연습: 탭 열기부터 결과 확인까지",
-    description: "실물 키보드의 주요 키와 새 탭·탭 전환·복사 카드로 단축키의 동작을 연결합니다.",
+    title: "단축키 연습: 설정과 창 분할·포커스 이동",
+    description: "Ctrl+쉼표의 설정에서 기본 프로필·테마·글꼴·작업 키를 확인하고, Alt+Shift+D로 같은 탭을 나눈 뒤 Alt+방향키로 강조된 패널의 포커스를 옮기는 구조입니다.",
     svg: shortcutsScene(),
   },
   "git-example": {

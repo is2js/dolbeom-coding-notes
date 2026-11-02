@@ -298,6 +298,85 @@ function integratedWorkbench() {
   `);
 }
 
+function htmlCardPractice() {
+  const p = 'sa-tools-html';
+  return frame(p, `
+    ${text(380, 72, 'HTML · 내용과 구조', 27, c.ink, 'middle')}
+    <g filter='url(#${p}-shadow)'>
+      ${screen(82, 112, 290, 263, c.ink)}
+      ${text(104, 176, 'index.html', 21, c.cream)}
+      ${text(104, 215, '<article>', 22, c.pale)}
+      ${text(123, 250, '<h2>Git</h2>', 22, c.cream)}
+      ${text(123, 285, '<p>강의 소개</p>', 22, c.cream)}
+      ${text(123, 320, '<button>설명 보기</button>', 18, c.cream)}
+      ${text(104, 350, '</article>', 22, c.pale)}
+      ${screen(433, 128, 243, 233)}
+      ${text(454, 190, 'Git', 27)}
+      ${text(454, 226, '강의 소개', 21, c.muted)}
+      ${rect(454, 257, 115, 42, c.cream, 5, c.muted)}
+      ${text(512, 285, '설명 보기', 18, c.muted, 'middle')}
+    </g>
+    ${arrow(p, 384, 244, 421, 244, { motion: true })}
+    ${pill(149, 411, 166, 'VS Code에서 작성', c.cream, 18)}
+    ${pill(467, 411, 166, '브라우저에서 열기', c.pale, 18)}
+    ${text(380, 494, '제목 · 설명 · 버튼을 한 카드에', 23, c.muted, 'middle')}
+  `);
+}
+
+function cssCardPractice() {
+  const p = 'sa-tools-css';
+  return frame(p, `
+    ${text(380, 72, 'CSS · 같은 카드를 꾸미기', 27, c.ink, 'middle')}
+    <g filter='url(#${p}-shadow)'>
+      ${paper(84, 124, 258, 259)}
+      ${text(104, 171, 'style.css', 23, c.muted)}
+      ${text(104, 216, '.card {', 22)}
+      ${text(121, 250, 'padding: 24px;', 20, c.muted)}
+      ${text(121, 283, 'background: white;', 19, c.muted)}
+      ${text(121, 316, 'border-radius: 12px;', 18, c.muted)}
+      ${text(104, 351, '}', 22)}
+      ${screen(437, 119, 237, 266, c.pale)}
+      ${rect(456, 174, 200, 175, c.paper, 12, c.sage)}
+      ${text(475, 211, 'Git', 27)}
+      ${text(475, 245, '강의 소개', 19, c.muted)}
+      ${rect(475, 271, 116, 42, c.muted, 7, c.muted)}
+      ${text(533, 299, '설명 보기', 18, c.paper, 'middle')}
+    </g>
+    ${arrow(p, 354, 252, 425, 252, { motion: true })}
+    ${highlight(p, path('M466 186h8m-8 0v8 M646 186h-8m8 0v8 M466 337h8m-8 0v-8 M646 337h-8m8 0v-8', 'none', c.orange, 3))}
+    ${pill(123, 415, 166, '스타일 속성', c.cream, 19)}
+    ${pill(475, 415, 160, '색 · 여백 · 모서리', c.pale, 17)}
+    ${text(380, 494, '내용은 유지하고 모양을 바꿉니다', 23, c.muted, 'middle')}
+  `);
+}
+
+function javascriptCardPractice() {
+  const p = 'sa-tools-javascript';
+  return frame(p, `
+    ${text(380, 72, 'JavaScript · 버튼에 동작 더하기', 27, c.ink, 'middle')}
+    <g filter='url(#${p}-shadow)'>
+      ${screen(80, 119, 250, 254, c.pale)}
+      ${rect(99, 170, 212, 169, c.paper, 12, c.sage)}
+      ${text(118, 205, 'Git', 26)}
+      ${text(118, 236, '강의 소개', 19, c.muted)}
+      ${rect(118, 259, 120, 42, c.muted, 7, c.muted)}
+      ${text(178, 287, '설명 보기', 18, c.paper, 'middle')}
+      ${path('M223 287l-8 26 11-4 6 13 7-3-6-13 12-4Z', c.orange, c.ink, 1.7)}
+      ${screen(429, 119, 250, 254, c.pale)}
+      ${rect(448, 170, 212, 169, c.paper, 12, c.sage)}
+      ${text(467, 205, 'Git', 26)}
+      ${text(467, 236, '강의 소개', 19, c.muted)}
+      ${rect(467, 254, 120, 38, c.muted, 7, c.muted)}
+      ${text(527, 279, '설명 보기', 18, c.paper, 'middle')}
+      ${highlight(p, rect(467, 302, 175, 25, c.softOrange, 5, c.orange) + text(477, 320, '변경을 기록합니다', 16, c.ink))}
+    </g>
+    ${arrow(p, 344, 249, 414, 249, { motion: true })}
+    ${pill(121, 410, 168, '클릭 전 · 설명 숨김', c.cream, 17)}
+    ${pill(470, 410, 168, '클릭 후 · 설명 표시', c.pale, 17)}
+    ${text(380, 495, '다시 누르면 설명을 숨깁니다', 23, c.muted, 'middle')}
+  `);
+}
+
 function localAndRemote() {
   const p = 'sa-web-map';
   return frame(p, `
@@ -422,37 +501,27 @@ function templateEngines() {
 function cardLayers() {
   const p = 'sa-frontend-css';
   return frame(p, `
-    ${text(157, 149, 'HTML', 27, c.ink, 'middle')}
-    ${text(380, 106, 'CSS / Tailwind', 25, c.ink, 'middle')}
-    ${text(604, 64, 'JavaScript', 25, c.ink, 'middle')}
+    ${text(380, 70, '같은 모양을 표현하는 두 가지 방법', 26, c.ink, 'middle')}
     <g filter='url(#${p}-shadow)'>
-      ${paper(77, 177, 163, 226)}
-      ${path('M95 219h126v137H95Z', 'none', c.sage, 1.5)}
-      ${text(110, 253, 'Git', 25)}
-      ${text(110, 287, '25분', 20, c.muted)}
-      ${rect(108, 310, 99, 31, c.paper, 0, c.muted)}
-      ${text(157, 333, '설명', 18, c.muted, 'middle')}
-      ${slab(293, 135, 175, 239, c.pale)}
-      ${rect(314, 159, 133, 185, c.paper, 14, c.muted)}
-      ${text(333, 201, 'Git', 27)}
-      ${text(333, 236, '25분', 20, c.muted)}
-      ${rect(330, 265, 100, 42, c.muted, 9, c.muted)}
-      ${text(380, 293, '설명', 20, c.paper, 'middle')}
-      ${pill(317, 352, 126, 'p-4', c.cream, 20)}
-      ${slab(518, 94, 175, 258, c.paper)}
-      ${text(541, 142, 'Git', 28)}
-      ${text(541, 176, '25분', 21, c.muted)}
-      ${rect(539, 197, 131, 45, c.muted, 9, c.muted)}
-      ${text(604, 227, '설명 보기', 20, c.paper, 'middle')}
-      ${highlight(p, rect(536, 260, 139, 66, c.pale, 9, c.sage) + text(605, 288, '펼친 설명', 20, c.muted, 'middle') + lines(553, 303, [101], c.sage, 0, 4))}
+      ${slab(81, 102, 281, 140, c.paper)}
+      ${text(102, 140, 'CSS 속성', 23)}
+      ${text(102, 177, 'padding: 1rem;', 20, c.muted)}
+      ${text(102, 211, 'border-radius: .75rem;', 19, c.muted)}
+      ${slab(81, 288, 281, 107, c.cream)}
+      ${text(102, 326, 'Tailwind 클래스', 23)}
+      ${text(102, 365, 'p-4  rounded-xl', 22, c.muted)}
+      ${screen(460, 143, 225, 233, c.pale)}
+      ${rect(479, 195, 187, 152, c.paper, 12, c.sage)}
+      ${text(497, 229, 'Git', 27)}
+      ${text(497, 262, '강의 소개', 19, c.muted)}
+      ${rect(497, 282, 116, 38, c.muted, 7, c.muted)}
+      ${text(555, 308, '설명 보기', 18, c.paper, 'middle')}
+      ${highlight(p, path('M489 205h8m-8 0v8 M656 205h-8m8 0v8 M489 337h8m-8 0v-8 M656 337h-8m8 0v-8', 'none', c.orange, 3))}
     </g>
-    ${arrow(p, 249, 281, 281, 265, { motion: true })}
-    ${arrow(p, 478, 235, 507, 220, { motion: true, delay: 1.2 })}
-    ${path('M658 232l20 28-13-2-5 12-6-4 6-12-12-3Z', c.orange, c.ink, 1.7)}
-    ${text(157, 450, '구조', 25, c.muted, 'middle')}
-    ${text(380, 450, '모양', 25, c.muted, 'middle')}
-    ${text(605, 450, '반응', 25, c.muted, 'middle')}
-    ${text(380, 501, '같은 카드에 세 역할을 차례로', 23, c.muted, 'middle')}
+    ${arrow(p, 375, 173, 445, 219, { motion: true })}
+    ${arrow(p, 375, 341, 445, 303, { motion: true, delay: 1.2 })}
+    ${pill(496, 414, 160, '여백 · 모서리', c.pale, 19)}
+    ${text(380, 493, 'Tailwind 클래스도 CSS 스타일을 적용합니다', 22, c.muted, 'middle')}
   `);
 }
 
@@ -518,6 +587,21 @@ export const webSectionScenes = {
     description: '하나의 프로젝트 작업대를 중심으로 README·PowerShell·Git 변경 비교·GitHub를 연결해 같은 작업의 맥락을 확인합니다.',
     svg: integratedWorkbench(),
   },
+  'tools-html': {
+    title: 'HTML: 강의 카드의 내용과 구조 만들기',
+    description: 'VS Code의 HTML 제목·설명·버튼이 브라우저의 꾸미지 않은 강의 카드로 나타나는 모습입니다.',
+    svg: htmlCardPractice(),
+  },
+  'tools-css': {
+    title: 'CSS: 같은 카드에 색과 여백 더하기',
+    description: 'CSS의 여백·배경색·둥근 모서리 속성을 같은 강의 카드에 적용해 모양이 바뀝니다.',
+    svg: cssCardPractice(),
+  },
+  'tools-javascript': {
+    title: 'JavaScript: 버튼으로 설명 표시하기',
+    description: '강의 카드의 버튼을 누르기 전 숨겨진 설명과 누른 뒤 표시되는 설명을 비교합니다.',
+    svg: javascriptCardPractice(),
+  },
   'web-map': {
     title: '백엔드는 어디서 실행될까: 로컬과 원격 서버',
     description: '내 PC의 브라우저와 서버 프로세스가 있는 로컬 섬, 다른 컴퓨터의 서버가 있는 원격 섬을 요청·응답으로 연결합니다.',
@@ -539,8 +623,8 @@ export const webSectionScenes = {
     svg: templateEngines(),
   },
   'frontend-css': {
-    title: '같은 카드에 HTML → CSS·Tailwind → JavaScript',
-    description: '구조만 있는 카드, 안쪽 여백과 색을 입힌 카드, 클릭으로 설명이 나타난 카드의 세 입체 단계를 순서대로 비교합니다.',
+    title: '기존 CSS와 Tailwind를 같은 카드에서 비교하기',
+    description: 'CSS 속성과 Tailwind 유틸리티 클래스가 같은 카드의 안쪽 여백과 둥근 모서리를 표현하는 방법을 비교합니다.',
     svg: cardLayers(),
   },
   'frontend-alpine': {

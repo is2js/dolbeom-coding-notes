@@ -5,9 +5,9 @@ import { resolveLessonAlias } from './course-storage.js';
 const relatedStepIds = {
   terminal: {
     'terminal-example': ['terminal-01', 'terminal-02', 'terminal-03'],
-    'terminal-gui-cli': ['terminal-04', 'codex-02'],
+    'terminal-gui-cli': ['terminal-04', 'terminal-08', 'codex-02'],
     'terminal-host-shell': ['terminal-05'],
-    'terminal-shortcuts': ['terminal-06', 'terminal-07', 'terminal-08'],
+    'terminal-shortcuts': ['terminal-06', 'terminal-07'],
   },
   git: {
     'git-example': ['git-01', 'git-02', 'git-03'],
@@ -28,6 +28,9 @@ const relatedStepIds = {
     'tools-vscode': ['tools-01', 'tools-02', 'tools-03'],
     'tools-pycharm': ['tools-06', 'ide-keymap', 'tools-07'],
     'codex-context': ['tools-05'],
+    'tools-html': ['html-practice'],
+    'tools-css': ['css-practice'],
+    'tools-javascript': ['javascript-practice'],
   },
   web: {
     'web-map': ['web-01', 'web-server-process'],

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#f6eddd" />
   <meta name="description" content="돌범이 풀어주는 AI 구독 전 코딩 필수 노하우. 윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 3시간 강의." />
   <title>돌범의 코딩 작업실 — AI 구독 전 코딩 필수 노하우</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="icon" type="image/png" href="./assets/branding/favicon-a.png" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -32,6 +32,7 @@
           <span class="brand-symbol" aria-hidden="true">&lt;∞&gt;</span>
           <span><span class="brand-kicker">돌범이 풀어주는</span><h1>AI 구독 전 코딩 필수 노하우</h1><span class="brand-subtitle">EXPLORE · UNDERSTAND · BUILD</span></span>
         </a>
+        <img class="brand-art" src="./assets/branding/header-a.png" width="1672" height="941" alt="" />
         <div class="course-meter" x-show="course">
           <span class="meter-icon" x-html="icon('book')"></span>
           <div><span class="eyebrow">CODING ESSENTIALS</span><div class="meter-row"><div class="meter-track" role="progressbar" :aria-valuenow="completed.length" aria-valuemin="0" :aria-valuemax="course ? course.lessons.length : 0" aria-label="완료한 강의"><i :style="'width:' + completed.length / Math.max(course?.lessons.length || 0, 1) * 100 + '%'"></i></div><b x-text="completed.length + '/' + (course?.lessons.length || 0)"></b></div></div>
@@ -45,7 +46,7 @@
       <template id="learning-template" x-if="course && !loading && route === 'learn'"></template>
 
       <section id="editor-host" x-show="course && route==='editor' && !loading"></section>
-      <footer class="page-footer"><span>돌범의 코딩 작업실 <i>© 2026</i></span><span><span class="status-dot"></span><span x-text="hasDraft?'이 브라우저의 편집본 사용 중':'A LITTLE KNOWLEDGE. A LOT MORE POSSIBILITIES.'"></span></span><button @click="openEditor()">강의 편집 <span aria-hidden="true">↗</span></button></footer>
+      <footer class="page-footer"><span>돌범의 코딩 작업실 <i>© 2026</i></span><span><span class="status-dot"></span><span x-text="hasDraft?'이 브라우저의 편집본 사용 중':'A LITTLE KNOWLEDGE. A LOT MORE POSSIBILITIES.'"></span></span><a class="zoom-background-link" href="./assets/branding/zoom-background-a.png" download="dolbeom-zoom-background.png">Zoom 배경 다운로드 ↓</a><button @click="openEditor()">강의 편집 <span aria-hidden="true">↗</span></button></footer>
     </div>
 
     <section id="presentation-host"></section>

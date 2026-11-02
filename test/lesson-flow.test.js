@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 22 core sections appear once in case, authored section order, recap flows', () => {
+test('all 25 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,10 +25,10 @@ test('all 22 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 22);
+  assert.equal(total, 25);
 });
 
-test('every core section has related examples and the registry covers all 67 existing step IDs', () => {
+test('every core section has related examples and the registry covers the existing step IDs', () => {
   const covered = new Set();
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -44,16 +44,20 @@ test('every core section has related examples and the registry covers all 67 exi
     assert.equal(JSON.stringify(lesson), before);
   }
   const expected = source.lessons.flatMap(lesson => lesson.steps.map(step => `${lesson.id}/${step.id}`));
-  assert.equal(expected.length, 67);
   assert.deepEqual([...covered].sort(), expected.sort());
 });
 
 test('terminal, README, Python keymap and template pages select examples for their own concepts', () => {
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-example')), ['terminal-01', 'terminal-02', 'terminal-03']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-gui-cli')), ['terminal-04', 'terminal-08', 'codex-02']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-host-shell')), ['terminal-05']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-shortcuts')), ['terminal-06', 'terminal-07']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-tools-markdown')), ['tools-08', 'tools-10']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode')), ['tools-01', 'tools-02', 'tools-03']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), ['tools-06', 'ide-keymap', 'tools-07']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-html')), ['html-practice']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-css')), ['css-practice']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-javascript')), ['javascript-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-html')), ['web-ssr-handler', 'web-ssr-template', 'web-08', 'web-11']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-web-jinja')), ['web-06', 'web-07', 'frontend-01']);
   assert.ok(!stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-css')).includes('frontend-08'));

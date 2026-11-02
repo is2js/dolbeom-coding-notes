@@ -15,15 +15,20 @@ import editorHtml from './editor.html?raw';
 import presentationHtml from './presentation.html?raw';
 import demoHtml from './demo.html?raw';
 import lessonHtml from './lesson.html?raw';
+import homeHtml from './home.html?raw';
 import './styles.css';
 import './editor.css';
 import './illustrations.css';
 import './presentation.css';
 import './lesson.css';
 import './branding.css';
+import './home.css';
+import './home-desktop.css';
+import './home-art.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
 document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml);
+document.getElementById('intro-template').innerHTML = homeHtml;
 document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml)}</template>`;
 document.querySelector('.brand h1').setAttribute('x-text', 'brandTitle');
 document.querySelector('.brand-kicker').setAttribute('x-text', "course ? course.author + '이 풀어주는' : '돌범이 풀어주는'");
@@ -202,6 +207,11 @@ Alpine.data('courseApp', () => ({
   readRoute(initial=false) {
     if (this.readPresentationRoute(initial)) return;
     this.pausePresentationTimers(); this.rehearsalOpen=false; this.readerOpen=false;
+    if (!location.hash || location.hash === '#/' || location.hash === '#/home') {
+      this.route='home'; this.drawer=false;
+      document.title='돌범의 코딩 작업실 · AI 구독 전 코딩 필수 노하우';
+      return;
+    }
     const editing = parseEditorRoute(location.hash, this.editor.working || this.course, this.editor.lessonId || this.lessonId);
     if (editing) {
       this.editor.open();
@@ -241,6 +251,16 @@ Alpine.data('courseApp', () => ({
     this.showLesson(editing ? this.editor.lessonId : this.lessonId,page); this.view=view; this.drawer=false;
     if(view === 'demo')this.showLearningDemo();
   },
+  async goIntro() {
+    if(this.route === 'editor' && !await prepareLearningReturn(this.editor)) {
+      this.notify('저장 상태를 확인한 뒤 다시 돌아가 주세요. 입력한 내용은 편집기에 남아 있습니다.');
+      return;
+    }
+    this.drawer=false; this.readerOpen=false;
+    if(location.hash !== '#/home') location.hash='/home';
+    else this.readRoute();
+    window.scrollTo({top:0,behavior:'instant'});
+  },
   openEditor(itemId=this.route === 'learn' && this.learningPage?.kind === 'section' ? this.learningPage.section.id : this.route === 'editor' ? this.editor.focusId : 'case', id=this.lessonId) {
     if(!this.editor)return;
     this.readerOpen=false;this.editor.open();
@@ -258,7 +278,7 @@ Alpine.data('courseApp', () => ({
     const address=editorAddress(this.editor.lessonId,this.editor.focusId || 'case');
     if(location.hash !== address)history.replaceState(null,'',address);
   },
-  focusMain() { const main=document.querySelector(this.route==='editor'?(this.editor.uiMode === 'focus' ? '.editor-focus' : '.editor-workspace'):this.route==='present'?'#presentation-main':'#lesson-main');if(main){main.tabIndex=-1;main.focus();} },
+  focusMain() { const main=document.querySelector(this.route==='editor'?(this.editor.uiMode === 'focus' ? '.editor-focus' : '.editor-workspace'):this.route==='present'?'#presentation-main':this.route==='home'?'#intro-main':'#lesson-main');if(main){main.tabIndex=-1;main.focus();} },
   exportLegacyDraft() {
     if(!this.legacyDraft)return;
     const blob=new Blob([JSON.stringify(this.legacyDraft,null,2)+'\n'],{type:'application/json;charset=utf-8'});

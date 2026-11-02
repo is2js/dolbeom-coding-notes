@@ -1,0 +1,16 @@
+/* Give the introduction a tighter, balanced layout on wide screens. */
+@media (min-width: 901px) {
+  .is-intro .masthead { min-height: 112px; }
+  .intro-page { max-width: 1360px; margin-inline: auto; padding-top: 0; }
+  .intro-hero {
+    grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+    gap: clamp(32px, 4vw, 64px);
+    min-height: 420px;
+    padding: 24px 24px 36px;
+  }
+  .intro-copy { padding-left: clamp(0px, 2vw, 28px); }
+  .intro-copy h2 { font-size: clamp(36px, 3.5vw, 54px); }
+  .intro-copy p { font-size: 16px; }
+  .intro-path { padding: 54px 24px; }
+  .intro-lesson-list button { min-height: 122px; }
+}

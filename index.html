@@ -6,21 +6,21 @@
   <meta name="theme-color" content="#f6eddd" />
   <meta name="description" content="돌범이 풀어주는 AI 구독 전 코딩 필수 노하우. 윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 3시간 강의." />
   <title>돌범의 코딩 작업실 — AI 구독 전 코딩 필수 노하우</title>
-  <link rel="icon" type="image/png" href="./assets/branding/favicon-a.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/branding/portrait-favicon.png" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div id="app" x-data="courseApp" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn' }" x-cloak>
-    <a class="skip-link" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
+  <div id="app" x-data="courseApp" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home' }" x-cloak>
+    <a class="skip-link" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
     <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
       <button class="rail-toggle" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="icon('chevron')"></button>
       <nav class="rail-links">
-        <button @click="goHome()" :class="{active: route === 'learn'}" aria-label="강의 홈" title="강의 홈" x-html="icon('home')"></button>
+        <button @click="goIntro()" :class="{active: route === 'home'}" aria-label="소개 홈" title="소개 홈" x-html="icon('home')"></button>
         <button @click="drawer = !drawer" :class="{active: drawer}" aria-label="전체 목차" title="전체 목차" x-html="icon('book')"></button>
-        <button @click="route === 'editor' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="icon('chip')"></button>
-        <button @click="route === 'editor' ? goHome('demo') : showLearningDemo()" :class="{active: route === 'learn' && view === 'demo'}" aria-label="관련 예제" title="관련 예제" x-html="icon('play')"></button>
+        <button @click="route !== 'learn' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="icon('chip')"></button>
+        <button @click="route !== 'learn' ? goHome('demo') : showLearningDemo()" :class="{active: route === 'learn' && view === 'demo'}" aria-label="관련 예제" title="관련 예제" x-html="icon('play')"></button>
         <button @click="openEditor()" :class="{active: route === 'editor'}" aria-label="강의 편집기" title="강의 편집기" x-html="icon('settings')"></button>
       </nav>
       <div class="rail-signature"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark">✳</span></div>
@@ -28,11 +28,10 @@
 
     <div class="workspace" x-show="route !== 'present'">
       <header class="masthead" x-show="route !== 'editor'">
-        <a class="brand" href="#/lesson/terminal" @click.prevent="goHome()" aria-label="돌범의 코딩 작업실 홈">
-          <span class="brand-symbol" aria-hidden="true">&lt;∞&gt;</span>
+        <a class="brand" href="#/home" @click.prevent="goIntro()" aria-label="돌범의 코딩 작업실 홈">
+          <img class="brand-portrait" src="./assets/branding/portrait-bright.png" width="1106" height="1422" alt="" />
           <span><span class="brand-kicker">돌범이 풀어주는</span><h1>AI 구독 전 코딩 필수 노하우</h1><span class="brand-subtitle">EXPLORE · UNDERSTAND · BUILD</span></span>
         </a>
-        <img class="brand-art" src="./assets/branding/header-a.png" width="1672" height="941" alt="" />
         <div class="course-meter" x-show="course">
           <span class="meter-icon" x-html="icon('book')"></span>
           <div><span class="eyebrow">CODING ESSENTIALS</span><div class="meter-row"><div class="meter-track" role="progressbar" :aria-valuenow="completed.length" aria-valuemin="0" :aria-valuemax="course ? course.lessons.length : 0" aria-label="완료한 강의"><i :style="'width:' + completed.length / Math.max(course?.lessons.length || 0, 1) * 100 + '%'"></i></div><b x-text="completed.length + '/' + (course?.lessons.length || 0)"></b></div></div>
@@ -43,6 +42,7 @@
       <div x-show="loading" class="loading-state"><span class="loading-mark">&lt; / &gt;</span><p>작업실을 준비하고 있습니다.</p></div>
       <div x-show="error" class="error-state" role="alert"><h2>강의 파일을 불러오지 못했습니다.</h2><p x-text="error"></p><button class="solid-button" @click="location.reload()">다시 불러오기</button></div>
 
+      <template id="intro-template" x-if="course && !loading && route === 'home'"></template>
       <template id="learning-template" x-if="course && !loading && route === 'learn'"></template>
 
       <section id="editor-host" x-show="course && route==='editor' && !loading"></section>

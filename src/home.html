@@ -1,0 +1,69 @@
+<main id="intro-main" class="intro-page">
+  <section class="intro-hero" aria-labelledby="intro-title">
+    <div class="intro-copy">
+      <span class="intro-kicker">DOLBEOM'S CODING WORKSPACE · 3 HOURS</span>
+      <h2 id="intro-title">AI와 함께 만들기 전에,<br><em>기본부터 차근차근.</em></h2>
+      <p>Codex와 함께 개발하며 마주치는 용어와 도구들.<br>실제 작업의 흐름을 따라 이해하고 직접 익혀봅니다.</p>
+      <div class="intro-actions"><button type="button" class="intro-primary" @click="showLesson(course.lessons[0].id)">첫 강의 시작하기 <span aria-hidden="true">↗</span></button><a href="#instructor" @click.prevent="$el.closest('main').querySelector('#instructor').scrollIntoView({behavior: prefersReducedMotion ? 'instant' : 'smooth'})">강사 소개 보기 ↓</a></div>
+      <div class="intro-stats"><span><b>07</b> LESSONS</span><span><b>180</b> MINUTES</span><span><b>01</b> STEP AT A TIME</span></div>
+    </div>
+    <div class="intro-art" role="img" aria-label="노트북과 코딩 화면, 책과 식물이 놓인 크림과 세이지색 작업실 그림">
+      <img src="./assets/branding/header-a.png" alt="" width="1672" height="941" />
+      <div class="art-sticker art-codex" aria-hidden="true">
+        <svg viewBox="0 0 150 94" fill="none">
+          <path d="M13 20C13 12.3 19.3 6 27 6H127C134.7 6 141 12.3 141 20V66C141 73.7 134.7 80 127 80H83L67 89L68 80H27C19.3 80 13 73.7 13 66V20Z" fill="#F8F2DF" stroke="#52705B" stroke-width="3"/>
+          <circle cx="33" cy="27" r="12" fill="#789477"/><path d="M33 19V35M25 27H41M27.5 21.5L38.5 32.5M38.5 21.5L27.5 32.5" stroke="#F8F2DF" stroke-width="2" stroke-linecap="round"/>
+          <text x="52" y="31" fill="#365543" font-size="13" font-family="sans-serif" font-weight="800" letter-spacing="1">CODEX</text>
+          <path d="M26 48H87M26 59H119M26 68H75" stroke="#9EB39A" stroke-width="4" stroke-linecap="round"/><path d="M95 48H117" stroke="#E3B974" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="art-sticker art-terminal" aria-hidden="true">
+        <svg viewBox="0 0 146 104" fill="none">
+          <rect x="9" y="8" width="128" height="77" rx="11" fill="#34584B" stroke="#F7F1DE" stroke-width="3"/>
+          <path d="M10 27H136" stroke="#F7F1DE" stroke-width="2" opacity=".7"/><circle cx="23" cy="18" r="3" fill="#E3B776"/><circle cx="33" cy="18" r="3" fill="#B8CAA9"/><circle cx="43" cy="18" r="3" fill="#F4E3BE"/>
+          <path d="M26 43L36 50L26 57M44 59H62" stroke="#F3E7C8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M77 44H113M77 53H104M77 62H118" stroke="#91B39B" stroke-width="3" stroke-linecap="round"/>
+          <path d="M62 85V94M84 85V94M48 95H98" stroke="#F7F1DE" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="art-sticker art-keyboard" aria-hidden="true">
+        <svg viewBox="0 0 165 78" fill="none">
+          <path d="M23 11H143L158 58C159.4 62.4 156.1 67 151.5 67H14C9.4 67 6.1 62.4 7.5 58L23 11Z" fill="#F6EBD3" stroke="#587660" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M30 22H40M49 22H59M68 22H78M87 22H97M106 22H116M125 22H135M26 34H37M46 34H57M66 34H77M86 34H97M106 34H117M126 34H138M22 46H34M43 46H55M64 46H76M85 46H97M106 46H118M127 46H141M50 57H113" stroke="#86A088" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="art-sticker art-mug" aria-hidden="true">
+        <svg viewBox="0 0 72 78" fill="none">
+          <path d="M19 28H50V53C50 62 43 68 34.5 68C26 68 19 62 19 53V28Z" fill="#F5D18E" stroke="#587660" stroke-width="3" stroke-linejoin="round"/><path d="M50 34H56C66 34 66 49 56 49H50" stroke="#587660" stroke-width="3" stroke-linecap="round"/><path d="M23 18C18 12 27 9 24 4M35 19C30 13 39 10 36 5" stroke="#F9F0D8" stroke-width="3" stroke-linecap="round"/><circle cx="29" cy="44" r="2" fill="#587660"/><circle cx="40" cy="44" r="2" fill="#587660"/><path d="M30 52C33 55 37 55 40 52" stroke="#587660" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="intro-spark intro-spark-one" aria-hidden="true">✳</span><span class="intro-spark intro-spark-two" aria-hidden="true">✦</span>
+    </div>
+  </section>
+
+  <section class="intro-path" aria-labelledby="intro-path-title">
+    <div class="intro-section-title"><div><span class="intro-kicker">YOUR LEARNING PATH</span><h2 id="intro-path-title">일곱 주제를 하나의 흐름으로</h2></div><p>사례로 시작해 개념을 익히고,<br>직접 확인하며 이어갑니다.</p></div>
+    <div class="intro-lesson-list"><template x-for="(item, index) in course.lessons" :key="item.id"><button type="button" @click="showLesson(item.id)"><span x-text="String(index + 1).padStart(2, '0')"></span><strong x-text="item.shortTitle"></strong><small x-text="coreMinutes(item) + '분'"></small><b aria-hidden="true">↗</b></button></template></div>
+  </section>
+
+  <section id="instructor" class="instructor" aria-labelledby="instructor-title">
+    <div class="instructor-heading"><span class="intro-kicker">MEET YOUR INSTRUCTOR</span><h2 id="instructor-title">안녕하세요,<br><em>돌범입니다.</em></h2><p>의학과 데이터, 그리고 개발을 경험하며 배운 것들을 실전 중심으로 풀어냅니다.</p><span class="instructor-mark">DOLBEOM / ABOUT</span></div>
+    <div class="instructor-details">
+      <section><h3>Certificate <span>자격 및 학력</span></h3><ul>
+        <li><time>2022.02~</time><div><strong>M.S. candidate, Statistics/Bioinformatics</strong><br><strong>바이오통계 석사과정</strong></div></li>
+        <li><time>2021.02</time><div>일반수련의 · General training</div></li>
+        <li><time>2020.02</time><div>한의사 · B.S. in Korean Oriental Medicine<br><small>동신대학교 한의학과 최우수 졸업 (수석 졸업)</small></div></li>
+        <li><time>2019.09</time><div><strong>정보처리기사 · Engineer Information Processing</strong></div></li>
+        <li><time>2019.04</time><div><strong>SQL 개발자 (SQLD) · 데이터분석 준전문가 (ADsP)</strong></div></li>
+      </ul></section>
+      <section><h3>Paper <span>논문</span></h3><ul><li><time>2019.12<br>게재 승인</time><div><a class="instructor-text-link" href="https://www.mdpi.com/2076-3417/9/24/5456" target="_blank" rel="noopener noreferrer"><strong>Identification of Toxic Herbs Using Deep Learning</strong> with Focus on the Sinomenium Acutum, Aristolochiae Manshuriensis Caulis, Akebiae Caulis <svg class="instructor-link-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5h11v11M19 5 5 19"/></svg></a></div></li></ul></section>
+      <section><h3>Experiences / Studies <span>경험 및 학습</span></h3><ul>
+        <li><time>2021.11~<br>2022.05</time><div><strong>우아한테크코스 백엔드 과정 4기 선발</strong><span class="instructor-links"><a class="instructor-icon-link" href="https://github.com/is2js/woowa_precourse" target="_blank" rel="noopener noreferrer" aria-label="우아한테크코스 프리코스 저장소 보기 (새 창)" title="프리코스 저장소"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5h11v11M19 5 5 19"/></svg></a><a class="instructor-icon-link" href="https://raw.githubusercontent.com/is2js/screenshots/main/20220525102303.png" target="_blank" rel="noopener noreferrer" aria-label="우아한테크코스 레벨 1 수료 확인 (새 창)" title="레벨 1 수료 확인"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></a></span></div></li>
+        <li><time>2019.07~09</time><div><strong><a class="instructor-text-link" href="https://dataonair.or.kr/bigjob/" target="_blank" rel="noopener noreferrer">Kdata 빅데이터 청년인재 <svg class="instructor-link-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5h11v11M19 5 5 19"/></svg></a> · 빅데이터 기반의 지능정보 시스템 개발(고려대) 과정</strong></div></li>
+        <li><time>2019.02~03</time><div><strong><a class="instructor-text-link" href="http://www.snubi.org/" target="_blank" rel="noopener noreferrer">서울대학교 의과대학 SNU BioInformatics Lab <svg class="instructor-link-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5h11v11M19 5 5 19"/></svg></a> Internship</strong></div></li>
+        <li><time>2018.03~<br>2020.02</time><div><a class="instructor-text-link" href="https://www.kosffl.or.kr/" target="_blank" rel="noopener noreferrer">한국지도자육성장학재단(Kosffl Club) <svg class="instructor-link-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5h11v11M19 5 5 19"/></svg></a> 장학생 선발</div></li>
+      </ul></section>
+    </div>
+  </section>
+  <section class="intro-bottom"><div><span class="intro-kicker">READY TO BEGIN?</span><h2>이제 첫 번째 이야기로.</h2></div><button type="button" class="intro-primary" @click="showLesson(course.lessons[0].id)">윈도우 터미널부터 시작하기 ↗</button></section>
+</main>

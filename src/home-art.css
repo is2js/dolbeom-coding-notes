@@ -1,0 +1,24 @@
+/* Illustrated stickers animate independently over the original artwork. */
+.intro-art { isolation: isolate; }
+.art-sticker {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 5px rgba(51, 76, 55, .18));
+  animation: sticker-bob 5.4s ease-in-out infinite;
+}
+.art-sticker svg { display: block; width: 100%; height: auto; overflow: visible; }
+.art-codex { width: 24%; right: -3%; top: -7%; rotate: 5deg; }
+.art-terminal { width: 21%; left: 33%; top: -9%; rotate: -7deg; animation-delay: -1.8s; }
+.art-keyboard { width: 26%; right: -3%; bottom: -8%; rotate: -5deg; animation-delay: -3.2s; }
+.art-mug { width: 11%; left: 45%; bottom: -9%; rotate: 8deg; animation-delay: -.9s; }
+@keyframes sticker-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+@media (max-width: 560px) {
+  .art-codex { width: 24%; right: -1%; top: -5%; }
+  .art-terminal { width: 20%; left: 33%; top: -6%; }
+  .art-keyboard { width: 26%; right: -1%; bottom: -6%; }
+  .art-mug { width: 10%; left: 45%; bottom: -6%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .art-sticker { animation: none; }
+}

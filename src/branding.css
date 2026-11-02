@@ -1,4 +1,12 @@
 /* The complete A illustration stays visible at every width. */
+.brand-portrait {
+  display: block;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 74px;
+  object-fit: contain;
+  object-position: center bottom;
+}
 .masthead { min-height: 142px; height: auto; }
 .brand-art {
   display: block;
@@ -23,6 +31,7 @@
 }
 
 @media (max-width: 720px) {
+  .brand-portrait { width: 40px; height: 54px; }
   .masthead { position: relative; min-height: 125px; padding: 10px 0; }
   .brand { width: calc(100% - 126px); }
   .brand-art { position: absolute; right: 0; bottom: 10px; width: 115px; }

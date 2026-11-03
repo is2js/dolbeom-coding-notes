@@ -56,6 +56,19 @@ test('루트 Pages와 상대 경로 배포에서도 정적 파일을 검증한�
   }
 });
 
+test('사이트 루트와 하위 폴더 링크는 index.html을 확인하고 누락·탈출을 거부한다',t=>{
+  const {dir}=fixture(t);
+  mkdirSync(join(dir,'guide'));
+  writeFileSync(join(dir,'guide/index.html'),'안내');
+  const links='<a href="./">홈</a><a href="guide/">안내</a>';
+  writeFileSync(join(dir,'index.html'),`<script src="/notes/assets/app.js"></script>${links}`);
+  assert.equal(checkDist({distDir:dir,base:'/notes/'}).assets,3);
+  writeFileSync(join(dir,'index.html'),'<script src="/notes/assets/app.js"></script><a href="missing/">안내</a>');
+  assert.throws(()=>checkDist({distDir:dir,base:'/notes/'}),/파일을 찾을 수/);
+  writeFileSync(join(dir,'index.html'),'<script src="/notes/assets/app.js"></script><a href="../">상위</a>');
+  assert.throws(()=>checkDist({distDir:dir,base:'/notes/'}),/하위 경로/);
+});
+
 test('Vite 개발 클라이언트와 로컬 파일 저장 코드는 배포하지 않는다',t=>{
   const {dir}=fixture(t);
   for (const developmentCode of [

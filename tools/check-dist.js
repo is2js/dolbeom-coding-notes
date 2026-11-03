@@ -20,8 +20,14 @@ export function checkDist({ distDir, base = './', sourceCourseFile }) {
     if (!url.pathname.startsWith(prefix)) {
       throw new Error(`배포 하위 경로를 벗어난 파일 참조: ${reference}`);
     }
-    const local = resolve(directory, decodeURIComponent(url.pathname.slice(prefix.length)));
-    const path = relative(directory, local);
+    let local = resolve(directory, decodeURIComponent(url.pathname.slice(prefix.length)));
+    let path = relative(directory, local);
+    // A trailing slash refers to a directory index on static hosting, including
+    // the site's own root. Keep the same containment checks for its index file.
+    if (!path.startsWith('..') && !isAbsolute(path) && url.pathname.endsWith('/') && existsSync(local) && statSync(local).isDirectory()) {
+      local = resolve(local, 'index.html');
+      path = relative(directory, local);
+    }
     if (path.startsWith('..') || isAbsolute(path) || !existsSync(local) || !statSync(local).isFile()) {
       throw new Error(`배포 결과에서 파일을 찾을 수 없습니다: ${reference}`);
     }

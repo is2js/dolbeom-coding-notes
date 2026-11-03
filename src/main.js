@@ -208,6 +208,7 @@ Alpine.data('courseApp', () => ({
     if (this.readPresentationRoute(initial)) return;
     this.pausePresentationTimers(); this.rehearsalOpen=false; this.readerOpen=false;
     if (!location.hash || location.hash === '#/' || location.hash === '#/home') {
+      if (location.hash) history.replaceState(history.state, '', new URL('.', location.href).pathname + location.search);
       this.route='home'; this.drawer=false;
       document.title='돌범의 코딩 작업실 · AI 구독 전 코딩 필수 노하우';
       return;
@@ -257,8 +258,8 @@ Alpine.data('courseApp', () => ({
       return;
     }
     this.drawer=false; this.readerOpen=false;
-    if(location.hash !== '#/home') location.hash='/home';
-    else this.readRoute();
+    if (location.hash) history.pushState(history.state, '', new URL('.', location.href).pathname + location.search);
+    this.readRoute();
     window.scrollTo({top:0,behavior:'instant'});
   },
   openEditor(itemId=this.route === 'learn' && this.learningPage?.kind === 'section' ? this.learningPage.section.id : this.route === 'editor' ? this.editor.focusId : 'case', id=this.lessonId) {

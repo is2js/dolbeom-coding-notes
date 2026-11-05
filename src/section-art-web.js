@@ -301,25 +301,29 @@ function integratedWorkbench() {
 function htmlCardPractice() {
   const p = 'sa-tools-html';
   return frame(p, `
-    ${text(380, 72, 'HTML · 내용과 구조', 27, c.ink, 'middle')}
+    ${text(380, 65, 'HTML · 코드의 요소와 화면 연결', 27, c.ink, 'middle')}
     <g filter='url(#${p}-shadow)'>
-      ${screen(82, 112, 290, 263, c.ink)}
-      ${text(104, 176, 'index.html', 21, c.cream)}
-      ${text(104, 215, '<article>', 22, c.pale)}
-      ${text(123, 250, '<h2>Git</h2>', 22, c.cream)}
-      ${text(123, 285, '<p>강의 소개</p>', 22, c.cream)}
-      ${text(123, 320, '<button>설명 보기</button>', 18, c.cream)}
-      ${text(104, 350, '</article>', 22, c.pale)}
-      ${screen(433, 128, 243, 233)}
-      ${text(454, 190, 'Git', 27)}
-      ${text(454, 226, '강의 소개', 21, c.muted)}
-      ${rect(454, 257, 115, 42, c.cream, 5, c.muted)}
-      ${text(512, 285, '설명 보기', 18, c.muted, 'middle')}
+      ${screen(65, 103, 316, 282, c.ink)}
+      ${text(88, 166, 'index.html · body 안', 20, c.cream)}
+      ${text(88, 201, '<article>', 20, c.pale)}
+      ${text(105, 240, '<h1>Git</h1>', 22, c.cream)}
+      ${text(105, 278, '<button>설명 보기</button>', 17, c.cream)}
+      ${text(105, 309, '<p>변경을 확인하고', 17, c.cream)}
+      ${text(105, 333, '기록합니다.</p>', 17, c.cream)}
+      ${text(88, 362, '</article>', 20, c.pale)}
+      ${screen(427, 103, 270, 282)}
+      ${text(449, 166, '브라우저 화면', 20, c.muted)}
+      ${text(449, 211, 'Git', 29)}
+      ${rect(449, 234, 119, 40, c.cream, 5, c.muted)}
+      ${text(509, 260, '설명 보기', 18, c.muted, 'middle')}
+      ${text(449, 313, '변경을 확인하고', 18, c.muted)}
+      ${text(449, 338, '기록합니다.', 18, c.muted)}
     </g>
-    ${arrow(p, 384, 244, 421, 244, { motion: true })}
-    ${pill(149, 411, 166, 'VS Code에서 작성', c.cream, 18)}
-    ${pill(467, 411, 166, '브라우저에서 열기', c.pale, 18)}
-    ${text(380, 494, '제목 · 설명 · 버튼을 한 카드에', 23, c.muted, 'middle')}
+    ${arrow(p, 388, 240, 418, 240, { motion: true })}
+    ${pill(98, 413, 161, 'h1 · 제목', c.pale, 19)}
+    ${pill(299, 413, 162, 'button · 버튼', c.cream, 18)}
+    ${pill(501, 413, 160, 'p · 설명', c.pale, 19)}
+    ${text(380, 495, '파일을 저장한 뒤 화면을 확인합니다', 22, c.muted, 'middle')}
   `);
 }
 
@@ -337,14 +341,16 @@ function cssCardPractice() {
       ${text(104, 351, '}', 22)}
       ${screen(437, 119, 237, 266, c.pale)}
       ${rect(456, 174, 200, 175, c.paper, 12, c.sage)}
-      ${text(475, 211, 'Git', 27)}
-      ${text(475, 245, '강의 소개', 19, c.muted)}
-      ${rect(475, 271, 116, 42, c.muted, 7, c.muted)}
-      ${text(533, 299, '설명 보기', 18, c.paper, 'middle')}
+      ${text(480, 212, 'Git', 27)}
+      ${rect(480, 230, 116, 38, c.muted, 7, c.muted)}
+      ${text(538, 255, '설명 보기', 18, c.paper, 'middle')}
+      ${text(480, 298, '변경을 확인하고', 16, c.muted)}
+      ${text(480, 321, '기록합니다.', 16, c.muted)}
     </g>
     ${arrow(p, 354, 252, 425, 252, { motion: true })}
-    ${highlight(p, path('M466 186h8m-8 0v8 M646 186h-8m8 0v8 M466 337h8m-8 0v-8 M646 337h-8m8 0v-8', 'none', c.orange, 3))}
-    ${pill(123, 415, 166, '스타일 속성', c.cream, 19)}
+    ${highlight(p, path('M456 197h24m-24-6v12m24-12v12', 'none', c.orange, 3))}
+    ${text(555, 166, '24px 안쪽 여백', 16, c.red, 'middle')}
+    ${pill(123, 415, 166, 'style.css 연결', c.cream, 19)}
     ${pill(475, 415, 160, '색 · 여백 · 모서리', c.pale, 17)}
     ${text(380, 494, '내용은 유지하고 모양을 바꿉니다', 23, c.muted, 'middle')}
   `);
@@ -353,26 +359,31 @@ function cssCardPractice() {
 function javascriptCardPractice() {
   const p = 'sa-tools-javascript';
   return frame(p, `
-    ${text(380, 72, 'JavaScript · 버튼에 동작 더하기', 27, c.ink, 'middle')}
+    ${text(380, 65, 'JavaScript · 클릭과 표시 상태', 27, c.ink, 'middle')}
     <g filter='url(#${p}-shadow)'>
-      ${screen(80, 119, 250, 254, c.pale)}
-      ${rect(99, 170, 212, 169, c.paper, 12, c.sage)}
-      ${text(118, 205, 'Git', 26)}
-      ${text(118, 236, '강의 소개', 19, c.muted)}
-      ${rect(118, 259, 120, 42, c.muted, 7, c.muted)}
-      ${text(178, 287, '설명 보기', 18, c.paper, 'middle')}
-      ${path('M223 287l-8 26 11-4 6 13 7-3-6-13 12-4Z', c.orange, c.ink, 1.7)}
-      ${screen(429, 119, 250, 254, c.pale)}
-      ${rect(448, 170, 212, 169, c.paper, 12, c.sage)}
-      ${text(467, 205, 'Git', 26)}
-      ${text(467, 236, '강의 소개', 19, c.muted)}
-      ${rect(467, 254, 120, 38, c.muted, 7, c.muted)}
-      ${text(527, 279, '설명 보기', 18, c.paper, 'middle')}
-      ${highlight(p, rect(467, 302, 175, 25, c.softOrange, 5, c.orange) + text(477, 320, '변경을 기록합니다', 16, c.ink))}
+      ${screen(54, 101, 306, 291, c.ink)}
+      ${text(75, 163, 'script.js · 일부', 19, c.cream)}
+      ${text(75, 202, "button.addEventListener(", 16, c.pale)}
+      ${text(91, 228, "'click', () => {", 16, c.cream)}
+      ${text(104, 261, 'const isHidden = detail.hidden;', 14, c.cream)}
+      ${text(104, 292, 'detail.hidden = !isHidden;', 14, c.cream)}
+      ${text(91, 326, '});', 16, c.pale)}
+      ${screen(421, 101, 285, 291, c.pale)}
+      ${text(442, 162, '브라우저 화면', 19, c.muted)}
+      ${rect(443, 178, 241, 74, c.paper, 8, c.sage)}
+      ${text(457, 204, 'Git', 20)}
+      ${rect(517, 184, 104, 31, c.muted, 6, c.muted)}
+      ${text(569, 205, '설명 보기', 15, c.paper, 'middle')}
+      ${text(457, 236, '설명 접힘', 16, c.muted)}
+      ${rect(443, 271, 241, 99, c.paper, 8, c.sage)}
+      ${text(457, 296, 'Git', 20)}
+      ${rect(517, 276, 104, 31, c.muted, 6, c.muted)}
+      ${text(569, 297, '설명 보기', 15, c.paper, 'middle')}
+      ${highlight(p, text(457, 329, '변경을 확인하고', 16, c.muted) + text(457, 352, '기록합니다.', 16, c.muted))}
     </g>
-    ${arrow(p, 344, 249, 414, 249, { motion: true })}
-    ${pill(121, 410, 168, '클릭 전 · 설명 숨김', c.cream, 17)}
-    ${pill(470, 410, 168, '클릭 후 · 설명 표시', c.pale, 17)}
+    ${arrow(p, 372, 258, 409, 258, { motion: true })}
+    ${pill(106, 416, 221, 'click · hidden 변경', c.cream, 18)}
+    ${pill(458, 416, 210, '접힘 ↔ 펼침', c.pale, 19)}
     ${text(380, 495, '다시 누르면 설명을 숨깁니다', 23, c.muted, 'middle')}
   `);
 }
@@ -505,17 +516,18 @@ function cardLayers() {
     <g filter='url(#${p}-shadow)'>
       ${slab(81, 102, 281, 140, c.paper)}
       ${text(102, 140, 'CSS 속성', 23)}
-      ${text(102, 177, 'padding: 1rem;', 20, c.muted)}
+      ${text(102, 177, 'padding: 24px;', 20, c.muted)}
       ${text(102, 211, 'border-radius: .75rem;', 19, c.muted)}
       ${slab(81, 288, 281, 107, c.cream)}
       ${text(102, 326, 'Tailwind 클래스', 23)}
-      ${text(102, 365, 'p-4  rounded-xl', 22, c.muted)}
+      ${text(102, 365, 'p-6  rounded-xl', 22, c.muted)}
       ${screen(460, 143, 225, 233, c.pale)}
       ${rect(479, 195, 187, 152, c.paper, 12, c.sage)}
       ${text(497, 229, 'Git', 27)}
-      ${text(497, 262, '강의 소개', 19, c.muted)}
-      ${rect(497, 282, 116, 38, c.muted, 7, c.muted)}
-      ${text(555, 308, '설명 보기', 18, c.paper, 'middle')}
+      ${rect(497, 243, 116, 36, c.muted, 7, c.muted)}
+      ${text(555, 267, '설명 보기', 17, c.paper, 'middle')}
+      ${text(497, 306, '변경을 확인하고', 16, c.muted)}
+      ${text(497, 327, '기록합니다.', 16, c.muted)}
       ${highlight(p, path('M489 205h8m-8 0v8 M656 205h-8m8 0v8 M489 337h8m-8 0v-8 M656 337h-8m8 0v-8', 'none', c.orange, 3))}
     </g>
     ${arrow(p, 375, 173, 445, 219, { motion: true })}
@@ -589,17 +601,17 @@ export const webSectionScenes = {
   },
   'tools-html': {
     title: 'HTML: 강의 카드의 내용과 구조 만들기',
-    description: 'VS Code의 HTML 제목·설명·버튼이 브라우저의 꾸미지 않은 강의 카드로 나타나는 모습입니다.',
+    description: 'index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',
     svg: htmlCardPractice(),
   },
   'tools-css': {
     title: 'CSS: 같은 카드에 색과 여백 더하기',
-    description: 'CSS의 여백·배경색·둥근 모서리 속성을 같은 강의 카드에 적용해 모양이 바뀝니다.',
+    description: 'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',
     svg: cssCardPractice(),
   },
   'tools-javascript': {
     title: 'JavaScript: 버튼으로 설명 표시하기',
-    description: '강의 카드의 버튼을 누르기 전 숨겨진 설명과 누른 뒤 표시되는 설명을 비교합니다.',
+    description: 'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',
     svg: javascriptCardPractice(),
   },
   'web-map': {

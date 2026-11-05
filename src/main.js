@@ -16,6 +16,7 @@ import presentationHtml from './presentation.html?raw';
 import demoHtml from './demo.html?raw';
 import lessonHtml from './lesson.html?raw';
 import homeHtml from './home.html?raw';
+import { introTypewriter } from './intro-typewriter.js';
 import './styles.css';
 import './editor.css';
 import './illustrations.css';
@@ -25,6 +26,7 @@ import './branding.css';
 import './home.css';
 import './home-desktop.css';
 import './home-art.css';
+import './intro-typewriter.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
 document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml);
@@ -89,6 +91,7 @@ function markdown(value) {
   });
 }
 
+Alpine.data('introTypewriter', introTypewriter);
 Alpine.data('courseApp', () => ({
   ...presenterState(), ...presenterMethods, ...learningState(), ...learningMethods,
   loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
@@ -102,7 +105,7 @@ Alpine.data('courseApp', () => ({
   get brandTitle() { return (this.course?.title || 'AI 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, ''); },
   get step() { return this.lesson?.steps[Math.min(this.stepIndex, this.lesson.steps.length - 1)]; },
   get lessonDuration() { return this.lesson ? lessonMinutes(this.lesson) : 0; },
-  get totalMinutes() { return this.course ? courseMinutes(this.course) : 180; },
+  get totalMinutes() { return this.course ? courseMinutes(this.course) : 0; },
   get isComplete() { return this.completed.includes(this.lessonId); },
   get learningPages() { return buildLessonFlow(this.lesson); },
   get learningPageIndex() { return Math.max(0,this.learningPages.findIndex(page=>page.id === this.learningPageId)); },

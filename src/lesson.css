@@ -1,5 +1,21 @@
 .lesson-flow-workspace { display: grid; gap: 22px; padding-bottom: 12px; }
 .lesson-flow-workspace .learning-path { position: static; }
+/* Reuse the course illustrations by stable topic ID, even if the order changes. */
+.lesson-flow-workspace .learning-path-step, .presentation-topics button { position: relative; isolation: isolate; overflow: hidden; }
+.lesson-flow-workspace .learning-path-step::before, .presentation-topics button::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background-image: var(--topic-art); background-repeat: no-repeat; background-size: auto 130%; background-position: right -10px center; opacity: .23; }
+.lesson-flow-workspace .learning-path-step[data-topic='terminal'], .presentation-topics button[data-topic='terminal'] { --topic-art: url('./illustrations/terminal.svg'); }
+.lesson-flow-workspace .learning-path-step[data-topic='git'], .presentation-topics button[data-topic='git'] { --topic-art: url('./illustrations/git.svg'); }
+.lesson-flow-workspace .learning-path-step[data-topic='github'], .presentation-topics button[data-topic='github'] { --topic-art: url('./illustrations/github.svg'); }
+.lesson-flow-workspace .learning-path-step[data-topic='markdown'], .presentation-topics button[data-topic='markdown'] { --topic-art: url('./illustrations/markdown.svg'); }
+.lesson-flow-workspace .learning-path-step[data-topic='ide'], .presentation-topics button[data-topic='ide'] { --topic-art: url('./illustrations/ide.svg'); }
+.lesson-flow-workspace .learning-path-step[data-topic='web'], .presentation-topics button[data-topic='web'] { --topic-art: url('./illustrations/web.svg'); }
+.lesson-flow-workspace .learning-path-step[data-topic='templates'], .presentation-topics button[data-topic='templates'] { --topic-art: url('./illustrations/templates.svg'); }
+.presentation-topics button::before { opacity: .14; }
+.presentation-topics button strong { color: #425e50; text-shadow: 0 1px 1px var(--paper), 0 0 5px var(--paper); }
+.presentation-topics button > span { background: var(--paper); }
+.lesson-flow-workspace .learning-path-number { background: #faf7ed; }
+.lesson-flow-workspace .learning-path-copy strong { color: #294b3b; text-shadow: 0 1px 1px #faf7ed, 0 0 5px #faf7ed; }
+.lesson-flow-workspace .learning-path-copy small { color: #526b57; text-shadow: 0 1px 1px #faf7ed, 0 0 5px #faf7ed; }
 .lesson-topic-picker, .lesson-page-picker, .lesson-short-title { display: none; }
 .flow-presentation-entry { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #4c7669; white-space: nowrap; }
 .flow-presentation-entry svg { width: 15px; height: 15px; }

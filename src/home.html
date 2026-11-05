@@ -1,11 +1,16 @@
 <main id="intro-main" class="intro-page">
   <section class="intro-hero" aria-labelledby="intro-title">
     <div class="intro-copy">
-      <span class="intro-kicker">DOLBEOM'S CODING WORKSPACE · 3 HOURS</span>
-      <h2 id="intro-title">AI와 함께 만들기 전에,<br><em>기본부터 차근차근.</em></h2>
+      <span class="intro-kicker">DOLBEOM'S CODING WORKSPACE</span>
+      <h2 id="intro-title" class="typewriter-title" aria-label="AI와 함께 만들기 전에, 기본부터 차근차근.">
+        <span class="typewriter-reserve" aria-hidden="true">AI와 함께 만들기 전에,<br><em>기본부터 차근차근.</em></span>
+        <span class="typewriter-display" aria-hidden="true" x-data="introTypewriter">
+          <span x-text="first">AI와 함께 만들기 전에,</span><span class="typewriter-caret" x-show="!secondStarted"></span><br><em x-text="second">기본부터 차근차근.</em><span class="typewriter-caret" x-show="secondStarted"></span>
+        </span>
+      </h2>
       <p>Codex와 함께 개발하며 마주치는 용어와 도구들.<br>실제 작업의 흐름을 따라 이해하고 직접 익혀봅니다.</p>
-      <div class="intro-actions"><button type="button" class="intro-primary" @click="showLesson(course.lessons[0].id)">첫 강의 시작하기 <span aria-hidden="true">↗</span></button><a href="#instructor" @click.prevent="$el.closest('main').querySelector('#instructor').scrollIntoView({behavior: prefersReducedMotion ? 'instant' : 'smooth'})">강사 소개 보기 ↓</a></div>
-      <div class="intro-stats"><span><b>07</b> LESSONS</span><span><b>180</b> MINUTES</span><span><b>01</b> STEP AT A TIME</span></div>
+      <div class="intro-actions"><button type="button" class="intro-primary" @click="showLesson(course.lessons[0].id)">첫 강의 시작하기 <span aria-hidden="true">↗</span></button><button type="button" class="intro-presentation" @click="openPresentation('terminal', 'intro')">강의 목표 발표하기 ↗</button><a href="#instructor" @click.prevent="$el.closest('main').querySelector('#instructor').scrollIntoView({behavior: prefersReducedMotion ? 'instant' : 'smooth'})">강사 소개 보기 ↓</a></div>
+      <div class="intro-stats"><span><b x-text="String(course.lessons.length).padStart(2, '0')"></b> LESSONS</span><span><b x-text="totalMinutes"></b> MINUTES</span><span><b>01</b> STEP AT A TIME</span></div>
     </div>
     <div class="intro-art" role="img" aria-label="노트북과 코딩 화면, 책과 식물이 놓인 크림과 세이지색 작업실 그림">
       <img src="./assets/branding/header-a.png" alt="" width="1672" height="941" />
@@ -39,6 +44,11 @@
       </div>
       <span class="intro-spark intro-spark-one" aria-hidden="true">✳</span><span class="intro-spark intro-spark-two" aria-hidden="true">✦</span>
     </div>
+  </section>
+
+  <section class="intro-outcomes" aria-labelledby="intro-outcomes-title">
+    <div><span class="intro-kicker">AFTER THIS COURSE</span><h2 id="intro-outcomes-title">수강 후 할 수 있는 일</h2><p>AI가 만든 프로젝트를 받았을 때, 무엇을 어디에서 확인해야 할지 차근차근 알아봅니다.</p></div>
+    <ol><li><strong>폴더와 파일을 찾습니다.</strong><span>탐색기와 터미널에서 같은 작업 위치를 확인합니다.</span></li><li><strong>변경과 기록을 살펴봅니다.</strong><span>Codex가 수정한 내용과 Git·GitHub의 역할을 구분합니다.</span></li><li><strong>문서와 화면을 읽습니다.</strong><span>README를 확인하고 강의 카드의 구조·모양·동작을 알아봅니다.</span></li></ol>
   </section>
 
   <section class="intro-path" aria-labelledby="intro-path-title">

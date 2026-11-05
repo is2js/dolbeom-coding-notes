@@ -50,3 +50,13 @@ test('the GUI/CLI scene connects a saved note with the same PowerShell file',()=
   assert.match(scene.description, /메모장.*저장.*Windows에서 쓰는 PowerShell.*Get-Content.*별칭 cat/);
   assert.doesNotMatch(scene.svg, /npm|node|서버/i);
 });
+
+test('card-practice scenes match the taught heading, button, description and 24px comparison',()=>{
+  const html = sectionScenes['tools-html'].svg;
+  assert.ok(html.indexOf('&lt;h1&gt;Git&lt;/h1&gt;') < html.indexOf('&lt;button&gt;설명 보기&lt;/button&gt;'));
+  assert.ok(html.indexOf('&lt;button&gt;설명 보기&lt;/button&gt;') < html.indexOf('&lt;p&gt;변경을 확인하고'));
+  assert.match(sectionScenes['tools-css'].svg, /padding: 24px;/);
+  assert.match(sectionScenes['tools-javascript'].svg, /detail\.hidden = !isHidden;/);
+  assert.match(sectionScenes['frontend-css'].svg, /padding: 24px;/);
+  assert.match(sectionScenes['frontend-css'].svg, /p-6  rounded-xl/);
+});

@@ -20,7 +20,7 @@
   <div class="editor-status-bar">
     <p role="status" aria-live="polite"><span class="editor-status-dot" :class="{ 'is-error': editor.status === 'error', 'is-pending': editor.status === 'pending' }"></span><span x-text="editor.statusText"></span></p>
     <span class="editor-save-destination" x-show="editor.uiMode === 'focus'" x-text="syncState.mode === 'local' ? (syncState.conflict ? '파일 충돌 확인 필요' : (editor.status === 'error' || syncState.status === 'offline' || syncState.status === 'error') ? '파일 저장 확인 필요' : syncState.status === 'synced' && editor.status === 'saved' ? '파일 저장 완료' : editor.status === 'pending' || syncState.status === 'saving' ? '파일에 저장 중…' : '파일 연결 확인 중…') : (editor.status === 'saved' ? '이 브라우저에 저장됨' : editor.status === 'pending' ? '이 브라우저에 저장 중…' : '브라우저 저장 확인 필요')"></span>
-    <p class="editor-total" x-show="editor.uiMode === 'details'" :class="{ 'is-warning': editor.coreMinutes !== 180 }">본편 <strong x-text="editor.coreMinutes"></strong> / 180분 <span>· 보충 <b x-text="editor.bonusMinutes"></b>분</span></p>
+    <p class="editor-total" x-show="editor.uiMode === 'details'">본편 <strong x-text="editor.coreMinutes"></strong>분 <span>· 보충 <b x-text="editor.bonusMinutes"></b>분</span></p>
   </div>
   <aside class="editor-legacy-notice" x-show="legacyDraft && editor.uiMode === 'details'" x-cloak aria-label="이전 강의 초안 보존 안내"><p>기존 6강에서 저장되지 않은 초안이 보존되어 있습니다. 필요한 내용은 JSON으로 백업한 뒤 새 강의에 옮겨 주세요.</p><button type="button" class="editor-button editor-button-small" @click="exportLegacyDraft()">이전 6강 초안 JSON 받기</button></aside>
   <section class="editor-sync-notice" x-show="editor.uiMode === 'details' || syncState.conflict || syncState.status === 'offline' || syncState.status === 'error'" :class="{ 'is-issue': syncState.status === 'offline' || syncState.status === 'error', 'is-conflict': syncState.conflict }" aria-label="강의 저장과 동기화 상태">
@@ -35,7 +35,6 @@
   </section>
   <div class="editor-alert" role="alert" x-show="editor.error" x-cloak><strong>입력 내용을 확인해 주세요.</strong><span x-text="editor.error"></span><p>수정 중인 내용은 이 편집기에 유지됩니다. 오류를 고치면 자동으로 다시 저장합니다.</p></div>
   <div class="editor-alert" role="alert" x-show="editor.importError" x-cloak><strong>파일을 가져오지 못했습니다.</strong><span x-text="editor.importError"></span><p>현재 편집 중인 강의는 그대로 유지되었습니다.</p></div>
-  <p class="editor-time-note" x-show="editor.coreMinutes !== 180" x-cloak>본편 합계가 180분과 다릅니다. <button type="button" class="editor-text-button" @click="editor.setMode('details'); editor.tab = 'sections'">상세 설정에서 시간 확인</button></p>
 
   <fieldset class="editor-focus" x-show="editor.uiMode === 'focus'" :disabled="editor.busy" aria-label="본문과 미리보기">
     <div class="editor-focus-selectors">
@@ -121,7 +120,7 @@
         <div class="editor-field"><label for="edit-lesson-title">강의 제목</label><input id="edit-lesson-title" type="text" x-model="editor.activeLesson.title" @input="editor.changed()" maxlength="200"></div>
         <div class="editor-field-grid">
           <div class="editor-field"><label for="edit-lesson-short">메뉴에 표시할 짧은 제목</label><input id="edit-lesson-short" type="text" x-model="editor.activeLesson.shortTitle" @input="editor.changed()" maxlength="80"></div>
-          <div class="editor-field"><label for="edit-lesson-duration">강의 예상 시간 (분)</label><input id="edit-lesson-duration" type="number" min="1" max="300" x-model.number="editor.activeLesson.durationMinutes" @input="editor.changed()"><small>본문 절별 시간 합계: <span x-text="editor.lessonMinutes(editor.activeLesson)"></span>분</small></div>
+          <div class="editor-field"><label>강의 예상 시간</label><strong><span x-text="editor.lessonMinutes(editor.activeLesson)"></span>분</strong><small>본편 절별 시간의 합계로 자동 계산합니다.</small></div>
         </div>
         <div class="editor-field"><label for="edit-lesson-subtitle">강의 소개</label><textarea id="edit-lesson-subtitle" rows="2" x-model="editor.activeLesson.subtitle" @input="editor.changed()"></textarea></div>
 
@@ -142,14 +141,14 @@
 
       <div id="editor-sections-panel" class="editor-panel" role="tabpanel" aria-labelledby="editor-sections-tab" x-show="editor.tab === 'sections'">
         <div class="editor-section-heading"><div><p class="editor-eyebrow">WRITE YOUR LESSON</p><h3>설명은 차근차근, 한 절씩</h3></div><button type="button" class="editor-button editor-button-small" @click="editor.addSection()">+ 본문 추가</button></div>
-        <p class="editor-helper">본편 시간만 180분에 합산합니다. 보충 설명은 수업 상황에 따라 골라 쓰세요.</p>
+        <p class="editor-helper">본편 절의 시간을 합산합니다. 보충 설명은 수업 상황에 따라 골라 쓰세요.</p>
         <template x-for="(section, index) in editor.activeLesson.sections" :key="section.id">
           <article class="editor-content-card" :class="{ 'is-expanded': editor.sectionId === section.id }">
             <div class="editor-card-top"><button type="button" class="editor-card-toggle" @click="editor.sectionId = editor.sectionId === section.id ? '' : section.id" :aria-expanded="editor.sectionId === section.id" :aria-controls="`section-fields-${section.id}`"><span class="editor-row-counter" x-text="String(index + 1).padStart(2, '0')"></span><strong x-text="section.title || '제목 없는 본문'"></strong><span class="editor-card-meta"><span x-text="section.optional ? '보충' : '본편'"></span> · <span x-text="section.minutes"></span>분</span><span class="editor-chevron" aria-hidden="true">⌄</span></button></div>
             <div class="editor-card-fields" :id="`section-fields-${section.id}`" x-show="editor.sectionId === section.id">
               <div class="editor-field"><label :for="`section-title-${section.id}`">절 제목</label><input :id="`section-title-${section.id}`" type="text" x-model="section.title" @input="editor.changed()"></div>
               <div class="editor-field"><label :for="`section-illustration-${section.id}`">본문·발표 개념 그림</label><select :id="`section-illustration-${section.id}`" :value="section.illustrationId || ''" @change="if ($event.target.value) section.illustrationId = $event.target.value; else delete section.illustrationId; editor.changed()"><option value="" :selected="!section.illustrationId">이 절에 맞는 자동 그림</option><option value="web-architecture" :selected="section.illustrationId === 'web-architecture'">프론트엔드·백엔드 역할</option><option value="server-rendering" :selected="section.illustrationId === 'server-rendering'">템플릿에서 화면까지</option></select></div>
-              <div class="editor-field-grid"><div class="editor-field"><label :for="`section-time-${section.id}`">예상 시간 (분)</label><input :id="`section-time-${section.id}`" type="number" min="1" max="300" x-model.number="section.minutes" @input="editor.changed()"></div><div class="editor-field"><label :for="`section-kind-${section.id}`">수업 구분</label><label class="editor-checkbox-label"><input :id="`section-kind-${section.id}`" type="checkbox" x-model="section.optional" @change="editor.changed()"><span>선택해서 읽는 보충 설명</span></label></div></div>
+              <div class="editor-field-grid"><div class="editor-field"><label :for="`section-time-${section.id}`">예상 시간 (분)</label><input :id="`section-time-${section.id}`" type="number" min="1" max="300" x-model.number="section.minutes" @input="editor.syncLessonDuration(); editor.changed()"></div><div class="editor-field"><label :for="`section-kind-${section.id}`">수업 구분</label><label class="editor-checkbox-label"><input :id="`section-kind-${section.id}`" type="checkbox" x-model="section.optional" @change="editor.syncLessonDuration(); editor.changed()"><span>선택해서 읽는 보충 설명</span></label></div></div>
               <div class="editor-markdown-heading"><label :for="`section-body-${section.id}`">Markdown 본문</label><button type="button" class="editor-add-inline" @click="editor.previewSectionId = editor.previewSectionId === section.id ? '' : section.id" :aria-pressed="editor.previewSectionId === section.id" x-text="editor.previewSectionId === section.id ? '편집으로 돌아가기' : '미리보기 ↗'"></button></div>
               <textarea class="editor-markdown-input" :id="`section-body-${section.id}`" rows="16" x-model="section.body" @input="editor.changed()" x-show="editor.previewSectionId !== section.id" spellcheck="false"></textarea>
               <div class="editor-markdown-preview prose" x-show="editor.previewSectionId === section.id" x-html="editor.preview(section.body)"></div>
@@ -223,7 +222,7 @@
               <div class="editor-field"><label for="edit-presentation-file">열어 둘 파일 <span>선택</span></label><input id="edit-presentation-file" type="text" maxlength="160" x-model="editor.activeLesson.presentation.demo.file" @input="editor.changed()" placeholder="예: src/main.js"></div>
               <div class="editor-field"><label for="edit-presentation-command">명령·진행 순서 <span>선택 · 최대 4,000자</span></label><textarea id="edit-presentation-command" rows="6" maxlength="4000" class="editor-code-input" spellcheck="false" x-model="editor.activeLesson.presentation.demo.command" @input="editor.changed()"></textarea></div>
               <div class="editor-field"><label for="edit-presentation-result">확인할 예상 결과 <span>최대 300자</span></label><textarea id="edit-presentation-result" rows="3" maxlength="300" x-model="editor.activeLesson.presentation.demo.expectedResult" @input="editor.changed()"></textarea></div>
-              <p class="editor-presentation-time-note">시연 시간은 기존 강의 안에서 진행할 예상 분량입니다. 본편 180분 합계에 중복해서 더하지 않습니다.</p>
+              <p class="editor-presentation-time-note">시연 시간은 기존 강의 안에서 진행할 예상 분량입니다. 본편 합계에 중복해서 더하지 않습니다.</p>
             </section>
             <section class="editor-presentation-block" aria-labelledby="edit-presentation-return-heading">
               <div class="editor-subheading"><h4 id="edit-presentation-return-heading">04 시연 뒤 복귀 요약</h4><span class="editor-presentation-limit">최대 240자</span></div>

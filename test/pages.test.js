@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { basename, join, resolve, sep } from 'node:path';
 import { resolvePagesBase } from '../tools/pages-base.js';
 import { checkDist } from '../tools/check-dist.js';
+import { courseMinutes } from '../src/course.js';
 
 test('로컬·프로젝트 Pages·사용자 사이트 경로를 정규화한다',()=>{
   assert.equal(resolvePagesBase(), './');
@@ -33,8 +34,8 @@ function fixture(t, base='/notes/') {
 }
 
 test('하위 경로의 CSS·JS와 강의 JSON을 실제 파일로 확인한다',t=>{
-  const {dir}=fixture(t);
-  assert.deepEqual(checkDist({distDir:dir,base:'/notes/'}),{base:'/notes/',assets:2,lessons:7,minutes:180});
+  const {dir,course}=fixture(t);
+  assert.deepEqual(checkDist({distDir:dir,base:'/notes/'}),{base:'/notes/',assets:2,lessons:7,minutes:courseMinutes(JSON.parse(course))});
 });
 test('다른 하위 경로 또는 루트로 잘못 연결된 자산을 거부한다',t=>{
   const {dir}=fixture(t,'/assets-misconfigured/');
@@ -51,8 +52,8 @@ test('누락된 CSS 자산과 재빌드하지 않은 강의 데이터를 감지�
 
 test('루트 Pages와 상대 경로 배포에서도 정적 파일을 검증한다',t=>{
   for (const base of ['/', './']) {
-    const {dir}=fixture(t,base);
-    assert.deepEqual(checkDist({distDir:dir,base}),{base,assets:2,lessons:7,minutes:180});
+    const {dir,course}=fixture(t,base);
+    assert.deepEqual(checkDist({distDir:dir,base}),{base,assets:2,lessons:7,minutes:courseMinutes(JSON.parse(course))});
   }
 });
 

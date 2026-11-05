@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" aria-hidden="true" focusable="false" class="topic-art-svg topic-art-markdown">
   <style>
+    @media (prefers-reduced-motion: reduce) { .art-motion { animation: none !important; } }
     .markdown-source-heading { animation: markdown-source-heading 6.6s ease-in-out infinite; }
     .markdown-render-heading { animation: markdown-render-heading 6.6s ease-in-out infinite; }
     .markdown-source-list { animation: markdown-source-list 6.6s ease-in-out infinite; }

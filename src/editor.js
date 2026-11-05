@@ -163,6 +163,9 @@ export function createEditor({ getCourse, onApply, onReset, toast, renderMarkdow
       if (!Number.isInteger(next) || next < 0 || next >= this.focusItems.length) return this.focusId;
       return this.focusItem(this.focusItems[next]);
     },
+    syncLessonDuration() {
+      if (this.activeLesson) this.activeLesson.durationMinutes = this.lessonMinutes(this.activeLesson);
+    },
     changed() {
       revision += 1;
       this.status = 'pending';
@@ -216,6 +219,7 @@ export function createEditor({ getCourse, onApply, onReset, toast, renderMarkdow
     removeSection(index) {
       if (this.activeLesson.sections.length <= 1) return;
       this.activeLesson.sections.splice(index, 1);
+      this.syncLessonDuration();
       this.sectionId = this.activeLesson.sections[Math.min(index, this.activeLesson.sections.length - 1)].id;
       this.normalizeFocus();
       this.changed();

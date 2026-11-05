@@ -19,6 +19,7 @@ const scenePrograms = {
 export function buildPresentationPages(lesson) {
   const sections = Array.isArray(lesson?.sections) ? lesson.sections : [];
   return [
+    ...(lesson?.id === 'terminal' ? [{ id: 'intro', kind: 'intro' }] : []),
     { id: 'case', kind: 'case' },
     ...sections.filter(section => !section.optional).map(section => ({
       id: `section-${section.id}`,

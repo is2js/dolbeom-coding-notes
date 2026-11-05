@@ -7,6 +7,7 @@
     <clipPath id="terminal-command-clip"><rect class="art-motion terminal-typed-mask" x="43" y="84" width="52" height="23"/></clipPath>
   </defs>
   <style>
+    @media (prefers-reduced-motion: reduce) { .art-motion { animation: none !important; } }
     .terminal-typed-mask { animation: terminal-type 6.4s steps(5, end) infinite; }
     .terminal-caret { animation: terminal-caret 1.8s ease-in-out infinite, terminal-caret-position 6.4s steps(5, end) infinite; }
     .terminal-result { animation: terminal-result 6.4s ease-in-out infinite; }

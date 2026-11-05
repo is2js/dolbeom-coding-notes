@@ -4,7 +4,7 @@ import {
 } from './presentation.js';
 
 let sessionStore = null;
-const phaseNames = { case: '시작 사례', section: '핵심 개념', demo: '실전 예고', live: '실전 진행', recap: '복귀 정리' };
+const phaseNames = { intro: '강의 목표', case: '시작 사례', section: '핵심 개념', demo: '실전 예고', live: '실전 진행', recap: '복귀 정리' };
 
 export function presenterState() {
   return {
@@ -65,7 +65,7 @@ export const presenterMethods = {
   },
   openPresentation(id = this.lessonId, pageId = null) {
     if (!this.course.lessons.some(lesson => lesson.id === id)) return;
-    const resumed = this.presentationResume?.lessonId === id ? this.presentationResume.pageId : 'case';
+    const resumed = this.presentationResume?.lessonId === id ? this.presentationResume.pageId : id === 'terminal' ? 'intro' : 'case';
     const requestedPage = pageId || resumed;
     const lesson = this.course.lessons.find(item => item.id === id);
     const page = buildPresentationPages(lesson).some(item => item.id === requestedPage) ? requestedPage : 'case';
@@ -97,7 +97,7 @@ export const presenterMethods = {
     const page = this.presentationPage;
     if (page?.kind === 'section') return page.section.title;
     if (page?.kind === 'case') return this.lesson.case.title;
-    return { demo: '실전에서 확인할 것', live: '이제 실제 화면에서 살펴봅니다', recap: '방금 본 장면을 연결하면' }[page?.kind] || this.lesson.shortTitle;
+    return { intro: '오늘, 무엇을 할 수 있게 될까요?', demo: '실전에서 확인할 것', live: '이제 실제 화면에서 살펴봅니다', recap: '방금 본 장면을 연결하면' }[page?.kind] || this.lesson.shortTitle;
   },
   presentationPageLabel(page) {
     return page.kind === 'section' ? page.section.title : this.presentationPhase(page.kind);

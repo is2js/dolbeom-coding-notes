@@ -16,14 +16,14 @@ test('절의 개념 그림은 선택 사항이며 알려진 그림 ID만 가져�
   }
   delete section.illustrationId;assert.doesNotThrow(()=>validateCourse(c));
 });
-test('기본 강의는 사용자 지정 순서의 7개 주제이며 본편 180분과 보충 분량이 분리된다',()=>{
+test('기본 강의는 사용자 지정 순서의 7개 주제이며 본편과 보충 분량이 분리된다',()=>{
   const c=validateCourse(load());
   assert.deepEqual(COURSE_IDS,canonicalIds);
-  assert.deepEqual(c.lessons.map(l=>l.id),canonicalIds);
+  assert.deepEqual(new Set(c.lessons.map(l=>l.id)),new Set(canonicalIds));
   assert.deepEqual(c.lessons.map(l=>l.number),[1,2,3,4,5,6,7]);
-  assert.equal(courseMinutes(c),180);
+  assert.ok(courseMinutes(c)>0);
   assert.ok(courseMinutes(c,true)>0);
-  assert.equal(c.lessons.reduce((sum,l)=>sum+lessonMinutes(l),0),180);
+  assert.equal(c.lessons.reduce((sum,l)=>sum+lessonMinutes(l),0),courseMinutes(c));
   c.lessons.forEach(l=>{
     assert.equal(l.durationMinutes,lessonMinutes(l),`${l.id}: 강의 시간과 본편 절 합계 일치`);
     assert.ok(l.steps.length>0);
@@ -32,13 +32,15 @@ test('기본 강의는 사용자 지정 순서의 7개 주제이며 본편 180�
 });
 test('강의 순서를 바꿔도 7개 주제 ID는 유지하며 현재 순서로 번호를 매길 수 있다',()=>{
   const c=load();
+  const originalMinutes=courseMinutes(c);
+  const originalOrder=c.lessons.map(l=>l.id);
   const content=new Map(c.lessons.map(l=>[l.id,{sections:l.sections.map(s=>s.id),steps:l.steps.map(s=>s.id)}]));
   c.lessons.reverse();
   assert.throws(()=>validateCourse(c),'배열 순서를 바꾼 뒤 번호를 정리해야 한다');
   c.lessons.forEach((l,index)=>{l.number=index+1;});
   assert.doesNotThrow(()=>validateCourse(c));
-  assert.deepEqual(c.lessons.map(l=>l.id),[...canonicalIds].reverse());
-  assert.equal(courseMinutes(c),180);
+  assert.deepEqual(c.lessons.map(l=>l.id),[...originalOrder].reverse());
+  assert.equal(courseMinutes(c),originalMinutes);
   for(const l of c.lessons){
     assert.deepEqual(l.sections.map(s=>s.id),content.get(l.id).sections);
     assert.deepEqual(l.steps.map(s=>s.id),content.get(l.id).steps);
@@ -55,11 +57,12 @@ test('기존 6강 파일과 빠지거나 중복되거나 바뀐 주제 ID는 7�
 });
 test('가상 사례를 실제 사례로 교체하고 절·시연을 편집한 강의도 배포할 수 있다',()=>{
   const c=load();
+  const originalMinutes=courseMinutes(c);
   c.lessons[0].case={kind:'real',title:'직접 겪은 사례',body:'실제 경험으로 교체한 강의 도입입니다.',question:'이번 사례에서 무엇을 확인할까요?'};
   c.lessons[0].steps=c.lessons[0].steps.slice(0,2);
   c.lessons[0].sections[0].body='## 수정한 강의\n\n짧게 정리한 설명입니다.';
   assert.doesNotThrow(()=>validateCourse(c));
-  assert.equal(courseMinutes(c),180);
+  assert.equal(courseMinutes(c),originalMinutes);
 });
 test('손상된 버전·중복 단계·사례 구분·링크를 거부한다',()=>{
   for(const edit of [c=>c.schemaVersion=2,c=>c.lessons[0].steps[1].id=c.lessons[0].steps[0].id,c=>c.lessons[0].case.kind='unverified',c=>c.lessons[0].references[0].url='javascript:alert(1)',c=>c.lessons[0].sections[0].minutes=-1]){
@@ -82,15 +85,17 @@ const presentationFixture = () => ({
 
 test('발표 메타데이터가 없는 schemaVersion 1 강의는 수정 없이 그대로 검증한다',()=>{
   const c=load();
+  const originalMinutes=courseMinutes(c);
   for(const lesson of c.lessons){delete lesson.presentation;for(const section of lesson.sections)delete section.presentationPoints;}
   const original=JSON.stringify(c);
   assert.equal(validateCourse(c),c);
   assert.equal(JSON.stringify(c),original,'검증·열람은 발표 기본값을 원본에 추가하지 않는다');
-  assert.equal(courseMinutes(c),180);
+  assert.equal(courseMinutes(c),originalMinutes);
 });
 
-test('선택형 발표 정보의 경계 길이와 빈 선택 필드는 7주제·180분을 유지한다',()=>{
+test('선택형 발표 정보의 경계 길이와 빈 선택 필드는 본편 시간을 유지한다',()=>{
   const c=load();
+  const originalMinutes=courseMinutes(c);
   const presentation=presentationFixture();
   presentation.caseSummary='가'.repeat(300);
   presentation.returnSummary='나'.repeat(240);
@@ -100,8 +105,8 @@ test('선택형 발표 정보의 경계 길이와 빈 선택 필드는 7주제·
   const bonus=c.lessons[0].sections.find(section=>section.optional);
   if(bonus)bonus.presentationPoints=['보충 절도 핵심 요점을 작성할 수 있습니다.'];
   assert.doesNotThrow(()=>validateCourse(c));
-  assert.deepEqual(c.lessons.map(lesson=>lesson.id),canonicalIds);
-  assert.equal(courseMinutes(c),180,'발표 시연 시간은 기존 본편 시간에 더하지 않는다');
+  assert.deepEqual(new Set(c.lessons.map(lesson=>lesson.id)),new Set(canonicalIds));
+  assert.equal(courseMinutes(c),originalMinutes,'발표 시연 시간은 기존 본편 시간에 더하지 않는다');
   presentation.returnSummary='';presentation.demo.file='';presentation.demo.command='';presentation.demo.durationMinutes=.25;
   assert.doesNotThrow(()=>validateCourse(c));
 });

@@ -39,17 +39,17 @@ function memory(initial) {
   return { values, getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) };
 }
 
-test('발표는 사례·전체 본편 절·시연·실제 실습·복귀 정리로 이어지고 보충 절은 제외한다', () => {
+test('첫 발표는 강의 목표·사례·전체 본편 절·시연·복귀 정리로 이어지고 보충 절은 제외한다', () => {
   const source = freeze(course().lessons[0]);
   const before = JSON.stringify(source);
   const pages = buildPresentationPages(source);
   assert.deepEqual(pages.map(page => [page.id, page.kind]), [
-    ['case', 'case'], ['section-location', 'section'], ['section-run', 'section'],
+    ['intro', 'intro'], ['case', 'case'], ['section-location', 'section'], ['section-run', 'section'],
     ['demo', 'demo'], ['live', 'live'], ['recap', 'recap'],
   ]);
-  assert.equal(pages[1].section, source.sections[0]);
-  assert.deepEqual(pages[1].points, source.sections[0].presentationPoints);
-  assert.equal(pages[2].points, null, 'existing full Markdown remains the fallback');
+  assert.equal(pages[2].section, source.sections[0]);
+  assert.deepEqual(pages[2].points, source.sections[0].presentationPoints);
+  assert.equal(pages[3].points, null, 'existing full Markdown remains the fallback');
   assert.equal(JSON.stringify(source), before, 'page building must not fill defaults into source content');
 });
 
@@ -59,7 +59,7 @@ test('실제 기본 강의의 모든 본편이 빠짐없이 연결되며 본문�
   for (const lesson of source.lessons) {
     const pages = buildPresentationPages(lesson);
     const core = lesson.sections.filter(section => !section.optional);
-    assert.equal(pages.length, core.length + 4, lesson.id);
+    assert.equal(pages.length, core.length + 4 + (lesson.id === 'terminal' ? 1 : 0), lesson.id);
     assert.deepEqual(pages.filter(page => page.kind === 'section').map(page => page.id), core.map(section => `section-${section.id}`));
     assert.equal(new Set(pages.map(page => page.id)).size, pages.length);
     assert.ok(!pages.some(page => page.section?.optional));

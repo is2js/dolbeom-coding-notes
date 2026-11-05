@@ -125,7 +125,8 @@ function greetingScene() {
       + text(102, 374, "New-Item · Set-Location", { mono: true, size: 15, fill: C.teal })
       + text(102, 400, "pwd", { mono: true, size: 22, fill: C.teal })
       + text(165, 400, "이동한 위치 확인", { size: 18 })
-      + '<rect x="345" y="385" width="4" height="20" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>')
+      + '<rect x="345" y="385" width="4" height="20" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>'
+      + text(102, 425, "cd .. → 상위 · Tab → 경로 완성", { size: 15, fill: C.teal }))
     + arrow(p, "M400 232h30") + signal(p, "M400 232h30")
     + card(p, 445, 106, 245, 174,
       text(466, 143, "파일 탐색기", { size: 24, weight: 650 })
@@ -387,7 +388,7 @@ function remoteRolesScene() {
 export const toolSectionScenes = {
   "terminal-example": {
     title: "첫 명령: 현재 위치에서 폴더 만들고 열기",
-    description: "PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R에 경로를 입력하거나 explorer.exe .으로 같은 폴더를 엽니다. ls로 목록을 확인한 후 mkdir과 cd로 폴더를 만들고 이동한 뒤 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 여는 흐름입니다.",
+    description: "PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R에 경로를 입력하거나 explorer.exe .으로 같은 폴더를 엽니다. ls로 목록을 확인한 후 mkdir과 cd로 폴더를 만들고 이동합니다. cd ..로 상위 폴더로 이동하고 Tab으로 경로를 완성해 봅니다. 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 엽니다.",
     svg: greetingScene(),
   },
   "terminal-gui-cli": {

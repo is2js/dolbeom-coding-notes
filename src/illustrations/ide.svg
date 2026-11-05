@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" aria-hidden="true" focusable="false" class="topic-art-svg topic-art-ide">
   <style>
+    @media (prefers-reduced-motion: reduce) { .art-motion { animation: none !important; } }
     .ide-file-trace { animation: ide-file-trace 6.4s ease-in-out infinite; }
     .ide-line-trace { animation: ide-line-trace 6.4s ease-in-out infinite; }
     .ide-cursor { animation: ide-cursor 6.4s ease-in-out infinite; }

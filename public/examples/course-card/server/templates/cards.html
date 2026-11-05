@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>강의 카드 · Jinja2 + Tailwind + Alpine</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='course.css') }}">
+  <script defer src="{{ url_for('static', path='alpine.js') }}"></script>
+</head>
+<body class="bg-slate-100 p-6 font-sans">
+  <ul class="list-none p-0">
+  {% for lesson in lessons %}
+  <li class="mb-4"><article class="max-w-80 rounded-xl bg-white p-6" x-data="{ open: false }">
+    <h2>{{ lesson.title }}</h2>
+    <p>{{ lesson.minutes }}분</p>
+    <button type="button" class="cursor-pointer px-3 py-2" @click="open = !open" :aria-expanded="open.toString()">설명 보기</button>
+    <p x-show="open" x-cloak>{{ lesson.description }}</p>
+  </article></li>
+  {% endfor %}
+  </ul>
+</body>
+</html>

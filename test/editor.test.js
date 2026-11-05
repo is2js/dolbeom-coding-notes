@@ -56,6 +56,21 @@ function fileEvent(text) {
   return { target: { files: [new File([text], 'course.json', { type: 'application/json' })], value: 'course.json' } };
 }
 
+test('본문 시간과 보충 구분을 바꾸면 강의 시간과 전체 본편 합계가 함께 바뀌고 저장된다', async () => {
+  const { editor, current } = harness();
+  const lesson = editor.activeLesson;
+  const before = editor.coreMinutes;
+  lesson.sections[0].minutes += 4;
+  editor.syncLessonDuration();
+  assert.equal(lesson.durationMinutes, editor.lessonMinutes(lesson));
+  assert.equal(editor.coreMinutes, before + 4);
+  lesson.sections[2].optional = false;
+  editor.syncLessonDuration();
+  assert.equal(editor.coreMinutes, before + 7);
+  assert.equal(await editor.save(), true);
+  assert.equal(current().lessons[0].durationMinutes, lesson.durationMinutes);
+});
+
 test('edits are isolated until debounced validation applies the complete course', async t => {
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const { editor, calls, current } = harness();

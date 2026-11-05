@@ -217,10 +217,12 @@ test('타이머 토글과 초기화는 다른 강의 시간을 보존하고 세�
 test('발표 이동은 보충 절을 건너뛰고 강의 경계와 재정렬된 강의 순서를 따른다', t => {
   const h = harness(t);
   h.flushRoute(true);
+  h.app.openPresentation('terminal', 'intro'); h.flushRoute();
+  assert.equal(h.app.presentationTitle(), '오늘, 무엇을 할 수 있게 될까요?');
   assert.equal(h.app.presentationAtBoundary(-1), true);
   h.app.movePresentation(-1);
-  assert.equal(h.location.hash, '#/present/terminal/case');
-  for (const pageId of ['section-location', 'section-run', 'demo', 'live', 'recap']) {
+  assert.equal(h.location.hash, '#/present/terminal/intro');
+  for (const pageId of ['case', 'section-location', 'section-run', 'demo', 'live', 'recap']) {
     h.app.movePresentation(1); h.flushRoute();
     assert.equal(h.app.presentationPageId, pageId);
   }

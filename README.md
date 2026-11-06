@@ -218,5 +218,6 @@ Pages 배포 작업은 `pages: write`, `id-token: write` 권한과 `github-pages
 - Markdown은 DOMPurify로 정제합니다. 가져온 코드를 평가하거나 실행하지 않습니다.
 - 글꼴은 Pretendard, Barlow Semi Condensed, IBM Plex Mono를 외부 CDN에서 읽으며 연결되지 않으면 시스템 글꼴로 표시됩니다. 애플리케이션 코드와 스타일은 로컬 빌드에 포함됩니다.
 - 디자인 참고: [Learn Arduino](https://learn-arduino-red.vercel.app/), 원본 디자인 [Dilum Sanjaya](https://x.com/DilumSanjaya). 로고·원본 3D 모델·원본 코드는 사용하지 않고 도구 지도와 아이콘을 새 SVG로 작성했습니다.
+- 최초 참고 사이트와 추가 참고 사례, 적용한 화면은 [디자인 참고 기록](DESIGN_REFERENCES.md)에 정리합니다. 모바일은 **현재 주제 → 전체 주제 보기**로 이동하고, 그림 아래 **그림 크게 보기**에서 화면 맞춤과 원본 크기를 전환합니다.
 
 기존 PVP 프로젝트와 분리된 독립 프로젝트입니다. 강의 원본은 공개 저장소에서 관리하고 사이트는 위 수동 절차로 갱신합니다.

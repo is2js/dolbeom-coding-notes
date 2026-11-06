@@ -275,6 +275,10 @@ test('키보드 이동은 발표 본문에서만 동작하며 입력·버튼·�
   h.app.rehearsalOpen = true; assert.equal(press(), false);
   h.app.rehearsalOpen = false; h.app.readerOpen = true; assert.equal(press(), false);
   h.app.readerOpen = false;
+  h.app.artViewerOpen = true;
+  assert.equal(press(), false, '확대 그림 뒤의 발표는 이동하지 않는다');
+  assert.equal(h.location.hash, unchanged);
+  h.app.artViewerOpen = false;
   assert.equal(press({ key: ' ' }), true); h.flushRoute();
   assert.equal(h.app.presentationPageId, 'section-run');
   assert.equal(press({ key: 'ArrowLeft' }), true); h.flushRoute();

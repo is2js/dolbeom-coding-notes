@@ -1,0 +1,20 @@
+<nav class="topic-navigation" :data-topic-navigation="route" :class="{ 'is-open': topicNavigationOpen, 'is-presentation': route === 'present' }" aria-label="전체 강의 주제" x-init="syncTopicNavigation()" @keydown.escape="closeTopicNavigation(true)">
+  <div class="topic-navigation-heading">
+    <h2>강의 주제 <span x-text="String(course.lessons.findIndex(topic => topic.id === lessonId) + 1).padStart(2, '0') + ' / ' + String(course.lessons.length).padStart(2, '0')"></span></h2>
+    <p>주제를 고르면 시작 사례부터 진행합니다.</p>
+    <button type="button" class="topic-presentation-entry" x-show="route !== 'present'" @click="openPresentation(lessonId, learningPageId)"><span x-html="icon('expand')"></span>이 위치에서 발표</button>
+  </div>
+  <button type="button" class="topic-navigation-toggle" :aria-expanded="topicNavigationOpen" :aria-controls="route + '-topic-list'" @click="topicNavigationOpen = !topicNavigationOpen">
+    <span class="topic-current-art" aria-hidden="true" x-html="topicThumbnail(lesson.id)"></span>
+    <span class="topic-current-copy"><small x-text="'현재 · ' + String(course.lessons.findIndex(topic => topic.id === lessonId) + 1).padStart(2, '0') + '강'"></small><strong x-text="lesson.shortTitle"></strong><span x-text="coreMinutes(lesson) + '분'"></span></span>
+    <span class="topic-toggle-label"><span x-text="topicNavigationOpen ? '전체 주제 접기' : '전체 주제 보기'"></span><span aria-hidden="true" class="topic-toggle-chevron" x-text="topicNavigationOpen ? '−' : '+'"></span></span>
+  </button>
+  <ol class="topic-navigation-list" data-topic-list :id="route + '-topic-list'" :style="'--topic-count:' + course.lessons.length">
+    <template x-for="(topic, index) in course.lessons" :key="topic.id"><li>
+      <button type="button" class="topic-card" :data-topic="topic.id" :class="{ 'is-current': topic.id === lessonId, 'is-complete': completed.includes(topic.id) }" :aria-current="topic.id === lessonId ? 'step' : null" @click="selectTopic(topic.id)">
+        <span class="topic-card-heading"><span class="topic-card-number" x-text="String(index + 1).padStart(2, '0')"></span><span class="topic-card-status" x-text="topic.id === lessonId ? '현재' : completed.includes(topic.id) ? '완료' : ''"></span></span>
+        <span class="topic-card-content"><span class="topic-card-art" aria-hidden="true" x-html="topicThumbnail(topic.id)"></span><span class="topic-card-copy"><strong x-text="topic.shortTitle"></strong><small x-text="coreMinutes(topic) + '분'"></small></span></span>
+      </button>
+    </li></template>
+  </ol>
+</nav>

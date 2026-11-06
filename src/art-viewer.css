@@ -1,0 +1,77 @@
+/* Keep the drawing, its caption and its controls in one readable frame. */
+.lesson-visual-panel { border: 1px solid #d3d6c2; border-radius: 12px; background: #f8f5e9; overflow: hidden; }
+.lesson-visual-tabs { padding: 9px 9px 0; gap: 6px; flex-wrap: wrap; }
+.lesson-visual-tabs button { min-height: 44px; padding: 10px 12px; font-size: 12px; }
+.lesson-visual-figure { margin: 0; padding: 8px 12px 0; }
+.lesson-visual-figure .isometric-grid { inset: 12px 12px 74px; opacity: .3; }
+.lesson-visual-figure .lesson-visual-art.workbench-illustration { width: 100%; height: auto; max-height: none; aspect-ratio: 760 / 550; }
+.lesson-visual-figure figcaption { display: flex; align-items: flex-start; justify-content: flex-start; gap: 9px; text-align: left; min-height: 52px; padding: 13px 6px; font-size: 12px; line-height: 1.7; color: #536c59; }
+.lesson-visual-figure figcaption .status-dot { flex: 0 0 6px; margin-top: 7px; }
+.lesson-art-tools { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; padding: 6px 12px 10px; border-top: 1px solid #dfe0cf; }
+.lesson-art-tools button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 9px 10px; font-size: 12px; color: #4a705f; border-radius: 6px; }
+.lesson-art-tools button svg, .art-expand-button svg { width: 16px; height: 16px; flex: 0 0 16px; }
+.lesson-art-tools .art-expand-button { font-weight: 700; background: #e8eddd; }
+.lesson-related-demo, .lesson-example-picker { margin: 12px; }
+.presentation-figure { border: 1px solid #d3d6c2; border-radius: 12px; background: #f8f5e9; display: flex; flex-direction: column; min-width: 0; overflow: hidden; padding: 12px; height: auto; min-height: 0; align-self: start; }
+.presentation-figure.is-goal-preview { min-height: 330px; height: min(49vh, 490px); }
+.presentation-figure-grid { inset: 12px 12px 120px; opacity: .3; }
+.presentation-figure .presentation-illustration, .presentation-figure .presentation-illustration.is-concept-diagram { position: relative; inset: auto; left: auto; top: auto; width: 100%; height: auto; aspect-ratio: 760 / 550; flex: 0 0 auto; }
+.presentation-figure .presentation-illustration svg { display: block; width: 100%; height: 100%; }
+.presentation-figure figcaption { position: relative; inset: auto; display: flex; gap: 10px; padding: 10px 4px; font-size: 12px; line-height: 1.7; color: #536c59; align-items: flex-start; }
+.presentation-figure figcaption > span:first-child { flex-shrink: 0; font: 10px/2 var(--mono); }
+.presentation-art-tools { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; padding-top: 5px; border-top: 1px solid #dfe0cf; }
+.presentation-art-tools .presentation-motion { position: static; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px; font-size: 12px; gap: 5px; }
+.presentation-art-tools .art-expand-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 10px; border-radius: 6px; background: #e8eddd; color: #4a705f; font-size: 12px; font-weight: 700; gap: 7px; }
+.lesson-visual-panel :where(button,select):focus-visible, .presentation-art-tools button:focus-visible, .art-viewer :where(button,[tabindex]):focus-visible { outline: 3px solid #a17436; outline-offset: 2px; }
+.art-viewer { width: min(calc(100vw - 32px), 1120px); max-width: none; max-height: calc(100dvh - 32px); border: 1px solid #a9b89d; border-radius: 14px; padding: 0; margin: auto; overflow: hidden; color: #315044; background: #faf7ed; box-shadow: 0 24px 90px #142e3b44; }
+.art-viewer[open] { display: flex; flex-direction: column; }
+.art-viewer::backdrop { background: #1b2c35b8; }
+.art-viewer-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 20px 12px; }
+.art-viewer-header > div { min-width: 0; }
+.art-viewer-header small { color: #6e836a; font-size: 11px; }
+.art-viewer-header h2 { margin: 5px 0 0; color: #315044; font-size: 20px; font-weight: 750; line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere; }
+.art-viewer button { min-height: 44px; padding: 9px 12px; border: 1px solid #cad1ba; border-radius: 6px; font-size: 12px; color: #4a705f; background: #faf7ed; }
+.art-viewer button:hover:not(:disabled) { background: #eaf0df; }
+.art-viewer button:disabled { opacity: .65; }
+.art-viewer .art-viewer-close { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.art-viewer-close svg { width: 18px; height: 18px; }
+.art-viewer-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 0 20px 12px; }
+.art-viewer-toolbar > div { display: flex; gap: 5px; }
+.art-viewer button[aria-pressed='true'] { color: #fffaf0; background: #4c7968; border-color: #4c7968; }
+.art-viewer-viewport { min-height: 0; max-height: calc(100dvh - 245px); padding: 12px; border-block: 1px solid #d9dccb; background: #efefdf; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.art-viewer-art.workbench-illustration { position: relative; inset: auto; width: min(100%, calc((100dvh - 280px) * 760 / 550)); max-width: 100%; height: auto; aspect-ratio: 760 / 550; margin: auto; }
+.art-viewer-art svg { display: block; width: 100%; height: 100%; }
+.art-viewer-viewport.is-original .art-viewer-art { width: max(760px, 100%); max-width: none; }
+.art-viewer > footer { flex-shrink: 0; padding: 12px 20px 16px; }
+.art-viewer > footer p { margin: 0 0 4px; font-size: 13px; line-height: 1.7; }
+.art-viewer > footer small { color: #72806a; font-size: 11px; }
+@media (max-width: 720px) {
+  .lesson-visual-figure { padding-inline: 8px; }
+  .lesson-visual-figure figcaption { font-size: 12px; padding: 10px 5px; }
+  .lesson-visual-tabs button { font-size: 12px; padding: 9px 11px; }
+  .lesson-art-tools { padding-inline: 8px; }
+  .lesson-art-tools button { font-size: 11px; }
+  .presentation-figure { width: 100%; max-width: none; height: auto; min-height: 0; padding: 8px; overflow: hidden; }
+  .presentation-figure.is-goal-preview { min-height: 300px; height: auto; }
+  .presentation-figure .presentation-illustration, .presentation-figure .presentation-illustration.is-concept-diagram { width: 100%; height: auto; left: auto; top: auto; }
+  .presentation-figure figcaption { font-size: 12px; line-height: 1.7; }
+  .presentation-art-tools .presentation-motion { font-size: 11px; min-height: 44px; }
+  .art-viewer { width: calc(100vw - 16px); max-height: calc(100dvh - 16px); border-radius: 10px; }
+  .art-viewer-header { gap: 10px; padding: 13px 12px 10px; }
+  .art-viewer-header h2 { font-size: 16px; }
+  .art-viewer-toolbar { padding: 0 12px 10px; gap: 6px; }
+  .art-viewer button { font-size: 11px; padding-inline: 10px; }
+  .art-viewer .art-viewer-close { width: 44px; padding-inline: 0; }
+  .art-viewer-close > span:last-child { display: none; }
+  .art-viewer-viewport { padding: 8px; max-height: calc(100dvh - 260px); }
+  .art-viewer > footer { padding: 10px 12px 12px; }
+  .art-viewer > footer p { font-size: 12px; }
+}
+@media (max-height: 500px) {
+  .art-viewer-header { padding-block: 8px; }
+  .art-viewer-header h2 { font-size: 15px; }
+  .art-viewer-toolbar { padding-bottom: 6px; }
+  .art-viewer-viewport { max-height: calc(100dvh - 190px); }
+  .art-viewer-art.workbench-illustration { width: min(100%, calc((100dvh - 210px) * 760 / 550)); }
+  .art-viewer > footer { padding-block: 6px; }
+}

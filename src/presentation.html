@@ -4,20 +4,18 @@
     <div class="presentation-header-actions"><span class="presentation-mode-label">LECTURE MODE</span><button type="button" @click="togglePresentationFullscreen()" :aria-pressed="fullscreenActive"><span x-html="icon('expand')"></span><span x-text="fullscreenActive ? '전체화면 해제' : '전체화면'"></span></button><button type="button" @click="exitPresentation()"><span x-html="icon('close')"></span>발표 종료</button></div>
   </header>
 
-  <nav class="presentation-topics" aria-label="발표 강의 순서">
-    <ol><template x-for="(topic,index) in course.lessons" :key="topic.id"><li><button type="button" :data-topic="topic.id" @click="openPresentation(topic.id,'case')" :class="{ 'is-current': topic.id === lessonId }" :aria-current="topic.id === lessonId ? 'step' : null" :aria-label="(index + 1) + '강 ' + topic.shortTitle + ' 발표'"><span x-text="String(index + 1).padStart(2,'0')"></span><strong x-text="topic.shortTitle"></strong></button></li></template></ol>
-  </nav>
+  <!-- TOPIC_NAVIGATION -->
 
   <main class="presentation-main" id="presentation-main" aria-labelledby="presentation-title">
     <div class="presentation-page-heading"><p><span class="presentation-phase-mark"></span><span x-text="presentationPhase()"></span><span class="presentation-separator">/</span><span x-text="lesson.shortTitle"></span></p><span x-text="presentationPage?.kind === 'section' ? presentationPage.section.minutes + '분 · 본편' : ['demo','live'].includes(presentationPage?.kind) ? '시연 권장 ' + presentationData.demo.durationMinutes + '분' : 'LESSON ' + String(lesson.number).padStart(2,'0')"></span></div>
 
     <div class="presentation-layout" :class="{ 'is-demonstration': ['demo','live'].includes(presentationPage?.kind) }">
-      <figure class="presentation-figure" x-show="['intro','case','section','recap'].includes(presentationPage?.kind)">
+      <figure class="presentation-figure" :class="{'is-goal-preview':presentationPage?.kind === 'intro'}" x-show="['intro','case','section','recap'].includes(presentationPage?.kind)">
         <div class="presentation-figure-grid" aria-hidden="true"></div>
         <div x-show="presentationPage?.kind !== 'intro'" class="presentation-illustration workbench-illustration" :class="'topic-' + presentationIllustrationId + (presentationArtStopped() ? ' is-motion-paused' : '') + (presentationIllustrationId !== lesson.id ? ' is-concept-diagram' : '')" role="img" :aria-label="lesson.shortTitle + ': ' + illustrationDescription(presentationIllustrationId)" x-html="lessonIllustration(presentationIllustrationId)"></div>
         <div x-show="presentationPage?.kind === 'intro'" class="presentation-goal-preview" aria-label="강의 카드 완성 예시"><span>OUR PRACTICE · 강의 카드</span><div><small>01 / CODING ESSENTIALS</small><h2>Git</h2><p>변경을 확인하고 기록합니다.</p><span class="presentation-goal-button">설명 보기 ↓</span></div><p>한 화면으로 구조 · 모양 · 동작을 연결합니다.</p></div>
-        <figcaption x-show="presentationPage?.kind !== 'intro'"><span x-text="String(lesson.number).padStart(2,'0') + ' / ' + String(course.lessons.length).padStart(2,'0')"></span><span x-text="lesson.shortTitle"></span></figcaption>
-        <button x-show="presentationPage?.kind !== 'intro'" class="presentation-motion" type="button" @click="illustrationPaused = !illustrationPaused" :disabled="prefersReducedMotion" :aria-pressed="illustrationPaused || prefersReducedMotion" :aria-label="prefersReducedMotion ? '시스템 설정에 따라 그림이 정지되어 있습니다' : illustrationPaused ? '발표 그림 움직임 재생' : '발표 그림 움직임 멈춤'"><span aria-hidden="true" x-text="illustrationPaused || prefersReducedMotion ? '▷' : 'Ⅱ'"></span><span x-text="prefersReducedMotion ? '정지 화면' : illustrationPaused ? '움직임 재생' : '움직임 멈춤'"></span></button>
+        <figcaption x-show="presentationPage?.kind !== 'intro'"><span x-text="String(lesson.number).padStart(2,'0') + ' / ' + String(course.lessons.length).padStart(2,'0')"></span><span x-text="illustrationCaption(presentationIllustrationId)"></span></figcaption>
+        <div class="presentation-art-tools" x-show="presentationPage?.kind !== 'intro'"><button type="button" class="art-expand-button" @click="openArtViewer($event)"><span x-html="icon('expand')"></span>그림 크게 보기</button><button class="presentation-motion" type="button" @click="illustrationPaused = !illustrationPaused" :disabled="prefersReducedMotion" :aria-pressed="illustrationPaused || prefersReducedMotion" :aria-label="prefersReducedMotion ? '시스템 설정에 따라 그림이 정지되어 있습니다' : illustrationPaused ? '발표 그림 움직임 재생' : '발표 그림 움직임 멈춤'"><span aria-hidden="true" x-text="illustrationPaused || prefersReducedMotion ? '▷' : 'Ⅱ'"></span><span x-text="prefersReducedMotion ? '정지 화면' : illustrationPaused ? '움직임 재생' : '움직임 멈춤'"></span></button></div>
       </figure>
 
       <section class="presentation-copy" :class="{ 'is-live': presentationPage?.kind === 'live' }">

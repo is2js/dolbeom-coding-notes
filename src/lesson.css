@@ -1,4 +1,6 @@
 .lesson-flow-workspace { display: grid; gap: 22px; padding-bottom: 12px; }
+.lesson-flow-workspace :where(.lesson-flow-fast, .lesson-edit-current, .lesson-current-note > footer button, .lesson-flow-navigation > button) { min-height: 44px; min-width: 44px; }
+.lesson-edit-current { display: inline-flex; align-items: center; }
 .lesson-flow-workspace .learning-path { position: static; }
 /* Reuse the course illustrations by stable topic ID, even if the order changes. */
 .lesson-flow-workspace .learning-path-step, .presentation-topics button { position: relative; isolation: isolate; overflow: hidden; }
@@ -123,4 +125,16 @@
   .lesson-visual-figure figcaption { display: none; }
   .lesson-art-tools { padding: 6px 0; }
   .lesson-current-cue { margin-bottom: 14px; }
+}
+
+/* The full current title remains readable beside the native mobile picker. */
+@media (max-width: 720px) {
+  .lesson-page-picker { display: grid; grid-template-columns: minmax(0,1fr) 44px 44px; gap: 8px; }
+  .lesson-page-current { grid-column: 1 / -1; min-width: 0; padding: 5px 4px 8px; }
+  .lesson-page-current > small { display: block; color: #687e61; font-size: 11px; margin-bottom: 5px; }
+  .lesson-page-current > strong { display: block; color: #35533e; font-size: 14px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere; }
+  .lesson-page-picker select { min-height: 44px; font-size: 16px; padding: 8px; }
+  .lesson-page-picker button { width: 44px; min-height: 44px; padding: 8px; border: 1px solid #c3cdb6; border-radius: 6px; background: #fcf9ee; }
+  .lesson-page-picker button:disabled { opacity: .4; }
+  .lesson-page-picker :where(button, select):focus-visible { outline: 3px solid #a8793f; outline-offset: 2px; }
 }

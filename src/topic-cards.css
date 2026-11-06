@@ -1,0 +1,14 @@
+.topic-thumbnail { display: block; flex-shrink: 0; }
+.topic-thumbnail > svg { display: block; width: 100%; height: auto; }
+.intro-topic-cards { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 10px; }
+.intro-topic-card { display: flex; min-width: 0; min-height: 218px; flex-direction: column; align-items: stretch; padding: 13px; border: 1px solid #bdc9b1; border-radius: 10px; background: #fcf8ed; color: #294536; text-align: left; transition: border-color .18s, box-shadow .18s, translate .18s; }
+.intro-topic-card:hover { border-color: #668b72; box-shadow: 0 7px 18px #415d4810; translate: 0 -3px; }
+.intro-topic-card:focus-visible { outline: 3px solid #aa7a42; outline-offset: 3px; }
+.intro-topic-card > .lesson-card-number { display: flex; align-items: center; justify-content: space-between; gap: 6px; color: #6f876b; font: 600 11px var(--mono); }
+.lesson-card-number > span:last-child { color: #94a18a; font-size: 13px; }
+.intro-topic-card > .topic-thumbnail { width: 100%; margin: 7px 0 11px; border-radius: 7px; background: #edf0df; }
+.intro-topic-card > strong { display: block; font-size: 14px; font-weight: 750; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
+.intro-topic-card > small { display: block; margin-top: auto; padding-top: 11px; color: #6d8067; font-size: 12px; line-height: 1.5; }
+@media (max-width:1099px) { .intro-topic-cards { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; } .intro-topic-card { min-height: 218px; padding: 15px; } .intro-topic-card > .topic-thumbnail { max-height: 130px; } .intro-topic-card > .topic-thumbnail > svg { height: 130px; } }
+@media (max-width:560px) { .intro-topic-cards { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; } .intro-topic-card { min-height: 218px; padding: 13px; } .intro-topic-card > strong { font-size: 14px; } .intro-topic-card > .topic-thumbnail, .intro-topic-card > .topic-thumbnail > svg { max-height: none; height: auto; } }
+@media (prefers-reduced-motion:reduce) { .intro-topic-card { transition: none; } .intro-topic-card:hover { translate: none; } }

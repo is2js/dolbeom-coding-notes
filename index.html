@@ -15,15 +15,15 @@
   <div id="app" x-data="courseApp" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home' }" x-cloak>
     <a class="skip-link" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
     <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
-      <button class="rail-toggle" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="icon('chevron')"></button>
+      <button class="rail-toggle" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>
       <nav class="rail-links">
-        <button @click="goIntro()" :class="{active: route === 'home'}" aria-label="소개 홈" title="소개 홈" x-html="icon('home')"></button>
-        <button @click="drawer = !drawer" :class="{active: drawer}" aria-label="전체 목차" title="전체 목차" x-html="icon('book')"></button>
-        <button @click="route !== 'learn' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="icon('chip')"></button>
-        <button @click="route !== 'learn' ? goHome('demo') : showLearningDemo()" :class="{active: route === 'learn' && view === 'demo'}" aria-label="관련 예제" title="관련 예제" x-html="icon('play')"></button>
-        <button @click="openEditor()" :class="{active: route === 'editor'}" aria-label="강의 편집기" title="강의 편집기" x-html="icon('settings')"></button>
+        <button @click="goIntro()" :class="{active: route === 'home'}" aria-label="소개 홈" title="소개 홈" x-html="workspaceIcon('overview')"></button>
+        <button @click="drawer = !drawer" :class="{active: drawer}" aria-label="전체 목차" title="전체 목차" x-html="workspaceIcon('outline')"></button>
+        <button @click="route !== 'learn' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="workspaceIcon('concept')"></button>
+        <button @click="route !== 'learn' ? goHome('demo') : showLearningDemo()" :class="{active: route === 'learn' && view === 'demo'}" aria-label="관련 예제" title="관련 예제" x-html="workspaceIcon('practice')"></button>
+        <button @click="openEditor()" :class="{active: route === 'editor'}" aria-label="강의 편집기" title="강의 편집기" x-html="workspaceIcon('edit')"></button>
       </nav>
-      <div class="rail-signature"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark">✳</span></div>
+      <div class="rail-signature"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark" aria-hidden="true" x-html="workspaceIcon('mark')"></span></div>
     </aside>
 
     <div class="workspace" x-show="route !== 'present'">
@@ -50,6 +50,7 @@
     </div>
 
     <section id="presentation-host"></section>
+    <div id="art-viewer-host"></div>
 
     <div x-show="drawer" class="drawer-backdrop" @click.self="drawer=false" @keydown.escape.window="drawer=false" x-transition.opacity><aside class="contents-drawer" aria-label="전체 목차"><div class="drawer-header"><span class="eyebrow">YOUR LEARNING PATH</span><button @click="drawer=false" aria-label="목차 닫기" x-html="icon('close')"></button></div><h2>차근차근, 내 것으로.</h2><p x-text="'AI가 한 일을 이해하는 ' + (course?.lessons.length || 0) + '개의 주제.'"></p><template x-for="(l,i) in (course?.lessons || [])" :key="l.id"><button class="drawer-lesson" @click="showLesson(l.id);drawer=false" :aria-current="l.id===lessonId?'step':null"><span x-text="String(i+1).padStart(2,'0')"></span><div><b x-text="l.shortTitle"></b><small x-text="coreMinutes(l)+'분 · '+l.sections.filter(s=>!s.optional).length+'개 절'"></small></div><span x-html="icon(completed.includes(l.id)?'check':'arrow')"></span></button></template><div class="drawer-note"><span x-html="icon('bulb')"></span>모든 강의는 사례로 시작합니다.<br>위에서부터 순서대로 이어 가 보세요.</div></aside></div>
 

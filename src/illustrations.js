@@ -1,7 +1,7 @@
 // The artwork follows stable topic IDs, so editing titles or reordering lessons
 // keeps each scene attached to the concept it illustrates.
 import { SECTION_ILLUSTRATIONS } from './course.js';
-import { sectionArtwork, sectionDescriptions } from './section-scenes.js';
+import { sectionArtwork, sectionDescriptions, sectionScenes } from './section-scenes.js';
 const sources = import.meta.glob('./illustrations/*.svg', { query: '?raw', import: 'default', eager: true });
 const artwork = { ...Object.fromEntries(Object.entries(sources).map(([path, svg]) => [path.split('/').pop().replace(/\.svg$/, ''), svg])), ...sectionArtwork };
 const descriptions = {
@@ -19,6 +19,10 @@ const descriptions = {
 
 export function lessonIllustration(id) { return artwork[id] || artwork.terminal; }
 export function illustrationDescription(id) { return descriptions[id] || descriptions.terminal; }
+// Short visual captions keep the complete accessible descriptions available.
+export function illustrationCaption(id) {
+  return sectionScenes[String(id).replace(/^section-/, '')]?.title || illustrationDescription(id);
+}
 export function sectionIllustrationId(section, lessonId) {
   if (SECTION_ILLUSTRATIONS.includes(section?.illustrationId)) return section.illustrationId;
   const id = `section-${section?.id}`;

@@ -5,7 +5,7 @@ import { validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite, COUR
 import { createEditor } from './editor.js';
 import { createLocalCourseSync } from './local-sync.js';
 import { COURSE_STORAGE, readCourseDrafts, resolveLessonAlias } from './course-storage.js';
-import { lessonIllustration, illustrationDescription, sectionIllustrationId } from './illustrations.js';
+import { lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId } from './illustrations.js';
 import { buildPresentationPages, getPresentation, createDemoTimer, formatDemoTime } from './presentation.js';
 import { presenterState, presenterMethods, currentDemoElapsed } from './presenter.js';
 import { editorAddress, parseEditorRoute, selectEditorLesson } from './editing-route.js';
@@ -17,6 +17,12 @@ import demoHtml from './demo.html?raw';
 import lessonHtml from './lesson.html?raw';
 import homeHtml from './home.html?raw';
 import { introTypewriter } from './intro-typewriter.js';
+import { topicThumbnail } from './topic-thumbnails.js';
+import { workspaceIcon } from './workspace-icons.js';
+import { topicNavigationState, topicNavigationMethods } from './topic-navigation.js';
+import { artViewerState, artViewerMethods } from './art-viewer.js';
+import topicNavigationHtml from './topic-navigation.html?raw';
+import artViewerHtml from './art-viewer.html?raw';
 import './styles.css';
 import './editor.css';
 import './illustrations.css';
@@ -27,11 +33,16 @@ import './home.css';
 import './home-desktop.css';
 import './home-art.css';
 import './intro-typewriter.css';
+import './topic-cards.css';
+import './topic-navigation.css';
+import './art-viewer.css';
+import './workspace-rail.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
-document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml);
+document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml);
 document.getElementById('intro-template').innerHTML = homeHtml;
-document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml)}</template>`;
+document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml)}</template>`;
+document.getElementById('art-viewer-host').innerHTML = artViewerHtml;
 document.querySelector('.brand h1').setAttribute('x-text', 'brandTitle');
 document.querySelector('.brand-kicker').setAttribute('x-text', "course ? course.author + '이 풀어주는' : '돌범이 풀어주는'");
 const DRAFT_KEY = COURSE_STORAGE.draft;
@@ -94,13 +105,14 @@ function markdown(value) {
 Alpine.data('introTypewriter', introTypewriter);
 Alpine.data('courseApp', () => ({
   ...presenterState(), ...presenterMethods, ...learningState(), ...learningMethods,
+  ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods,
   loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,
   completed: [], drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, lessonObject, lessonIllustration, illustrationDescription, sectionIllustrationId, markdown, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, markdown, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
   get brandTitle() { return (this.course?.title || 'AI 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, ''); },
   get step() { return this.lesson?.steps[Math.min(this.stepIndex, this.lesson.steps.length - 1)]; },
@@ -191,9 +203,17 @@ Alpine.data('courseApp', () => ({
         if(draft)this.restoreWorkingDraft(draft);
       }
       this.initPresentation();
+      this.initTopicNavigation();
       this.readRoute(true);
+      for (const key of ['route', 'lessonId', 'learningPageId', 'presentationPageId']) {
+        this.$watch(key, () => {
+          this.closeArtViewer({restoreFocus:false});
+          this.syncTopicNavigation();
+        });
+      }
       this.$watch('editor.lessonId', () => this.syncEditorAddress());
       this.$watch('editor.focusId', () => this.syncEditorAddress());
+      this.$watch('course.lessons', () => this.syncTopicNavigation());
       window.addEventListener('hashchange', ()=>this.readRoute());
       this.$watch('readerOpen', open=>{
         if(open && !this.$refs.reader.open) this.$refs.reader.showModal();
@@ -208,6 +228,7 @@ Alpine.data('courseApp', () => ({
     } catch (e) { this.error = e.message || '실행 서버와 강의 JSON을 확인해 주세요.'; this.loading=false; }
   },
   readRoute(initial=false) {
+    this.closeArtViewer({restoreFocus:false});
     if (this.readPresentationRoute(initial)) return;
     this.pausePresentationTimers(); this.rehearsalOpen=false; this.readerOpen=false;
     if (!location.hash || location.hash === '#/' || location.hash === '#/home') {

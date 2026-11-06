@@ -1,0 +1,29 @@
+/* A quiet coding-tool rail: one selected marker instead of stacked icon boxes. */
+.rail { background: #ede5d5d9; border-right-color: #cfc7b54d; }
+.rail .rail-toggle { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; padding: 10px; border: 0; border-radius: 9px; background: transparent; color: #73816f; }
+.rail .rail-toggle svg { width: 23px; height: 23px; }
+.rail .rail-toggle[aria-expanded="true"] { color: #396d56; background: #dce5d3; }
+.rail .rail-links { gap: 17px; margin-top: 32px; }
+.rail .rail-links button { position: relative; width: 44px; height: 44px; flex-shrink: 0; padding: 10px; border: 0; border-radius: 9px; background: transparent; color: #68766b; transition: color .16s ease, background .16s ease; }
+.rail .rail-links button svg { display: block; width: 24px; height: 24px; }
+.rail .rail-links button::before { content: ''; position: absolute; left: -10px; top: 13px; width: 3px; height: 18px; border-radius: 0 3px 3px 0; background: transparent; }
+.rail .rail-links button:hover, .rail .rail-toggle:hover { color: #365e48; background: #e9eddf; }
+.rail .rail-links button.active, .rail .rail-links button:first-child.active { color: #366d52; background: #e0e8d7; border: 0; }
+.rail .rail-links button.active::before { background: #548469; }
+.rail :where(.rail-links button, .rail-toggle):focus-visible { outline: 2px solid #9b743e; outline-offset: 1px; }
+.rail-signature .signature-mark { display: grid; place-items: center; width: 21px; height: 21px; margin-top: 6px; writing-mode: horizontal-tb; transform: rotate(180deg); color: #6e816c; }
+.rail-signature .signature-mark svg { display: block; width: 19px; height: 19px; }
+@media (max-width: 720px) {
+  .rail .rail-toggle { margin-top: 16px; }
+  .rail .rail-links { gap: 12px; margin-top: 21px; }
+  .rail .rail-links button::before { left: -2px; }
+  .rail .rail-links button svg { width: 23px; height: 23px; }
+}
+@media (max-height: 540px) {
+  .rail .rail-toggle { margin-top: 10px; }
+  .rail .rail-links { gap: 5px; margin-top: 10px; }
+  .rail .rail-signature { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail .rail-links button { transition: none; }
+}

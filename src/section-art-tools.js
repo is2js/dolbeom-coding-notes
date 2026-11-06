@@ -1,434 +1,265 @@
-const C = {
-  ink: "#283449", paper: "#f5ead3", cream: "#dfcfad",
-  sage: "#8aa395", teal: "#536e6d", orange: "#da9d77",
-  light: "#fcf5e7", muted: "#788577", line: "#c6b99c",
-};
+// Self-contained, crisp diagrams. Complete static geometry explains each idea;
+// named motion layers only trace the command, transfer, or review action.
+const C = { ink:'#1d2a42', teal:'#267c78', sage:'#cbdcc5', light:'#fff9ed', paper:'#f6ecd7', cream:'#e6d4ae', amber:'#e8b55c', red:'#ae674f', paleRed:'#f1d9c9', muted:'#586b64', line:'#bdc7b3', white:'#fffdf7' };
+const esc = value => String(value).replace(/[&<>"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[char]));
+const text = (x,y,value,{size=22,fill=C.ink,weight=550,anchor='start',mono=false}={}) => `<text x="${x}" y="${y}" fill="${fill}" stroke="none" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" font-family="${mono?'Consolas,monospace':'Pretendard,Malgun Gothic,system-ui,sans-serif'}">${esc(value)}</text>`;
+const path = (d,stroke=C.ink,width=2.8,extra='') => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
+const rect = (x,y,w,h,fill=C.light,r=10,extra='') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" ${/\bstroke=/.test(extra)?'':`stroke="${C.ink}"`} ${/\bstroke-width=/.test(extra)?'':'stroke-width="2.6"'} ${extra}/>`;
+const circle = (x,y,r,fill=C.sage,extra='') => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${C.ink}" stroke-width="2.8" ${extra}/>`;
+const check = (x,y,scale=1) => `<g transform="translate(${x} ${y}) scale(${scale})">${path('M-10 0l7 7 17-20',C.teal,4)}</g>`;
+const cursor = (p,x,y,fill=C.teal,h=23) => `<rect x="${x}" y="${y}" width="5" height="${h}" rx="1" fill="${fill}" class="art-motion ${p}-cursor"/>`;
+const arrow = (p,d) => path(d,C.teal,3.4,`marker-end="url(#${p}-arrow)"`);
+const flow = (p,d,delay=0) => path(d,C.amber,5,`class="art-motion ${p}-flow" pathLength="100" stroke-dasharray="9 91" stroke-dashoffset="100" opacity="0" style="animation-delay:${delay}s"`);
+const pill = (x,y,w,label,fill=C.sage,mono=false) => rect(x,y,w,36,fill,7,'stroke-width="1.8"') + text(x+w/2,y+25,label,{size:20,mono,anchor:'middle',weight:650});
 
-const escapeText = (value) => String(value).replace(/[&<>"]/g, (char) => ({
-  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;",
-}[char]));
-
-function text(x, y, value, options = {}) {
-  const { size = 22, fill = C.ink, weight = 500, anchor = "start", mono = false } = options;
-  return '<text x="' + x + '" y="' + y + '" fill="' + fill + '" stroke="none" font-size="' + size
-    + '" font-weight="' + weight + '" text-anchor="' + anchor + '" font-family="'
-    + (mono ? "Consolas, monospace" : "Pretendard, Malgun Gothic, system-ui, sans-serif") + '">'
-    + escapeText(value) + '</text>';
+function panel(x,y,w,h,title,body,{dark=false,titleSize=23}={}) {
+  return `<g stroke-linejoin="round"><path d="M${x+w} ${y+10}l9 8v${h-9}l-9-9Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="2.6"/><path d="M${x} ${y+h}l9 9h${w}l-9-9Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="2.6"/>`
+    + rect(x,y,w,h,dark?C.ink:C.light)
+    + `<path d="M${x+10} ${y}h${w-20}q10 0 10 10v32H${x}V${y+10}q0-10 10-10Z" fill="${C.ink}"/>`
+    + text(x+17,y+29,title,{size:titleSize,fill:C.light,weight:700})
+    + `<circle cx="${x+w-17}" cy="${y+21}" r="4" fill="${C.amber}"/>`
+    + path(`M${x} ${y+42}h${w}`,C.ink,2.6) + body + '</g>';
 }
 
-function rect(x, y, width, height, fill = C.paper, radius = 12, extra = "") {
-  return '<rect x="' + x + '" y="' + y + '" width="' + width + '" height="' + height
-    + '" rx="' + radius + '" fill="' + fill + '" stroke="' + C.ink + '" stroke-width="2.4" ' + extra + '/>';
+function document(x,y,w=82,h=100,fill=C.white) {
+  const f=20;
+  return `<g stroke="${C.ink}" stroke-width="2.6" stroke-linejoin="round"><path d="M${x+6} ${y+7}h${w-f}l${f} ${f}v${h-f}H${x+6}Z" fill="${C.cream}"/><path d="M${x} ${y}h${w-f}l${f} ${f}v${h-f}H${x}Z" fill="${fill}"/><path d="M${x+w-f} ${y}v${f}h${f}" fill="${C.cream}"/>`
+    + path(`M${x+15} ${y+h*.43}h${w-30}`,C.teal,4) + path(`M${x+15} ${y+h*.6}h${w-35}M${x+15} ${y+h*.77}h${w-42}`,C.line,4) + '</g>';
 }
 
-function line(path, color = C.ink, width = 2.4, extra = "") {
-  return '<path d="' + path + '" fill="none" stroke="' + color + '" stroke-width="' + width
-    + '" stroke-linecap="round" stroke-linejoin="round" ' + extra + '/>';
+function folder(x,y,w=180,h=115) {
+  return `<g stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"><path d="M${x} ${y+17}V${y}h${w*.36}l14 17h${w*.64-14}v${h-17}H${x}Z" fill="${C.amber}"/><path d="M${x-7} ${y+36}h${w+18}l-16 ${h-36}H${x+4}Z" fill="${C.paper}"/>`
+    + path(`M${x+12} ${y+47}h${w-21}`,C.white,3) + '</g>';
 }
 
-function arrow(prefix, path, color = C.teal) {
-  return line(path, color, 3, 'marker-end="url(#' + prefix + '-arrow)"');
+function commit(x,y,label,r=28) {
+  return `<g stroke="${C.ink}" stroke-width="2.8"><path d="M${x-r} ${y}v22c0 19 ${r*2} 19 ${r*2} 0v-22" fill="${C.teal}"/><ellipse cx="${x}" cy="${y}" rx="${r}" ry="14" fill="${C.sage}"/><ellipse cx="${x}" cy="${y}" rx="9" ry="4" fill="${C.white}"/></g>`
+    + text(x,y+67,label,{size:22,anchor:'middle',weight:700});
+}
+const key = (x,y,w,label,active=false) => rect(x+2,y+5,w,37,C.cream,6) + rect(x,y,w,37,active?C.sage:C.white,6) + text(x+w/2,y+26,label,{size:20,mono:true,anchor:'middle',weight:650});
+
+function scene(p,heading,contents,footer='') {
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="topic-art-svg section-art-svg ${p}" viewBox="0 0 760 550" aria-hidden="true" focusable="false"><defs><marker id="${p}-arrow" viewBox="0 0 10 10" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1l7 4-7 4" fill="none" stroke="${C.teal}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`
+    + `<style>.${p} .${p}-flow{animation:${p}-travel 5.8s ease-in-out infinite}.${p} .${p}-cursor{animation:${p}-blink 2.6s steps(2,end) infinite}.${p} .${p}-focus{animation:${p}-focus 5.8s ease-in-out infinite}@keyframes ${p}-travel{0%,8%{stroke-dashoffset:100;opacity:0}20%{opacity:1}77%{stroke-dashoffset:0;opacity:1}90%,100%{stroke-dashoffset:0;opacity:0}}@keyframes ${p}-blink{0%,48%{opacity:1}49%,100%{opacity:.18}}@keyframes ${p}-focus{0%,100%{stroke-opacity:.4}35%,70%{stroke-opacity:1}}@media(prefers-reduced-motion:reduce){.${p} .art-motion{animation:none!important}}</style>`
+    + text(380,61,heading,{size:27,anchor:'middle',weight:750}) + path('M80 81h600',C.line,1.4)
+    + `<ellipse cx="384" cy="450" rx="264" ry="16" fill="${C.ink}" opacity=".055"/>`
+    + contents + (footer?text(380,513,footer,{size:21,anchor:'middle',fill:C.muted,weight:600}):'') + '</svg>';
 }
 
-function card(prefix, x, y, width, height, contents, fill = "") {
-  return '<g stroke-linejoin="round">'
-    + '<path d="M' + (x + 12) + ' ' + (y + height) + 'h' + (width - 12) + 'v-'
-    + (height - 12) + 'l8 8v' + (height - 8) + 'H' + (x + 20) + 'z" fill="' + C.cream
-    + '" stroke="' + C.ink + '" stroke-width="2.4"/>'
-    + rect(x, y, width, height, fill || 'url(#' + prefix + '-paper)')
-    + line("M" + (x + 14) + " " + (y + 7) + "H" + (x + width - 14), C.light, 2)
-    + contents + '</g>';
-}
-
-function check(x, y, scale = 1, color = C.teal) {
-  return '<g transform="translate(' + x + " " + y + ') scale(' + scale + ')">'
-    + line("M-10 0l7 7L12-12", color, 4) + '</g>';
-}
-
-function dot(x, y, radius = 5, fill = C.sage) {
-  return '<circle cx="' + x + '" cy="' + y + '" r="' + radius + '" fill="' + fill
-    + '" stroke="' + C.ink + '" stroke-width="1.7"/>';
-}
-
-function signal(prefix, path) {
-  return line(path, C.light, 4, 'class="art-motion ' + prefix + '-flow" pathLength="100" stroke-dasharray="6 94" stroke-dashoffset="100" opacity="0"');
-}
-
-function documentShape(x, y, width = 86, height = 106, fill = C.light) {
-  return '<g stroke="' + C.ink + '" stroke-width="2.3" stroke-linejoin="round">'
-    + '<path d="M' + x + " " + y + "h" + (width - 21) + "l21 21v" + (height - 21)
-    + "H" + x + 'z" fill="' + fill + '"/>'
-    + '<path d="M' + (x + width - 21) + " " + y + "v21h21" + '" fill="' + C.cream + '"/>'
-    + line("M" + (x + 15) + " " + (y + 43) + "h" + (width - 30), C.teal, 3)
-    + line("M" + (x + 15) + " " + (y + 59) + "h" + (width - 36), C.line, 3)
-    + line("M" + (x + 15) + " " + (y + 75) + "h" + (width - 43), C.line, 3) + '</g>';
-}
-
-function folder(x, y, width, height, contents = "") {
-  return '<g stroke="' + C.ink + '" stroke-width="2.4" stroke-linejoin="round">'
-    + '<path d="M' + x + " " + (y + 20) + "v-" + 20 + "h" + (width * 0.38) + "l14 20h"
-    + (width * 0.62 - 14) + "v" + (height - 20) + "H" + x + 'z" fill="' + C.cream + '"/>'
-    + contents
-    + '<path d="M' + (x - 6) + " " + (y + 40) + "h" + (width + 17) + "l-17 " + (height - 40)
-    + "H" + (x + 5) + 'z" fill="' + C.paper + '"/>'
-    + line("M" + (x + 6) + " " + (y + 47) + "h" + (width - 12), C.light, 2) + '</g>';
-}
-
-function commitNode(prefix, x, y, radius = 34) {
-  const ry = radius * 0.48;
-  return '<g stroke="' + C.ink + '" stroke-width="2.4">'
-    + '<path d="M' + (x - radius) + " " + y + "v30c0 " + ry + " " + (radius * 2) + " " + ry
-    + " " + (radius * 2) + ' 0v-30" fill="' + C.teal + '"/>'
-    + '<ellipse cx="' + x + '" cy="' + y + '" rx="' + radius + '" ry="' + ry + '" fill="' + C.sage + '"/>'
-    + '<ellipse cx="' + x + '" cy="' + (y - 1) + '" rx="' + (radius * 0.34) + '" ry="' + (ry * 0.34)
-    + '" fill="' + C.light + '" stroke-width="1.8"/>'
-    + line("M" + (x - radius + 8) + " " + (y - 5) + "q" + (radius - 8) + "-13 " + (radius * 2 - 16) + " 0", "#cad5bb", 1.6)
-    + '</g>';
-}
-
-function key(x, y, width, label, active = false) {
-  return '<g>' + rect(x + 2, y + 4, width, 29, C.cream, 5)
-    + rect(x, y, width, 29, active ? C.sage : C.light, 5)
-    + text(x + width / 2, y + 21, label, { size: 18, weight: 600, anchor: "middle" }) + '</g>';
-}
-
-function scene(prefix, contents) {
-  return '<svg xmlns="http://www.w3.org/2000/svg" class="topic-art-svg section-art-svg" viewBox="0 0 760 550" aria-hidden="true" focusable="false">'
-    + '<defs><linearGradient id="' + prefix + '-paper" x1="0" y1="0" x2="0" y2="1">'
-    + '<stop stop-color="#fcf5e7"/><stop offset="1" stop-color="#f0e4cc"/></linearGradient>'
-    + '<filter id="' + prefix + '-shadow" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="7"/></filter>'
-    + '<marker id="' + prefix + '-arrow" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto" markerUnits="userSpaceOnUse">'
-    + '<path d="M1 1l5 3-5 3" fill="none" stroke="' + C.teal + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>'
-    + '<style>.' + prefix + '-flow{animation:' + prefix + '-travel 6.8s ease-in-out infinite}'
-    + '.' + prefix + '-cursor{animation:' + prefix + '-cursor-light 6.8s ease-in-out infinite}'
-    + '@keyframes ' + prefix + '-travel{0%,8%{stroke-dashoffset:100;opacity:0}18%{opacity:.9}74%{stroke-dashoffset:0;opacity:.9}86%,100%{stroke-dashoffset:0;opacity:0}}'
-    + '@keyframes ' + prefix + '-cursor-light{0%,100%{opacity:.3}35%,65%{opacity:.85}}'
-    + '@media(prefers-reduced-motion:reduce){.' + prefix + '-flow,.' + prefix + '-cursor{animation:none!important}}</style>'
-    + '<ellipse cx="383" cy="442" rx="219" ry="20" fill="#8e8975" opacity=".14" filter="url(#' + prefix + '-shadow)"/>'
-    + contents + '</svg>';
-}
-
-function greetingScene() {
-  const p = "section-terminal-example";
-  return scene(p,
-    text(380, 74, "터미널과 탐색기를 오가며 같은 위치 확인", { anchor: "middle", size: 24, weight: 650 })
-    + card(p, 70, 106, 320, 330,
-      text(94, 143, "PowerShell", { size: 24, weight: 650 }) + dot(361, 135, 5, C.sage)
-      + line("M91 159h277", C.line, 1.5)
-      + rect(91, 171, 278, 47, "#e2e8d5", 6, 'stroke-opacity="0"')
-      + text(102, 201, "pwd", { mono: true, size: 23, weight: 700, fill: C.teal })
-      + text(167, 201, "= Get-Location", { mono: true, size: 17 })
-      + text(102, 250, "explorer.exe .", { mono: true, size: 22 })
-      + text(102, 300, "ls", { mono: true, size: 23, weight: 700, fill: C.teal })
-      + text(150, 300, "= Get-ChildItem", { mono: true, size: 17 })
-      + text(102, 351, "mkdir → cd", { mono: true, size: 22 })
-      + text(102, 374, "New-Item · Set-Location", { mono: true, size: 15, fill: C.teal })
-      + text(102, 400, "pwd", { mono: true, size: 22, fill: C.teal })
-      + text(165, 400, "이동한 위치 확인", { size: 18 })
-      + '<rect x="345" y="385" width="4" height="20" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>'
-      + text(102, 425, "cd .. → 상위 · Tab → 경로 완성", { size: 15, fill: C.teal }))
-    + arrow(p, "M400 232h30") + signal(p, "M400 232h30")
-    + card(p, 445, 106, 245, 174,
-      text(466, 143, "파일 탐색기", { size: 24, weight: 650 })
-      + line("M464 158h206", C.line, 1.5)
-      + rect(464, 171, 205, 36, C.light, 6)
-      + text(476, 195, "C:\\work", { mono: true, size: 19, fill: C.teal })
-      + text(466, 242, "Win + R → 경로 입력", { size: 19 })
-      + text(466, 264, "또는 explorer.exe .", { mono: true, size: 17 }))
-    + card(p, 445, 315, 245, 121,
-      text(466, 351, "탐색기 주소창", { size: 23, weight: 650 })
-      + rect(464, 365, 205, 42, "#e2e8d5", 6, 'stroke-opacity="0"')
-      + text(566, 393, "wt -d .", { anchor: "middle", mono: true, size: 23, fill: C.teal }))
-    + arrow(p, "M567 290v14") + signal(p, "M567 290v14")
-    + text(380, 485, "현재 폴더를 확인하고, 탐색기와 터미널을 전환", { anchor: "middle", size: 21 })
-    + text(380, 517, "표시된 경로는 예시 · 실제 존재하는 폴더로 연습", { anchor: "middle", size: 19, fill: C.teal })
-  );
+function locationScene() {
+  const p='section-terminal-example';
+  return scene(p,'터미널 ↔ 탐색기 · 같은 폴더 확인',
+    panel(56,108,335,326,'PowerShell',
+      rect(75,164,296,45,'#dfebd6',6,'stroke="none"')
+      + text(88,194,'pwd',{size:25,fill:C.teal,mono:true,weight:750}) + text(157,194,'= Get-Location',{size:18,mono:true})
+      + text(88,243,'explorer.exe .',{size:24,mono:true})
+      + text(88,291,'ls',{size:25,fill:C.teal,mono:true,weight:750}) + text(138,291,'= Get-ChildItem',{size:18,mono:true})
+      + text(88,338,'mkdir → cd',{size:24,mono:true}) + text(88,368,'New-Item · Set-Location',{size:18,mono:true,fill:C.muted})
+      + text(88,410,'cd ..  ·  Tab',{size:22,mono:true,fill:C.teal}) + cursor(p,328,391))
+    + arrow(p,'M402 231h29') + flow(p,'M402 231h29')
+    + panel(446,108,258,176,'파일 탐색기',rect(465,165,220,41,C.white,6)
+      + text(477,193,'C:\\work',{size:22,mono:true,fill:C.teal})
+      + text(467,242,'Win + R → 경로 입력',{size:20}) + text(467,269,'같은 위치의 폴더',{size:20,fill:C.muted}))
+    + arrow(p,'M575 296v20') + flow(p,'M575 296v20',1.3)
+    + panel(446,329,258,105,'탐색기 주소창',text(575,407,'wt -d .',{size:25,anchor:'middle',mono:true,fill:C.teal,weight:750})),
+    '현재 위치 확인 → 폴더 만들기 → 화면 전환');
 }
 
 function guiCliScene() {
-  const p = "section-terminal-gui-cli";
-  return scene(p,
-    text(380, 73, "하나의 메모 파일을 두 화면에서 확인", { anchor: "middle", size: 25, weight: 650 })
-    + card(p, 50, 113, 267, 278,
-      text(73, 150, "PowerShell · CLI", { size: 24, weight: 650 })
-      + line("M70 167h227", C.line, 1.5)
-      + text(73, 207, "pwd", { mono: true, size: 22, fill: C.teal })
-      + text(73, 240, "New-Item", { mono: true, size: 22 })
-      + text(73, 274, "memo.txt", { mono: true, size: 22 })
-      + line("M72 292h223", C.line, 1.5)
-      + text(73, 325, "Get-Content / cat", { mono: true, size: 18, fill: C.teal })
-      + text(73, 357, "memo.txt", { mono: true, size: 22 })
-      + '<rect x="244" y="338" width="4" height="21" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>')
-    + documentShape(337, 191, 86, 106, C.light)
-    + text(380, 326, "memo.txt", { mono: true, anchor: "middle", size: 17, fill: C.teal })
-    + arrow(p, "M325 239h4") + signal(p, "M325 239h4")
-    + arrow(p, "M430 239h10") + signal(p, "M430 239h10")
-    + card(p, 449, 113, 260, 278,
-      text(470, 150, "메모장 · GUI", { size: 24, weight: 650 })
-      + line("M468 167h222", C.line, 1.5)
-      + rect(467, 183, 224, 122, C.light, 6)
-      + text(480, 214, "memo.txt", { mono: true, size: 18, fill: C.teal })
-      + line("M480 229h196", C.line, 1.5)
-      + text(480, 260, "Hello, Codex!", { mono: true, size: 20 })
-      + '<rect x="647" y="242" width="4" height="20" rx="2" fill="' + C.teal + '" class="art-motion ' + p + '-cursor"/>'
-      + text(472, 344, "입력 후 Ctrl+S 저장", { size: 20 })
-      + text(472, 371, "탐색기에서 파일 확인", { size: 18, fill: C.teal }))
-    + arrow(p, "M563 409v26H194v-26") + signal(p, "M563 409v26H194v-26")
-    + text(380, 481, "메모장에서 저장 → 터미널에서 내용 읽기", { anchor: "middle", size: 22, fill: C.teal })
-    + text(380, 516, "앞에서 만든 연습 폴더를 그대로 사용", { anchor: "middle", size: 19 })
-  );
+  const p='section-terminal-gui-cli';
+  return scene(p,'같은 memo.txt를 두 화면에서 확인',
+    panel(43,115,282,297,'PowerShell · CLI',
+      text(64,198,'New-Item / ni',{mono:true,size:23}) + text(64,236,'memo.txt',{mono:true,size:25,fill:C.teal,weight:700})
+      + path('M64 256h239',C.line,1.6) + text(64,298,'Get-Content / cat',{mono:true,size:20,fill:C.teal,weight:650})
+      + text(64,337,'memo.txt',{mono:true,size:25}) + text(64,382,'내용 읽기',{size:22}) + cursor(p,237,316))
+    + document(348,201,64,92) + arrow(p,'M332 244h8') + flow(p,'M332 244h8')
+    + arrow(p,'M420 244h8') + flow(p,'M420 244h8',.8) + text(380,332,'같은 파일',{size:19,anchor:'middle',fill:C.teal,weight:700})
+    + panel(438,115,278,297,'메모장 · GUI',
+      text(460,191,'memo.txt',{mono:true,size:22,fill:C.teal}) + path('M460 207h233',C.line,1.6)
+      + text(460,252,'Hello, Codex!',{mono:true,size:25}) + cursor(p,654,230)
+      + pill(461,291,225,'Ctrl+S · 저장',C.sage) + text(461,382,'탐색기에서 파일 확인',{size:20}))
+    + arrow(p,'M569 427v35H185v-35') + flow(p,'M569 427v35H185v-35',1.4),
+    '메모장에서 저장한 내용을 PowerShell로 다시 읽기');
 }
 
 function hostShellScene() {
-  const p = "section-terminal-host-shell";
-  return scene(p,
-    text(380, 85, "호스트는 창과 탭, 셸은 명령 해석", { anchor: "middle", size: 25, weight: 650 })
-    + card(p, 88, 119, 584, 288,
-      '<path d="M100 120h560v58H100z" fill="' + C.cream + '" stroke="none"/>'
-      + text(111, 157, "Windows Terminal", { size: 28, weight: 650 })
-      + text(647, 156, "호스트", { anchor: "end", size: 20, fill: C.teal })
-      + rect(111, 190, 167, 32, C.sage, 7)
-      + rect(296, 190, 167, 32, C.paper, 7)
-      + rect(481, 190, 167, 32, C.paper, 7)
-      + text(194, 213, "탭 1", { anchor: "middle", size: 18 })
-      + text(379, 213, "탭 2", { anchor: "middle", size: 18 })
-      + text(564, 213, "탭 3", { anchor: "middle", size: 18 })
-      + rect(111, 235, 167, 147, C.ink, 8)
-      + rect(296, 235, 167, 147, C.teal, 8)
-      + rect(481, 235, 167, 147, "#384c52", 8)
-      + text(194, 271, "PowerShell 7", { anchor: "middle", size: 23, fill: C.light, weight: 650 })
-      + text(194, 304, "pwsh.exe", { anchor: "middle", mono: true, size: 19, fill: "#c4d2b7" })
-      + text(130, 354, "PS >", { mono: true, size: 24, fill: C.light })
-      + '<rect x="196" y="334" width="5" height="24" rx="2" fill="' + C.light + '" class="art-motion ' + p + '-cursor"/>'
-      + text(379, 266, "Windows", { anchor: "middle", size: 23, fill: C.light, weight: 650 })
-      + text(379, 293, "PowerShell 5.1", { anchor: "middle", size: 21, fill: C.light, weight: 650 })
-      + text(379, 322, "powershell.exe", { anchor: "middle", mono: true, size: 17, fill: "#d4ddc6" })
-      + text(315, 359, "PS >", { mono: true, size: 24, fill: C.light })
-      + text(564, 275, "명령 프롬프트", { anchor: "middle", size: 22, fill: C.light, weight: 650 })
-      + text(564, 311, "cmd.exe", { anchor: "middle", mono: true, size: 20, fill: "#e7dabd" })
-      + text(502, 359, "C:\\>", { mono: true, size: 24, fill: C.light }))
-    + text(380, 450, "탭의 프로필과 실행할 셸을 확인", { anchor: "middle", size: 23, fill: C.teal })
-    + text(380, 489, "git · codex는 셸에서 부르는 별도 프로그램", { anchor: "middle", size: 21 })
-  );
+  const p='section-terminal-host-shell';
+  return scene(p,'Windows Terminal은 셸을 담는 작업 창',
+    panel(53,108,646,318,'Windows Terminal · 창 / 탭 / 분할',
+      pill(74,166,188,'탭 1',C.sage) + pill(282,166,188,'탭 2',C.paper) + pill(490,166,188,'탭 3',C.paper)
+      + rect(74,220,188,182,C.ink,8) + rect(282,220,188,182,'#285e61',8) + rect(490,220,188,182,'#3a4b60',8)
+      + text(168,259,'PowerShell 7',{size:23,anchor:'middle',fill:C.light,weight:700})
+      + text(168,296,'pwsh.exe',{size:20,anchor:'middle',fill:C.sage,mono:true}) + text(96,366,'PS >',{size:26,mono:true,fill:C.white}) + cursor(p,167,344,C.amber)
+      + text(376,253,'Windows',{size:23,anchor:'middle',fill:C.light,weight:700})
+      + text(376,282,'PowerShell 5.1',{size:20,anchor:'middle',fill:C.light,weight:700})
+      + text(376,315,'powershell.exe',{size:19,anchor:'middle',fill:C.sage,mono:true}) + text(304,366,'PS >',{size:26,mono:true,fill:C.white})
+      + text(584,262,'명령 프롬프트',{size:22,anchor:'middle',fill:C.light,weight:700})
+      + text(584,299,'cmd.exe',{size:21,anchor:'middle',fill:C.sage,mono:true}) + text(514,366,'C:\\>',{size:26,mono:true,fill:C.white})),
+    '호스트는 창을 관리하고, 선택한 셸은 명령을 해석');
 }
 
 function shortcutsScene() {
-  const p = "section-terminal-shortcuts";
-  return scene(p,
-    text(380, 82, "설정에서 준비하고, 나눈 창 사이로 이동", { anchor: "middle", size: 25, weight: 650 })
-    + card(p, 91, 124, 190, 278,
-      text(186, 162, "설정", { anchor: "middle", size: 26, weight: 650 })
-      + line("M113 183h145", C.line, 1.5)
-      + text(112, 216, "기본 프로필", { size: 21 })
-      + rect(111, 228, 148, 31, "#e2e8d5", 6)
-      + text(185, 251, "PowerShell 7", { anchor: "middle", size: 18 })
-      + text(112, 294, "테마 · 글꼴 · 키", { size: 18 })
-      + line("M115 316h133", C.teal, 2.5)
-      + dot(151, 316, 6, C.light)
-      + key(120, 350, 74, "Ctrl") + key(212, 350, 39, ","))
-    + arrow(p, "M295 254h20") + signal(p, "M295 254h20")
-    + card(p, 329, 124, 339, 278,
-      text(351, 161, "Windows Terminal", { size: 25, weight: 650 })
-      + rect(349, 180, 139, 29, C.sage, 5)
-      + text(418, 201, "한 탭 안의 패널", { anchor: "middle", size: 17 })
-      + line("M512 191v12M506 197h12", C.teal, 2.5)
-      + rect(350, 224, 142, 153, C.ink, 7)
-      + rect(509, 224, 137, 153, C.teal, 7)
-      + text(369, 273, "PS >", { mono: true, size: 25, fill: C.light })
-      + text(527, 273, "PS >", { mono: true, size: 25, fill: C.light })
-      + '<rect x="433" y="252" width="5" height="25" rx="2" fill="' + C.light + '" class="art-motion ' + p + '-cursor"/>'
-      + text(421, 344, "현재 포커스", { anchor: "middle", size: 18, fill: "#d4ddc6" })
-      + text(577, 344, "다른 패널", { anchor: "middle", size: 18, fill: "#d4ddc6" })
-      + '<rect x="346" y="220" width="150" height="161" rx="9" fill="none" stroke="' + C.orange + '" stroke-width="3" class="art-motion ' + p + '-cursor"/>')
-    + text(186, 441, "Ctrl + ,", { anchor: "middle", mono: true, size: 24, fill: C.teal })
-    + text(186, 475, "설정 열기", { anchor: "middle", size: 22 })
-    + text(499, 441, "Alt + Shift + D", { anchor: "middle", mono: true, size: 23, fill: C.teal })
-    + text(499, 475, "분할  ·  Alt + 방향키로 포커스", { anchor: "middle", size: 21 })
-    + text(380, 520, "기본 키 기준 · 바꾼 키는 설정에서 확인", { anchor: "middle", size: 20, fill: C.teal })
-  );
+  const p='section-terminal-shortcuts';
+  return scene(p,'설정 → 창 분할 → 포커스 이동',
+    panel(49,112,207,310,'설정',text(70,191,'기본 프로필',{size:23}) + pill(70,211,164,'PowerShell 7',C.sage)
+      + text(70,286,'테마 · 글꼴',{size:23}) + path('M72 311h158',C.teal,4) + circle(125,311,7,C.white)
+      + key(76,354,79,'Ctrl') + key(174,354,49,','))
+    + arrow(p,'M269 271h21') + flow(p,'M269 271h21')
+    + panel(304,112,402,310,'한 탭 안에서 두 패널 사용',rect(325,175,170,218,C.ink,8) + rect(511,175,172,218,'#285e61',8)
+      + text(345,224,'PS >',{mono:true,size:28,fill:C.white}) + text(531,224,'PS >',{mono:true,size:28,fill:C.white})
+      + cursor(p,418,202,C.amber,27) + text(410,356,'현재 포커스',{size:21,anchor:'middle',fill:C.sage})
+      + text(597,356,'다른 패널',{size:21,anchor:'middle',fill:C.sage})
+      + `<rect x="320" y="170" width="180" height="228" rx="11" fill="none" stroke="${C.amber}" stroke-width="3.5" class="art-motion ${p}-focus"/>`)
+    + text(152,462,'Ctrl + ,',{size:23,anchor:'middle',mono:true,fill:C.teal,weight:700})
+    + text(504,462,'Alt + Shift + D',{size:24,anchor:'middle',mono:true,fill:C.teal,weight:700}),
+    '분할 후 Alt + 방향키로 이동 · 기본 키 설정 기준');
 }
 
 function diffScene() {
-  const p = "section-git-example";
-  return scene(p,
-    card(p, 119, 115, 388, 286,
-      text(146, 154, "index.html", { mono: true, weight: 650 })
-      + line("M139 174h348", C.line, 1.5)
-      + rect(140, 197, 343, 54, "#ead3bc", 6, 'stroke-opacity=".2"')
-      + text(157, 233, "− 코딩 노트", { fill: "#8e5f49" })
-      + rect(140, 267, 343, 54, "#dce6ce", 6, 'stroke-opacity=".2"')
-      + text(157, 303, "+ 돌범의 코딩 기초", { fill: C.teal, weight: 600 })
-      + line("M157 350h229M157 369h168", C.line, 3))
-    + '<g><path d="M544 314l39 55" fill="none" stroke="' + C.ink + '" stroke-width="21" stroke-linecap="round"/>'
-    + '<path d="M544 314l39 55" fill="none" stroke="' + C.teal + '" stroke-width="13" stroke-linecap="round"/>'
-    + '<circle cx="513" cy="265" r="61" fill="' + C.light + '" fill-opacity=".9" stroke="' + C.ink + '" stroke-width="3"/>'
-    + '<circle cx="513" cy="265" r="49" fill="none" stroke="' + C.sage + '" stroke-width="2"/>'
-    + check(511, 266, 1.7) + signal(p, "M513 216a49 49 0 1 1-49 49") + '</g>'
-    + card(p, 423, 392, 211, 67,
-      text(446, 420, "README", { mono: true, size: 22 })
-      + text(446, 445, "기존 작업은 보존", { size: 18, fill: C.teal }))
-    + text(201, 448, "바뀐 줄을 검토", { size: 22, weight: 600 })
-  );
+  const p='section-git-example';
+  return scene(p,'화면이 바뀌면, 변경한 줄부터 확인',
+    panel(63,109,619,282,'index.html · 변경 비교',rect(84,172,577,69,C.paleRed,7,'stroke="none"')
+      + text(104,216,'− 코딩 노트',{size:27,fill:C.red,weight:650}) + rect(84,257,577,69,'#dce9d4',7,'stroke="none"')
+      + text(104,301,'+ 돌범의 코딩 기초',{size:27,fill:C.teal,weight:750})
+      + `<rect x="84" y="257" width="577" height="69" rx="7" fill="none" stroke="${C.teal}" stroke-width="3" class="art-motion ${p}-focus"/>`
+      + text(105,368,'무엇을 바꿨는지 먼저 읽습니다.',{size:22,fill:C.muted}))
+    + document(76,418,52,64,C.white) + text(150,449,'README',{mono:true,size:24,weight:700})
+    + text(150,480,'별도로 하던 작업은 보존',{size:21,fill:C.muted}) + circle(617,451,33,C.sage) + check(617,451,1.4),
+    '제목 변경을 검토하고, 다른 수정은 섞지 않기');
 }
 
 function versionFlowScene() {
-  const p = "section-git-why";
-  return scene(p,
-    rect(92, 112, 421, 299, "#f1e6cf", 23, 'stroke-dasharray="7 8" stroke-opacity=".55"')
-    + text(302, 154, "내 컴퓨터", { anchor: "middle", weight: 650 })
-    + documentShape(124, 220, 78, 105)
-    + text(163, 371, "저장", { anchor: "middle", weight: 600 })
-    + arrow(p, "M215 272h37")
-    + '<path d="M264 270h87l-8 42h-71z" fill="' + C.cream + '" stroke="' + C.ink + '" stroke-width="2.5" stroke-linejoin="round"/>'
-    + documentShape(275, 222, 63, 75)
-    + '<path d="M264 285h87l-8 29h-71z" fill="' + C.sage + '" stroke="' + C.ink + '" stroke-width="2.4" stroke-linejoin="round"/>'
-    + text(307, 371, "선택", { anchor: "middle", weight: 600 })
-    + arrow(p, "M361 272h33")
-    + commitNode(p, 438, 266, 33)
-    + text(438, 371, "커밋", { anchor: "middle", weight: 600 })
-    + arrow(p, "M477 270h85") + text(521, 249, "push", { anchor: "middle", mono: true })
-    + signal(p, "M477 270h85")
-    + card(p, 569, 190, 103, 130,
-      text(620, 226, "원격", { anchor: "middle", weight: 650 })
-      + line("M588 250h65M588 271h65M588 292h65", C.teal, 8)
-      + dot(593, 250, 3, C.light) + dot(593, 271, 3, C.light) + dot(593, 292, 3, C.light))
-    + arrow(p, "M620 333v34")
-    + card(p, 565, 381, 111, 57,
-      text(599, 418, "PR", { mono: true, anchor: "middle", weight: 650 })
-      + check(646, 409, 0.7))
-    + text(302, 449, "로컬 기록", { anchor: "middle", size: 22 })
-  );
+  const p='section-git-why';
+  return scene(p,'로컬 기록과 원격 협업은 다른 단계',
+    rect(41,110,475,319,C.paper,15,'stroke-dasharray="8 7"') + text(279,150,'내 컴퓨터 · Git',{size:26,anchor:'middle',weight:750})
+    + document(76,224,71,94) + text(113,381,'저장',{size:23,anchor:'middle',weight:700})
+    + arrow(p,'M163 274h47') + flow(p,'M163 274h47') + document(233,207,66,83)
+    + `<path d="M220 269h96l-9 54h-78Z" fill="${C.sage}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/>`
+    + path('M225 283h87',C.white,2) + text(268,381,'선택',{size:23,anchor:'middle',weight:700})
+    + arrow(p,'M330 274h39') + flow(p,'M330 274h39',1) + commit(419,266,'커밋',31)
+    + arrow(p,'M462 274h91') + flow(p,'M462 274h91',2) + text(523,246,'push',{size:22,anchor:'middle',mono:true,fill:C.teal,weight:700})
+    + panel(569,176,143,153,'GitHub',path('M590 242h99M590 270h99M590 298h99',C.teal,9)
+      + circle(600,242,4,C.white) + circle(600,270,4,C.white) + circle(600,298,4,C.white),{titleSize:22})
+    + arrow(p,'M640 344v28') + rect(569,387,143,52,C.sage,8) + text(641,422,'PR · 검토',{size:22,anchor:'middle',weight:750}),
+    'Git은 변경 기록 · GitHub는 원격 보관과 검토');
 }
 
 function promptScene() {
-  const p = "section-git-prompt";
-  return scene(p,
-    card(p, 116, 134, 244, 275,
-      text(141, 176, "Codex 요청", { weight: 650 })
-      + line("M136 195h204", C.line, 1.5)
-      + rect(140, 220, 24, 24, C.light, 4) + check(152, 233, 0.55)
-      + text(181, 241, "목표")
-      + rect(140, 267, 24, 24, C.light, 4) + check(152, 280, 0.55)
-      + text(181, 288, "기존 작업 보존")
-      + rect(140, 314, 24, 24, C.light, 4) + check(152, 327, 0.55)
-      + text(181, 335, "확인 방법")
-      + text(141, 382, "작게 요청하기", { size: 18, fill: C.teal }))
-    + '<path d="M194 125h87l9 22h-105z" fill="' + C.sage + '" stroke="' + C.ink + '" stroke-width="2.3" stroke-linejoin="round"/>'
-    + arrow(p, "M374 275h25")
-    + '<circle cx="456" cy="275" r="48" fill="' + C.sage + '" stroke="' + C.ink + '" stroke-width="2.5"/>'
-    + '<circle cx="456" cy="275" r="36" fill="' + C.light + '" stroke="' + C.teal + '" stroke-width="1.7"/>'
-    + check(456, 278, 1.6)
-    + text(456, 358, "검증", { anchor: "middle", weight: 600 })
-    + arrow(p, "M517 275h25") + signal(p, "M517 275h25")
-    + commitNode(p, 598, 267, 42)
-    + text(598, 358, "커밋", { anchor: "middle", weight: 600 })
-    + card(p, 410, 397, 234, 52, text(527, 430, "diff · 검사 · 기록", { anchor: "middle", size: 22 }))
-  );
+  const p='section-git-prompt';
+  return scene(p,'작게 요청하고, 확인한 뒤 기록',
+    panel(58,120,283,305,'Codex 요청 카드',
+      text(83,206,'01',{mono:true,size:21,fill:C.teal,weight:750}) + text(127,206,'변경 목표',{size:24,weight:700})
+      + text(83,267,'02',{mono:true,size:21,fill:C.teal,weight:750}) + text(127,267,'기존 작업 보존',{size:24,weight:700})
+      + text(83,328,'03',{mono:true,size:21,fill:C.teal,weight:750}) + text(127,328,'확인 방법',{size:24,weight:700})
+      + path('M83 356h234',C.line,1.7) + text(83,394,'수정 → 검사 → 커밋',{size:22,fill:C.muted}))
+    + arrow(p,'M355 267h25') + flow(p,'M355 267h25') + circle(440,267,43,C.sage) + check(440,267,1.7)
+    + text(440,356,'검증',{size:25,anchor:'middle',weight:700}) + arrow(p,'M495 267h35') + flow(p,'M495 267h35',1.8)
+    + commit(603,259,'커밋',42) + pill(387,396,281,'diff · 검사 결과 · 기록',C.paper),
+    '자동화할 작업과 보존할 내용을 함께 전달');
 }
 
 function cloneScene() {
-  const p = "section-github-clone";
-  return scene(p,
-    '<g stroke="' + C.ink + '" stroke-width="2.4" stroke-linejoin="round">'
-    + '<path d="M119 161l70-39 85 48-70 41z" fill="' + C.sage + '"/>'
-    + '<path d="M119 161v121l85 49V210z" fill="' + C.paper + '"/>'
-    + '<path d="M204 210l70-40v121l-70 40z" fill="' + C.teal + '"/>'
-    + line("M139 204l44 25M139 231l44 25M139 258l44 25", C.teal, 6)
-    + dot(225, 227, 4, C.light) + dot(243, 217, 4, C.light)
-    + '</g>'
-    + text(193, 369, "GitHub", { anchor: "middle", weight: 650 })
-    + arrow(p, "M294 236h82") + text(337, 211, "clone", { anchor: "middle", mono: true })
-    + signal(p, "M294 236h82")
-    + folder(402, 173, 221, 148,
-      documentShape(420, 172, 78, 102) + documentShape(498, 157, 92, 117))
-    + text(512, 287, "내 폴더", { anchor: "middle", weight: 650 })
-    + line("M512 336v24M361 382v-22h296v22M512 360v22", C.teal, 2.7)
-    + card(p, 293, 387, 137, 58, text(361, 424, "README", { anchor: "middle", mono: true, size: 22 }))
-    + card(p, 448, 387, 127, 58, text(511, 424, "진입점", { anchor: "middle", size: 22 }))
-    + card(p, 594, 387, 127, 58, text(657, 424, "데이터", { anchor: "middle", size: 22 }))
-  );
+  const p='section-github-clone';
+  return scene(p,'원격 저장소를 내 폴더로 가져오기',
+    panel(52,118,250,230,'GitHub · 원격 저장소',
+      `<path d="M111 211l61-34 70 39-61 35Z" fill="${C.sage}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M111 211v70l70 39v-69Z" fill="${C.white}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M181 251l61-35v70l-61 34Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/>`
+      + path('M127 245l35 19M127 270l35 19',C.teal,4) + circle(203,265,4,C.amber) + circle(220,255,4,C.amber),{titleSize:20})
+    + arrow(p,'M319 241h84') + flow(p,'M319 241h84') + text(360,214,'clone',{mono:true,size:25,anchor:'middle',fill:C.teal,weight:750})
+    + panel(424,118,280,230,'내 컴퓨터 · 작업 폴더',document(504,181,79,101) + folder(470,204,183,111)
+      + text(563,299,'프로젝트',{size:23,anchor:'middle',weight:750}),{titleSize:22})
+    + path('M565 361v23M369 384h304M369 384v17M521 384v17M673 384v17',C.teal,3)
+    + pill(310,409,122,'README',C.paper,true) + pill(461,409,122,'진입점',C.paper) + pill(612,409,122,'데이터',C.paper),
+    '받은 뒤에는 README · 시작 파일 · 데이터를 구분');
 }
 
 function remoteRolesScene() {
-  const p = "section-github-roles";
-  return scene(p,
-    line("M314 233L257 194M449 233l55-39M267 364l57-49M453 315l62 48", C.teal, 3)
-    + signal(p, "M267 364l57-49")
-    + text(282, 212, "소개", { size: 18, anchor: "middle", fill: C.teal })
-    + text(484, 211, "정적 게시", { size: 18, anchor: "middle", fill: C.teal })
-    + text(280, 330, "push", { size: 22, mono: true, anchor: "middle" })
-    + text(490, 331, "clone", { size: 22, mono: true, anchor: "middle" })
-    + card(p, 98, 104, 178, 126,
-      dot(139, 151, 16, C.orange)
-      + '<path d="M113 201v-9c0-17 12-26 26-26s26 9 26 26v9" fill="' + C.sage + '" stroke="' + C.ink + '" stroke-width="2"/>'
-      + text(176, 151, "프로필", { size: 22, weight: 650 })
-      + line("M176 176h73M176 191h57", C.line, 3))
-    + card(p, 493, 104, 178, 126,
-      text(516, 143, "Pages", { size: 24, weight: 650 })
-      + line("M509 159h146", C.line, 1.5)
-      + rect(514, 173, 43, 34, C.sage, 4)
-      + line("M571 179h69M571 194h55", C.teal, 3))
-    + '<g stroke="' + C.ink + '" stroke-width="2.4" stroke-linejoin="round">'
-    + '<path d="M303 231l78-45 80 46-78 45z" fill="' + C.sage + '"/>'
-    + '<path d="M303 231v81l80 46v-81z" fill="' + C.paper + '"/>'
-    + '<path d="M383 277l78-45v81l-78 45z" fill="' + C.teal + '"/>'
-    + line("M321 264l44 25M321 286l44 25", C.teal, 6)
-    + dot(407, 292, 4, C.light) + dot(431, 279, 4, C.light)
-    + '</g>'
-    + text(381, 176, "GitHub", { size: 24, weight: 650, anchor: "middle" })
-    + card(p, 93, 365, 188, 88,
-      text(187, 398, "내 컴퓨터", { size: 22, weight: 650, anchor: "middle" })
-      + text(187, 433, "수정 · 커밋", { size: 18, anchor: "middle", fill: C.teal }))
-    + card(p, 510, 363, 160, 90,
-      text(590, 397, "서버", { size: 22, weight: 650, anchor: "middle" })
-      + text(590, 432, "실행 준비", { size: 18, anchor: "middle", fill: C.teal }))
-  );
+  const p='section-github-roles';
+  return scene(p,'GitHub를 목적에 맞게 활용',
+    arrow(p,'M281 195l39 42') + arrow(p,'M442 237l40-42') + arrow(p,'M272 378l53-57') + arrow(p,'M443 321l45 57')
+    + flow(p,'M272 378l53-57') + flow(p,'M443 321l45 57',2)
+    + panel(49,108,222,130,'프로필',circle(84,186,15,C.amber) + text(116,181,'나를 소개',{size:23,weight:650}) + text(116,213,'README',{mono:true,size:21,fill:C.teal}))
+    + panel(489,108,222,130,'GitHub Pages',text(510,184,'정적 사이트 게시',{size:23,weight:650}) + text(510,215,'HTML · CSS · JS',{size:20,fill:C.teal,mono:true}))
+    + `<path d="M314 235l66-37 68 38-66 37Z" fill="${C.sage}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M314 235v66l68 38v-66Z" fill="${C.white}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M382 273l66-37v66l-66 37Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/>`
+    + path('M332 267l33 18M332 289l33 18',C.teal,5) + text(381,372,'원격 저장소',{size:23,anchor:'middle',weight:750})
+    + panel(49,376,222,87,'내 컴퓨터 · push',text(70,445,'변경 기록 올리기',{size:22}),{titleSize:22})
+    + panel(489,376,222,87,'서버 · clone',text(510,445,'가져온 뒤 실행 준비',{size:21}),{titleSize:22}),
+    '원격 보관 · 프로필 소개 · 정적 게시 · 실행 준비');
+}
+
+function pipeScene() {
+  const p='section-terminal-bonus';
+  return scene(p,'파이프는 왼쪽 결과를 오른쪽으로 전달',
+    panel(57,108,644,102,'PowerShell · 명령 읽기',text(80,184,'Get-ChildItem -File | Select-Object Name',{mono:true,size:22,fill:C.teal,weight:650}))
+    + panel(58,255,250,190,'파일 목록 · ls',text(79,339,'memo.txt',{size:23,mono:true}) + text(79,379,'README.md',{size:23,mono:true}) + text(79,419,'파일의 여러 속성',{size:21,fill:C.muted}))
+    + arrow(p,'M324 348h104') + flow(p,'M324 348h104') + text(376,316,'|',{size:43,anchor:'middle',mono:true,weight:750})
+    + panel(445,255,250,190,'이름 선택 · select',text(467,337,'Name',{size:22,mono:true,fill:C.teal,weight:700})
+      + text(467,377,'memo.txt',{size:23,mono:true}) + text(467,417,'README.md',{size:23,mono:true}),{titleSize:22}),
+    'ls · select는 PowerShell의 기본 별칭');
+}
+
+function errorReportScene() {
+  const p='section-git-bonus';
+  const rows=[['현재 폴더','dolbeom-notes'],['현재 브랜치','feat/course-search'],['실행 명령','git push'],['오류 전문','오류 원문 전체 첨부'],['보존할 작업','index.html의 내 수정']];
+  const body=rows.map(([label,value],i)=>{const y=184+i*52;return text(137,y,`${i+1}. ${label}`,{size:22,weight:700,fill:C.teal})
+    + text(330,y,value,{size:21,mono:i<3}) + (i<4?path(`M134 ${y+17}h488`,C.line,1.4):'');}).join('');
+  return scene(p,'다섯 줄의 상태로 도움 요청하기',panel(110,110,536,338,'동기화 오류 보고 · 가상 예시',body)
+    + circle(139,482,14,C.sage) + check(139,482,.65) + text(167,489,'토큰 · 비밀번호는 지우고 공유',{size:23,weight:650}) + cursor(p,606,376));
 }
 
 export const toolSectionScenes = {
-  "terminal-example": {
-    title: "첫 명령: 현재 위치에서 폴더 만들고 열기",
-    description: "PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R에 경로를 입력하거나 explorer.exe .으로 같은 폴더를 엽니다. ls로 목록을 확인한 후 mkdir과 cd로 폴더를 만들고 이동합니다. cd ..로 상위 폴더로 이동하고 Tab으로 경로를 완성해 봅니다. 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 엽니다.",
-    svg: greetingScene(),
+  'terminal-example': {
+    title:'첫 명령: 현재 위치에서 폴더 만들고 열기',
+    description:'PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R에 경로를 입력하거나 explorer.exe .으로 같은 폴더를 엽니다. ls로 목록을 확인한 후 mkdir과 cd로 폴더를 만들고 이동합니다. cd ..로 상위 폴더로 이동하고 Tab으로 경로를 완성해 봅니다. 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 엽니다.',
+    svg:locationScene(),
   },
-  "terminal-gui-cli": {
-    title: "GUI와 CLI 연결: 같은 메모 파일 만들고 확인하기",
-    description: "앞에서 만든 연습 폴더의 memo.txt를 PowerShell에서 만들고 메모장에서 내용을 입력해 저장한 뒤, 탐색기와 Windows에서 쓰는 PowerShell의 Get-Content 또는 그 기본 별칭 cat으로 같은 파일을 확인합니다.",
-    svg: guiCliScene(),
+  'terminal-gui-cli': {
+    title:'GUI와 CLI 연결: 같은 메모 파일 만들고 확인하기',
+    description:'앞에서 만든 연습 폴더의 memo.txt를 PowerShell에서 만들고 메모장에서 내용을 입력해 저장한 뒤, 탐색기와 Windows에서 쓰는 PowerShell의 Get-Content 또는 그 기본 별칭 cat으로 같은 파일을 확인합니다.',
+    svg:guiCliScene(),
   },
-  "terminal-host-shell": {
-    title: "Windows Terminal과 PowerShell·cmd의 관계",
-    description: "Windows Terminal 호스트 안의 탭별 프로필에서 PowerShell 7의 pwsh.exe, Windows PowerShell 5.1의 powershell.exe, 명령 프롬프트의 cmd.exe를 구분합니다.",
-    svg: hostShellScene(),
+  'terminal-host-shell': {
+    title:'Windows Terminal과 PowerShell·cmd의 관계',
+    description:'Windows Terminal 호스트 안의 탭별 프로필에서 PowerShell 7의 pwsh.exe, Windows PowerShell 5.1의 powershell.exe, 명령 프롬프트의 cmd.exe를 구분합니다.',
+    svg:hostShellScene(),
   },
-  "terminal-shortcuts": {
-    title: "단축키 연습: 설정과 창 분할·포커스 이동",
-    description: "Ctrl+쉼표의 설정에서 기본 프로필·테마·글꼴·작업 키를 확인하고, Alt+Shift+D로 같은 탭을 나눈 뒤 Alt+방향키로 강조된 패널의 포커스를 옮기는 구조입니다.",
-    svg: shortcutsScene(),
+  'terminal-shortcuts': {
+    title:'단축키 연습: 설정과 창 분할·포커스 이동',
+    description:'Ctrl+쉼표의 설정에서 기본 프로필·테마·글꼴·작업 키를 확인하고, Alt+Shift+D로 같은 탭을 나눈 뒤 Alt+방향키로 강조된 패널의 포커스를 옮기는 구조입니다.',
+    svg:shortcutsScene(),
   },
-  "git-example": {
-    title: "Codex 사용 예: 화면이 바뀐 뒤 확인할 것",
-    description: "제목의 삭제·추가 줄을 확대해 검토하면서 별도로 남아 있는 README 작업을 보존합니다.",
-    svg: diffScene(),
+  'git-example': {
+    title:'Codex 사용 예: 화면이 바뀐 뒤 확인할 것',
+    description:'제목의 삭제·추가 줄을 확대해 검토하면서 별도로 남아 있는 README 작업을 보존합니다.',
+    svg:diffScene(),
   },
-  "git-why": {
-    title: "Git을 쓰는 이유: 버전·GitHub·PR 구분",
-    description: "내 컴퓨터의 저장·선택·커밋과 경계 밖 원격 전송·PR 검토를 다른 도형과 영역으로 구분합니다.",
-    svg: versionFlowScene(),
+  'git-why': {
+    title:'Git을 쓰는 이유: 버전·GitHub·PR 구분',
+    description:'내 컴퓨터의 저장·선택·커밋과 경계 밖 원격 전송·PR 검토를 다른 도형과 영역으로 구분합니다.',
+    svg:versionFlowScene(),
   },
-  "git-prompt": {
-    title: "Codex에게 수정·확인·커밋을 요청하는 프롬프트",
-    description: "목표·보존 조건·확인 방법이 적힌 요청서가 검증 관문과 커밋 기록으로 이어집니다.",
-    svg: promptScene(),
+  'git-prompt': {
+    title:'Codex에게 수정·확인·커밋을 요청하는 프롬프트',
+    description:'목표·보존 조건·확인 방법이 적힌 요청서가 검증 관문과 커밋 기록으로 이어집니다.',
+    svg:promptScene(),
   },
-  "github-clone": {
-    title: "clone 사용 예: Codex와 저장소 구조 분석하기",
-    description: "원격 저장소가 로컬 폴더로 복제되고 README·진입점·데이터를 나누어 분석하는 구조입니다.",
-    svg: cloneScene(),
+  'github-clone': {
+    title:'clone 사용 예: Codex와 저장소 구조 분석하기',
+    description:'원격 저장소가 로컬 폴더로 복제되고 README·진입점·데이터를 나누어 분석하는 구조입니다.',
+    svg:cloneScene(),
   },
-  "github-roles": {
-    title: "원격 보관부터 서버·프로필·Pages까지 연결하기",
-    description: "GitHub를 중심으로 내 컴퓨터의 push, 서버의 clone·실행 준비, 프로필 소개와 Pages 정적 게시를 구분합니다.",
-    svg: remoteRolesScene(),
+  'github-roles': {
+    title:'원격 보관부터 서버·프로필·Pages까지 연결하기',
+    description:'GitHub를 중심으로 내 컴퓨터의 push, 서버의 clone·실행 준비, 프로필 소개와 Pages 정적 게시를 구분합니다.',
+    svg:remoteRolesScene(),
+  },
+  'terminal-bonus': {
+    title:'보충 노트: 파이프와 명령을 읽는 방법',
+    description:'PowerShell의 Get-ChildItem -File 결과가 파이프를 통해 Select-Object Name으로 전달되어 파일 이름을 보여 줍니다. ls와 select는 이 환경의 기본 별칭입니다.',
+    svg:pipeScene(),
+  },
+  'git-bonus': {
+    title:'보충: 오류 보고에 넣을 다섯 줄',
+    description:'현재 폴더와 브랜치, 실행한 명령, 오류 전문과 보존할 수정 내용을 다섯 줄로 정리한 가상 보고서입니다. 토큰과 비밀번호는 지우고 공유합니다.',
+    svg:errorReportScene(),
   },
 };

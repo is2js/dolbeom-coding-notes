@@ -27,6 +27,7 @@
     </aside>
 
     <div class="workspace" x-show="route !== 'present'">
+      <div class="site-update-bar"><p class="site-update" title="현재 사이트를 빌드한 시각 · 한국 표준시"><span>업데이트</span><time :datetime="siteUpdatedAt" x-text="siteUpdatedLabel"></time></p></div>
       <header class="masthead" x-show="route !== 'editor'">
         <a class="brand" href="./" @click.prevent="goIntro()" aria-label="돌범의 코딩 작업실 홈">
           <img class="brand-portrait" src="./assets/branding/portrait-bright.png" width="1106" height="1422" alt="" />

@@ -1,20 +1,22 @@
-<nav class="topic-navigation" :data-topic-navigation="route" :class="{ 'is-open': topicNavigationOpen, 'is-presentation': route === 'present' }" aria-label="전체 강의 주제" x-init="syncTopicNavigation()" @keydown.escape="closeTopicNavigation(true)">
+<nav class="topic-navigation" :data-topic-navigation="route" :class="{ 'is-open': topicNavigationOpen, 'is-presentation': route === 'present' }" aria-label="전체 강의 주제" x-init="syncTopicNavigation()" @keydown.escape="if(topicNavigationOpen){$event.preventDefault();$event.stopPropagation();closeTopicNavigation(true)}" @click.outside="closeTopicNavigation()">
   <div class="topic-navigation-heading">
-    <h2>강의 주제 <span x-text="String(course.lessons.findIndex(topic => topic.id === lessonId) + 1).padStart(2, '0') + ' / ' + String(course.lessons.length).padStart(2, '0')"></span></h2>
-    <p>주제를 고르면 시작 사례부터 진행합니다.</p>
-    <button type="button" class="topic-presentation-entry" x-show="route !== 'present'" @click="openPresentation(lessonId, learningPageId)"><span x-html="icon('expand')"></span>이 위치에서 발표</button>
-  </div>
-  <button type="button" class="topic-navigation-toggle" :aria-expanded="topicNavigationOpen" :aria-controls="route + '-topic-list'" @click="topicNavigationOpen = !topicNavigationOpen">
-    <span class="topic-current-art" aria-hidden="true" x-html="topicThumbnail(lesson.id)"></span>
-    <span class="topic-current-copy"><small x-text="'현재 · ' + String(course.lessons.findIndex(topic => topic.id === lessonId) + 1).padStart(2, '0') + '강'"></small><strong x-text="lesson.shortTitle"></strong><span x-text="coreMinutes(lesson) + '분'"></span></span>
-    <span class="topic-toggle-label"><span x-text="topicNavigationOpen ? '전체 주제 접기' : '전체 주제 보기'"></span><span aria-hidden="true" class="topic-toggle-chevron" x-text="topicNavigationOpen ? '−' : '+'"></span></span>
-  </button>
-  <ol class="topic-navigation-list" data-topic-list :id="route + '-topic-list'" :style="'--topic-count:' + course.lessons.length">
-    <template x-for="(topic, index) in course.lessons" :key="topic.id"><li>
-      <button type="button" class="topic-card" :data-topic="topic.id" :class="{ 'is-current': topic.id === lessonId, 'is-complete': completed.includes(topic.id) }" :aria-current="topic.id === lessonId ? 'step' : null" @click="selectTopic(topic.id)">
-        <span class="topic-card-heading"><span class="topic-card-number" x-text="String(index + 1).padStart(2, '0')"></span><span class="topic-card-status" x-text="topic.id === lessonId ? '현재' : completed.includes(topic.id) ? '완료' : ''"></span></span>
-        <span class="topic-card-content"><span class="topic-card-art" aria-hidden="true" x-html="topicThumbnail(topic.id)"></span><span class="topic-card-copy"><strong x-text="topic.shortTitle"></strong><small x-text="coreMinutes(topic) + '분'"></small></span></span>
+    <div class="topic-picker-anchor">
+      <button type="button" class="topic-navigation-toggle" :aria-expanded="topicNavigationOpen" :aria-controls="route + '-topic-list'" aria-haspopup="menu" @click="toggleTopicNavigation()" @keydown.arrow-down.prevent="openTopicNavigation('first')" @keydown.arrow-up.prevent="openTopicNavigation('last')">
+        <span class="topic-picker-art" aria-hidden="true" x-html="topicThumbnail(lesson.id)"></span><span class="topic-picker-copy"><small x-text="'강의 주제 · ' + String(course.lessons.findIndex(topic => topic.id === lessonId) + 1).padStart(2,'0') + ' / ' + course.lessons.length"></small><strong x-text="lesson.shortTitle"></strong></span><span class="topic-picker-chevron" :class="{'is-open':topicNavigationOpen}" aria-hidden="true" x-html="icon('chevron')"></span>
       </button>
-    </li></template>
+      <div class="topic-dropdown" :class="{'is-open':topicNavigationOpen}" :inert="!topicNavigationOpen" :aria-hidden="!topicNavigationOpen" x-show="topicNavigationOpen" x-transition.opacity.duration.120ms>
+        <div class="topic-dropdown-heading"><strong>강의 주제</strong><span>선택하면 시작 사례로 이동합니다</span></div>
+        <ol class="topic-navigation-list" :style="'max-height:' + topicMenuHeight + 'px'" data-topic-list role="menu" aria-label="강의 주제 선택" :id="route + '-topic-list'">
+          <template x-for="(topic,index) in course.lessons" :key="topic.id"><li role="none"><button type="button" class="topic-option" role="menuitemradio" tabindex="-1" :data-topic="topic.id" :aria-checked="topic.id === lessonId" :aria-current="topic.id === lessonId ? 'step' : null" @click="selectTopic(topic.id)" @keydown.arrow-down.prevent="focusTopicOption($event,1)" @keydown.arrow-up.prevent="focusTopicOption($event,-1)" @keydown.home.prevent="focusTopicOption($event,'first')" @keydown.end.prevent="focusTopicOption($event,'last')" @keydown.tab="closeTopicNavigation()"><span class="topic-option-art" aria-hidden="true" x-html="topicThumbnail(topic.id)"></span><span class="topic-option-copy"><strong x-text="String(index+1).padStart(2,'0') + ' ' + topic.shortTitle"></strong><small x-text="topic.sections.filter(section => !section.optional).length + '개 본문 · ' + coreMinutes(topic) + '분'"></small></span><span class="topic-option-status" x-text="topic.id === lessonId ? '현재' : completed.includes(topic.id) ? '완료' : ''"></span></button></li></template>
+        </ol>
+      </div>
+    </div>
+    <button type="button" class="topic-presentation-entry" x-show="route !== 'present'" @click="openPresentation(lessonId,learningPageId)" aria-label="현재 위치에서 발표 모드 열기"><span x-html="icon('expand')"></span><span>이 위치에서 발표</span></button>
+  </div>
+</nav>
+<nav class="section-navigation" :data-section-navigation="route" aria-label="하위 주제 이동">
+  <ol class="section-slide-list" data-section-list>
+    <template x-for="(page,index) in navigationPages()" :key="page.id"><li><button type="button" class="section-slide" :class="{'is-current':page.id === navigationPageId()}" :data-page="page.id" :aria-current="page.id === navigationPageId() ? 'step' : null" :title="navigationPageTitle(page)" @click="selectNavigationPage(page.id)"><span class="section-slide-art" aria-hidden="true" x-html="navigationPageThumbnail(page)"></span><span class="section-slide-copy"><small x-text="String(index+1).padStart(2,'0') + ' · ' + navigationPagePhase(page)"></small><strong x-text="navigationPageTitle(page)"></strong></span><span class="section-slide-arrow" aria-hidden="true" x-html="icon('chevron')"></span></button></li></template>
   </ol>
+  <div class="section-slide-controls"><button type="button" class="section-slide-previous" @click="moveNavigationPage(-1)" :disabled="navigationAtBoundary(-1)" aria-label="이전 하위 주제" x-html="icon('chevronLeft')"></button><button type="button" class="section-slide-next" @click="moveNavigationPage(1)" :disabled="navigationAtBoundary(1)" aria-label="다음 하위 주제" x-html="icon('chevron')"></button></div>
 </nav>

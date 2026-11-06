@@ -1,88 +1,16 @@
-// Small, text-free scenes shared by home, lesson and presentation cards.
-// All artwork is local SVG with no IDs, external resources or user-supplied markup.
+// Native, high-contrast subject silhouettes; no text, IDs or external resources.
 const scenes = {
-  terminal: `
-    <path d="M34 22 114 13 123 19 43 28Z" fill="#c6d1bb"/>
-    <path d="M34 22 43 28V79L34 73Z" fill="#89a38c"/>
-    <path d="M43 28 123 19V70L43 79Z" fill="#3c5b50"/>
-    <path d="M43 39 123 30" stroke="#9fb99d"/>
-    <circle cx="51" cy="33" r="1.8" fill="#e4bf80"/><circle cx="58" cy="32" r="1.8" fill="#c7d4b7"/>
-    <path d="m55 49 9 5-8 8m17 0 16-2" stroke="#fff1cd" stroke-width="3"/>
-    <path d="m51 84 41-5 18 9-41 6Z" fill="#e6dcc4"/>
-    <path d="m51 84 18 10v5L51 89Zm18 10 41-6v5l-41 6Z" fill="#9caf98"/>
-    <path d="m112 65 13-2 5 4 13-2v24l-31 5Z" fill="#e1bd80"/>
-    <path d="m112 73 31-5" stroke="#b48d5f"/>
-  `,
-  git: `
-    <path d="M48 20 111 12 121 19 58 27Z" fill="#e9d3aa"/>
-    <path d="M48 20 58 27V88L48 81Z" fill="#bba785"/>
-    <path d="M58 27 121 19V80L58 88Z" fill="#fff8e7"/>
-    <path d="M76 39v33m0-23c0 11 25 2 25 15" stroke="#577966" stroke-width="4"/>
-    <circle cx="76" cy="38" r="6" fill="#dfb878"/><circle cx="76" cy="73" r="6" fill="#dfb878"/>
-    <circle cx="101" cy="65" r="6" fill="#c88c68"/>
-    <path d="m28 74 13-6 13 7-13 6Z" fill="#a9bea1"/>
-    <path d="m28 74 13 7v12l-13-7Zm13 7 13-6v12l-13 6Z" fill="#789b85"/>
-    <path d="m111 87 11-6 12 6-11 6Z" fill="#ecd5ad"/><path d="m111 87 12 6v8l-12-6Zm12 6 11-6v8l-11 6Z" fill="#c5ac82"/>
-  `,
-  github: `
-    <path d="M59 43c-10 0-15-6-15-13 0-9 8-15 17-14C66 4 85 4 93 15c12-4 24 4 24 14 0 8-6 14-15 14Z" fill="#e5eddb"/>
-    <path d="m79 27 10-4 10 5-10 5Z" fill="#6f927a"/><path d="m79 27 10 6v12l-10-6Zm10 6 10-5v12l-10 5Z" fill="#456a5b"/>
-    <path d="M89 48v12m0 0L48 75m41-15 31 13" stroke="#89a78b" stroke-dasharray="3 4"/>
-    <path d="m28 70 25-6 17 9-25 6Z" fill="#fff8e8"/><path d="m28 70 17 9v16l-17-9Z" fill="#dfcda8"/><path d="m45 79 25-6v16l-25 6Z" fill="#b5c5a4"/>
-    <path d="m100 70 25-6 15 9-25 6Z" fill="#fff8e8"/><path d="m100 70 15 9v16l-15-9Z" fill="#dfcda8"/><path d="m115 79 25-6v16l-25 6Z" fill="#b5c5a4"/>
-    <path d="m62 88 20-5 15 8-20 5Z" fill="#e2bd81"/><path d="m62 88 15 8v8l-15-8Zm15 8 20-5v8l-20 5Z" fill="#bd9f70"/>
-  `,
-  markdown: `
-    <path d="m40 23 51-9 24 13v58l-51 10-24-13Z" fill="#b1c0a4"/>
-    <path d="m47 20 51-9 19 11v60L66 93 47 81Z" fill="#e2d6ba"/>
-    <path d="m58 26 50-10 13 8v60L71 95 58 86Z" fill="#fff9e9"/>
-    <path d="m108 16 0 16 13-8" fill="#dbe5cc"/>
-    <path d="m77 38-1 17m10-20-1 17m-14-9 20-4m-21 13 20-4" stroke="#577b65" stroke-width="2.5"/>
-    <path d="m76 65 32-7m-32 15 24-5m-24 13 30-6" stroke="#9db196" stroke-width="2.7"/>
-    <path d="m33 83 7 5 27-38-7-5Z" fill="#dfb878"/><path d="m33 83-1 9 8-4Z" fill="#fff0cb"/>
-  `,
-  ide: `
-    <path d="m28 24 89-12 11 7-89 12Z" fill="#c8d2b9"/>
-    <path d="m28 24 11 7v54l-11-7Z" fill="#8ca38c"/>
-    <path d="m39 31 89-12v54L39 85Z" fill="#fff7e6"/>
-    <path d="m39 41 89-12M64 38v43" stroke="#a2b698"/>
-    <path d="m46 50 10-1m-10 9 8-1m-8 9 10-1" stroke="#9ab096" stroke-width="2.4"/>
-    <path d="m73 47 16-2m6-1 20-2m-36 13 28-4m-34 13 16-2m6-1 20-3m-36 13 20-3" stroke="#678b73" stroke-width="2.7"/>
-    <path d="m95 52 12-2m-34 14 8-1" stroke="#c88c68" stroke-width="2.7"/>
-    <path d="m62 87 35-5 20 10-35 6Z" fill="#d9cfb7"/>
-    <path d="m62 87 20 11v4L62 91Zm20 11 35-6v4l-35 6Z" fill="#9cb098"/>
-    <path d="m112 59 31-4v28l-31 4Z" fill="#dce7cf"/><path d="m118 65 19-3m-19 9 12-2m-12 9 17-2" stroke="#769779" stroke-width="2.3"/>
-  `,
-  web: `
-    <path d="m16 36 61-8 8 5-61 8Z" fill="#d7dfc8"/>
-    <path d="m16 36 8 5v43l-8-5Z" fill="#a0b196"/>
-    <path d="m24 41 61-8v43l-61 8Z" fill="#fff8e7"/>
-    <path d="m24 50 61-8" stroke="#9eb397"/>
-    <path d="m33 59 20-2v15l-20 2Z" fill="#afc7a3"/>
-    <path d="m60 57 17-2m-17 9 13-2m-13 9 17-2" stroke="#84a085" stroke-width="2.5"/>
-    <path d="m107 23 22-6 15 9-22 6Z" fill="#91ac8e"/>
-    <path d="m107 23 15 9v56l-15-9Z" fill="#6e8f78"/>
-    <path d="m122 32 22-6v56l-22 6Z" fill="#3e6154"/>
-    <path d="m127 43 12-3m-12 18 12-3m-12 18 12-3" stroke="#b5c8a8" stroke-width="2.4"/>
-    <path d="m88 52 15-3m-5-3 5 3-4 5m-12 12 15-3m-10-3-5 6 5 2" stroke="#c18e59" stroke-width="2.3"/>
-  `,
-  templates: `
-    <path d="m24 67 64-17 44 24-64 18Z" fill="#c4d3b5"/><path d="m24 67 44 25v7L24 74Zm44 25 64-18v7L68 99Z" fill="#91aa8b"/>
-    <path d="m24 49 64-17 44 24-64 18Z" fill="#f0dbb3"/><path d="m24 49 44 25v6L24 55Zm44 25 64-18v6L68 80Z" fill="#ceb78b"/>
-    <path d="m24 31 64-17 44 24-64 18Z" fill="#fff8e7"/><path d="m24 31 44 25v6L24 37Zm44 25 64-18v6L68 62Z" fill="#b6c4a6"/>
-    <path d="m42 32 15-4 11 6-15 4Z" fill="#a4bd9d"/><path d="m65 26 19-5 26 14-19 5Z" fill="#e3e8d2"/>
-    <path d="m60 43 31-8m-24 12 31-9" stroke="#8da784" stroke-width="2.2"/>
-    <path d="m116 79 10-3 9 5-10 3Z" fill="#e2b77b"/><path d="m116 79 9 5v11l-9-5Zm9 5 10-3v11l-10 3Z" fill="#bb9464"/>
-  `,
-  fallback: `
-    <path d="m43 26 47-12 28 16v54L71 97 43 80Z" fill="#e5d7b8"/>
-    <path d="m71 42 47-12v54L71 97Z" fill="#fff8e7"/>
-    <path d="m81 54 25-7m-25 18 25-7m-25 18 18-5" stroke="#83a081" stroke-width="3"/>
-    <path d="m43 26 28 16v55L43 80Z" fill="#a7bb9f"/>
-  `,
+  "terminal": "<path d=\"M22 16h104l10 8v57H32l-10-8Z\" fill=\"#bdcbb0\"/><path d=\"M32 24h104v57H32Z\" fill=\"#263f4c\"/><path d=\"M32 35h104\" stroke=\"#7c9b9a\"/><circle cx=\"40\" cy=\"30\" r=\"2\" fill=\"#e7b960\" stroke=\"none\"/><circle cx=\"47\" cy=\"30\" r=\"2\" fill=\"#aac8ac\" stroke=\"none\"/><path d=\"m45 47 10 8-10 8m21 0h17\" stroke=\"#fff2c9\" stroke-width=\"3.6\"/><path d=\"m34 85 93 0 12 14H22Z\" fill=\"#e7d5b4\"/><path d=\"M22 99h117v5H22Z\" fill=\"#b7aa8f\"/><path d=\"M111 68V57h15l6 7h14v28h-35Z\" fill=\"#e6b762\"/><path d=\"M107 73h43l-5 22h-34Z\" fill=\"#f3dfb7\"/>",
+  "git": "<g transform=\"translate(0 -6)\"><path d=\"m18 79 61-33 63 32-61 31Z\" fill=\"#eadbbe\"/><path d=\"M18 79v7l63 29v-6m0 0 61-31v7l-61 30\" fill=\"#baaa8c\"/><path d=\"m35 63 33 19 31-18 29 17m-60 1V46l31-17 29 16\" stroke=\"#367d7b\" stroke-width=\"4\"/><path d=\"m68 46 31-17 29 16\" stroke=\"#c67f5c\" stroke-width=\"4\"/><g fill=\"#b0c6a6\"><ellipse cx=\"35\" cy=\"63\" rx=\"11\" ry=\"7\"/><ellipse cx=\"68\" cy=\"82\" rx=\"11\" ry=\"7\"/><ellipse cx=\"99\" cy=\"64\" rx=\"11\" ry=\"7\"/></g><g fill=\"#e4b75f\"><ellipse cx=\"128\" cy=\"81\" rx=\"11\" ry=\"7\"/></g><g fill=\"#c88967\"><ellipse cx=\"99\" cy=\"29\" rx=\"11\" ry=\"7\"/><ellipse cx=\"128\" cy=\"45\" rx=\"11\" ry=\"7\"/></g></g>",
+  "github": "<path d=\"M49 47c-13 0-20-8-20-17 0-12 10-20 22-18 10-15 33-15 42 1 15-5 30 5 30 18 0 10-8 16-20 16Z\" fill=\"#dfebd4\"/><path d=\"m68 25 14-7 15 8-15 8Z\" fill=\"#a8c19d\"/><path d=\"m68 25 14 9v17l-14-9Zm14 9 15-8v17l-15 8Z\" fill=\"#367d7b\"/><path d=\"M51 79V57h19m37 0h18v22\" fill=\"none\" stroke=\"#367d7b\" stroke-width=\"3\"/><path d=\"m63 51 7 6-7 6m55 9 7 7 7-7\" fill=\"none\" stroke=\"#367d7b\" stroke-width=\"3\"/><path d=\"M25 77h41l7 7v20H32l-7-7Z\" fill=\"#eddfc4\"/><path d=\"M32 84h41v20H32Z\" fill=\"#a8c19d\"/><path d=\"M101 77h35l8 7v20h-35l-8-7Z\" fill=\"#eddfc4\"/><path d=\"M109 84h35v20h-35Z\" fill=\"#a8c19d\"/>",
+  "markdown": "<path d=\"M20 16h46l12 12v67H20Z\" fill=\"#f6e7c8\"/><path d=\"M66 16v12h12\" fill=\"#c5d1b6\"/><path d=\"M28 33v20m10-20v20m-14-14h18m-18 9h18\" stroke=\"#367d7b\" stroke-width=\"3\"/><path d=\"M29 65h37m-37 11h29m-29 11h35\" stroke=\"#809c83\" stroke-width=\"3\"/><path d=\"M88 16h45l12 12v67H88Z\" fill=\"#fff9ec\"/><path d=\"M133 16v12h12\" fill=\"#c5d1b6\"/><path d=\"M99 37h34m-34 13h25m-25 17h34m-34 12h27\" stroke=\"#367d7b\" stroke-width=\"4\"/><path d=\"M73 58h12m-6-6 6 6-6 6\" stroke=\"#d19c48\" stroke-width=\"3\"/>",
+  "ide": "<path d=\"M15 17h121l9 8v64H24l-9-8Z\" fill=\"#b8c8ab\"/><path d=\"M24 25h121v64H24Z\" fill=\"#fff9ec\"/><path d=\"M24 36h121M56 36v53\" stroke=\"#738b7c\"/><path d=\"M32 47h15m-15 11h11m-11 11h15\" stroke=\"#809d85\" stroke-width=\"3\"/><path d=\"M64 43h71v27H64Z\" fill=\"#263f4c\"/><path d=\"m73 50-4 5 4 5m16-10 4 5-4 5m-8-11-3 12\" stroke=\"#dce9cf\" stroke-width=\"2.7\"/><path d=\"M66 77h29m9 0h28\" stroke=\"#c67f5c\" stroke-width=\"4\"/><path d=\"M69 89h35l12 13H57Z\" fill=\"#e2cfab\"/><path d=\"M49 104h75\" stroke=\"#b6a787\" stroke-width=\"4\"/>",
+  "web": "<path d=\"M12 30h78l8 7v62H20l-8-7Z\" fill=\"#d4dfc4\"/><path d=\"M20 37h78v62H20Z\" fill=\"#fff9ec\"/><path d=\"M20 49h78\" stroke=\"#7f9882\"/><path d=\"M29 59h26v28H29Z\" fill=\"#a9c49d\"/><path d=\"M64 61h24m-24 10h18m-18 10h23\" stroke=\"#809d85\" stroke-width=\"3\"/><path d=\"m116 17 14-8 21 9-14 8Z\" fill=\"#b8ceaa\"/><path d=\"m116 17 21 9v71l-21-9Z\" fill=\"#789985\"/><path d=\"m137 26 14-8v71l-14 8Z\" fill=\"#367d7b\"/><path d=\"m122 34 9 4m-9 15 9 4m-9 15 9 4\" stroke=\"#dce9cf\" stroke-width=\"3\"/><path d=\"M95 49h17m-7-6 7 6-7 6m8 20H96m7-6-7 6 7 6\" stroke=\"#cf9b47\" stroke-width=\"2.7\"/>",
+  "templates": "<path d=\"m19 74 62-19 61 25-62 23Z\" fill=\"#a5bf9a\"/><path d=\"m19 74 61 29v7L19 81Zm61 29 62-23v7l-62 23Z\" fill=\"#73977a\"/><path d=\"m19 56 62-19 61 25-62 23Z\" fill=\"#eccd91\"/><path d=\"m19 56 61 29v7L19 63Zm61 29 62-23v7L80 92Z\" fill=\"#c3a267\"/><path d=\"m19 38 62-19 61 25-62 23Z\" fill=\"#fff9ec\"/><path d=\"m19 38 61 29v7L19 45Zm61 29 62-23v7L80 74Z\" fill=\"#b9c6aa\"/><path d=\"m39 36 30-9 17 7-30 10Z\" fill=\"#a9c49d\"/><path d=\"m76 27 17-5 28 11-17 6Z\" fill=\"#e3e7d2\"/><path d=\"m57 49 44-14m-28 18 43-14\" stroke=\"#648875\" stroke-width=\"2.4\"/>",
+  "fallback": "<path d=\"M42 13h61l18 18v72H42Z\" fill=\"#fff9ec\"/><path d=\"M103 13v18h18\" fill=\"#c6d3b8\"/><path d=\"M54 48h53m-53 17h41m-41 17h48\" stroke=\"#72967b\" stroke-width=\"4\"/>"
 };
 
 export function topicThumbnail(id) {
   const key = Object.hasOwn(scenes, id) ? id : 'fallback';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" fill="none" aria-hidden="true" focusable="false" data-topic-thumbnail="${key}"><ellipse cx="81" cy="97" rx="66" ry="10" fill="#7e9970" opacity=".12"/><g stroke="#3e574c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" fill="none" aria-hidden="true" focusable="false" data-topic-thumbnail="${key}"><g stroke="#26334b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
 }

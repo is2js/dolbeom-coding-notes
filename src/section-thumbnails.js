@@ -1,0 +1,56 @@
+import { topicThumbnail } from './topic-thumbnails.js';
+
+// Small silhouettes are authored separately from the text-rich teaching diagrams.
+// Stable section IDs keep the miniature attached when a lecturer edits a title.
+const ink = '#26344e', teal = '#2e8390', cream = '#fff5df', sage = '#bad0b5', gold = '#e7b65e';
+const box = (x,y,w,h,fill=cream,r=5) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}"/>`;
+const path = (d,color=ink,width=2.6) => `<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}"/>`;
+const dot = (x,y,r=6,fill=teal) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`;
+const label = (x,y,value,size=18) => `<text x="${x}" y="${y}" font-family="Consolas,monospace" font-size="${size}" font-weight="700" fill="${ink}" stroke="none">${value}</text>`;
+const window = (x,y,w,h,body='',fill=cream) => box(x+5,y+5,w,h,'#d2bd96')+box(x,y,w,h,fill)+path(`M${x} ${y+13}h${w}`)+dot(x+8,y+7,1.4,gold)+dot(x+14,y+7,1.4,sage)+body;
+const folder = (x,y,w=49,h=35) => `<path d="M${x} ${y+8}v-8h${w*.4}l7 8h${w*.6-7}v${h-8}h-${w}Z" fill="${gold}"/>`+path(`M${x} ${y+13}h${w}`);
+const page = (x,y,body='',fill=cream) => `<path d="M${x} ${y}h31l12 12v46h-43Z" fill="${fill}"/>`+path(`M${x+31} ${y}v12h12`)+body;
+const arrow = (x,y,w=24) => path(`M${x} ${y}h${w}m-6-5 6 5-6 5`,teal,3);
+const check = (x,y) => path(`M${x} ${y}l6 6 13-16`,teal,4);
+const rows = (x,y) => path(`M${x} ${y}h25m-25 9h20m-20 9h25`,'#718371',3);
+const server = (x,y) => box(x+5,y-5,38,62,'#8ba99d')+box(x,y,38,62,sage)+[0,1,2].map(i=>box(x+6,y+7+i*17,26,10,cream,2)+dot(x+11,y+12+i*17,1.5,teal)).join('');
+const keys = (first,second) => box(24,31,51,35,cream)+label(35,55,first,17)+box(84,42,51,35,sage)+label(95,66,second,17);
+const scenes = {
+  'terminal-example': window(13,20,77,57,path('M25 45l8 7-8 7m19 0h13',teal,3),'#e0ebd8')+folder(101,46)+arrow(85,39,20),
+  'terminal-gui-cli': window(13,24,57,55,rows(23,49))+arrow(75,53,18)+page(103,22,rows(111,46)),
+  'terminal-host-shell': window(19,18,118,72,box(28,39,42,39,'#d9e6d0')+box(78,39,49,39,'#ead5ad')+label(34,66,'&gt;_',17)+label(87,66,'C:',17)),
+  'terminal-shortcuts': keys('Alt','↔')+path('M19 86h125',teal),
+  'terminal-bonus': window(10,23,63,59,label(21,61,'&gt;_',20))+path('M80 35v42',teal,4)+window(89,23,58,59,rows(99,48)),
+  'git-example': page(17,22,path('M26 48h23', '#a65d4e',4))+arrow(65,51,23)+page(100,22,path('M111 48h23m-12-10v20',teal,4),'#e0ebd8'),
+  'git-why': path('M32 76V30m0 22c0-21 68-21 68 2v22',teal,4)+dot(32,76,10,gold)+dot(32,30,10,gold)+dot(100,54,10,sage)+dot(100,78,10,teal),
+  'git-prompt': page(17,21,rows(26,46))+arrow(65,53,22)+dot(116,54,23,sage)+check(106,56),
+  'github-clone': window(15,20,65,45,label(28,51,'&lt;/&gt;',16))+arrow(84,52,20)+folder(101,64)+path('M111 44v12m-5-5 5 5 5-5',teal,3),
+  'github-roles': dot(79,48,21,sage)+path('M61 53 30 77m49-8v22m20-38 32 24',teal,3)+folder(12,74,33,23)+box(64,82,30,18,gold)+box(118,74,30,24,cream),
+  'git-bonus': page(33,15,rows(42,40))+page(84,25,check(96,61),'#e0ebd8')+label(104,47,'5',19),
+  'markdown-map': page(21,16,rows(30,41))+[0,1,2,3].map(i=>box(91,19+i*19,44,13,i%2?sage:gold,3)).join(''),
+  'tools-markdown': page(18,19,label(25,52,'#',25))+arrow(65,53,20)+window(94,25,53,53,rows(103,48)),
+  'markdown-code': page(18,19,label(25,52,'MD',17))+path('M71 51h18m0-20v40m0-40h12m-12 20h12m-12 20h12',teal,3)+[0,1,2].map(i=>box(105,21+i*23,34,17,i===1?sage:cream,3)).join(''),
+  'codex-bonus': page(21,16,rows(30,40))+path('M95 28a26 26 0 1 1-7 47m7-59v12h12',teal,4),
+  'tools-map': window(13,24,124,62,path('M50 38v48')+path('M62 50h52','#a65d4e',4)+path('M62 63h52',teal,4)+path('M24 49h15m-15 10h15')),
+  'tools-vscode': window(15,20,123,72,box(29,43,92,24,'#e0ebd8')+path('M38 53h44')+`<circle cx="103" cy="54" r="6" fill="none"/>`+path('M108 59l7 7')),
+  'tools-pycharm': window(13,20,91,67,path('M25 45l9 7-9 7m23-14-9 14',teal,3))+box(86,60,58,27,gold)+label(95,79,'Ctrl',14),
+  'codex-context': window(16,16,123,78,path('M54 30v64m0-24h85')+folder(24,41,22,17)+path('M66 45h47m-47 10h32')+label(65,86,'&gt;_',16)),
+  'tools-html': window(16,21,123,68,label(28,58,'&lt;h1&gt;',19)+box(94,44,31,27,sage)),
+  'tools-css': window(16,21,123,68,box(34,43,88,32,sage)+box(46,52,64,14,cream,3))+path('M27 43v32m-3-32h6m-6 32h6',teal,2),
+  'tools-javascript': window(16,21,123,68,box(29,43,46,26,gold)+path('M83 55h13m-5-5 5 5-5 5',teal,3)+box(101,45,24,22,sage))+dot(44,57,4,teal),
+  'tools-bonus': window(15,20,123,70,box(27,44,47,29,sage)+label(34,64,'env',15)+path('M91 44l20 13-20 13Z',teal,3)),
+  'web-map': window(11,32,61,49,box(23,52,36,18,sage))+server(106,23)+arrow(75,53,23),
+  'web-http': window(12,31,62,49,rows(22,55))+server(109,25)+arrow(78,42,23)+path('M101 66H78m6-5-6 5 6 5',teal,3),
+  'web-html': page(14,26,label(22,60,'{{}}',14))+dot(77,56,12,gold)+arrow(91,55,15)+window(112,29,37,48,box(120,49,20,14,sage)),
+  'web-bonus': window(12,27,135,54,label(23,61,'/  #',22))+path('M22 44h114',teal),
+  'web-jinja': page(23,21,label(31,53,'{{}}',14),'#e2ecd8')+page(92,21,label(100,53,'{{}}',14),'#f0dbb1')+path('M77 28v58',teal,2),
+  'frontend-css': page(16,20,rows(24,45))+arrow(65,52,20)+window(96,29,51,48,box(105,49,32,17,sage)),
+  'frontend-alpine': window(15,22,123,65,box(28,43,47,27,gold)+box(91,46,32,17,sage,8)+dot(113,54,5,cream))+path('M78 57h10',teal,3),
+  'frontend-bonus': page(21,16,label(28,49,'CSS',14))+arrow(69,52,21)+window(104,29,41,48,path('M114 52l10 13m0-13-10 13','#a65d4e',3)),
+};
+
+export function sectionThumbnail(id, topicId='terminal') {
+  const key = String(id || '').replace(/^section-/, '');
+  if (!Object.hasOwn(scenes,key)) return topicThumbnail(topicId);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" aria-hidden="true" focusable="false" data-section-thumbnail="${key}"><ellipse cx="80" cy="98" rx="64" ry="7" fill="#26344e" opacity=".09"/><g fill="none" stroke="${ink}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
+}

@@ -1,5 +1,6 @@
 <div class="presentation-shell" x-ref="presentationShell" aria-label="강의 발표 모드">
   <header class="presentation-header">
+    <p class="site-update presentation-update" title="현재 사이트를 빌드한 시각 · 한국 표준시"><span>업데이트</span><time :datetime="siteUpdatedAt" x-text="siteUpdatedLabel"></time></p>
     <div class="presentation-brand"><img class="presentation-brand-portrait" src="./assets/branding/portrait-bright.png" width="1106" height="1422" alt="" /><div><small x-text="course.author + '이 풀어주는'"></small><strong x-text="brandTitle"></strong></div></div>
     <div class="presentation-header-actions"><span class="presentation-mode-label">LECTURE MODE</span><button type="button" @click="togglePresentationFullscreen()" :aria-pressed="fullscreenActive"><span x-html="icon('expand')"></span><span x-text="fullscreenActive ? '전체화면 해제' : '전체화면'"></span></button><button type="button" @click="exitPresentation()"><span x-html="icon('close')"></span>발표 종료</button></div>
   </header>

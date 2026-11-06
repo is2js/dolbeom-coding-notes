@@ -18,9 +18,11 @@ import lessonHtml from './lesson.html?raw';
 import homeHtml from './home.html?raw';
 import { introTypewriter } from './intro-typewriter.js';
 import { topicThumbnail } from './topic-thumbnails.js';
+import { sectionThumbnail } from './section-thumbnails.js';
 import { workspaceIcon } from './workspace-icons.js';
 import { topicNavigationState, topicNavigationMethods } from './topic-navigation.js';
 import { artViewerState, artViewerMethods } from './art-viewer.js';
+import { formatSiteUpdatedAt } from './site-update.js';
 import topicNavigationHtml from './topic-navigation.html?raw';
 import artViewerHtml from './art-viewer.html?raw';
 import './styles.css';
@@ -34,9 +36,10 @@ import './home-desktop.css';
 import './home-art.css';
 import './intro-typewriter.css';
 import './topic-cards.css';
-import './topic-navigation.css';
 import './art-viewer.css';
 import './workspace-rail.css';
+import './topic-navigation.css';
+import './site-update.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
 document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml);
@@ -107,12 +110,13 @@ Alpine.data('courseApp', () => ({
   ...presenterState(), ...presenterMethods, ...learningState(), ...learningMethods,
   ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods,
   loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
+  siteUpdatedAt: __SITE_UPDATED_AT__, siteUpdatedLabel: formatSiteUpdatedAt(__SITE_UPDATED_AT__),
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,
   completed: [], drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, markdown, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
   get brandTitle() { return (this.course?.title || 'AI 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, ''); },
   get step() { return this.lesson?.steps[Math.min(this.stepIndex, this.lesson.steps.length - 1)]; },
@@ -264,7 +268,7 @@ Alpine.data('courseApp', () => ({
     if(location.hash !== address) location.hash=address.slice(1);
     else this.readRoute();
     safeWrite(localStorage,LAST_KEY,id);
-    this.$nextTick(()=>{if(changedTopic)window.scrollTo({top:0,behavior:'instant'});else document.querySelector('.lesson-flow-heading')?.scrollIntoView({block:'start',behavior:'instant'});});
+    this.$nextTick(()=>{if(changedTopic)window.scrollTo({top:0,behavior:'instant'});else document.querySelector('.topic-navigation')?.scrollIntoView({block:'start',behavior:'instant'});});
   },
   async goHome(view='map') {
     const editing=this.route === 'editor';

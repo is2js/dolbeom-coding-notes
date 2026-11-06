@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,25);
+  assert.equal(Object.keys(sectionScenes).length,31);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,25);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,31);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }

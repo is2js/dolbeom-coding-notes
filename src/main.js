@@ -23,6 +23,9 @@ import { workspaceIcon } from './workspace-icons.js';
 import { topicNavigationState, topicNavigationMethods } from './topic-navigation.js';
 import { artViewerState, artViewerMethods } from './art-viewer.js';
 import { formatSiteUpdatedAt } from './site-update.js';
+import { createCommandRenderer } from './command-code.js';
+import { commandUnits } from './command-copy-units.js';
+import { writeClipboard } from './clipboard.js';
 import topicNavigationHtml from './topic-navigation.html?raw';
 import artViewerHtml from './art-viewer.html?raw';
 import './styles.css';
@@ -40,6 +43,8 @@ import './art-viewer.css';
 import './workspace-rail.css';
 import './topic-navigation.css';
 import './site-update.css';
+import './command-copy.css';
+import './prose.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
 document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml);
@@ -99,8 +104,9 @@ function lessonObject(id) {
   const objectKey = ({ ide: 'tools', templates: 'frontend' })[id] || id;
   return `<svg viewBox="0 0 74 74" fill="none" ${common} aria-hidden="true">${objects[objectKey] || objects.tools}</svg>`;
 }
+const commandRenderer = createCommandRenderer();
 function markdown(value) {
-  return DOMPurify.sanitize(marked.parse(value || '', { breaks: false, gfm: true }), {
+  return DOMPurify.sanitize(marked.parse(value || '', { breaks: false, gfm: true, renderer: commandRenderer }), {
     USE_PROFILES: { html: true }, FORBID_TAGS: ['style', 'input', 'form', 'iframe', 'video', 'audio', 'img'], FORBID_ATTR: ['style'],
   });
 }
@@ -141,7 +147,8 @@ Alpine.data('courseApp', () => ({
   get presentationTimer() { return this.demoTimers[this.lessonId] || createDemoTimer(); },
   get presentationElapsed() { return formatDemoTime(currentDemoElapsed(this.demoTimers, this.lessonId, this.presentationNow)); },
   get illustrationMotionStopped() { return this.illustrationPaused || this.prefersReducedMotion || !this.artPageVisible || this.view !== 'map'; },
-  get codeLines() { return (this.step?.code || '# 이 단계의 설명을 읽어 보세요.').split('\n'); },
+  get codeLines() { return (this.step?.code || '# 이 단계의 설명을 읽어 보세요.').split(/\r\n|\r|\n/); },
+  get codeCopyByLine() { return Object.fromEntries(commandUnits(this.step?.code || '',this.step?.language || 'text').map(unit=>[unit.start,unit])); },
   get sceneTitle() { return ({terminal:'Windows Terminal · PowerShell',vscode:'Visual Studio Code',pycharm:'PyCharm / Python',browser:'Browser preview',code:'Code walkthrough',git:'Git / change review',architecture:'Request & response'})[this.step?.scene] || 'Development workspace'; },
   get graphNodes() {
     const dictionary = {
@@ -443,7 +450,24 @@ Alpine.data('courseApp', () => ({
   toggleComplete() { this.completed=this.isComplete?this.completed.filter(id=>id!==this.lessonId):[...this.completed,this.lessonId];if(!safeWrite(localStorage,PROGRESS_KEY,this.completed))this.notify('학습 표시를 저장하지 못했습니다.');else this.notify(this.isComplete?'한 걸음 더 배웠습니다. 학습 완료!':'학습 완료 표시를 취소했습니다.'); },
   async copyStep() {
     const text=this.step.code || this.step.description;
-    try {await navigator.clipboard.writeText(text);this.notify('현재 단계의 코드를 복사했습니다.');}catch {this.notify('복사 권한을 확인하거나 시연 화면의 텍스트를 선택해 주세요.');}
+    await this.copyCodeText(text,'현재 단계의 전체 코드를 복사했습니다.');
+  },
+  async copyCodeText(text,message='명령어를 복사했습니다.') {
+    const copied=await writeClipboard(text);
+    this.notify(copied ? message : '복사하지 못했습니다. 브라우저의 복사 권한을 확인하거나 코드 텍스트를 직접 선택해 주세요.');
+    return copied;
+  },
+  async copyCodeFromEvent(event) {
+    const button=event.target.closest?.('button[data-copy-value]');
+    if(!button || !event.currentTarget.contains(button))return;
+    const text=button.getAttribute('data-copy-value');
+    const copied=await this.copyCodeText(text,button.dataset.copyKind==='block' ? '전체 코드를 복사했습니다.' : '명령어를 복사했습니다.');
+    if(!copied)return;
+    button.dataset.copyState='copied';
+    const label=button.querySelector('.command-copy-label');
+    if(label)label.textContent='완료';
+    clearTimeout(button.copyFeedbackTimer);
+    button.copyFeedbackTimer=setTimeout(()=>{delete button.dataset.copyState;if(label)label.textContent=button.dataset.copyKind==='block'?'전체 복사':'복사';},1600);
   },
   openSection(id) {this.readerOpen=true;this.$nextTick(()=>setTimeout(()=>this.scrollReader('section-'+id),50));},
   scrollReader(id) {document.getElementById(id)?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});},

@@ -1,0 +1,31 @@
+.copyable-code { margin: 1.1em 0; min-width: 0; border: 1px solid #30363f; border-radius: 10px; background: #111418; color: #e6edf3; box-shadow: 0 5px 16px #18213d0b; overflow: hidden; }
+.copyable-code pre, .markdown-body .copyable-code pre { min-width: 0; margin: 0; border: 0; border-radius: 0; background: transparent; color: #e6edf3; padding: 12px 14px; overflow-x: auto; white-space: pre; }
+.copyable-code pre code { padding: 0; background: transparent; color: inherit; white-space: pre; word-break: normal; overflow-wrap: normal; }
+.command-terminal-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px 6px; color: #a5afbc; font: 10px/1.4 var(--mono); letter-spacing: .09em; }
+.command-terminal-lights { display: inline-block; width: 7px; height: 7px; margin-right: 22px; border-radius: 50%; background: #ce756a; box-shadow: 11px 0 #ccb06d, 22px 0 #78a58b; }
+.command-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; }
+.command-context { color: #a2aebd; background: transparent; }
+.command-context pre { padding-block: 7px !important; color: #a2aebd !important; }
+.command-copy { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; gap: 4px; min-width: 48px; min-height: 44px; margin: 3px; padding: 5px 8px; border: 1px solid transparent; border-radius: 6px; color: #aebdca; background: transparent; font-family: inherit; font-size: 11px; line-height: 1.2; cursor: pointer; white-space: nowrap; }
+.command-copy:hover { color: #f0f6fc; background: #252e38; border-color: #435161; }
+.command-copy:focus-visible { outline: 2px solid #85c9b7; outline-offset: -2px; color: #f0f6fc; background: #252e38; }
+.command-copy svg { width: 15px; height: 15px; flex-shrink: 0; }
+.command-copy span.copy-symbol { position: relative; display: inline-block; width: 15px; height: 15px; flex-shrink: 0; }
+.command-copy span.copy-symbol::before, .command-copy span.copy-symbol::after { content: ''; position: absolute; width: 8px; height: 10px; border: 1.3px solid currentColor; border-radius: 1px; }
+.command-copy span.copy-symbol::before { left: 1px; top: 0; opacity: .7; }
+.command-copy span.copy-symbol::after { left: 5px; top: 4px; background: #111418; }
+.command-copy span.copied-symbol { width: 15px; font-size: 15px; line-height: 15px; }
+.command-copy .copied-symbol { display: none; }
+.command-copy[data-copy-state="copied"] { color: #b7e5c6; background: #223d30; }
+.command-copy[data-copy-state="copied"] .copy-symbol { display: none; }
+.command-copy[data-copy-state="copied"] .copied-symbol { display: block; }
+.code-block-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-left: 14px; font: 10px/1.4 var(--mono); color: #a5afbc; }
+.demo-code .code-line { position: relative; min-width: 0; gap: 10px; align-items: center; }
+.demo-code .code-line code { min-width: 0; flex: 1; overflow-x: auto; }
+.demo-command-copy { flex-shrink: 0; min-height: 36px; min-width: 44px; margin: 0 2px 0 8px; color: #add5b8; }
+.demo-command-copy:hover, .demo-command-copy:focus-visible { color: #e5f5e3; background: #344c4b; border-color: #6e9384; }
+.demo-command-copy[data-copy-state="copied"] { color: #e5f5e3; background: #345b4d; }
+@media (max-width: 720px), (pointer: coarse) {
+  .demo-command-copy { min-height: 44px; }
+  .copyable-code pre, .markdown-body .copyable-code pre { padding: 12px 10px; }
+}

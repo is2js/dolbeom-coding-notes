@@ -65,7 +65,7 @@
   <dialog class="presentation-rehearsal" x-ref="rehearsal" aria-labelledby="rehearsal-title" @close="rehearsalOpen=false" @cancel.prevent="rehearsalOpen=false" @click="if($event.target===$el)rehearsalOpen=false">
     <header><div><span class="eyebrow">PREPARED WALKTHROUGH</span><h2 id="rehearsal-title">준비된 재현 · <span x-text="lesson.shortTitle"></span></h2></div><button type="button" @click="rehearsalOpen=false" aria-label="재현 닫고 발표로 돌아가기" x-html="icon('close')"></button></header>
     <p class="presentation-rehearsal-notice">사전 작성된 코드와 결과를 보여 주는 강의용 재현입니다. 실제 명령을 실행하지 않습니다.</p>
-    <div class="presentation-rehearsal-picker"><label for="rehearsal-step-select">시연 단계</label><select id="rehearsal-step-select" :value="String(stepIndex)" @change="stepIndex = Number($event.target.value)"><template x-for="(item,index) in lesson.steps" :key="item.id"><option :value="String(index)" :selected="index === stepIndex" x-text="(index + 1) + '. ' + item.title"></option></template></select><button type="button" @click="copyStep()">현재 코드 복사</button></div>
+    <div class="presentation-rehearsal-picker"><label for="rehearsal-step-select">시연 단계</label><select id="rehearsal-step-select" :value="String(stepIndex)" @change="stepIndex = Number($event.target.value)"><template x-for="(item,index) in lesson.steps" :key="item.id"><option :value="String(index)" :selected="index === stepIndex" x-text="(index + 1) + '. ' + item.title"></option></template></select><button type="button" @click="copyStep()">전체 코드 복사</button></div>
     <div class="demo-stage presentation-rehearsal-stage">
       <!-- SHARED_DEMO -->
     </div>

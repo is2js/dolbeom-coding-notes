@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div id="app" x-data="courseApp" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home' }" x-cloak>
+  <div id="app" x-data="courseApp" @click="copyCodeFromEvent($event)" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home' }" x-cloak>
     <a class="skip-link" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
     <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
       <button class="rail-toggle" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>

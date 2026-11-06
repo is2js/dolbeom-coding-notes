@@ -1,0 +1,85 @@
+/* Reading rhythm shared by lesson notes, expanded notes and the editor preview. */
+.lesson-current-note { padding: 26px; }
+.lesson-current-note > header { margin-bottom: 18px; }
+.lesson-current-note > h2 { margin-bottom: 18px; }
+.lesson-current-cue { margin-bottom: 24px; line-height: 1.75; }
+.lesson-current-prose { padding-right: 10px; }
+
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) { color: #2c3540; font-weight: 450; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) strong { color: #2e5143; font-weight: 700; }
+
+.lesson-current-prose .markdown-body,
+.reader-article .markdown-body,
+.editor-markdown-preview,
+.editor-page .editor-focus-preview-body {
+  max-inline-size: 74ch;
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: -.01em;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) p {
+  margin: 0 0 1.25em;
+  white-space: normal;
+}
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) > :first-child { margin-top: 0; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) > :last-child { margin-bottom: 0; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) :is(h1, h2, h3, h4) {
+  margin-block: 1.7em .8em;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) :is(ul, ol) {
+  margin-block: 1.15em 1.4em;
+  padding-inline-start: 1.55em;
+}
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) li { margin-block: .55em; padding-inline-start: .15em; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) li > p { margin-block: .4em; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) :not(pre) > code {
+  display: inline;
+  vertical-align: baseline;
+  padding: .1em .36em;
+  border: 1px solid #c8d2b8;
+  border-radius: 5px;
+  background: #e7ecd9;
+  color: #365744;
+  font-size: .9em;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  overflow-wrap: anywhere;
+}
+:is(.lesson-current-prose .markdown-body, .reader-article .markdown-body, .editor-markdown-preview) .copyable-code pre code { font-size: 12px; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) .copyable-code { margin-block: 1.3em 1.55em; }
+:is(.markdown-body, .editor-markdown-preview) blockquote { margin-block: 1.4em; padding: 16px 18px; line-height: 1.85; }
+:is(.markdown-body, .editor-markdown-preview) blockquote > :last-child { margin-bottom: 0; }
+.reader-case blockquote { white-space: normal; }
+.reader-article { padding-inline: 36px; }
+.presentation-prose { line-height: 1.85; }
+
+@media (max-width: 720px) {
+  .lesson-current-note { padding: 22px 18px; }
+  .lesson-current-note > header { margin-bottom: 18px; }
+  .lesson-current-note > h2 { margin-bottom: 16px; }
+  .lesson-current-cue { margin-bottom: 22px; }
+  .lesson-current-prose { padding-right: 0; }
+  .lesson-current-prose .markdown-body,
+  .reader-article .markdown-body,
+  .editor-markdown-preview,
+  .editor-page .editor-focus-preview-body {
+    font-size: 14px;
+    line-height: 1.9;
+    letter-spacing: 0;
+  }
+  .reader-article { padding: 24px 18px 40px; }
+}
+
+@media (max-width: 420px) {
+  .lesson-current-note { padding-inline: 16px; }
+  .reader-article { padding-inline: 16px; }
+}

@@ -6,6 +6,5 @@
 .presentation-update { position: absolute; right: 0; top: 3px; }
 @media (max-width: 720px) {
   .site-update-bar { min-height: 23px; padding-top: 6px; }
-  .site-update, .site-update time { font-size: 9px; }
   .presentation-update { top: 2px; }
 }

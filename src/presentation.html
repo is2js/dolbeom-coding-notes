@@ -10,7 +10,7 @@
   <main class="presentation-main" id="presentation-main" aria-labelledby="presentation-title">
     <div class="presentation-page-heading"><p><span class="presentation-phase-mark"></span><span x-text="presentationPhase()"></span><span class="presentation-separator">/</span><span x-text="lesson.shortTitle"></span></p><span x-text="presentationPage?.kind === 'section' ? presentationPage.section.minutes + '분 · 본편' : ['demo','live'].includes(presentationPage?.kind) ? '시연 권장 ' + presentationData.demo.durationMinutes + '분' : 'LESSON ' + String(lesson.number).padStart(2,'0')"></span></div>
 
-    <div class="presentation-layout" :class="{ 'is-demonstration': ['demo','live'].includes(presentationPage?.kind), 'is-goals': presentationPage?.kind === 'intro' }">
+    <div class="presentation-layout" :class="{ 'is-demonstration': ['demo','live'].includes(presentationPage?.kind), 'is-goals': presentationPage?.kind === 'intro', 'has-command-examples': presentationPage?.kind === 'section' && presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length }">
       <figure class="presentation-figure" :class="{'is-goal-preview':presentationPage?.kind === 'intro'}" x-show="['intro','case','section','recap'].includes(presentationPage?.kind)">
         <div class="presentation-figure-grid" aria-hidden="true"></div>
         <div x-show="presentationPage?.kind !== 'intro' && !(presentationPage?.kind === 'case' && renderCourseMarkdownImages(lesson.case.body))" class="presentation-illustration workbench-illustration" :class="'topic-' + presentationIllustrationId + (presentationArtStopped() ? ' is-motion-paused' : '') + (presentationIllustrationId !== lesson.id ? ' is-concept-diagram' : '')" role="img" :aria-label="lesson.shortTitle + ': ' + illustrationDescription(presentationIllustrationId)" x-html="lessonIllustration(presentationIllustrationId)"></div>
@@ -34,8 +34,17 @@
         </div></template>
 
         <template x-if="presentationPage?.kind === 'section'"><div>
-          <ol class="presentation-points" x-show="presentationPage.points?.length"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-text="point"></p></li></template></ol>
+          <ol class="presentation-points" x-show="showPresentationPoints(lessonId, presentationPage)"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-text="point"></p></li></template></ol>
           <div class="presentation-prose" x-show="!presentationPage.points?.length" x-html="markdown(presentationPage.section.body)"></div>
+          <section class="presentation-command-examples" :class="{ 'is-first': lessonId === 'terminal' }" aria-label="이 절의 명령어와 설명" x-show="presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length">
+            <h2>이 절의 명령어</h2>
+            <p class="presentation-command-hint">실행 전 명령 설명을 확인하세요.</p>
+            <template x-for="(group,index) in presentationCommandGroups(presentationPage.section.body)" :key="presentationPage.id + '-command-' + index"><div>
+              <details class="presentation-command-context" x-show="group.context" :open="group.destructive || group.optionalInstall || group.explorerAddress"><summary x-text="group.destructive ? '삭제 명령의 설명과 주의사항' : group.optionalInstall ? '선택 설치 안내' : group.explorerAddress ? '탐색기 주소 표시줄에서 실행' : '명령 설명 보기'"></summary><div class="markdown-body presentation-command-prose" x-html="markdown(group.context)"></div></details>
+              <div class="markdown-body presentation-command-prose" x-html="markdown(group.code)"></div>
+            </div></template>
+          </section>
+          <details class="presentation-terminal-summary" x-show="presentationPage.points?.length && !showPresentationPoints(lessonId, presentationPage)"><summary>핵심 설명 보기</summary><ul><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-summary-' + index"><li x-text="point"></li></template></ul></details>
         </div></template>
 
         <template x-if="['demo','live'].includes(presentationPage?.kind)"><div class="presentation-demo-content">
@@ -48,7 +57,7 @@
           </div>
           <div class="presentation-demo-grid">
             <dl class="presentation-demo-target"><div><dt>열 프로그램</dt><dd x-text="presentationData.demo.program"></dd></div><div><dt>살펴볼 파일·화면</dt><dd x-text="presentationData.demo.file || '현재 프로그램의 화면'"></dd></div></dl>
-            <div class="presentation-demo-command" x-show="presentationData.demo.command"><div><span>명령·진행 순서</span><button type="button" @click="copyPresentationCommand()"><span x-html="icon('copy')"></span>시연 내용 복사</button></div><pre><code x-text="presentationData.demo.command"></code></pre></div>
+            <div class="presentation-demo-command" x-show="presentationData.demo.command"><div><span>명령·진행 순서</span><button type="button" @click="copyPresentationCommand()"><span x-html="icon('copy')"></span>시연 내용 복사</button></div><div class="presentation-demo-lines" x-show="presentationDemoCommands(presentationData.demo.command)" x-html="presentationDemoCommands(presentationData.demo.command)"></div><pre x-show="!presentationDemoCommands(presentationData.demo.command)"><code x-text="presentationData.demo.command"></code></pre></div>
             <div class="presentation-demo-result"><span x-html="icon('check')"></span><div><h2>이 결과를 함께 확인합니다</h2><p x-text="presentationData.demo.expectedResult"></p></div></div>
           </div>
         </div></template>

@@ -1,6 +1,6 @@
-# 돌범의 코딩 작업실
+# 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우
 
-**돌범이 풀어주는 AI 구독 전 코딩 필수 노하우** — Codex로 코딩해 봤지만 기초 개발 도구가 낯선 사람을 위한 7강 강의노트입니다.
+**돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우** — Codex로 코딩해 봤지만 기초 개발 도구가 낯선 사람을 위한 7강 강의노트입니다.
 
 [강의 주소](https://is2js.github.io/dolbeom-coding-notes/#/lesson/terminal/case) · [발표 모드](https://is2js.github.io/dolbeom-coding-notes/#/present/terminal/case) · [원본 저장소](https://github.com/is2js/dolbeom-coding-notes)
 

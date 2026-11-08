@@ -59,7 +59,7 @@ export const presenterMethods = {
     const hash = `#/present/${this.lessonId}/${this.presentationPageId}`;
     if (location.hash !== hash) history.replaceState(null, '', hash);
     this.persistPresentation();
-    document.title = `${this.lesson.shortTitle} · 발표 모드 · 돌범의 코딩 작업실`;
+    document.title = `${this.lesson.shortTitle} · 발표 모드 · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
     this.focusPresentation();
     return true;
   },
@@ -153,11 +153,19 @@ export const presenterMethods = {
     this.demoTimers[this.lessonId] = resetDemoTimer(); this.presentationNow = Date.now(); this.persistPresentation();
   },
   async exitPresentation() {
+    // Presentation-only phases have no direct learning page. Resume at the
+    // nearest relevant explanation: intro → case, demo/live → final section.
+    const page = this.presentationPage;
+    const section = (this.lesson?.sections || []).filter(item => !item.optional).at(-1);
+    const learningPage = page?.kind === 'section' || page?.kind === 'case' || page?.kind === 'recap'
+      ? page.id : page?.kind === 'demo' || page?.kind === 'live'
+        ? (section ? `section-${section.id}` : 'case') : 'case';
+    const lessonId = this.lessonId;
     this.pausePresentationTimers(); this.persistPresentation();
     if (document.fullscreenElement) {
       try { await document.exitFullscreen(); } catch { /* The presentation still exits if the browser rejects fullscreen changes. */ }
     }
-    this.showLesson(this.lessonId);
+    this.showLesson(lessonId, learningPage);
   },
   async togglePresentationFullscreen() {
     try {
@@ -181,7 +189,7 @@ export const presenterMethods = {
     if (this.route !== 'present') return;
     if (!this.presentationPages.some(page => page.id === this.presentationPageId)) this.goPresentationPage('case');
     this.persistPresentation();
-    document.title = `${this.lesson.shortTitle} · 발표 모드 · 돌범의 코딩 작업실`;
+    document.title = `${this.lesson.shortTitle} · 발표 모드 · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
   },
 };
 

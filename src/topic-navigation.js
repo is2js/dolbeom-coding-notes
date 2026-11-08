@@ -28,6 +28,17 @@ export const topicNavigationMethods = {
       previousWidth = globalThis.window.innerWidth;
       this.syncTopicNavigation();
     });
+    globalThis.document?.addEventListener('keydown', event => this.handlePresentationEntryKeys(event));
+  },
+  handlePresentationEntryKeys(event) {
+    if (this.route !== 'learn' || event.defaultPrevented || event.repeat || event.isComposing
+        || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
+        || this.topicNavigationOpen || this.drawer || this.readerOpen || this.rehearsalOpen || this.artViewerOpen) return;
+    if (event.code !== 'KeyP' && String(event.key || '').toLowerCase() !== 'p') return;
+    if (event.target?.isContentEditable || event.target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], dialog[open]')) return;
+    if (globalThis.document?.querySelector?.('dialog[open]')) return;
+    event.preventDefault();
+    this.openPresentation(this.lessonId, this.learningPageId);
   },
   selectTopic(id) {
     if (!this.course?.lessons.some(topic => topic.id === id)) return false;

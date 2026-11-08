@@ -42,7 +42,7 @@ function harness(t, { hash = '#/present/terminal/case', session, blockedStorage 
   t.mock.method(globalThis, 'clearInterval', id => intervals.delete(id));
   const values = new Map(session ? [[SESSION_KEY, JSON.stringify(session)]] : []);
   const storage = { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) };
-  const calls = { focus: [], scroll: [], history: [], notify: [], shownLessons: [], modalOpen: 0, modalClose: 0 };
+  const calls = { focus: [], scroll: [], history: [], notify: [], shownLessons: [], shownPages: [], modalOpen: 0, modalClose: 0 };
   const window = { ...eventTarget(), scrollTo: options => calls.scroll.push(options) };
   Object.defineProperty(window, 'sessionStorage', {
     get() { if (blockedStorage) throw new Error('storage blocked'); return storage; },
@@ -84,7 +84,7 @@ function harness(t, { hash = '#/present/terminal/case', session, blockedStorage 
       $nextTick(callback) { callback(); },
       $watch(key, callback) { watchers.set(key, callback); },
       notify(message) { calls.notify.push(message); },
-      showLesson(id) { this.lessonId = id; this.route = 'learn'; location.hash = `/lesson/${id}`; calls.shownLessons.push(id); },
+      showLesson(id, page = 'case') { this.lessonId = id; this.route = 'learn'; location.hash = `/lesson/${id}/${page}`; calls.shownLessons.push(id); calls.shownPages.push(page); },
       get lesson() { return this.course.lessons.find(item => item.id === this.lessonId) || this.course.lessons[0]; },
       get presentationPages() { return buildPresentationPages(this.lesson); },
       get presentationPageIndex() { return Math.max(0, this.presentationPages.findIndex(page => page.id === this.presentationPageId)); },
@@ -249,7 +249,7 @@ test('불량 URL은 올바른 발표 경로로 교체하고 포커스·제목·�
   assert.equal(h.flushRoute(true), true);
   assert.equal(h.location.hash, '#/present/terminal/case');
   assert.deepEqual(h.calls.history, ['#/present/terminal/case']);
-  assert.equal(h.document.title, '터미널 · 발표 모드 · 돌범의 코딩 작업실');
+  assert.equal(h.document.title, '터미널 · 발표 모드 · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우');
   assert.equal(h.app.readerOpen, false);
   assert.equal(h.app.rehearsalOpen, false);
   assert.equal(h.app.drawer, false);
@@ -321,9 +321,31 @@ test('Alpine watch 어댑터는 연습 모달을 중복 열지 않고 전체화�
   await h.app.exitPresentation();
   assert.equal(h.app.fullscreenActive, false);
   assert.equal(h.app.route, 'learn');
-  assert.equal(h.location.hash, '#/lesson/git');
+  assert.equal(h.location.hash, '#/lesson/git/section-changes');
   assert.deepEqual(h.saved(), { lessonId: 'git', pageId: 'live', timers: { git: { elapsedMs: 5000, startedAt: null } } });
   assert.deepEqual(h.calls.shownLessons, ['git']);
+  assert.deepEqual(h.calls.shownPages, ['section-changes']);
+});
+
+test('발표 종료는 현재 주제와 설명에 대응하는 강의 화면으로 돌아간다', async t => {
+  const h = harness(t);
+  for (const [lesson, page, expected] of [
+    ['terminal', 'intro', 'case'], ['terminal', 'case', 'case'],
+    ['terminal', 'section-location', 'section-location'], ['terminal', 'section-run', 'section-run'],
+    ['terminal', 'recap', 'recap'], ['terminal', 'demo', 'section-run'], ['terminal', 'live', 'section-run'],
+    ['git', 'section-changes', 'section-changes'], ['git', 'case', 'case'], ['git', 'recap', 'recap'],
+  ]) {
+    h.location.hash = `/present/${lesson}/${page}`;
+    assert.equal(h.flushRoute(), true);
+    await h.app.exitPresentation();
+    assert.equal(h.location.hash, `#/lesson/${lesson}/${expected}`, `${lesson}/${page}`);
+    assert.equal(h.app.route, 'learn');
+  }
+  // A lesson with no non-optional sections still has its case as a safe target.
+  h.course.lessons[1].sections = [{ id: 'optional-only', optional: true }];
+  h.location.hash = '/present/git/demo'; h.flushRoute();
+  await h.app.exitPresentation();
+  assert.equal(h.location.hash, '#/lesson/git/case');
 });
 
 test('저장소 접근이 차단되어도 발표 라우트와 타이머는 메모리에서 계속 동작한다', t => {

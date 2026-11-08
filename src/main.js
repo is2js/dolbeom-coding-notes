@@ -1,5 +1,6 @@
 import Alpine from 'alpinejs';
 import { renderCourseMarkdown as markdown, renderCourseMarkdownImages } from './course-markdown.js';
+import { presentationCommandGroups, presentationDemoCommands, showPresentationPoints } from './presentation-commands.js';
 import { validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite, COURSE_IDS } from './course.js';
 import { createEditor } from './editor.js';
 import { createLocalCourseSync } from './local-sync.js';
@@ -113,9 +114,12 @@ Alpine.data('courseApp', () => ({
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, renderCourseMarkdownImages, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, renderCourseMarkdownImages, presentationCommandGroups, presentationDemoCommands, showPresentationPoints, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
-  get brandTitle() { return (this.course?.title || 'AI 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, ''); },
+  get brandTitle() {
+    const title = (this.course?.title || 'Ai 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, '');
+    return title === 'AI 구독 전 코딩 필수 노하우' ? 'Ai 구독 전 코딩 필수 노하우' : title;
+  },
   get step() { return this.lesson?.steps[Math.min(this.stepIndex, this.lesson.steps.length - 1)]; },
   get lessonDuration() { return this.lesson ? lessonMinutes(this.lesson) : 0; },
   get totalMinutes() { return this.course ? courseMinutes(this.course) : 0; },
@@ -236,7 +240,7 @@ Alpine.data('courseApp', () => ({
     if (!location.hash || location.hash === '#/' || location.hash === '#/home') {
       if (location.hash) history.replaceState(history.state, '', new URL('.', location.href).pathname + location.search);
       this.route='home'; this.drawer=false;
-      document.title='돌범의 코딩 작업실 · AI 구독 전 코딩 필수 노하우';
+      document.title='돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우';
       return;
     }
     const editing = parseEditorRoute(location.hash, this.editor.working || this.course, this.editor.lessonId || this.lessonId);
@@ -246,14 +250,14 @@ Alpine.data('courseApp', () => ({
       this.editor.focusItem(editing.itemId);
       selectEditorLesson(this,editing.lessonId); this.route='editor'; this.drawer=false;
       this.syncEditorAddress();
-      document.title='본문 편집 · 돌범의 코딩 작업실'; return;
+      document.title='본문 편집 · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우'; return;
     }
     const first = this.course.lessons[0].id;
     const last = initial ? resolveLessonAlias(safeRead(localStorage,LAST_KEY,first)) : first;
     const learning = parseLessonRoute(location.hash,this.course,last) || {lessonId:COURSE_IDS.includes(last)?last:first,pageId:'case'};
     this.selectLearningLocation(learning.lessonId,learning.pageId);
     this.route='learn'; this.infoTab='case'; this.readerOpen=false;
-    document.title=`${this.lesson.shortTitle} · 돌범의 코딩 작업실`;
+    document.title=`${this.lesson.shortTitle} · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
     safeWrite(localStorage,LAST_KEY,this.lessonId);
     const address=lessonAddress(this.lessonId,this.learningPageId);
     if(location.hash !== address)history.replaceState(null,'',address);
@@ -336,7 +340,7 @@ Alpine.data('courseApp', () => ({
     if(this.route === 'learn')this.reconcileLearningFlow(selectedStepId);
     safeWrite(localStorage,DRAFT_KEY,next);
     this.recordDraft(next,false);
-    if(this.route==='learn')document.title=`${this.lesson.shortTitle} · 돌범의 코딩 작업실`;
+    if(this.route==='learn')document.title=`${this.lesson.shortTitle} · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
     this.reconcilePresentation();
     return true;
   },
@@ -364,7 +368,7 @@ Alpine.data('courseApp', () => ({
     } else this.recordDraft(next,false);
     this.stepIndex=Math.min(this.stepIndex,this.lesson.steps.length-1);
     if(this.route === 'learn')this.reconcileLearningFlow();
-    if(this.route==='learn')document.title=`${this.lesson.shortTitle} · 돌범의 코딩 작업실`;
+    if(this.route==='learn')document.title=`${this.lesson.shortTitle} · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
     this.reconcilePresentation();
   },
   async resetCourse() {

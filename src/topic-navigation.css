@@ -15,6 +15,7 @@
 .topic-presentation-entry { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; gap: 8px; padding: 8px 10px; color: #476a64; font-size: 12px; white-space: nowrap; }
 .topic-presentation-entry > span:first-child { display: flex; }
 .topic-presentation-entry svg { width: 18px; height: 18px; }
+.topic-presentation-entry kbd { display: inline-block; margin-left: 4px; padding: 1px 5px; border: 1px solid #bbcab5; border-radius: 4px; background: #f4f5e9; color: #526d5c; font: 600 11px/1.5 var(--mono); }
 .topic-dropdown { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; min-width: 0; padding: 7px; border: 1px solid #bcaf94; border-radius: 12px; background: #fbf5e8; box-shadow: 0 12px 30px #362d2226, 0 3px 7px #362d220d; z-index: 50; pointer-events: none; }
 .topic-dropdown.is-open { pointer-events: auto; }
 .topic-dropdown-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 7px 9px 10px; border-bottom: 1px solid #e1d7c2; }

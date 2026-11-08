@@ -16,6 +16,37 @@ test('주제 선택은 같은 주제를 포함해 항상 사례로 이동하고 
   }
 });
 
+test('P는 일반 강의의 현재 주제와 절에서 발표를 시작한다', () => {
+  const calls = [];
+  const app = { ...topicNavigationState(), ...topicNavigationMethods, route: 'learn', lessonId: 'terminal', learningPageId: 'section-terminal-example',
+    openPresentation: (...args) => calls.push(args),
+  };
+  const event = { code: 'KeyP', key: 'p', target: { closest: () => null }, preventDefault: () => calls.push('prevent') };
+  app.handlePresentationEntryKeys(event);
+  assert.deepEqual(calls, ['prevent', ['terminal', 'section-terminal-example']]);
+  app.learningPageId = 'recap';
+  app.handlePresentationEntryKeys(event);
+  assert.deepEqual(calls.at(-1), ['terminal', 'recap']);
+});
+
+test('발표 진입 단축키는 편집 중, 메뉴·대화상자 및 다른 화면에서 동작하지 않는다', () => {
+  let calls = 0;
+  const app = { ...topicNavigationState(), ...topicNavigationMethods, route: 'learn', lessonId: 'git', learningPageId: 'case',
+    openPresentation: () => calls++,
+  };
+  const base = { code: 'KeyP', key: 'p', target: { closest: () => null }, preventDefault: () => calls++ };
+  for (const patch of [
+    { ctrlKey: true }, { shiftKey: true }, { altKey: true }, { metaKey: true }, { repeat: true },
+    { isComposing: true }, { defaultPrevented: true }, { code: 'KeyA', key: 'a' },
+    { target: { isContentEditable: true, closest: () => null } }, { target: { closest: () => ({}) } },
+  ]) app.handlePresentationEntryKeys({ ...base, ...patch });
+  for (const field of ['topicNavigationOpen', 'drawer', 'readerOpen', 'rehearsalOpen', 'artViewerOpen']) {
+    app[field] = true; app.handlePresentationEntryKeys(base); app[field] = false;
+  }
+  for (const route of ['present', 'editor', 'home']) { app.route = route; app.handlePresentationEntryKeys(base); }
+  assert.equal(calls, 0);
+});
+
 function listAt(left, right, scrollLeft = 120) {
   const calls = [];
   return { calls, clientWidth: 300, scrollWidth: 1000, scrollLeft,

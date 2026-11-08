@@ -4,8 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f6eddd" />
-  <meta name="description" content="돌범이 풀어주는 AI 구독 전 코딩 필수 노하우. 윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 강의." />
-  <title>돌범의 코딩 작업실 — AI 구독 전 코딩 필수 노하우</title>
+  <meta name="description" content="돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우. 윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 강의." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://is2js.github.io/dolbeom-coding-notes/" />
+  <meta property="og:title" content="돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우" />
+  <meta property="og:description" content="윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 강의." />
+  <meta property="og:image" content="https://is2js.github.io/dolbeom-coding-notes/assets/branding/social-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="돌범과 코딩 강의에 등장하는 도구들이 함께 있는 코딩 작업실" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우" />
+  <meta name="twitter:description" content="윈도우 터미널부터 Git, GitHub, 마크다운, IDE, 웹의 구조와 템플릿까지 배우는 강의." />
+  <meta name="twitter:image" content="https://is2js.github.io/dolbeom-coding-notes/assets/branding/social-preview.png" />
+  <title>돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우</title>
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/branding/portrait-favicon.png" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" rel="stylesheet" />
@@ -29,9 +41,9 @@
     <div class="workspace" x-show="route !== 'present'">
       <div class="site-update-bar"><p class="site-update" title="현재 사이트를 빌드한 시각 · 한국 표준시"><span>업데이트</span><time :datetime="siteUpdatedAt" x-text="siteUpdatedLabel"></time></p></div>
       <header class="masthead" x-show="route !== 'editor'">
-        <a class="brand" href="./" @click.prevent="goIntro()" aria-label="돌범의 코딩 작업실 홈">
+        <a class="brand" href="./" @click.prevent="goIntro()" aria-label="돌범이 풀어주는 코딩 강의 홈">
           <img class="brand-portrait" src="./assets/branding/portrait-bright.png" width="1106" height="1422" alt="" />
-          <span><span class="brand-kicker">돌범이 풀어주는</span><h1>AI 구독 전 코딩 필수 노하우</h1><span class="brand-subtitle">EXPLORE · UNDERSTAND · BUILD</span></span>
+          <span><span class="brand-kicker">돌범이 풀어주는</span><h1>Ai 구독 전 코딩 필수 노하우</h1><span class="brand-subtitle">EXPLORE · UNDERSTAND · BUILD</span></span>
         </a>
         <div class="course-meter" x-show="course">
           <span class="meter-icon" x-html="icon('book')"></span>
@@ -47,7 +59,7 @@
       <template id="learning-template" x-if="course && !loading && route === 'learn'"></template>
 
       <section id="editor-host" x-show="course && route==='editor' && !loading"></section>
-      <footer class="page-footer"><span>돌범의 코딩 작업실 <i>© 2026</i></span><span><span class="status-dot"></span><span x-text="hasDraft?'이 브라우저의 편집본 사용 중':'A LITTLE KNOWLEDGE. A LOT MORE POSSIBILITIES.'"></span></span><a class="zoom-background-link" href="./assets/branding/zoom-background-a.png" download="dolbeom-zoom-background.png">Zoom 배경 다운로드 ↓</a><button @click="openEditor()">강의 편집 <span aria-hidden="true">↗</span></button></footer>
+      <footer class="page-footer"><span>돌범이 풀어주는 코딩 강의 <i>© 2026</i></span><span><span class="status-dot"></span><span x-text="hasDraft?'이 브라우저의 편집본 사용 중':'A LITTLE KNOWLEDGE. A LOT MORE POSSIBILITIES.'"></span></span><a class="zoom-background-link" href="./assets/branding/zoom-background-a.png" download="dolbeom-zoom-background.png">Zoom 배경 다운로드 ↓</a><button @click="openEditor()">강의 편집 <span aria-hidden="true">↗</span></button></footer>
     </div>
 
     <section id="presentation-host"></section>

@@ -33,6 +33,7 @@
 .presentation-phase-mark { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
 .presentation-separator { color: #c5c3ae; }
 .presentation-layout { display: grid; grid-template-columns: minmax(0,.88fr) minmax(0,1.2fr); gap: clamp(28px,4vw,80px); align-items: center; min-height: calc(100% - 30px); padding-top: 24px; max-width: 1740px; margin: 0 auto; }
+.presentation-layout.has-command-examples { align-items: start; }
 .presentation-layout.is-demonstration { display: block; padding-top: 20px; }
 .presentation-figure { position: relative; min-width: 0; width: 100%; height: min(49vh,490px); min-height: 300px; margin: 0; align-self: center; }
 .presentation-figure-grid { position: absolute; inset: 0; background-image: linear-gradient(29deg,transparent 49.7%,#d6ccba55 49.8%,#d6ccba55 50.2%,transparent 50.3%),linear-gradient(-29deg,transparent 49.7%,#d6ccba55 49.8%,#d6ccba55 50.2%,transparent 50.3%); background-size: 110px 64px; mask-image: radial-gradient(ellipse at center,black 5%,transparent 70%); }
@@ -65,6 +66,17 @@
 .presentation-points li:last-child { padding-bottom: 0; }
 .presentation-points li > span { color: #7a9787; font: 12px var(--mono); padding-top: 12px; flex-shrink: 0; }
 .presentation-points p { margin: 0; color: #405950; font-size: clamp(24px,1.85vw,32px); line-height: 1.65; letter-spacing: -.035em; word-break: keep-all; overflow-wrap: anywhere; }
+.presentation-command-examples { margin-top: 30px; }
+.presentation-command-examples.is-first { margin-top: 0; }
+.presentation-command-examples h2 { margin: 0 0 12px; color: #405950; font-size: 16px; }
+.presentation-command-hint { color: #788576; font-size: 13px; margin: 0 0 10px; }
+.presentation-command-context summary { color: #47756d; font-size: 14px; min-height: 44px; padding: 12px 0; box-sizing: border-box; cursor: pointer; }
+.presentation-command-context[open] .presentation-command-prose { margin-bottom: 10px; }
+.presentation-command-prose { font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.presentation-command-prose .copyable-code pre { font-size: 14px; }
+.presentation-terminal-summary { margin: 20px 0; color: #405950; font-size: 15px; line-height: 1.6; }
+.presentation-terminal-summary summary { padding: 10px 0; color: #47756d; cursor: pointer; }
+.presentation-terminal-summary ul { margin: 8px 0; padding-left: 1.3em; }
 .presentation-goals li { padding: 8px 0; gap: 14px; }
 .presentation-goals li > span { padding-top: 5px; }
 .presentation-goals p { font-size: clamp(16px,1.25vw,22px); line-height: 1.45; }
@@ -108,6 +120,10 @@
 .presentation-demo-command button { display: flex; align-items: center; gap: 5px; color: #c1d3b9; white-space: nowrap; }
 .presentation-demo-command button svg { width: 13px; height: 13px; }
 .presentation-demo-command pre { margin: 0; padding: 18px 23px; max-height: 205px; overflow: auto; font: 19px/1.65 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; scrollbar-width: thin; scrollbar-color: #718d7b transparent; }
+.presentation-demo-command .presentation-demo-lines { display: block; max-height: 300px; overflow: auto; padding: 0 12px 12px; border: 0; }
+.presentation-demo-lines .copyable-code { margin: 0; }
+.presentation-demo-lines .copyable-code pre { font-size: 14px; white-space: pre; }
+.presentation-demo-lines .command-copy { color: #aebdca; }
 .presentation-demo-result { display: flex; gap: 15px; align-items: flex-start; grid-column: 1/-1; padding: 17px 23px; border: 1px solid #b6c4ac; border-radius: 7px; background: #e7eddd; color: #497566; }
 .presentation-demo-result > span { padding-top: 3px; }
 .presentation-demo-result h2 { margin: 0 0 6px; color: #78917c; font-size: 11px; font-weight: 500; }
@@ -188,6 +204,47 @@
   .presentation-resources { gap: 12px; }
   .presentation-position { grid-template-columns: minmax(0,180px) auto; }
   .presentation-navigation { gap: 12px; }
+}
+/* A laptop at normal browser zoom needs more room for the visual and less
+   oversized presentation copy. Mobile keeps its separate stacked layout. */
+@media (min-width: 721px) and (max-width: 1450px) {
+  .presentation-layout:not(.is-demonstration) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    gap: clamp(22px, 2.8vw, 40px);
+  }
+  .presentation-layout.is-goals {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  }
+  .is-goals .presentation-figure.is-goal-preview {
+    height: auto;
+    min-height: 0;
+  }
+  .presentation-shell .presentation-case-image-stage img { max-height: min(58vh, 490px); }
+  .presentation-copy h1 { font-size: clamp(25px, 2.2vw, 32px); margin-bottom: 18px; }
+  .presentation-case-summary, .presentation-return-summary,
+  .presentation-points p, .presentation-prose { font-size: clamp(18px, 1.55vw, 22px); line-height: 1.55; }
+  .presentation-question p { font-size: clamp(17px, 1.4vw, 20px); line-height: 1.5; }
+  .presentation-points li { padding: 13px 0; }
+  .presentation-points li > span { padding-top: 6px; }
+  .presentation-goals p { font-size: clamp(15px, 1.25vw, 18px); line-height: 1.45; }
+  .presentation-goals li { padding: 6px 0; }
+  .presentation-recap li { font-size: clamp(16px, 1.3vw, 19px); }
+  .presentation-question { margin-top: 18px; padding-top: 16px; }
+}
+@media (min-width: 721px) and (max-width: 1450px) and (max-height: 850px) {
+  .is-presenting .presentation-shell { row-gap: 5px; }
+  .presentation-header { padding: 8px 0 6px; }
+  .presentation-brand-portrait { width: 36px; height: 44px; }
+  .presentation-main { padding: 8px 0 12px; }
+  .presentation-layout:not(.is-demonstration) { align-items: start; min-height: 0; padding-top: 8px; }
+  .presentation-shell .presentation-figure,
+  .is-goals .presentation-figure.is-goal-preview { height: auto; min-height: 0; }
+  .presentation-shell .presentation-figure .presentation-illustration,
+  .presentation-shell .presentation-figure .presentation-illustration.is-concept-diagram {
+    width: 100%; height: min(36vh, 275px); aspect-ratio: auto;
+  }
+  .presentation-shell .presentation-case-image-stage img { max-height: min(36vh, 275px); }
+  .presentation-footer { padding: 7px 0; }
 }
 @media (max-width: 720px) {
   .learning-path-controls .presentation-entry { font-size: 9px; padding: 5px 7px; }

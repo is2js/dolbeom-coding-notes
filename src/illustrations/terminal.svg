@@ -18,9 +18,18 @@
     <circle cx="167" cy="128" r="3.8" fill="#aac1a0" stroke="none" stroke-width="0" />
     <text x="189" y="134" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#d6e4d5" stroke="none">POWERSHELL</text>
     <text x="149" y="185" font-family="Consolas,monospace" font-size="23" font-weight="600" text-anchor="start" fill="#dcebd7" stroke="none">PS C:\work&gt;</text>
-    <text x="149" y="234" font-family="Consolas,monospace" font-size="34" font-weight="700" text-anchor="start" fill="#fff4d6" stroke="none">&gt; codex</text>
-    <rect class="art-motion terminal-caret" x="298" y="211" width="13" height="29" rx="1" fill="#e4b75f" />
-    <text x="149" y="286" font-family="Consolas,monospace" font-size="23" font-weight="600" text-anchor="start" fill="#a9d3c0" stroke="none">pwd   ls   cd</text>
+    <text x="149" y="234" font-family="Consolas,monospace" font-size="30" font-weight="700" text-anchor="start" fill="#fff4d6" stroke="none">npm run dev</text>
+    <rect class="art-motion terminal-caret" x="358" y="211" width="13" height="29" rx="1" fill="#e4b75f" />
+    <text x="149" y="286" font-family="Consolas,monospace" font-size="21" font-weight="600" text-anchor="start" fill="#a9d3c0" stroke="none">localhost: ...</text>
+    <!-- AI response card: an archive and a command are handed to the learner. -->
+    <path d="M548 101h139v132H548z" fill="#c8b89b" stroke="#26334b" stroke-width="3" />
+    <rect x="538" y="91" width="139" height="132" rx="9" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
+    <path d="M538 126h139" fill="none" stroke="#c8d4bf" stroke-width="2" />
+    <text x="552" y="115" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="17" font-weight="700" fill="#5d746c" stroke="none">AI 응답</text>
+    <path d="M553 144h34l7 7h24v31h-65z" fill="#e4b75f" stroke="#26334b" stroke-width="2.5" />
+    <path d="M583 147v27m-4-23h8m-8 7h8m-8 7h8" fill="none" stroke="#26334b" stroke-width="2" />
+    <text x="628" y="171" font-family="Consolas,monospace" font-size="17" font-weight="700" fill="#26334b" stroke="none">ZIP</text>
+    <path d="M553 197h93m-93 10h68" fill="none" stroke="#87a69d" stroke-width="3" stroke-linecap="round" />
     <path d="M174 365h320l58 59H119Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M119 424h433v12H119Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <rect x="170" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />

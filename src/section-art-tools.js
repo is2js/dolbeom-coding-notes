@@ -52,17 +52,18 @@ function locationScene() {
     panel(56,108,335,326,'PowerShell',
       rect(75,164,296,45,'#dfebd6',6,'stroke="none"')
       + text(88,194,'pwd',{size:25,fill:C.teal,mono:true,weight:750}) + text(157,194,'= Get-Location',{size:18,mono:true})
-      + text(88,243,'explorer.exe .',{size:24,mono:true})
-      + text(88,291,'ls',{size:25,fill:C.teal,mono:true,weight:750}) + text(138,291,'= Get-ChildItem',{size:18,mono:true})
-      + text(88,338,'mkdir → cd',{size:24,mono:true}) + text(88,368,'New-Item · Set-Location',{size:18,mono:true,fill:C.muted})
-      + text(88,410,'cd ..  ·  Tab',{size:22,mono:true,fill:C.teal}) + cursor(p,328,391))
+      + text(88,232,'explorer.exe .',{size:23,mono:true})
+      + text(88,271,'cd .  ·  cd ..',{size:22,mono:true,fill:C.teal})
+      + text(88,310,'ls',{size:24,fill:C.teal,mono:true,weight:750}) + text(138,310,'= Get-ChildItem',{size:18,mono:true})
+      + text(88,350,'mkdir → 빈 폴더 삭제',{size:20})
+      + text(88,394,'다시 mkdir → cd',{size:21,fill:C.muted}) + cursor(p,328,374))
     + arrow(p,'M402 231h29') + flow(p,'M402 231h29')
     + panel(446,108,258,176,'파일 탐색기',rect(465,165,220,41,C.white,6)
       + text(477,193,'C:\\work',{size:22,mono:true,fill:C.teal})
       + text(467,242,'Win + R → 경로 입력',{size:20}) + text(467,269,'같은 위치의 폴더',{size:20,fill:C.muted}))
     + arrow(p,'M575 296v20') + flow(p,'M575 296v20',1.3)
     + panel(446,329,258,105,'탐색기 주소창',text(575,407,'wt -d .',{size:25,anchor:'middle',mono:true,fill:C.teal,weight:750})),
-    '현재 위치 확인 → 폴더 만들기 → 화면 전환');
+    '현재 위치와 부모 폴더 → 만들기와 삭제 연습');
 }
 
 function guiCliScene() {
@@ -208,8 +209,8 @@ function errorReportScene() {
 
 export const toolSectionScenes = {
   'terminal-example': {
-    title:'첫 명령: 현재 위치에서 폴더 만들고 열기',
-    description:'PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R에 경로를 입력하거나 explorer.exe .으로 같은 폴더를 엽니다. ls로 목록을 확인한 후 mkdir과 cd로 폴더를 만들고 이동합니다. cd ..로 상위 폴더로 이동하고 Tab으로 경로를 완성해 봅니다. 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 엽니다.',
+    title:'첫 명령: 현재 위치와 폴더를 오가며 연습하기',
+    description:'PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R이나 explorer.exe .으로 같은 폴더를 엽니다. cd .과 cd ..로 현재와 부모 폴더를 살펴보고 ls로 목록을 확인합니다. mkdir로 만든 빈 연습 폴더를 삭제하고 다시 만든 후 cd로 들어갑니다. 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 엽니다.',
     svg:locationScene(),
   },
   'terminal-gui-cli': {

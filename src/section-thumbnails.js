@@ -16,7 +16,7 @@ const rows = (x,y) => path(`M${x} ${y}h25m-25 9h20m-20 9h25`,'#718371',3);
 const server = (x,y) => box(x+5,y-5,38,62,'#8ba99d')+box(x,y,38,62,sage)+[0,1,2].map(i=>box(x+6,y+7+i*17,26,10,cream,2)+dot(x+11,y+12+i*17,1.5,teal)).join('');
 const keys = (first,second) => box(24,31,51,35,cream)+label(35,55,first,17)+box(84,42,51,35,sage)+label(95,66,second,17);
 const scenes = {
-  'terminal-example': window(13,20,77,57,path('M25 45l8 7-8 7m19 0h13',teal,3),'#e0ebd8')+folder(101,46)+arrow(85,39,20),
+  'terminal-example': window(13,20,77,57,path('M25 45l8 7-8 7m19 0h13',teal,3),'#e0ebd8')+folder(101,46)+arrow(85,39,20)+path('M103 88H85m6-5-6 5 6 5',teal,3),
   'terminal-gui-cli': window(13,24,57,55,rows(23,49))+arrow(75,53,18)+page(103,22,rows(111,46)),
   'terminal-host-shell': window(19,18,118,72,box(28,39,42,39,'#d9e6d0')+box(78,39,49,39,'#ead5ad')+label(34,66,'&gt;_',17)+label(87,66,'C:',17)),
   'terminal-shortcuts': keys('Alt','↔')+path('M19 86h125',teal),

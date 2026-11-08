@@ -65,6 +65,17 @@
 .presentation-points li:last-child { padding-bottom: 0; }
 .presentation-points li > span { color: #7a9787; font: 12px var(--mono); padding-top: 12px; flex-shrink: 0; }
 .presentation-points p { margin: 0; color: #405950; font-size: clamp(24px,1.85vw,32px); line-height: 1.65; letter-spacing: -.035em; word-break: keep-all; overflow-wrap: anywhere; }
+.presentation-goals li { padding: 8px 0; gap: 14px; }
+.presentation-goals li > span { padding-top: 5px; }
+.presentation-goals p { font-size: clamp(16px,1.25vw,22px); line-height: 1.45; }
+@media (min-width: 1000px) {
+  .presentation-layout.is-goals { grid-template-columns: minmax(220px,.48fr) minmax(0,1.52fr); gap: clamp(24px,3vw,56px); padding-top: 12px; }
+  .is-goals .presentation-figure.is-goal-preview { height: min(36vh,270px); min-height: 220px; }
+  .is-goals .presentation-copy h1 { margin-bottom: 14px; }
+  .is-goals .presentation-goals { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2px 22px; }
+  .is-goals .presentation-goals li { padding: 5px 0; border: 0; }
+  .is-goals .presentation-goal-note { margin-top: 12px; }
+}
 .presentation-prose { font-size: 24px; line-height: 1.75; overflow-wrap: anywhere; color: #4a5b56; }
 .presentation-prose > :first-child { margin-top: 0; }
 .presentation-prose pre { max-width: 100%; overflow-x: auto; padding: 18px; border-radius: 5px; background: #e9e3d2; font-size: 18px; }

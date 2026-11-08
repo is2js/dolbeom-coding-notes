@@ -39,6 +39,9 @@ test('the first terminal scene highlights pwd and identifies its PowerShell alia
   assert.match(scene.svg, />wt -d \.<\/text>/);
   assert.match(scene.description, /pwd\(Get-Location의 별칭\)/);
   assert.match(scene.description, /Win\+R/);
+  // The temporary folder must be recreated before entering it.
+  assert.ok(scene.svg.indexOf('mkdir → 빈 폴더 삭제') < scene.svg.indexOf('다시 mkdir → cd'));
+  assert.match(scene.description, /빈 연습 폴더를 삭제하고 다시 만든 후 cd로 들어갑니다/);
 });
 
 test('the GUI/CLI scene connects a saved note with the same PowerShell file',()=>{

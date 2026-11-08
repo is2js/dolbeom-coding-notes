@@ -10,11 +10,11 @@
 
 중앙 **관련 예제 재현**은 선택한 절의 코드·출력만 보여 줍니다. 세부절이 바뀌면 그림과 예제 묶음도 바뀝니다. **이 위치에서 발표**로 현재 절부터 발표를 시작할 수도 있습니다.
 
-터미널 도입은 **강의용 재구성 사례**입니다. Codex가 사이트를 참고해 만든 프로젝트를 ZIP으로 받은 뒤, 실행 안내를 읽고 터미널에서 로컬 서버를 열어 달라고 요청하는 장면을 소개합니다. 실제 대화·영상은 준비 후 교체합니다. ZIP 제공, 서버 필요 여부와 자동 새로고침은 프로젝트마다 다릅니다. 첫 터미널 실습은 서버나 Python·Node 설치 없이 진행합니다.
+터미널 도입은 **실제 AI 작업 화면**입니다. 프로젝트 ZIP과 `npm install`, `npm run dev` 실행 안내를 확인하고, Windows Terminal의 PowerShell에서 실행해 달라고 요청한 장면을 소개합니다. 이 단계에서 명령을 실행하거나 외우지는 않습니다. ZIP 제공, 서버 필요 여부와 자동 새로고침은 프로젝트마다 다릅니다. 첫 터미널 실습은 서버나 Python·Node 설치 없이 진행합니다.
 
 터미널의 네 본편 절은 다음 순서로 연습합니다.
 
-1. **위치·GUI 전환·폴더:** `Get-Location`과 `pwd` → 실제 경로만 복사해 Win+R에 붙여 넣기 또는 PowerShell에서 `explorer.exe .` → `Get-ChildItem`과 `ls` → 실제 연습용 부모 폴더로 `Set-Location` 또는 `cd` → `Test-Path`가 False인지 확인 → `mkdir` 또는 `New-Item -ItemType Directory`로 생성 → `cd` 또는 `Set-Location`으로 이동 → `pwd`·`ls`·`explorer.exe .` → 탐색기 주소줄 `wt -d .` → 열린 Terminal의 프로필·위치 확인. `C:\work`는 예시이므로 실제 존재하는 연습용 경로로 바꿉니다. 같은 기능의 두 명령은 비교 예시로, 폴더를 생성할 때는 둘 중 하나만 실행합니다.
+1. **위치·GUI 전환·폴더:** `Get-Location`과 `pwd` → 실제 경로만 복사해 Win+R에 붙여 넣기 또는 PowerShell에서 `explorer.exe .` → `cd .`과 `cd ..`·`pwd`로 현재·부모 폴더 비교 후 실제 경로로 돌아오기 → `Get-ChildItem`과 `ls` → 실제 연습용 부모 폴더로 `Set-Location` 또는 `cd` → `Test-Path`가 False인지 확인 → `mkdir` 또는 `New-Item -ItemType Directory`로 생성 → 방금 만든 빈 폴더를 확인하고 `rmdir` 또는 `Remove-Item`으로 삭제 → 삭제 확인 후 재생성 → `cd` 또는 `Set-Location`으로 이동 → `pwd`·`ls`·`explorer.exe .` → 탐색기 주소줄 `wt -d .` → 열린 Terminal의 프로필·위치 확인. `C:\work`는 예시이므로 실제 존재하는 연습용 경로로 바꿉니다. 같은 기능의 두 명령은 비교 예시로, 폴더를 생성할 때는 둘 중 하나만 실행합니다.
 2. **GUI·메모 파일:** 앞에서 만든 `dolbeom-demo` 폴더에서 `pwd`로 경로 확인 → `Test-Path .\memo.txt`가 False일 때 `New-Item -ItemType File -Path .\memo.txt` 또는 PowerShell 별칭 `ni` → 탐색기에서 메모장으로 열기 → `Hello, Codex!` 입력·저장 → `ls`와 `cat .\memo.txt` 또는 `Get-Content -LiteralPath .\memo.txt`로 같은 파일 확인. 기존 파일이 있다면 다른 이름을 사용합니다.
 3. **호스트·셸:** Terminal·PowerShell·cmd·설치된 Git Bash 구분 → Terminal의 테마·탭·분할·단축키·시작 위치 장점 → `$PSVersionTable.PSVersion` → 기본 5.1과 선택 설치 7의 공존 확인. 7 설치는 필수가 아닙니다.
 4. **설정·정리:** Ctrl+, → 앱 테마·프로필 색 구성표와 글꼴 확인 → 동작에서 연결 키 확인·변경 → 탭 → Alt+Shift+D → Alt+방향키 → 핵심 체크리스트. 테마와 키는 버전·설정·키보드 배열에 따라 달라질 수 있습니다.
@@ -29,7 +29,7 @@ PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도
 
 | 순서 | 주제 | 본편 구성 | 시간 |
 | --- | --- | --- | ---: |
-| 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 강의 목표 → ZIP·서버 재구성 사례 → 위치·탐색기 전환 → 연습 폴더·메모 → 셸·테마·단축키 | 30분 |
+| 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 강의 목표 → ZIP·서버 실제 사례 → 위치·탐색기 전환 → 연습 폴더·메모 → 셸·테마·단축키 | 30분 |
 | 02 | Git | Codex의 변경 기록 → 버전 관리와 GitHub·PR 연결 → 수정·검증·커밋을 요청하는 프롬프트 | 25분 |
 | 03 | GitHub | 다른 프로젝트를 clone해서 분석 → 원격 보관·서버에서 받기·프로필·Pages | 20분 |
 | 04 | 마크다운 | Codex 요청 구조화 → README와 프로필 → Notion·Obsidian과 공통 문법 | 20분 |
@@ -40,7 +40,7 @@ PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도
 
 실전 전환 시간은 각 주제의 본편 시간에 포함됩니다. 보충 노트 30분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
 
-각 주제의 Codex 사례는 추후 실제 장면으로 교체하며, 사례와 별도로 **공통 강의 카드**를 실습합니다. 첫 터미널에서는 연습 폴더, Git에서는 강의 카드 복사본의 변경 기록, GitHub에서는 준비한 원격 예시, Markdown에서는 카드 README를 확인합니다. 실제 원격 저장소는 준비 전제이며 자동으로 생성하거나 공개하지 않습니다.
+터미널은 실제 AI 작업 화면으로 시작하고, 나머지 주제의 Codex 사례는 추후 실제 장면으로 교체합니다. 사례와 별도로 **공통 강의 카드**를 실습합니다. 첫 터미널에서는 연습 폴더, Git에서는 강의 카드 복사본의 변경 기록, GitHub에서는 준비한 원격 예시, Markdown에서는 카드 README를 확인합니다. 실제 원격 저장소는 준비 전제이며 자동으로 생성하거나 공개하지 않습니다.
 
 IDE의 HTML·CSS·JavaScript 실습은 수업용 강의 카드 예제입니다. 실습을 저장하고 브라우저를 새로고침하면서 구조, 모양, 버튼 동작을 차례로 확인합니다. 이어지는 프론트엔드 단원에서는 이 카드가 사용자에게 보이고 상호작용하는 프론트엔드의 한 예라는 점을 설명합니다. 템플릿 단원은 같은 카드의 역할을 다시 활용해 서버 데이터, Tailwind CSS, Alpine.js를 연결합니다.
 

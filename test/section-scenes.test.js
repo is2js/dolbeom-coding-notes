@@ -36,6 +36,7 @@ test('the first terminal scene highlights pwd and identifies its PowerShell alia
   assert.match(scene.svg, />= Get-Location<\/text>/);
   assert.match(scene.svg, />= Get-ChildItem<\/text>/);
   assert.match(scene.svg, />explorer\.exe \.<\/text>/);
+  assert.match(scene.svg, />C:\\Users<\/text>/);
   assert.match(scene.svg, />wt -d \.<\/text>/);
   assert.match(scene.description, /pwd\(Get-Location의 별칭\)/);
   assert.match(scene.description, /Win\+R/);

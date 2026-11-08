@@ -59,7 +59,7 @@ function locationScene() {
       + text(88,394,'다시 mkdir → cd',{size:21,fill:C.muted}) + cursor(p,328,374))
     + arrow(p,'M402 231h29') + flow(p,'M402 231h29')
     + panel(446,108,258,176,'파일 탐색기',rect(465,165,220,41,C.white,6)
-      + text(477,193,'C:\\work',{size:22,mono:true,fill:C.teal})
+      + text(477,193,'C:\\Users',{size:22,mono:true,fill:C.teal})
       + text(467,242,'Win + R → 경로 입력',{size:20}) + text(467,269,'같은 위치의 폴더',{size:20,fill:C.muted}))
     + arrow(p,'M575 296v20') + flow(p,'M575 296v20',1.3)
     + panel(446,329,258,105,'탐색기 주소창',text(575,407,'wt -d .',{size:25,anchor:'middle',mono:true,fill:C.teal,weight:750})),

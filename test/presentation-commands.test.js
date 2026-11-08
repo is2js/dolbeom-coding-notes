@@ -35,7 +35,9 @@ test('presentation command examples use the current section source and keep adja
   assert.match(explorerLaunch.context, /탐색기에서 \*\*주소 표시줄/);
   assert.equal(explorerLaunch.explorerAddress, true, '탐색기 입력 위치를 기본으로 표시한다');
   assert.equal(presentationCommandGroups('터미널에서 실행합니다.\n\n```text\nwt -d .\n```')[0].explorerAddress, false);
-  assert.match(result, /숨김 항목까지/);
+  assert.match(result, /방금 새로 만든 빈/);
+  assert.doesNotMatch(result, /ls -Force \.\\dolbeom-demo/);
+  assert.doesNotMatch(result, /-WhatIf/);
   assert.match(result, /N으로 취소/);
   assert.match(result, /경로는 컴퓨터마다/);
   assert.equal(groups.find(group => group.code.includes('rmdir .\\dolbeom-demo')).destructive, true);

@@ -17,7 +17,7 @@
     <circle cx="152" cy="128" r="3.8" fill="#e4b75f" stroke="none" stroke-width="0" />
     <circle cx="167" cy="128" r="3.8" fill="#aac1a0" stroke="none" stroke-width="0" />
     <text x="189" y="134" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#d6e4d5" stroke="none">POWERSHELL</text>
-    <text x="149" y="185" font-family="Consolas,monospace" font-size="23" font-weight="600" text-anchor="start" fill="#dcebd7" stroke="none">PS C:\work&gt;</text>
+    <text x="149" y="185" font-family="Consolas,monospace" font-size="23" font-weight="600" text-anchor="start" fill="#dcebd7" stroke="none">PS ...\project&gt;</text>
     <text x="149" y="234" font-family="Consolas,monospace" font-size="30" font-weight="700" text-anchor="start" fill="#fff4d6" stroke="none">npm run dev</text>
     <rect class="art-motion terminal-caret" x="358" y="211" width="13" height="29" rx="1" fill="#e4b75f" />
     <text x="149" y="286" font-family="Consolas,monospace" font-size="21" font-weight="600" text-anchor="start" fill="#a9d3c0" stroke="none">localhost: ...</text>

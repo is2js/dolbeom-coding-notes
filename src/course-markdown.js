@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify';
-import { marked } from 'marked';
+import { courseMarked } from './course-markdown-engine.js';
 import { createCommandRenderer } from './command-code.js';
 
 const renderer = createCommandRenderer();
@@ -8,8 +8,8 @@ export function isCourseImageSource(src) {
   return typeof src === 'string' && /^\.\/assets\/course\/(?:[a-z0-9][a-z0-9_-]*\/)*[a-z0-9][a-z0-9_-]*\.(?:png|jpe?g|webp)$/i.test(src);
 }
 
-export function renderCourseMarkdown(value) {
-  const fragment = DOMPurify.sanitize(marked.parse(value || '', { breaks: false, gfm: true, renderer }), {
+function sanitizeCourseMarkup(markup) {
+  const fragment = DOMPurify.sanitize(markup, {
     USE_PROFILES: { html: true },
     FORBID_TAGS: ['style', 'input', 'form', 'iframe', 'video', 'audio'],
     FORBID_ATTR: ['style'],
@@ -29,6 +29,16 @@ export function renderCourseMarkdown(value) {
   const container = document.createElement('div');
   container.append(fragment);
   return container.innerHTML;
+}
+
+export function renderCourseMarkdown(value) {
+  return sanitizeCourseMarkup(courseMarked.parse(value || '', { breaks: false, gfm: true, renderer }));
+}
+
+// Short summaries and descriptions use inline Markdown without introducing
+// block wrappers; the same sanitizer protects all generated HTML.
+export function renderCourseInline(value) {
+  return sanitizeCourseMarkup(courseMarked.parseInline(value || '', { gfm: true }));
 }
 
 // Presentations use their short text summary, but should still show its case media.

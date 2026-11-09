@@ -7,9 +7,15 @@
 
 :is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) { color: #2c3540; font-weight: 450; }
 :is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) strong { color: #2e5143; font-weight: 700; }
+:is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose) mark { color: #07577f; background: #dcedf5; border-radius: 4px; padding: .08em .25em; font-weight: 800; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 :is(.markdown-body, .editor-markdown-preview, .case-markdown, .presentation-prose, .presentation-case-image-stage) img { display: block; max-width: 100%; height: auto; border: 1px solid #d5cbb8; border-radius: 6px; }
 .presentation-case-image-stage { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.presentation-case-image { width: 100%; }
 .presentation-case-image-stage img { width: 100%; max-height: min(49vh, 490px); object-fit: contain; }
+.presentation-case-image-controls { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+.presentation-case-image-controls button { min-height: 44px; flex: 0 0 auto; padding: 8px 10px; border: 1px solid #a7b9aa; border-radius: 5px; background: #e5eee0; color: #315d52; font-size: 12px; font-weight: 700; }
+.presentation-case-image-controls button:disabled { opacity: .42; }
+.presentation-case-image-position { min-width: 0; color: #58746a; font-size: 11px; line-height: 1.4; text-align: center; overflow-wrap: anywhere; }
 .presentation-case .presentation-prose img { display: none; }
 
 .lesson-current-prose .markdown-body,

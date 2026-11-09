@@ -102,7 +102,7 @@ function hostShellScene() {
 function shortcutsScene() {
   const p='section-terminal-shortcuts';
   return scene(p,'설정 → 창 분할 → 포커스 이동',
-    panel(49,112,207,310,'설정',text(70,191,'동작 설정',{size:23}) + pill(70,211,164,'단축키 확인',C.sage)
+    panel(49,112,207,310,'설정',text(70,191,'작업 설정',{size:23}) + pill(70,211,164,'단축키 확인',C.sage)
       + text(70,286,'기본 · 강사',{size:23}) + path('M72 311h158',C.teal,4) + circle(125,311,7,C.white)
       + key(76,354,79,'Ctrl') + key(174,354,49,','))
     + arrow(p,'M269 271h21') + flow(p,'M269 271h21')
@@ -112,7 +112,7 @@ function shortcutsScene() {
       + text(597,356,'다른 패널',{size:21,anchor:'middle',fill:C.sage})
       + `<rect x="320" y="170" width="180" height="228" rx="11" fill="none" stroke="${C.amber}" stroke-width="3.5" class="art-motion ${p}-focus"/>`)
     + text(152,462,'Ctrl + ,',{size:23,anchor:'middle',mono:true,fill:C.teal,weight:700})
-    + text(504,462,'Ctrl + \\',{size:24,anchor:'middle',mono:true,fill:C.teal,weight:700}),
+    + text(504,462,'Ctrl + Shift + \\',{size:24,anchor:'middle',mono:true,fill:C.teal,weight:700}),
     '강사 설정: 오른쪽 분할 · Ctrl+Alt+방향키로 이동');
 }
 
@@ -225,7 +225,7 @@ export const toolSectionScenes = {
   },
   'terminal-shortcuts': {
     title:'단축키 연습: 설정과 창 분할·포커스 이동',
-    description:'Ctrl+쉼표로 동작 설정에서 기본 단축키와 강사 단축키를 비교합니다. 강사의 Ctrl+백슬래시로 오른쪽 분할한 뒤 Ctrl+Alt+방향키로 강조된 창의 포커스를 옮기는 예시입니다.',
+    description:'Ctrl+쉼표로 작업 설정에서 기본 단축키와 강사 단축키를 비교합니다. 강사의 Ctrl+Shift+백슬래시로 오른쪽 분할한 뒤 Ctrl+Alt+방향키로 강조된 창의 포커스를 옮기는 예시입니다.',
     svg:shortcutsScene(),
   },
   'git-example': {

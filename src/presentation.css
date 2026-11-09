@@ -243,7 +243,7 @@
   .presentation-shell .presentation-figure .presentation-illustration.is-concept-diagram {
     width: 100%; height: min(36vh, 275px); aspect-ratio: auto;
   }
-  .presentation-shell .presentation-case-image-stage img { max-height: min(36vh, 275px); }
+  .presentation-shell .presentation-case-image-stage img { max-height: min(55vh, 420px); }
   .presentation-footer { padding: 7px 0; }
 }
 @media (max-width: 720px) {
@@ -267,6 +267,7 @@
   .presentation-page-heading > span { font-size: 8px; }
   .presentation-layout { display: flex; flex-direction: column; padding-top: 5px; gap: 16px; }
   .presentation-figure { height: 235px; min-height: 0; width: 100%; max-width: 390px; overflow: clip; }
+  .presentation-figure.has-case-media { height: auto; overflow: visible; }
   .presentation-figure .presentation-illustration { width: 125%; height: 130%; left: -12.5%; top: -18%; }
   .presentation-figure figcaption { left: 5%; bottom: 0; font-size: 10px; }
   .presentation-figure figcaption > span:first-child { font-size: 8px; }

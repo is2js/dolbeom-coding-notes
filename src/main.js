@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import { renderCourseMarkdown as markdown, renderCourseMarkdownImages } from './course-markdown.js';
+import { renderCourseMarkdown as markdown, renderCourseInline as markdownInline, renderCourseMarkdownImages } from './course-markdown.js';
 import { presentationCommandGroups, presentationDemoCommands, showPresentationPoints } from './presentation-commands.js';
 import { validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite, COURSE_IDS } from './course.js';
 import { createEditor } from './editor.js';
@@ -114,7 +114,7 @@ Alpine.data('courseApp', () => ({
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, renderCourseMarkdownImages, presentationCommandGroups, presentationDemoCommands, showPresentationPoints, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, presentationCommandGroups, presentationDemoCommands, showPresentationPoints, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
   get brandTitle() {
     const title = (this.course?.title || 'Ai 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, '');

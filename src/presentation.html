@@ -11,10 +11,25 @@
     <div class="presentation-page-heading"><p><span class="presentation-phase-mark"></span><span x-text="presentationPhase()"></span><span class="presentation-separator">/</span><span x-text="lesson.shortTitle"></span></p><span x-text="presentationPage?.kind === 'section' ? presentationPage.section.minutes + '분 · 본편' : ['demo','live'].includes(presentationPage?.kind) ? '시연 권장 ' + presentationData.demo.durationMinutes + '분' : 'LESSON ' + String(lesson.number).padStart(2,'0')"></span></div>
 
     <div class="presentation-layout" :class="{ 'is-demonstration': ['demo','live'].includes(presentationPage?.kind), 'is-goals': presentationPage?.kind === 'intro', 'has-command-examples': presentationPage?.kind === 'section' && presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length }">
-      <figure class="presentation-figure" :class="{'is-goal-preview':presentationPage?.kind === 'intro'}" x-show="['intro','case','section','recap'].includes(presentationPage?.kind)">
+      <figure class="presentation-figure" :class="{'is-goal-preview':presentationPage?.kind === 'intro', 'has-case-media': presentationPage?.kind === 'case' && renderCourseMarkdownImages(lesson.case.body)}" x-show="['intro','case','section','recap'].includes(presentationPage?.kind)">
         <div class="presentation-figure-grid" aria-hidden="true"></div>
         <div x-show="presentationPage?.kind !== 'intro' && !(presentationPage?.kind === 'case' && renderCourseMarkdownImages(lesson.case.body))" class="presentation-illustration workbench-illustration" :class="'topic-' + presentationIllustrationId + (presentationArtStopped() ? ' is-motion-paused' : '') + (presentationIllustrationId !== lesson.id ? ' is-concept-diagram' : '')" role="img" :aria-label="lesson.shortTitle + ': ' + illustrationDescription(presentationIllustrationId)" x-html="lessonIllustration(presentationIllustrationId)"></div>
-        <div class="presentation-case-image-stage" x-show="presentationPage?.kind === 'case' && renderCourseMarkdownImages(lesson.case.body)" x-html="presentationPage?.kind === 'case' ? renderCourseMarkdownImages(lesson.case.body) : ''"></div>
+        <div class="presentation-case-image-stage" x-show="presentationPage?.kind === 'case' && renderCourseMarkdownImages(lesson.case.body)" x-data="{
+          imageIndex: 0,
+          get images() {
+            const template = document.createElement('template');
+            template.innerHTML = renderCourseMarkdownImages(lesson.case.body);
+            return Array.from(template.content.querySelectorAll('img'), image => ({ html: image.outerHTML, alt: image.alt }));
+          },
+          get activeIndex() { return Math.min(this.imageIndex, Math.max(0, this.images.length - 1)); }
+        }" x-effect="lesson.id; presentationPageId; imageIndex = 0">
+          <div class="presentation-case-image" x-html="images[activeIndex]?.html || ''"></div>
+          <div class="presentation-case-image-controls" x-show="images.length > 1" aria-label="사례 이미지 전환">
+            <button type="button" @click="imageIndex = Math.max(0, activeIndex - 1)" :disabled="activeIndex === 0" aria-label="이전 사례 이미지">‹ 이전 이미지</button>
+            <span class="presentation-case-image-position" aria-live="polite" aria-atomic="true" x-text="(activeIndex + 1) + ' / ' + images.length + ' · ' + (images[activeIndex]?.alt || '사례 이미지')"></span>
+            <button type="button" @click="imageIndex = Math.min(images.length - 1, activeIndex + 1)" :disabled="activeIndex >= images.length - 1" aria-label="다음 사례 이미지">다음 이미지 ›</button>
+          </div>
+        </div>
         <template x-if="presentationPage?.kind === 'intro'"><div class="presentation-illustration workbench-illustration topic-terminal is-concept-diagram is-motion-paused" role="img" :aria-label="illustrationDescription('section-terminal-example')" x-html="lessonIllustration('section-terminal-example')"></div></template>
         <figcaption x-show="presentationPage?.kind === 'intro'"><span>01 / TERMINAL</span><span>터미널과 탐색기를 오가며 연습하기</span></figcaption>
         <figcaption x-show="presentationPage?.kind !== 'intro' && !(presentationPage?.kind === 'case' && renderCourseMarkdownImages(lesson.case.body))"><span x-text="String(lesson.number).padStart(2,'0') + ' / ' + String(course.lessons.length).padStart(2,'0')"></span><span x-text="illustrationCaption(presentationIllustrationId)"></span></figcaption>
@@ -24,17 +39,17 @@
       <section class="presentation-copy" :class="{ 'is-live': presentationPage?.kind === 'live' }">
         <div class="presentation-title-row"><h1 id="presentation-title" tabindex="-1" x-text="presentationTitle()"></h1><span class="presentation-demo-badge" x-show="presentationPage?.kind === 'live'">실전 시연</span></div>
 
-        <template x-if="presentationPage?.kind === 'intro'"><div><ol class="presentation-points presentation-goals"><template x-for="(objective,index) in lesson.objectives" :key="`${lesson.id}-goal-${index}`"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-text="objective"></p></li></template></ol><p class="presentation-goal-note">연습 폴더에서 확인한 내용을 다음 강의로 이어갑니다.</p></div></template>
+        <template x-if="presentationPage?.kind === 'intro'"><div><ol class="presentation-points presentation-goals"><template x-for="(objective,index) in lesson.objectives" :key="`${lesson.id}-goal-${index}`"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-html="markdownInline(objective)"></p></li></template></ol><p class="presentation-goal-note">연습 폴더에서 확인한 내용을 다음 강의로 이어갑니다.</p></div></template>
 
         <template x-if="presentationPage?.kind === 'case'"><div class="presentation-case">
           <span class="presentation-case-label" x-text="lesson.case.kind === 'real' ? '돌범의 실제 개발 사례' : '교체용 가상 사례 · 실제 대화 아님'"></span>
-          <p class="presentation-case-summary" x-show="presentationData.caseSummary" x-text="presentationData.caseSummary"></p>
+          <p class="presentation-case-summary" x-show="presentationData.caseSummary" x-html="markdownInline(presentationData.caseSummary)"></p>
           <div class="presentation-prose" x-show="!presentationData.caseSummary" x-html="markdown(lesson.case.body)"></div>
-          <div class="presentation-question"><span x-html="icon('bulb')"></span><p x-text="lesson.case.question"></p></div>
+          <div class="presentation-question"><span x-html="icon('bulb')"></span><p x-html="markdownInline(lesson.case.question)"></p></div>
         </div></template>
 
         <template x-if="presentationPage?.kind === 'section'"><div>
-          <ol class="presentation-points" x-show="showPresentationPoints(lessonId, presentationPage)"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-text="point"></p></li></template></ol>
+          <ol class="presentation-points" x-show="showPresentationPoints(lessonId, presentationPage)"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-html="markdownInline(point)"></p></li></template></ol>
           <div class="presentation-prose" x-show="!presentationPage.points?.length" x-html="markdown(presentationPage.section.body)"></div>
           <section class="presentation-command-examples" :class="{ 'is-first': lessonId === 'terminal' }" aria-label="이 절의 명령어와 설명" x-show="presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length">
             <h2>이 절의 명령어</h2>
@@ -44,7 +59,7 @@
               <div class="markdown-body presentation-command-prose" x-html="markdown(group.code)"></div>
             </div></template>
           </section>
-          <details class="presentation-terminal-summary" x-show="presentationPage.points?.length && !showPresentationPoints(lessonId, presentationPage)"><summary>핵심 설명 보기</summary><ul><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-summary-' + index"><li x-text="point"></li></template></ul></details>
+          <details class="presentation-terminal-summary" x-show="presentationPage.points?.length && !showPresentationPoints(lessonId, presentationPage)"><summary>핵심 설명 보기</summary><ul><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-summary-' + index"><li x-html="markdownInline(point)"></li></template></ul></details>
         </div></template>
 
         <template x-if="['demo','live'].includes(presentationPage?.kind)"><div class="presentation-demo-content">
@@ -62,7 +77,7 @@
           </div>
         </div></template>
 
-        <template x-if="presentationPage?.kind === 'recap'"><div class="presentation-recap"><p class="presentation-return-summary" x-text="presentationData.returnSummary"></p><ul><template x-for="(item,index) in lesson.checklist.slice(0,3)" :key="lesson.id + '-recap-' + index"><li><span x-html="icon('check')"></span><span x-text="item"></span></li></template></ul><p class="presentation-next-topic" x-text="course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1] ? '다음 연결 · ' + course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1].shortTitle : '7개 주제를 하나의 개발 흐름으로 연결했습니다.'"></p></div></template>
+        <template x-if="presentationPage?.kind === 'recap'"><div class="presentation-recap"><p class="presentation-return-summary" x-html="markdownInline(presentationData.returnSummary)"></p><ul><template x-for="(item,index) in lesson.checklist.slice(0,3)" :key="lesson.id + '-recap-' + index"><li><span x-html="icon('check')"></span><span x-html="markdownInline(item)"></span></li></template></ul><p class="presentation-next-topic" x-text="course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1] ? '다음 연결 · ' + course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1].shortTitle : '7개 주제를 하나의 개발 흐름으로 연결했습니다.'"></p></div></template>
       </section>
     </div>
   </main>
@@ -80,7 +95,7 @@
     <div class="demo-stage presentation-rehearsal-stage">
       <!-- SHARED_DEMO -->
     </div>
-    <div class="presentation-rehearsal-description"><strong x-text="step.title"></strong><p x-text="step.description"></p></div>
+    <div class="presentation-rehearsal-description"><strong x-text="step.title"></strong><p x-html="markdownInline(step.description)"></p></div>
     <footer><button type="button" @click="prevStep()" :disabled="stepIndex === 0">이전 시연 단계</button><span x-text="(stepIndex + 1) + ' / ' + lesson.steps.length"></span><button type="button" @click="nextStep()" :disabled="stepIndex === lesson.steps.length - 1">다음 시연 단계</button><button type="button" class="presentation-rehearsal-return" @click="rehearsalOpen=false">발표로 돌아가기</button></footer>
   </dialog>
 </div>

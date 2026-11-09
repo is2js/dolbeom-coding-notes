@@ -394,235 +394,290 @@
           "expectedResult": "같은 연습 폴더에 새 메모를 만들고 메모장에 저장합니다. 탐색기 목록과 PowerShell의 cat 또는 Get-Content에서 동일한 파일과 저장 내용을 확인합니다.",
           "durationMinutes": 6
         },
-        "returnSummary": "현재 위치와 GUI 전환, . · .., 목록과 빈 연습 폴더 생성·삭제·이동을 확인했습니다. 같은 폴더의 메모를 만들고 저장한 뒤 탐색기와 PowerShell에서 확인했습니다. Terminal과 셸을 구분하고 Git으로 이어 갑니다. 연습 폴더를 바탕으로 다음 Git에서 강의 카드 작업용 복사본의 변경 기록을 살펴봅니다."
+        "returnSummary": "현재 위치와 GUI 전환, . · .., 목록과 빈 연습 폴더 생성·삭제·이동을 확인했습니다. 같은 폴더의 메모를 만들고 저장한 뒤 탐색기와 PowerShell에서 확인했습니다. Terminal과 셸을 구분하고 Git으로 이어 갑니다. 다음 Git에서는 별도의 새 폴더에서 메모의 버전을 기록합니다."
       }
     },
     {
       "id": "git",
       "number": 2,
-      "title": "Git: Codex의 수정을 확인하고 버전으로 기록하기",
+      "title": "Git: 텍스트 파일로 버전을 기록하고 다시 살펴보기",
       "shortTitle": "Git",
-      "subtitle": "AI가 고친 줄을 읽고, Git·GitHub·PR을 구분한 뒤 수정·검증·커밋을 요청합니다.",
+      "subtitle": "메모 두 버전을 커밋하고, 변경과 이전 기록을 확인한 뒤 현재 작업으로 돌아옵니다.",
       "icon": "git",
-      "durationMinutes": 25,
+      "durationMinutes": 35,
       "case": {
-        "kind": "example",
-        "title": "Codex가 고친 제목만 기록하려면 무엇을 봐야 할까요?",
-        "body": "교체용 가상 사례 · 실제 사용자 대화가 아닙니다.\n\n가상의 개발자가 dolbeom-notes에서 강의 카드 제목 한 줄을 바꿔 달라고 Codex에게 요청했습니다. 그런데 작업 폴더에는 개발자가 먼저 고친 README도 함께 남아 있습니다. 화면은 원하는 대로 보이지만 ‘전부 커밋해 줘’라고 하면 이번 요청과 관계없는 수정까지 한 기록에 섞일 수 있습니다. 개발자는 바뀐 파일과 줄을 확인하고 제목 변경에 해당하는 내용만 남기기로 합니다.",
-        "question": "화면에서 좋아 보이는 결과를, 무엇이 바뀌었는지 설명할 수 있는 버전으로 남기려면 어떤 순서가 필요할까요?"
+        "kind": "real",
+        "title": "Git 기록에서 바뀐 파일과 내용을 찾아보기",
+        "body": "### 개발 기록을 다시 살펴보는 화면\n\n아래는 제가 실제 프로젝트를 개발하며 Git 기록을 PyCharm에서 살펴본 화면입니다. 기능을 개선한 뒤 관련 변경을 하나의 **커밋**으로 기록해 두면, 나중에 어떤 작업을 했는지 기록 목록에서 찾아볼 수 있습니다. 커밋은 변경을 저장할 때마다 자동으로 생기는 것이 아니라, 기록할 내용을 골라 명시적으로 만듭니다.\n\n![PyCharm에서 Git 커밋 기록을 선택하고 관련 파일과 두 버전의 차이를 나란히 살펴보는 실제 프로젝트 화면](./assets/course/git-commit-diff-screenshot.png)\n\n### 화면을 읽는 순서\n\n1. **왼쪽 아래 기록 목록**에서 찾아보고 싶은 작업의 커밋을 선택합니다. 화면에서는 ‘RPG: 계정 캐릭터 관리 개선’ 기록을 선택했습니다.\n2. **오른쪽 파일 목록**에서 해당 기록과 관련된 파일을 살펴보고, 궁금한 파일을 선택합니다.\n3. **위쪽 Diff 화면**에서 선택한 파일의 두 버전을 나란히 비교합니다. 색으로 표시된 부분을 보며 어떤 줄이 달라졌는지 확인할 수 있습니다. 비교 기준과 화면 배치는 선택한 버전과 도구의 설정에 따라 달라질 수 있습니다.\n\n이렇게 작업을 의미 있는 단위로 기록하면 시간이 지난 뒤에도 특정 작업을 찾고, **어떤 파일이 바뀌었는지와 그 안의 변경 내용**을 확인하기 편합니다. Git이 버전 기록을 관리하고, 이 화면의 PyCharm은 그 기록과 차이를 보기 쉽게 보여 주는 도구입니다. 다른 IDE나 터미널에서도 Git 기록과 차이를 확인할 수 있습니다.\n\n이제 별도의 새 연습 폴더에서 텍스트 파일을 두 번 기록하고, 기록 사이의 차이를 직접 확인합니다. 이 연습은 실제 프로젝트를 수정하지 않는 수업용 재구성입니다.",
+        "question": "나중에 특정 작업을 다시 살펴보려면 어떤 단위로 기록하고, 바뀐 파일과 내용을 어떻게 확인하면 좋을까요?"
       },
       "objectives": [
-        "Codex가 만든 변경과 기존 작업을 나누어 읽고 이번 요청의 범위를 정합니다.",
-        "파일 저장·스테이징·커밋을 구분하고 Git을 사용하는 이유를 설명합니다.",
-        "Git·GitHub·PR의 역할과 로컬 기록·원격 공유의 차이를 말합니다.",
-        "수정 범위·보존 조건·검증 방법·커밋 결과를 포함한 Codex 프롬프트를 작성합니다."
+        "새 연습 저장소에서 텍스트 파일의 버전 1과 버전 2를 각각 커밋합니다.",
+        "상태와 diff, 커밋 목록에서 바뀐 파일·내용·기록을 확인합니다.",
+        "안전하게 이전 커밋을 잠시 살펴보고 원래 브랜치로 돌아옵니다.",
+        "Codex에게 변경을 확인하고 커밋하도록 요청할 때 확인할 결과를 말합니다."
       ],
       "sections": [
         {
           "id": "git-example",
-          "title": "Codex 사용 예: 화면이 바뀐 뒤 확인할 것",
+          "title": "Git 시작하기: 연습 폴더와 저장소 만들기",
           "minutes": 5,
           "optional": false,
-          "body": "Codex에게 ‘강의 카드 제목을 바꿔 줘’라고 요청한 가상 사례로 시작합니다. 브라우저에 새 제목이 보이면 기능 확인의 한 가지 근거가 됩니다. 그러나 어떤 파일을 바꿨는지, 요청 밖의 내용이 섞였는지, 원래 있던 수정은 무엇인지까지 알려 주지는 않습니다. 그래서 화면 확인 다음에 변경 내용을 읽는 과정이 필요합니다.\n\n예제에서는 제목이 index.html에 있고 개발자가 수정한 README.md도 남아 있다고 가정합니다. 실제 프로젝트에서는 제목이 JSON이나 다른 파일에 있을 수 있으므로 먼저 위치를 찾습니다. 아래 명령은 준비된 Git 저장소에서 상태와 파일의 차이를 읽는 예입니다.\n\n```powershell\ngit status --short --branch\ngit diff -- index.html\n```\n\n`status`에서는 현재 브랜치와 변경 파일을 확인하고, `diff`에서는 어떤 줄을 지우고 더했는지 읽습니다. 제목 한 줄을 요청했다면 새 제목의 정확한 문구와 관련 없는 삭제가 없는지를 확인합니다. README 수정은 이전부터 있던 작업일 수 있으므로 이번 요청을 근거로 지우거나 되돌리지 않습니다.\n\n강사는 미리 준비한 변경 전후를 나란히 보여 주고 ‘제목 변경’, ‘기존 문서 수정’ 두 묶음으로 설명합니다. 수강생은 파일 이름만 보고 정답을 고르기보다 실제 바뀐 줄을 읽습니다. 같은 파일에 서로 다른 목적의 수정이 섞였을 때는 파일 하나를 통째로 선택해도 범위가 넓어질 수 있다는 점도 짚습니다.\n\n이번 절에서는 요청한 목표와 실제 변경을 대응시키고, 이번에 기록할 내용을 짧게 설명할 수 있게 만드는 것입니다. 그 설명이 다음 절에서 커밋의 단위를 정하는 기준이 됩니다.\n\n**공통 실습 준비:** 강의 카드 정적 예제의 `03-javascript` 파일들을 별도의 새 연습 폴더에 복사하고, 카드 안내용 README를 그 폴더에서 함께 준비합니다. [단계별 강의 카드 안내](./examples/course-card/index.html)를 참고합니다. Git 실습은 그 복사본을 별도로 준비한 저장소에서 진행합니다. 실제 프로젝트와 기존 변경은 건드리지 않습니다. 아래 변경표는 수업용 재현이며 강사의 실제 Codex 대화는 아닙니다.",
+          "body": "### 저장과 커밋은 어떻게 다를까요?\n\n메모장을 저장하면 파일의 현재 내용이 바뀝니다. Git은 원하는 시점의 파일 상태를 메시지와 함께 **커밋**으로 기록합니다. 뜻이 통하는 작업 단위로 기록하면 나중에 그 작업을 찾고 비교하기 좋습니다. 강사의 [우아한테크코스 프리코스 저장소](https://github.com/is2js/woowa_precourse)와 [4기 후기](https://ttungbab.tistory.com/204)에서 살펴본 작은 단위의 커밋 취지를 참고해, 이번에는 한 파일과 두 기록만 사용하는 **수업용 재구성 실습**을 합니다.\n\n### 먼저 준비하기\n\n이 실습은 Windows Terminal의 PowerShell과 메모장을 사용합니다. Git이 설치되어 있는지 확인합니다.\n\n```powershell\ngit --version\n```\n\n버전이 나오지 않으면 [Git 공식 설치 안내](https://git-scm.com/install/windows)를 확인합니다. 아래 실습의 `git init -b`와 `git switch`는 Git 2.28 이상을 기준으로 합니다. 설치를 마쳤다면 터미널을 다시 열어 버전을 확인합니다.\n\n### 다른 파일을 건드리지 않을 새 폴더\n\n홈 폴더로 이동하고 같은 이름의 폴더가 이미 있는지 먼저 확인합니다. `cd`는 PowerShell의 `Set-Location`, `pwd`는 `Get-Location`의 기본 별칭입니다. `Test-Path`에는 PowerShell 기본 별칭이 없습니다. cmd의 `if exist`, macOS/Linux 셸의 `test -e`는 별도의 존재 확인 문법입니다.\n\n```powershell\ncd ~\npwd\nTest-Path .\\git-practice\n```\n\n**False가 나올 때만** 다음 명령으로 새 폴더를 만듭니다. True라면 기존 폴더를 사용하거나 덮어쓰지 말고, 비어 있는 다른 이름을 골라 이후 명령의 폴더명도 함께 바꿉니다. `mkdir`은 PowerShell에서 폴더를 만드는 기본 명령이며 `New-Item -ItemType Directory`로도 만들 수 있습니다. 둘 중 하나만 실행합니다.\n\n```powershell\nmkdir git-practice\n```\n\n폴더가 정상 생성됐을 때만 이동하고 위치를 확인합니다. 생성에 실패했다면 멈추고 원인을 확인합니다.\n\n```powershell\ncd .\\git-practice\npwd\n```\n\n현재 위치가 방금 만든 `git-practice`인지 확인한 뒤 초기화합니다.\n\n```powershell\ngit init -b main\n```\n\n`git init -b main`은 **현재의 새 연습 폴더**에 Git 저장소를 만들고 처음 브랜치 이름을 main으로 정합니다. 이 폴더가 맞는지 `pwd`로 확인한 뒤 실행합니다. GitHub에 업로드하거나 공개하는 동작은 아닙니다.",
           "presentationPoints": [
-            "화면 확인에 더해 변경 파일과 바뀐 줄을 읽습니다.",
-            "Codex의 수정과 이전부터 있던 작업을 구분합니다.",
-            "이번 요청에 해당하는 변경을 한 문장으로 설명합니다."
+            "Git 설치 확인 후 새 연습 폴더에서 git init -b main을 실행합니다.",
+            "파일 저장과 커밋 기록은 별개의 동작입니다.",
+            "기존 폴더를 덮어쓰지 않고 새 연습 저장소만 사용합니다."
           ]
         },
         {
           "id": "git-why",
-          "title": "Git을 쓰는 이유: 버전·GitHub·PR 구분",
-          "minutes": 9,
+          "title": "버전 1·2 기록하기: 저장·변경 확인·커밋",
+          "minutes": 15,
           "optional": false,
-          "body": "파일을 저장하면 현재 내용이 디스크에 남습니다. 하지만 ‘어제와 무엇이 달라졌는가’, ‘어느 변경부터 문제가 생겼는가’를 설명할 기록은 별도로 필요합니다. Git은 프로젝트의 변경을 버전으로 관리하는 도구입니다. 작업 중인 파일, 다음 기록에 넣을 내용을 고르는 스테이징, 그 내용을 남긴 커밋을 구분해 봅니다.\n\n```text\n저장: 현재 파일 내용 반영\n스테이징: 다음 커밋에 넣을 내용 선택\n커밋: 선택한 내용을 로컬 버전 기록으로 남김\npush: 로컬 기록을 원격 저장소에 보냄\nPR: 변경의 병합을 제안하고 검토하는 절차\n```\n\n### 강의 카드의 변경을 한 장면씩\n\n다음은 이미 Git이 추적하고 이전 커밋이 있는 연습 저장소의 **가상 예시**입니다. `index.html`의 제목을 바꾸고 기존에 다른 목적으로 고친 `README.md`도 남아 있습니다. 이 예에서 README 수정은 아직 스테이징하지 않았습니다. 실제 작업 결과를 보고 있다고 가정하지 않습니다.\n\n```text\n작업 폴더       index.html 제목 변경 + README.md 기존 수정\n스테이징       이번 기록에 포함할 제목 변경을 확인하고 선택\n커밋           선택한 내용의 로컬 기록 생성\n남은 작업       선택하지 않은 README.md 변경은 작업 폴더에 남음\n```\n\n`git status --short`로 변경 파일을 확인하고 `git diff -- index.html`로 추적 중인 카드 파일의 변경 줄을 읽습니다. 일반 `git diff`는 스테이징하지 않은 변경을 보여 주며, 이미 스테이징한 내용은 `git diff --cached -- index.html`로 따로 비교할 수 있습니다. 새 파일이 아직 추적되지 않았다면 일반 `git diff`에 그 내용이 표시되지 않을 수 있으므로 상태와 파일을 따로 확인합니다. 커밋은 선택 당시의 내용을 기록하며, 선택하지 않은 수정은 포함되지 않습니다. 실제 시연은 별도로 준비한 연습 저장소와 기존 기록이 필요합니다.\n\n커밋은 ‘오늘 작업’처럼 양으로 나누기보다 ‘강의 카드 제목 수정’처럼 목적을 설명할 수 있는 단위로 남기면 비교하기 쉽습니다. 메시지·변경·확인 결과를 연결하면 Codex에게 원인 조사를 요청할 때도 기준이 됩니다. Git은 자동 백업 버튼이 아니므로 아직 기록하지 않은 작업까지 커밋에 담겼다고 생각하지 않습니다.\n\nGitHub는 Git 저장소를 원격에 보관하고 협업하는 서비스입니다. Git은 내 컴퓨터에서도 사용할 수 있고, 로컬 커밋을 만들었다고 GitHub 화면이 즉시 바뀌지는 않습니다. PR은 Git 명령 이름이 아니라 GitHub 등 협업 서비스에서 변경을 비교하고 병합을 제안하는 기능입니다. 커밋, push, PR 병합, 사이트 배포는 각각 확인해야 하는 단계입니다.\n\n브랜치는 작업 흐름을 나누어 기록하는 데 사용합니다. 현재 브랜치를 확인하고 팀이 정한 작업 브랜치에서 시작합니다. 파일을 잘못 고쳤을 때도 작업 중인 수정 취소와 이미 공유한 커밋의 되돌림은 대상이 다르므로, 보존할 작업과 기준 버전을 먼저 정합니다.\n\n상태 구분은 [공식 Git 책](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository), PR의 역할은 [GitHub 공식 설명](https://docs.github.com/en/pull-requests/reference/pull-requests)에서 다시 확인할 수 있습니다.",
+          "body": "### 커밋에 표시될 이름을 연습 저장소에만 설정하기\n\n커밋에는 작성자 이름과 이메일이 기록됩니다. 다음은 연습용 예시이며 **현재 연습 저장소에만** 적용됩니다. 실제 GitHub 계정에 로그인하거나 전역 설정을 바꾸는 명령은 아닙니다. 나중에 원격으로 공유할 경우에는 사용할 이름과 이메일을 다시 확인합니다.\n\n```powershell\ngit config --local user.name \"Practice\"\ngit config --local user.email \"practice@example.com\"\n```\n\n### 버전 1: 메모를 만들고 첫 기록 남기기\n\n아직 없는 `note.txt`를 메모장으로 엽니다. 만들겠냐는 질문이 나타나면 확인하고 아래 한 줄을 입력한 뒤 **Ctrl+S로 저장하고 메모장을 닫습니다.**\n\n```powershell\nnotepad note.txt\n```\n\n```text\nversion 1\n```\n\n`git status`로 새 파일이 보이는지 확인합니다. 아직 추적하지 않은 새 파일은 일반 `git diff`에 내용이 보이지 않을 수 있습니다. 파일을 다음 커밋에 넣도록 선택한 뒤 기록하고 목록을 확인합니다.\n\n```powershell\ngit status\ngit add -- note.txt\ngit status\ngit commit -m \"version 1\"\ngit log --oneline\n```\n\n**저장 → add(스테이징) → commit(기록)**은 서로 다른 단계입니다. 커밋 ID는 컴퓨터마다 다릅니다. 성공하지 않았다면 오류를 확인하고 다음으로 넘어가지 않습니다.\n\n### 버전 2: 고치고 비교한 뒤 기록하기\n\n같은 파일을 다시 열어 내용을 `version 2`로 바꾸고 저장한 뒤 닫습니다.\n\n```powershell\nnotepad note.txt\n```\n\n```text\nversion 2\n```\n\n상태를 확인하고 아직 스테이징하지 않은 내용과 버전 1 사이의 차이를 읽습니다. 이 예에서는 `-version 1`, `+version 2`처럼 표시됩니다. 표시 색은 환경에 따라 다를 수 있습니다.\n\n```powershell\ngit status\ngit diff -- note.txt\n```\n\n원하는 한 줄이 맞다면 버전 2를 기록하고 목록을 확인합니다.\n\n```powershell\ngit add -- note.txt\ngit commit -m \"version 2\"\ngit log --oneline\n```\n\n목록에는 보통 새 커밋이 위에, 이전 커밋이 아래에 나타납니다. 이미 스테이징한 변경은 일반 `git diff` 대신 `git diff --staged`로 확인할 수 있습니다. Git은 내 컴퓨터에서 버전을 기록하는 도구이고, GitHub는 Git 저장소를 원격에 보관하고 함께 살펴볼 수 있는 서비스입니다. 로컬에 두 커밋을 만들었다고 GitHub에 자동으로 올라가지는 않습니다. PR은 GitHub 등에서 변경을 검토하고 합치자고 제안하는 기능입니다. 원격 저장소와 공유는 다음 강의에서 살펴봅니다.",
           "presentationPoints": [
-            "저장·스테이징·커밋은 서로 다른 단계입니다.",
-            "Git은 버전 관리 도구이고 GitHub는 원격 보관·협업 서비스입니다.",
-            "push·PR 병합·배포는 각각 결과를 확인해야 합니다."
+            "메모장으로 version 1 저장 → git add → 첫 커밋",
+            "version 2로 고친 뒤 git diff로 변경 줄 확인 → 두 번째 커밋",
+            "git log --oneline에서 두 기록을 확인합니다."
           ]
         },
         {
           "id": "git-prompt",
-          "title": "Codex에게 수정·확인·커밋을 요청하는 프롬프트",
-          "minutes": 11,
+          "title": "이전 기록에 다녀오기: 확인하고 현재로 돌아오기",
+          "minutes": 15,
           "optional": false,
-          "body": "이제 ‘알아서 고치고 커밋해 줘’를 검토할 수 있는 요청으로 바꿉니다. 목표는 짧게, 보존 조건은 구체적으로, 확인 방법은 프로젝트에 맞게 적습니다. 예제에서는 준비된 수업용 저장소의 제목 한 줄을 바꿉니다. Codex가 접근한 폴더와 현재 변경부터 읽게 하면 서로 다른 작업을 시작하는 일을 줄일 수 있습니다.\n\n```text\n현재 폴더·브랜치·변경 상태를 먼저 확인해 줘.\n기존 README 수정은 보존하고 강의 카드 제목 위치를 찾아줘.\n제목만 '돌범의 코딩 기초'로 바꿔줘.\n변경 diff를 읽고 프로젝트의 관련 확인 절차를 실행해 줘.\n요청한 변경만 스테이징해 내용 확인 후 로컬 커밋해 줘.\n변경 파일·확인 결과·커밋 ID·남은 변경을 알려줘.\n```\n\n이 요청은 목표, 제외할 작업, 검증, 완료 근거를 담습니다. 실제 제목의 위치가 예상과 다르면 찾은 파일을 기준으로 바꿉니다. 검증 명령은 다른 프로젝트의 명령을 그대로 끼우지 않고 README와 package.json에 있는 관련 절차를 확인합니다. 확인을 실행할 수 없었다면 그 이유와 남은 확인을 결과에 적습니다.\n\n강사는 diff를 먼저 읽고, 요청한 경로만 스테이징한 뒤 `git diff --staged`로 커밋할 내용을 다시 확인합니다. 스테이징 후 파일을 더 수정했다면 두 내용이 달라질 수 있습니다. 하나의 파일에 기존 작업이 섞여 있다면 부분 선택 등 범위를 나누는 방법이 필요하므로, 단순한 파일 전체 추가로 대신하지 않습니다.\n\n실전 시연의 완료 기준은 ‘커밋했다고 답했다’가 아니라 변경 내용과 검사 결과, 실제 커밋 기록을 연결해 설명하는 것입니다. 로컬 커밋까지가 이번 요청의 범위이고, 원격 공유와 PR은 다음 GitHub 강의에서 이어 갑니다. [Codex 프롬프팅 안내](https://learn.chatgpt.com/docs/prompting)를 참고해 자신의 요청도 목표·맥락·확인 조건으로 다듬어 봅니다.",
+          "body": "### 두 기록의 차이 먼저 보기\n\n두 커밋을 만들고 현재 브랜치가 main인지, 저장되지 않은 변경이 없는지 확인합니다. 메모장에 열린 파일도 저장하고 닫습니다.\n\n```powershell\ngit status\ngit log --oneline\ngit diff HEAD~1 HEAD -- note.txt\n```\n\n`HEAD`는 현재 보고 있는 커밋, `HEAD~1`은 바로 이전 커밋을 가리킵니다. 위 비교는 이전 커밋과 현재 커밋 사이에 `note.txt`가 어떻게 바뀌었는지 읽는 명령입니다. 변경된 파일이 남아 있다면 전환하지 말고 먼저 저장·커밋 여부를 확인합니다.\n\n### 버전 1에 잠시 방문하기\n\n상태가 깨끗하고 두 커밋이 있을 때만 다음 명령을 실행합니다.\n\n```powershell\ngit switch --detach HEAD~1\ngit status\ncat .\\note.txt\n```\n\n파일 내용이 `version 1`인지 확인합니다. 지금은 예전 커밋을 직접 보고 있어 Git이 **detached HEAD**라고 표시합니다. 놀랄 오류가 아닙니다. 이번에는 수정하거나 커밋하지 않고 내용만 확인합니다. `cat`은 PowerShell의 `Get-Content` 기본 별칭이며 `Get-Content .\\note.txt`로도 볼 수 있습니다. macOS/Linux에도 `cat` 명령이 있고 Windows cmd에서는 보통 `type note.txt`를 사용합니다. 셸마다 명령과 옵션은 다를 수 있습니다.\n\n### 바로 원래 브랜치로 돌아오기\n\n다른 브랜치로 이동하지 말고 바로 아래 명령을 실행합니다. `git switch -`는 **직전에 있던 브랜치**로 돌아가며, 이 연습에서는 main으로 돌아갑니다.\n\n```powershell\ngit switch -\ngit status\ncat .\\note.txt\n```\n\n현재 브랜치가 main이고 파일이 `version 2`로 보이는지 확인합니다. 두 커밋은 그대로 남아 있습니다. 중간에 다른 전환을 했다면 `-`가 가리키는 대상이 달라질 수 있으므로 안내를 멈추고 현재 상태와 돌아갈 브랜치를 먼저 확인합니다. 예전 상태에서 실수로 파일을 수정했다면 바로 전환하지 말고 변경을 별도 안전한 곳에 보관한 뒤 상태를 확인합니다.\n\n### Codex에게 부탁한다면?\n\n같은 새 연습 저장소에서 다음처럼 구체적으로 요청할 수 있습니다. 실제 작업이나 기록이 남아 있는 프로젝트에는 보존할 변경을 먼저 설명합니다.\n\n```text\n현재 폴더와 Git 상태를 먼저 확인해 줘.\nnote.txt를 version 3으로 바꾸고 diff를 보여 줘.\n요청과 관계없는 파일은 바꾸지 말아 줘.\n변경을 확인한 뒤 note.txt만 로컬 커밋하고, 기록과 남은 변경을 알려 줘.\n```\n\n결과는 직접 `git status`, `git log --oneline`, 필요하면 `git diff`로 확인합니다. 다음 GitHub 강의에서는 이 텍스트 실습과 **별도로 준비한** 원격 저장소를 통해 가져오기와 공유를 살펴봅니다.",
           "presentationPoints": [
-            "목표·보존할 기존 작업·확인 방법·완료 근거를 요청에 넣습니다.",
-            "diff와 스테이징 내용을 확인한 뒤 관련 변경만 커밋합니다.",
-            "변경 파일·검사 결과·커밋 ID·남은 작업으로 결과를 설명합니다."
+            "깨끗한 상태에서 git switch --detach HEAD~1로 이전 기록을 확인합니다.",
+            "이전 상태에서는 수정 없이 확인하고 git switch -로 즉시 원래 브랜치에 돌아옵니다.",
+            "cat으로 version 1 → version 2를 비교하고 git log로 기록을 확인합니다."
           ]
         }
       ],
       "pitfalls": [
         {
-          "title": "커밋을 저장·push·PR과 같은 뜻으로 쓰기",
-          "body": "저장은 파일, 커밋은 로컬 기록, push는 원격 전송, PR은 병합 제안입니다. 어디까지 진행됐는지 결과로 구분합니다."
+          "title": "기존 프로젝트나 연습 폴더를 덮어쓰기",
+          "body": "새 폴더의 존재 여부와 현재 위치를 확인하고 이미 있으면 다른 이름을 씁니다."
         },
         {
-          "title": "요청과 관계없는 기존 변경까지 함께 넣기",
-          "body": "작업 전 status와 diff를 읽고 보존할 내용을 정합니다. 같은 파일에 기존 작업이 섞였다면 스테이징 범위를 더 나눕니다."
+          "title": "저장만 하면 커밋이 자동으로 생긴다고 생각하기",
+          "body": "파일 저장, add, commit은 서로 다른 단계입니다. 상태와 기록을 확인합니다."
         },
         {
-          "title": "검사 명령이 실행됐다는 말만으로 완료 판단하기",
-          "body": "어떤 검사를 어떤 결과로 확인했는지 읽습니다. 실패했거나 실행하지 못한 검사는 남은 일로 적습니다."
+          "title": "미기록 변경이 있는데 이전 커밋으로 이동하기",
+          "body": "메모장을 저장하고 닫은 뒤 git status가 깨끗한지 확인합니다. 보존할 변경이 있다면 먼저 멈춥니다."
         },
         {
-          "title": "되돌리기 전에 대상을 정하지 않기",
-          "body": "아직 기록하지 않은 파일 수정인지, 이미 공유한 커밋인지와 보존할 작업을 먼저 확인합니다. 명령의 대상과 영향을 설명한 뒤 선택합니다."
+          "title": "이전 상태에서 수정하고 복귀할 브랜치를 잊기",
+          "body": "이번 실습에서는 detached HEAD에서 읽기만 한 뒤 git switch -로 바로 돌아옵니다."
+        },
+        {
+          "title": "커밋과 GitHub 업로드를 같은 뜻으로 쓰기",
+          "body": "커밋은 로컬 기록이며 GitHub로 공유하려면 원격 저장소와 별도 전송 과정이 필요합니다."
         }
       ],
       "checklist": [
-        "현재 브랜치와 기존 변경을 먼저 확인할 수 있습니다.",
-        "diff의 변경 줄을 요청 목표와 연결해 설명할 수 있습니다.",
-        "저장·스테이징·커밋·push·PR을 구분할 수 있습니다.",
-        "Codex 요청에 보존 조건과 확인할 결과를 넣을 수 있습니다.",
-        "커밋 전 스테이징 내용을 확인하고 완료 후 남은 변경을 설명할 수 있습니다."
+        "새 연습 폴더와 Git 저장소를 구분해 확인할 수 있습니다.",
+        "텍스트 파일 버전 1과 버전 2를 저장하고 각 버전을 커밋할 수 있습니다.",
+        "git status, git diff와 git log로 변경과 기록을 살펴볼 수 있습니다.",
+        "이전 커밋을 읽고 원래 브랜치로 돌아와 버전 2를 확인할 수 있습니다.",
+        "Git 로컬 기록과 GitHub 원격 공유의 차이를 설명할 수 있습니다."
       ],
       "steps": [
         {
           "id": "git-01",
-          "title": "가상 작업의 변경 범위 읽기",
-          "description": "AI의 제목 수정과 기존 README 수정을 나누어 살펴봅니다.",
-          "scene": "git",
-          "code": "이번 요청: 강의 카드 제목 변경\n기존 작업: README.md 설명 수정\n목표: 제목에 해당하는 변경만 로컬 커밋",
-          "language": "text",
-          "output": "수업용 가상 변경입니다. 실제 파일 내용은 diff로 확인합니다.",
+          "title": "Git과 새 폴더 확인",
+          "description": "Git 2.28 이상을 확인하고 홈에서 같은 이름의 폴더가 없는지 확인합니다.",
+          "scene": "terminal",
+          "code": "git --version\ncd ~\npwd\nTest-Path .\\git-practice",
+          "language": "powershell",
+          "output": "False일 때만 다음 단계로 갑니다. True이면 다른 새 이름을 정합니다.",
           "focus": "git",
-          "fileName": "변경 범위 메모",
+          "fileName": "준비 확인",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-02",
-          "title": "현재 상태 확인",
-          "description": "준비된 Git 저장소에서 브랜치와 수정 파일을 읽는 예입니다.",
+          "title": "새 연습 폴더 만들기",
+          "description": "False를 확인한 뒤에만 새 폴더를 만들고 오류가 없었는지 확인합니다.",
           "scene": "terminal",
-          "code": "git status --short --branch",
+          "code": "mkdir git-practice",
           "language": "powershell",
-          "output": "확인할 것: 현재 브랜치, 변경 파일, 이미 스테이징된 내용",
+          "output": "폴더 생성에 실패했다면 여기서 멈춥니다.",
           "focus": "git",
-          "fileName": "Git 상태",
+          "fileName": "연습 폴더",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
+          ]
+        },
+        {
+          "id": "git-02-enter",
+          "title": "새 폴더로 이동해 위치 확인",
+          "description": "생성 성공을 확인한 뒤 이동하고 pwd의 위치를 읽습니다.",
+          "scene": "terminal",
+          "code": "cd .\\git-practice\npwd",
+          "language": "powershell",
+          "output": "방금 만든 git-practice 위치인지 확인합니다.",
+          "focus": "git",
+          "fileName": "현재 위치",
+          "files": [
+            "git-practice/",
+            "note.txt"
+          ]
+        },
+        {
+          "id": "git-02-init",
+          "title": "새 폴더에 저장소 만들기",
+          "description": "확인한 새 연습 폴더에서만 Git을 초기화합니다.",
+          "scene": "terminal",
+          "code": "git init -b main",
+          "language": "powershell",
+          "output": "새 git-practice 안에 main 브랜치 저장소가 준비됩니다.",
+          "focus": "git",
+          "fileName": "연습 저장소",
+          "files": [
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-03",
-          "title": "제목 변경의 차이 읽기",
-          "description": "요청한 문구 외에 추가되거나 삭제된 줄이 있는지 비교합니다.",
-          "scene": "git",
-          "code": "-<h1>코딩 강의노트</h1>\n+<h1>돌범의 코딩 기초</h1>",
-          "language": "diff",
-          "output": "가상의 diff 발췌입니다. 실제 프로젝트에서는 제목이 있는 파일을 먼저 찾습니다.",
+          "title": "연습용 작성자와 첫 메모",
+          "description": "현재 저장소에만 작성자 예시를 설정하고 메모장에 version 1을 입력·저장한 뒤 닫습니다.",
+          "scene": "terminal",
+          "code": "git config --local user.name \"Practice\"\ngit config --local user.email \"practice@example.com\"\nnotepad note.txt",
+          "language": "powershell",
+          "output": "메모장에 version 1을 입력하고 Ctrl+S로 저장한 뒤 닫습니다.",
           "focus": "git",
-          "fileName": "index.html",
+          "fileName": "note.txt",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-04",
-          "title": "저장부터 PR까지 구분하기",
-          "description": "이미 추적 중인 연습 저장소를 전제로 한 가상 재현입니다. 카드 제목 변경을 선택해 기록하더라도 선택하지 않은 README 수정은 남습니다.",
-          "scene": "architecture",
-          "code": "작업 폴더: index.html 제목 변경 + README.md 기존 수정\ngit status --short → 변경 파일 확인\ngit diff -- index.html → 카드 제목의 변경 줄 확인\n스테이징 → 다음 커밋에 담을 변경 선택\n커밋 → 선택한 내용의 로컬 기록\n남은 README.md → 기존 수정 보존\npush → 원격에 기록 보내기\nPR → 병합 제안·검토",
-          "language": "text",
-          "output": "수업용 가상 결과: 카드 제목만 선택한 경우 README 변경은 작업 폴더에 남습니다.\n추적하지 않은 새 파일의 내용은 일반 git diff에 보이지 않을 수 있습니다.",
+          "title": "버전 1 커밋",
+          "description": "새 파일을 다음 기록에 넣고 첫 커밋을 만듭니다.",
+          "scene": "terminal",
+          "code": "git status\ngit add -- note.txt\ngit status\ngit commit -m \"version 1\"",
+          "language": "powershell",
+          "output": "git log --oneline에서 첫 커밋을 확인합니다.",
           "focus": "git",
-          "fileName": "작업 흐름",
+          "fileName": "버전 1",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-05",
-          "title": "수정 전에 범위를 주는 프롬프트",
-          "description": "폴더와 상태를 읽고 기존 작업을 보존하도록 목표를 적습니다.",
-          "scene": "code",
-          "code": "현재 폴더·브랜치·변경 상태를 먼저 확인해 줘.\n기존 README 수정은 보존해 줘.\n강의 카드 제목 위치를 찾아 '돌범의 코딩 기초'로 바꿔줘.\n제목 이외에 바꿀 내용이 필요하면 이유를 설명해 줘.",
-          "language": "text",
-          "output": "검토할 것: 목표와 보존할 작업이 모두 적혀 있는가?",
-          "focus": "codex",
-          "fileName": "수정 요청 예시",
+          "title": "메모장에서 버전 2로 수정",
+          "description": "version 2로 바꾸고 저장한 뒤 메모장을 닫습니다.",
+          "scene": "terminal",
+          "code": "notepad note.txt",
+          "language": "powershell",
+          "output": "Ctrl+S로 저장하고 메모장을 닫은 뒤 다음 단계로 이동합니다.",
+          "focus": "git",
+          "fileName": "note.txt",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
+          ]
+        },
+        {
+          "id": "git-05-diff",
+          "title": "버전 2 변경 줄 확인",
+          "description": "메모장 저장·종료를 확인한 다음 현재 차이를 읽습니다.",
+          "scene": "terminal",
+          "code": "git status\ngit diff -- note.txt",
+          "language": "powershell",
+          "output": "예상: -version 1, +version 2.",
+          "focus": "git",
+          "fileName": "변경 비교",
+          "files": [
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-06",
-          "title": "프로젝트에 맞는 확인 요청",
-          "description": "변경 diff와 실제로 수행할 검사를 연결합니다.",
-          "scene": "code",
-          "code": "변경 diff를 먼저 읽어 줘.\nREADME와 package.json에서 관련 확인 절차를 찾아 실행해 줘.\n카드 제목을 화면에서도 확인하고 결과를 알려줘.\n실행하지 못한 확인은 이유와 함께 적어줘.",
-          "language": "text",
-          "output": "확인 근거는 실행한 검사와 실제 관찰한 화면으로 설명합니다.",
-          "focus": "codex",
-          "fileName": "검증 요청 예시",
+          "title": "버전 2 커밋과 기록 확인",
+          "description": "원하는 한 줄이 맞는지 확인하고 두 번째 기록을 만듭니다.",
+          "scene": "terminal",
+          "code": "git add -- note.txt\ngit commit -m \"version 2\"\ngit log --oneline",
+          "language": "powershell",
+          "output": "두 커밋이 나타납니다. ID는 환경마다 다릅니다.",
+          "focus": "git",
+          "fileName": "버전 2",
           "files": [
-            "dolbeom-notes/",
-            "package.json",
-            "index.html"
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-07",
-          "title": "커밋에 넣을 내용 선택",
-          "description": "예제에서는 제목 수정만 있는 index.html을 선택합니다.",
+          "title": "이전 기록 방문 전 확인",
+          "description": "메모장을 닫고 깨끗한 상태와 두 커밋을 먼저 확인합니다.",
           "scene": "terminal",
-          "code": "git diff -- index.html\ngit add -- index.html\ngit diff --staged",
+          "code": "git status\ngit log --oneline",
           "language": "powershell",
-          "output": "같은 파일에 기존 작업이 섞였다면 부분 선택 등으로 범위를 나눈 뒤 확인합니다.",
+          "output": "변경이 남았거나 커밋이 두 개가 아니면 여기서 멈춥니다.",
           "focus": "git",
-          "fileName": "스테이징 비교",
+          "fileName": "상태 확인",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
+          ]
+        },
+        {
+          "id": "git-07-switch",
+          "title": "이전 커밋 방문",
+          "description": "상태가 깨끗하고 두 커밋이 있음을 확인한 후 이전 커밋을 잠시 엽니다.",
+          "scene": "terminal",
+          "code": "git switch --detach HEAD~1",
+          "language": "powershell",
+          "output": "detached HEAD는 이전 커밋을 직접 보는 상태입니다. 수정하지 않습니다.",
+          "focus": "git",
+          "fileName": "버전 1 방문",
+          "files": [
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "git-08",
-          "title": "로컬 커밋과 남은 작업 확인",
-          "description": "확인한 내용만 기록하고 실제 커밋과 상태를 읽습니다.",
+          "title": "예전 파일 읽기",
+          "description": "이전 커밋의 파일을 수정하지 않고 확인합니다.",
           "scene": "terminal",
-          "code": "git commit -m \"Update course title\"\ngit log -1 --oneline\ngit status --short --branch",
+          "code": "git status\ncat .\\note.txt",
           "language": "powershell",
-          "output": "확인할 것: 커밋에 제목 변경이 담겼고 기존 README 작업은 보존됐는가?",
+          "output": "version 1 표시. cat은 PowerShell의 Get-Content 기본 별칭입니다.",
           "focus": "git",
-          "fileName": "커밋 결과 확인",
+          "fileName": "이전 파일",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
           ]
         },
         {
           "id": "codex-09",
-          "title": "결과를 근거와 함께 보고받기",
-          "description": "수정과 검증, 기록 상태를 짧게 정리하는 요청입니다.",
-          "scene": "code",
-          "code": "변경 파일과 바꾼 이유를 요약해 줘.\n실행한 확인과 결과를 알려줘.\n관련 변경만 로컬 커밋했다면 커밋 ID를 적어줘.\n기존 작업을 포함해 남아 있는 변경도 알려줘.",
-          "language": "text",
-          "output": "커밋·원격 공유·배포를 같은 완료 문장으로 묶지 않고 확인한 범위를 말합니다.",
-          "focus": "codex",
-          "fileName": "완료 보고 프롬프트",
+          "title": "원래 브랜치로 바로 복귀",
+          "description": "다른 전환 없이 즉시 이전 브랜치로 돌아와 현재 파일을 확인합니다.",
+          "scene": "terminal",
+          "code": "git switch -\ngit status\ncat .\\note.txt",
+          "language": "powershell",
+          "output": "main으로 돌아와 version 2가 표시됩니다. 실제 출력을 확인합니다.",
+          "focus": "git",
+          "fileName": "현재 파일",
           "files": [
-            "dolbeom-notes/",
-            "index.html",
-            "README.md"
+            "git-practice/",
+            "note.txt"
           ]
         }
       ],
@@ -688,19 +743,27 @@
         {
           "title": "참고한 공개 핸드북 · 버전 관리",
           "url": "https://vibe.onebitefe.com/lessons/s06-c01-version-control"
+        },
+        {
+          "title": "강사의 우아한테크코스 프리코스 저장소",
+          "url": "https://github.com/is2js/woowa_precourse"
+        },
+        {
+          "title": "우아한테크코스 4기 후기 · 작은 단위 커밋 참고",
+          "url": "https://ttungbab.tistory.com/204"
         }
       ],
-      "closing": "Git은 Codex가 만든 결과를 읽고 설명할 수 있는 버전으로 남기는 도구입니다. 다음 GitHub 강의에서는 저장소를 clone해 읽어 보고, 로컬 기록을 원격에서 보관하고 소개하는 방법을 연결합니다. 준비한 같은 강의 카드 저장소를 다음 GitHub 예시에도 사용합니다.",
+      "closing": "Git으로 메모의 두 상태를 기록하고 이전 기록을 살펴본 뒤 현재 브랜치로 돌아왔습니다. 다음 GitHub 강의에서는 별도로 준비한 저장소를 가져오고 원격에 보관하는 방법을 살펴봅니다.",
       "presentation": {
-        "caseSummary": "Codex가 바꾼 카드 제목과 이전부터 수정한 README가 함께 남아 있습니다. 이번 요청의 변경만 읽고 확인해 하나의 로컬 커밋으로 남길 범위를 정합니다.",
+        "caseSummary": "실제 프로젝트의 Git 기록에서 커밋을 선택하고 바뀐 파일과 두 버전의 Diff를 살펴봅니다. 이어서 새 연습 저장소에 메모 버전 1·2를 직접 기록합니다.",
         "demo": {
-          "program": "IDE · Codex · PowerShell",
-          "file": "수업용 강의 카드 작업 복사본 · index.html과 README.md · 별도 준비한 Git 저장소",
-          "command": "현재 상태 확인 → 기존 README 수정 보존\nCodex에 제목 한 줄 수정과 관련 검증 요청\ngit diff -- index.html\ngit add -- index.html\ngit diff --staged\ngit commit -m \"Update course title\"",
-          "expectedResult": "제목 변경과 기존 작업을 구분하고 요청한 내용만 기록합니다. diff·검사 결과·커밋을 근거로 수정 결과를 설명합니다.",
-          "durationMinutes": 4
+          "program": "Windows Terminal · PowerShell · 메모장",
+          "file": "새 git-practice 폴더 · note.txt",
+          "command": "Git 버전과 새 폴더 확인 → git init -b main\n메모장 version 1 저장 → git add → git commit\n메모장 version 2 저장 → git diff → git add → git commit\ngit log --oneline → git status 깨끗함 확인\ngit switch --detach HEAD~1 → cat .\\note.txt\ngit switch - → git status → cat .\\note.txt",
+          "expectedResult": "버전 1과 2의 커밋을 만들고 이전 기록에서 version 1을 확인한 다음 main으로 돌아와 version 2를 확인합니다.",
+          "durationMinutes": 12
         },
-        "returnSummary": "Git은 로컬 버전 기록, GitHub는 원격 보관·협업, PR은 병합 제안입니다. Codex 요청에 목표·보존 조건·검증·커밋 근거를 넣으면 결과를 함께 검토하기 쉬워집니다."
+        "returnSummary": "메모 파일의 두 버전을 커밋하고 diff와 기록을 확인했습니다. 이전 커밋을 읽은 뒤 원래 브랜치로 돌아왔으며, 다음 GitHub 강의에서는 별도로 준비한 원격 저장소를 살펴봅니다."
       }
     },
     {
@@ -729,7 +792,7 @@
           "title": "clone 사용 예: Codex와 저장소 구조 분석하기",
           "minutes": 9,
           "optional": false,
-          "body": "이번 가상 사례에서는 GitHub의 수업용 dolbeom-notes 저장소를 읽는 것부터 시작합니다. README와 파일 목록에서 프로젝트 목적과 실행 안내를 찾습니다. 자신의 폴더에 저장소를 가져온 뒤 Codex가 읽을 범위를 정하면 파일과 설명을 연결하기 쉽습니다.\n\n`clone`은 저장소를 내 컴퓨터의 새 폴더로 복제하는 작업입니다. 파일뿐 아니라 버전 기록도 함께 가져오므로 이후 변경을 비교하고 원격과 연결해 작업할 수 있습니다. 저장소의 Code 메뉴에서 주소를 확인합니다. 아래 OWNER와 경로는 수업용 예시이며, 강사가 준비한 주소와 실제 작업 위치로 바꿉니다.\n\n```powershell\ngit clone https://github.com/OWNER/dolbeom-notes.git\nSet-Location -LiteralPath .\\dolbeom-notes  # 또는 cd -LiteralPath .\\dolbeom-notes\nGet-ChildItem -Name                         # 또는 ls -Name\nGet-Content -LiteralPath .\\README.md        # 또는 cat -LiteralPath .\\README.md\n```\n\nCodex에는 ‘README와 파일 구조를 읽고 진입 파일, 데이터 위치, 실행 절차를 근거 경로와 함께 요약해 줘’라고 요청해 봅니다. 분석 단계에서는 어떤 기술을 쓰는지, 강의 카드 내용이 어디에 있는지, 실행하려면 어떤 준비가 필요한지를 먼저 정리합니다. 실제 파일을 읽은 근거를 함께 받습니다.\n\nclone이 끝나도 의존성 설치나 서버 실행이 자동으로 끝난 것은 아닙니다. 실행은 README의 별도 절차를 따르고, 공개 배포도 따로 설정합니다. 이미 같은 이름의 작업 폴더가 있다면 덮어쓰기 대신 새 위치를 정해 목적을 분명히 합니다. 네트워크가 안 되는 수업에서는 준비된 복제본과 사전 화면으로 구조 읽기를 이어 갈 수 있습니다.\n\n프로젝트의 시작점과 다음 준비를 설명할 수 있는지 확인합니다. clone의 범위는 [clone 공식 안내](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)에서 확인합니다.\n\nWindows PowerShell에서 `cd`, `ls`, `cat`은 각각 `Set-Location`, `Get-ChildItem`, `Get-Content`의 기본 별칭입니다. `-LiteralPath`와 `-Name`은 PowerShell의 매개변수이므로 다른 셸에 그대로 붙이지 않습니다. 기본 Windows cmd에서는 이동에 `cd`, 목록에 `dir /b`, 파일 읽기에 `type README.md`를 쓰고, macOS의 기본 셸에서는 `cd`, `ls`, `cat README.md`를 사용합니다. 목록의 표시·숨김 항목은 다를 수 있습니다. `git clone`은 Git 프로그램의 명령으로 PowerShell 별칭이 아닙니다.\n\n**공통 실습 연결:** Git에서 본 강의 카드 프로젝트를 원격 저장소로 보관했다는 준비된 예를 사용합니다. 실제 공개 저장소 주소는 강사가 준비한 뒤 OWNER와 이름을 바꾸며, 준비 전에는 [강의 카드 단계별 예제](./examples/course-card/index.html)와 파일 목록으로 흐름을 설명합니다. 원격 저장소 생성·공개는 이 재현으로 자동 수행되지 않습니다.",
+          "body": "이번 가상 사례에서는 GitHub의 수업용 dolbeom-notes 저장소를 읽는 것부터 시작합니다. README와 파일 목록에서 프로젝트 목적과 실행 안내를 찾습니다. 자신의 폴더에 저장소를 가져온 뒤 Codex가 읽을 범위를 정하면 파일과 설명을 연결하기 쉽습니다.\n\n`clone`은 저장소를 내 컴퓨터의 새 폴더로 복제하는 작업입니다. 파일뿐 아니라 버전 기록도 함께 가져오므로 이후 변경을 비교하고 원격과 연결해 작업할 수 있습니다. 저장소의 Code 메뉴에서 주소를 확인합니다. 아래 OWNER와 경로는 수업용 예시이며, 강사가 준비한 주소와 실제 작업 위치로 바꿉니다.\n\n```powershell\ngit clone https://github.com/OWNER/dolbeom-notes.git\nSet-Location -LiteralPath .\\dolbeom-notes  # 또는 cd -LiteralPath .\\dolbeom-notes\nGet-ChildItem -Name                         # 또는 ls -Name\nGet-Content -LiteralPath .\\README.md        # 또는 cat -LiteralPath .\\README.md\n```\n\nCodex에는 ‘README와 파일 구조를 읽고 진입 파일, 데이터 위치, 실행 절차를 근거 경로와 함께 요약해 줘’라고 요청해 봅니다. 분석 단계에서는 어떤 기술을 쓰는지, 강의 카드 내용이 어디에 있는지, 실행하려면 어떤 준비가 필요한지를 먼저 정리합니다. 실제 파일을 읽은 근거를 함께 받습니다.\n\nclone이 끝나도 의존성 설치나 서버 실행이 자동으로 끝난 것은 아닙니다. 실행은 README의 별도 절차를 따르고, 공개 배포도 따로 설정합니다. 이미 같은 이름의 작업 폴더가 있다면 덮어쓰기 대신 새 위치를 정해 목적을 분명히 합니다. 네트워크가 안 되는 수업에서는 준비된 복제본과 사전 화면으로 구조 읽기를 이어 갈 수 있습니다.\n\n프로젝트의 시작점과 다음 준비를 설명할 수 있는지 확인합니다. clone의 범위는 [clone 공식 안내](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)에서 확인합니다.\n\nWindows PowerShell에서 `cd`, `ls`, `cat`은 각각 `Set-Location`, `Get-ChildItem`, `Get-Content`의 기본 별칭입니다. `-LiteralPath`와 `-Name`은 PowerShell의 매개변수이므로 다른 셸에 그대로 붙이지 않습니다. 기본 Windows cmd에서는 이동에 `cd`, 목록에 `dir /b`, 파일 읽기에 `type README.md`를 쓰고, macOS의 기본 셸에서는 `cd`, `ls`, `cat README.md`를 사용합니다. 목록의 표시·숨김 항목은 다를 수 있습니다. `git clone`은 Git 프로그램의 명령으로 PowerShell 별칭이 아닙니다.\n\n**공통 실습 연결:** Git의 텍스트 파일 실습과 별도로 준비한 강의 카드 프로젝트의 원격 저장소 예를 사용합니다. 실제 공개 저장소 주소는 강사가 준비한 뒤 OWNER와 이름을 바꾸며, 준비 전에는 [강의 카드 단계별 예제](./examples/course-card/index.html)와 파일 목록으로 흐름을 설명합니다. 원격 저장소 생성·공개는 이 재현으로 자동 수행되지 않습니다.",
           "presentationPoints": [
             "README·파일 목록·Code 메뉴의 clone 주소에서 시작합니다.",
             "clone은 파일과 버전 기록을 가져오며 실행·배포는 별도입니다.",
@@ -1054,7 +1117,7 @@
           "title": "README.md 관례와 GitHub 프로필 README의 조건",
           "minutes": 7,
           "optional": false,
-          "body": "### 다음 사람이 시작할 수 있는 안내를 만듭니다\n\nREADME는 프로젝트의 목적과 시작 방법 등을 소개할 때 널리 쓰는 문서입니다. .md는 Markdown 파일에 흔히 붙이는 확장자입니다. Git이나 일반 프로젝트가 README.md 파일을 반드시 요구하는 것은 아닙니다. 새로 합류한 사람과 미래의 나를 위해 실제 내용과 맞는 안내를 두면 유용합니다.\n\n준비된 README에서는 “무엇을 하는 예제인가”, “준비된 환경에서 무엇을 확인하는가”, “관련 메모는 어디에 있는가”를 찾습니다. 실행 명령을 적을 때는 실제 package.json의 scripts와 맞는지 대조합니다. 문서에 명령이 있다는 사실과 그 명령이 성공했다는 사실을 구분하고, 비밀 토큰이나 개인 경로를 복사해 넣지 않습니다. 코드 블록에 언어 이름을 붙이는 것은 표시를 돕는 것이며 프로그램을 설치하는 기능이 아닙니다.\n\nGitHub는 저장소의 .github, 루트, docs 위치에 있는 README를 찾아 보여 줍니다. 여러 위치에 있으면 이 순서로 선택합니다. 수업 예제는 찾기 쉬운 루트 README.md 하나를 사용합니다. 프로젝트 안내와 개인 프로필 README는 목적과 조건이 다릅니다.\n\n프로필 README는 **사용자 이름과 같은 이름의 저장소**, **공개 저장소**, **루트의 README.md**, **내용이 들어 있는 파일**이라는 조건이 모두 맞아야 표시됩니다. 관리형 사용자 계정에는 이 기능이 제공되지 않습니다. 사용자 이름이 dolbeom-study라면 같은 이름의 저장소를 사용하는 방식입니다. 강사는 준비한 프로필과 저장소 설정에서 네 조건을 직접 확인합니다.\n\n**같이 확인:** 준비한 프로젝트 README와 강사의 프로필 소개 원문을 비교합니다. 전자에서 실행 안내를, 후자에서 자기소개를 찾아 표시하고 네 조건을 체크합니다. 제목과 링크가 보여도 링크 대상과 프로젝트의 실제 상태까지 맞는지 한 번 더 확인합니다.\n\n**공통 실습 연결:** Git 연습에 사용한 강의 카드 작업용 복사본의 README를 열고 프로젝트 목적과 확인 방법을 찾아봅니다. 준비된 [카드 README 예시](./examples/course-card/03-javascript/README.md)로도 비교할 수 있습니다. 예제 README는 GitHub 프로필 소개가 아니라 강의 카드 프로젝트 안내입니다.",
+          "body": "### 다음 사람이 시작할 수 있는 안내를 만듭니다\n\nREADME는 프로젝트의 목적과 시작 방법 등을 소개할 때 널리 쓰는 문서입니다. .md는 Markdown 파일에 흔히 붙이는 확장자입니다. Git이나 일반 프로젝트가 README.md 파일을 반드시 요구하는 것은 아닙니다. 새로 합류한 사람과 미래의 나를 위해 실제 내용과 맞는 안내를 두면 유용합니다.\n\n준비된 README에서는 “무엇을 하는 예제인가”, “준비된 환경에서 무엇을 확인하는가”, “관련 메모는 어디에 있는가”를 찾습니다. 실행 명령을 적을 때는 실제 package.json의 scripts와 맞는지 대조합니다. 문서에 명령이 있다는 사실과 그 명령이 성공했다는 사실을 구분하고, 비밀 토큰이나 개인 경로를 복사해 넣지 않습니다. 코드 블록에 언어 이름을 붙이는 것은 표시를 돕는 것이며 프로그램을 설치하는 기능이 아닙니다.\n\nGitHub는 저장소의 .github, 루트, docs 위치에 있는 README를 찾아 보여 줍니다. 여러 위치에 있으면 이 순서로 선택합니다. 수업 예제는 찾기 쉬운 루트 README.md 하나를 사용합니다. 프로젝트 안내와 개인 프로필 README는 목적과 조건이 다릅니다.\n\n프로필 README는 **사용자 이름과 같은 이름의 저장소**, **공개 저장소**, **루트의 README.md**, **내용이 들어 있는 파일**이라는 조건이 모두 맞아야 표시됩니다. 관리형 사용자 계정에는 이 기능이 제공되지 않습니다. 사용자 이름이 dolbeom-study라면 같은 이름의 저장소를 사용하는 방식입니다. 강사는 준비한 프로필과 저장소 설정에서 네 조건을 직접 확인합니다.\n\n**같이 확인:** 준비한 프로젝트 README와 강사의 프로필 소개 원문을 비교합니다. 전자에서 실행 안내를, 후자에서 자기소개를 찾아 표시하고 네 조건을 체크합니다. 제목과 링크가 보여도 링크 대상과 프로젝트의 실제 상태까지 맞는지 한 번 더 확인합니다.\n\n**공통 실습 연결:** 별도로 준비한 강의 카드 예제의 README를 열고 프로젝트 목적과 확인 방법을 찾아봅니다. 준비된 [카드 README 예시](./examples/course-card/03-javascript/README.md)로도 비교할 수 있습니다. 예제 README는 GitHub 프로필 소개가 아니라 강의 카드 프로젝트 안내입니다.",
           "presentationPoints": [
             "README.md는 프로젝트 안내에 널리 쓰이는 관례이며 필수 파일은 아닙니다.",
             "프로필 README는 이름 일치·공개·루트 README.md·내용이 필요합니다.",

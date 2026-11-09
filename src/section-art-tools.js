@@ -118,45 +118,52 @@ function shortcutsScene() {
 
 function diffScene() {
   const p='section-git-example';
-  return scene(p,'화면이 바뀌면, 변경한 줄부터 확인',
-    panel(63,109,619,282,'index.html · 변경 비교',rect(84,172,577,69,C.paleRed,7,'stroke="none"')
-      + text(104,216,'− 코딩 노트',{size:27,fill:C.red,weight:650}) + rect(84,257,577,69,'#dce9d4',7,'stroke="none"')
-      + text(104,301,'+ 돌범의 코딩 기초',{size:27,fill:C.teal,weight:750})
-      + `<rect x="84" y="257" width="577" height="69" rx="7" fill="none" stroke="${C.teal}" stroke-width="3" class="art-motion ${p}-focus"/>`
-      + text(105,368,'무엇을 바꿨는지 먼저 읽습니다.',{size:22,fill:C.muted}))
-    + document(76,418,52,64,C.white) + text(150,449,'README',{mono:true,size:24,weight:700})
-    + text(150,480,'별도로 하던 작업은 보존',{size:21,fill:C.muted}) + circle(617,451,33,C.sage) + check(617,451,1.4),
-    '제목 변경을 검토하고, 다른 수정은 섞지 않기');
+  return scene(p,'연습 폴더를 Git 저장소로 준비',
+    folder(73,200,192,135) + document(124,170,78,99,C.white)
+    + text(171,389,'새 연습 폴더',{size:23,anchor:'middle',weight:700})
+    + arrow(p,'M286 265h44') + flow(p,'M286 265h44')
+    + panel(351,121,351,298,'PowerShell · 연습 폴더',
+      text(374,208,'git --version',{size:24,mono:true,fill:C.teal,weight:700})
+      + text(374,257,'git init',{size:27,mono:true,weight:700})
+      + path('M374 281h302',C.line,1.5)
+      + text(374,332,'Git이 기록할 준비',{size:22})
+      + text(374,369,'메모 파일로 연습',{size:22,fill:C.muted}) + cursor(p,501,237)),
+    '별도 연습 폴더에서 Git 기록 시작');
 }
 
 function versionFlowScene() {
   const p='section-git-why';
-  return scene(p,'로컬 기록과 원격 협업은 다른 단계',
-    rect(41,110,475,319,C.paper,15,'stroke-dasharray="8 7"') + text(279,150,'내 컴퓨터 · Git',{size:26,anchor:'middle',weight:750})
-    + document(76,224,71,94) + text(113,381,'저장',{size:23,anchor:'middle',weight:700})
-    + arrow(p,'M163 274h47') + flow(p,'M163 274h47') + document(233,207,66,83)
-    + `<path d="M220 269h96l-9 54h-78Z" fill="${C.sage}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/>`
-    + path('M225 283h87',C.white,2) + text(268,381,'선택',{size:23,anchor:'middle',weight:700})
-    + arrow(p,'M330 274h39') + flow(p,'M330 274h39',1) + commit(419,266,'커밋',31)
-    + arrow(p,'M462 274h91') + flow(p,'M462 274h91',2) + text(523,246,'push',{size:22,anchor:'middle',mono:true,fill:C.teal,weight:700})
-    + panel(569,176,143,153,'GitHub',path('M590 242h99M590 270h99M590 298h99',C.teal,9)
-      + circle(600,242,4,C.white) + circle(600,270,4,C.white) + circle(600,298,4,C.white),{titleSize:22})
-    + arrow(p,'M640 344v28') + rect(569,387,143,52,C.sage,8) + text(641,422,'PR · 검토',{size:22,anchor:'middle',weight:750}),
-    'Git은 변경 기록 · GitHub는 원격 보관과 검토');
+  return scene(p,'메모의 두 버전을 차례로 기록',
+    document(75,134,145,190,C.white) + pill(91,170,109,'버전 1',C.paper)
+    + arrow(p,'M240 229h55') + flow(p,'M240 229h55')
+    + document(319,134,145,190,C.sage) + pill(335,170,109,'버전 2',C.light)
+    + arrow(p,'M481 229h37') + flow(p,'M481 229h37',1)
+    + panel(535,135,165,189,'차이 · diff',
+      text(551,218,'− 버전 1',{size:20,fill:C.red,weight:700})
+      + text(551,260,'+ 버전 2',{size:20,fill:C.teal,weight:700}),{titleSize:20})
+    + path('M145 380h249',C.teal,4) + circle(145,380,13,C.amber) + circle(394,380,13,C.sage)
+    + text(145,435,'첫 커밋',{size:22,anchor:'middle',weight:700})
+    + text(394,435,'두 번째 커밋',{size:22,anchor:'middle',weight:700})
+    + pill(529,376,173,'기록 · log',C.paper),
+    '각 버전을 커밋하고 변경 차이 확인');
 }
 
 function promptScene() {
   const p='section-git-prompt';
-  return scene(p,'작게 요청하고, 확인한 뒤 기록',
-    panel(58,120,283,305,'Codex 요청 카드',
-      text(83,206,'01',{mono:true,size:21,fill:C.teal,weight:750}) + text(127,206,'변경 목표',{size:24,weight:700})
-      + text(83,267,'02',{mono:true,size:21,fill:C.teal,weight:750}) + text(127,267,'기존 작업 보존',{size:24,weight:700})
-      + text(83,328,'03',{mono:true,size:21,fill:C.teal,weight:750}) + text(127,328,'확인 방법',{size:24,weight:700})
-      + path('M83 356h234',C.line,1.7) + text(83,394,'수정 → 검사 → 커밋',{size:22,fill:C.muted}))
-    + arrow(p,'M355 267h25') + flow(p,'M355 267h25') + circle(440,267,43,C.sage) + check(440,267,1.7)
-    + text(440,356,'검증',{size:25,anchor:'middle',weight:700}) + arrow(p,'M495 267h35') + flow(p,'M495 267h35',1.8)
-    + commit(603,259,'커밋',42) + pill(387,396,281,'diff · 검사 결과 · 기록',C.paper),
-    '자동화할 작업과 보존할 내용을 함께 전달');
+  return scene(p,'이전 기록을 보고 최신으로 돌아오기',
+    document(89,132,132,172,C.white) + pill(103,165,101,'버전 1',C.paper)
+    + text(155,342,'잠시 확인',{size:22,anchor:'middle',weight:700})
+    + document(365,132,132,172,C.sage) + pill(379,165,101,'버전 2',C.light)
+    + text(431,342,'최신 기록',{size:22,anchor:'middle',weight:700})
+    + arrow(p,'M345 206h-98') + flow(p,'M345 206h-98')
+    + arrow(p,'M245 252h98') + flow(p,'M245 252h98',1.5)
+    + text(295,183,'이전',{size:20,anchor:'middle',fill:C.teal,weight:700})
+    + text(295,284,'복귀',{size:20,anchor:'middle',fill:C.teal,weight:700})
+    + panel(530,134,175,170,'Codex',text(547,215,'메모 수정',{size:20,weight:700})
+      + text(547,250,'확인 · 기록',{size:20,fill:C.teal,weight:700}),{titleSize:21})
+    + pill(111,369,384,'변경 사항 없는 상태에서 살펴보기',C.paper)
+    + circle(620,389,25,C.sage) + check(620,389,1.1),
+    '기록 탐색은 임시로 · 돌아온 뒤 수정과 커밋');
 }
 
 function cloneScene() {
@@ -229,18 +236,18 @@ export const toolSectionScenes = {
     svg:shortcutsScene(),
   },
   'git-example': {
-    title:'Codex 사용 예: 화면이 바뀐 뒤 확인할 것',
-    description:'제목의 삭제·추가 줄을 확대해 검토하면서 별도로 남아 있는 README 작업을 보존합니다.',
+    title:'Git 시작하기: 연습 폴더와 저장소 만들기',
+    description:'별도 연습 폴더에 메모 파일을 준비하고 PowerShell에서 Git 버전을 확인한 뒤 git init으로 기록할 저장소를 만듭니다.',
     svg:diffScene(),
   },
   'git-why': {
-    title:'Git을 쓰는 이유: 버전·GitHub·PR 구분',
-    description:'내 컴퓨터의 저장·선택·커밋과 경계 밖 원격 전송·PR 검토를 다른 도형과 영역으로 구분합니다.',
+    title:'버전 1·2 기록하기: 저장·변경 확인·커밋',
+    description:'메모 파일을 버전 1과 버전 2로 수정해 두 커밋으로 기록하고, 변경 비교와 커밋 목록을 살펴봅니다.',
     svg:versionFlowScene(),
   },
   'git-prompt': {
-    title:'Codex에게 수정·확인·커밋을 요청하는 프롬프트',
-    description:'목표·보존 조건·확인 방법이 적힌 요청서가 검증 관문과 커밋 기록으로 이어집니다.',
+    title:'이전 기록에 다녀오기: 확인하고 현재로 돌아오기',
+    description:'변경 사항이 없는 상태에서 이전 버전을 임시로 확인한 뒤 최신 위치로 돌아오고, 같은 메모의 수정과 기록을 Codex에게 요청합니다.',
     svg:promptScene(),
   },
   'github-clone': {

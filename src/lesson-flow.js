@@ -10,9 +10,9 @@ const relatedStepIds = {
     'terminal-shortcuts': ['terminal-06', 'terminal-07'],
   },
   git: {
-    'git-example': ['git-01', 'git-02', 'git-03'],
-    'git-why': ['git-04'],
-    'git-prompt': ['git-05', 'git-06', 'git-07', 'git-08', 'codex-09'],
+    'git-example': ['git-01', 'git-02', 'git-02-enter', 'git-02-init', 'git-03'],
+    'git-why': ['git-04', 'git-05', 'git-05-diff', 'git-06'],
+    'git-prompt': ['git-07', 'git-07-switch', 'git-08', 'codex-09'],
   },
   github: {
     'github-clone': ['github-01', 'git-09', 'github-02', 'github-03', 'git-10'],

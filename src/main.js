@@ -416,7 +416,7 @@ Alpine.data('courseApp', () => ({
   browserPreview() {
     const address='<div class="address-bar">⌕ &nbsp; 로컬 미리보기 / dolbeom-notes</div>';
     const heading='<span class="eyebrow">MY FIRST PROJECT</span><h3>돌범의 강의노트</h3>';
-    const gitCard='<div><span>02</span><b>Git</b><small>25분 · 변경을 기록하기</small></div>';
+    const gitCard='<div><span>02</span><b>Git</b><small>35분 · 변경을 기록하기</small></div>';
     const githubCard='<div><span>03</span><b>GitHub</b><small>20분 · 원격에서 함께 검토하기</small></div>';
     const terminalCard='<div><span>01</span><b>윈도우 터미널</b><small>25분 · 현재 위치부터 확인하기</small></div>';
     const id=this.step.id;
@@ -426,14 +426,14 @@ Alpine.data('courseApp', () => ({
       if(id==='github-06')return '<div class="address-bar">예시 주소 / example-user.github.io / lecture-notes /</div><div class="sample-page"><span class="eyebrow">GITHUB PAGES · 재현 화면</span><h3>돌범의 강의노트</h3><p>HTML · CSS · JavaScript로 제공하는 정적 사이트입니다.</p><div class="sample-review">소스: GitHub 저장소에서 코드 확인<br>사이트: Pages 주소로 강의 열기</div><p class="sample-state">Python·FastAPI 서버는 Pages에서 실행하지 않습니다.</p></div>';
       return '<div class="address-bar">가상 GitHub / dolbeom-notes / pull/12</div><div class="sample-page"><span class="eyebrow">PULL REQUEST · 재현 화면</span><h3>README 실행 안내 보완</h3><span class="sample-pr-state">OPEN</span><p>docs/readme-guide → 기본 브랜치</p><div class="sample-review">Files changed에서 변경 비교<br>검토 의견 → 확인 → 병합</div><p class="sample-state">PR은 GitHub의 변경 검토·병합 제안 기능입니다.</p></div>';
     }
-    if(id==='web-04')return address+'<div class="sample-page"><span class="eyebrow">STATIC FILE / JSON RESPONSE</span><h3>GET /data/course.json</h3><div class="sample-response"><span>200 OK · application/json</span><pre>{ "lessons": [<br>  { "id": "git", "title": "Git", "minutes": 25 }<br>] }</pre></div><p class="sample-state">정적 JSON 파일 → 브라우저 JavaScript → 강의 카드 표시</p></div>';
+    if(id==='web-04')return address+'<div class="sample-page"><span class="eyebrow">STATIC FILE / JSON RESPONSE</span><h3>GET /data/course.json</h3><div class="sample-response"><span>200 OK · application/json</span><pre>{ "lessons": [<br>  { "id": "git", "title": "Git", "minutes": 35 }<br>] }</pre></div><p class="sample-state">정적 JSON 파일 → 브라우저 JavaScript → 강의 카드 표시</p></div>';
     if(this.lessonId==='web' && ['web-02','web-11'].includes(id))return '<div class="address-bar">예시 로컬 서버 / 127.0.0.1:8000 / lessons</div><div class="sample-page"><span class="eyebrow">HTML RESPONSE · 재현 화면</span><h3>강의 목록</h3><div class="sample-cards">'+terminalCard+gitCard+'</div><p class="sample-state">GET /lessons → 200 OK · text/html<br>Response의 제목과 Elements의 현재 DOM을 대조합니다.</p></div>';
     if(this.lessonId==='markdown') {
       if(id==='tools-10')return '<div class="address-bar">가상 GitHub / dolbeom-study</div><div class="sample-page"><span class="eyebrow">PROFILE README · 재현 화면</span><h3>돌범의 학습 기록</h3><p>Codex로 개발하며 배운 내용을 정리합니다.</p><div class="sample-review">① 사용자명 = 저장소명<br>② 공개 저장소<br>③ 루트 README.md<br>④ 파일에 내용 작성</div><p class="sample-state">프로젝트 README와 프로필 README의 표시 조건을 구분합니다.</p></div>';
       return address+'<div class="sample-page"><span class="eyebrow">README.MD / RENDERED PREVIEW</span><h3>돌범의 강의노트</h3><p>실행 방법과 작업 규칙을 문서로 남깁니다.</p><div class="sample-review">① 현재 프로젝트 폴더 확인<br>② npm install<br>③ npm run dev</div></div>';
     }
     if(this.lessonId==='templates' || this.lessonId==='frontend') {
-      if(id==='frontend-03')return address+'<div class="sample-page">'+heading+'<div class="sample-cards sample-single sample-padding-comparison"><div><span>p-4 → p-6</span><b>Git</b><small>25분 · 변경을 기록하기</small></div></div><p class="sample-state">기본 테마의 padding: 1rem → 1.5rem<br>같은 카드에서 안쪽 여백을 비교합니다.</p></div>';
+      if(id==='frontend-03')return address+'<div class="sample-page">'+heading+'<div class="sample-cards sample-single sample-padding-comparison"><div><span>p-4 → p-6</span><b>Git</b><small>35분 · 변경을 기록하기</small></div></div><p class="sample-state">기본 테마의 padding: 1rem → 1.5rem<br>같은 카드에서 안쪽 여백을 비교합니다.</p></div>';
       if(id==='frontend-07')return address+'<div class="sample-page"><span class="eyebrow">SERVER TITLE + BROWSER STATE</span><h3>Git</h3><div class="sample-binding"><small>x-data: open = false</small><strong>접힘</strong><span>x-text가 현재 펼침 상태를 표시합니다.</span></div><p class="sample-state">제목: Jinja2의 서버 값 · 접힘: Alpine의 브라우저 값</p></div>';
       if(id==='frontend-08')return address+'<div class="sample-page">'+heading+'<div class="sample-cards sample-single">'+gitCard+'</div><div class="sample-toggle-button">설명 보기 · 펼침 상태 ▴</div><div class="sample-expanded">변경을 읽고 기록합니다.</div><p class="sample-state">클릭 후: open = true · aria-expanded = true · 설명 표시</p></div>';
       if(id==='frontend-10')return address+'<div class="sample-page"><span class="eyebrow">CARD STATE CHECK · 재현 화면</span><h3>강의 목록</h3><div class="sample-cards">'+terminalCard+gitCard+'</div><div class="sample-expanded">Git만 펼침 · 변경을 읽고 기록합니다.</div><p class="sample-state">카드 상태 독립 · Enter/Space · 다시 접기 확인<br>새로고침 → 두 카드 모두 초기 접힘</p></div>';

@@ -259,7 +259,7 @@ function serverToBrowser() {
     ${text(172,285,'+',31,c.muted,'middle')}${rect(73,306,198,66,c.cream,7)}${text(172,346,'데이터: Git',24,c.ink,'middle')}
     ${sheet(332,188,117,172)}${text(391,232,'HTML',25,c.ink,'middle')}${code(348,271,'<h2>',c.teal,22)}${text(390,322,'Git',28,c.ink,'middle')}
     ${panel(495,145,209,233,'브라우저')}${rect(515,210,168,143,c.paper,8)}
-    ${text(538,256,'Git',33)}${text(538,296,'25분',23,c.muted)}
+    ${text(538,256,'Git',33)}${text(538,296,'35분',23,c.muted)}
     ${arrow(p,301,248,323,248)}${arrow(p,457,248,485,248,{delay:1.1})}
     ${pill(62,425,224,'HTML 생성',c.pale,22)}${pill(494,425,210,'해석 · 화면 표시',c.cream,21)}
   `,'템플릿 처리와 화면 그리기는 다른 단계입니다');

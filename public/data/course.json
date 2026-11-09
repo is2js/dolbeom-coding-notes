@@ -65,12 +65,12 @@
         },
         {
           "id": "terminal-shortcuts",
-          "title": "Terminal 설정: 테마와 탭·분할 단축키 연습",
+          "title": "Terminal 설정: 탭·분할 단축키 연습",
           "minutes": 6,
           "optional": false,
-          "body": "### 1. 화면을 편하게 읽도록 꾸미기\n\nWindows Terminal에서 **Ctrl+,**를 눌러 설정을 엽니다. 메뉴 이름은 버전과 언어에 따라 조금 다를 수 있습니다.\n\n- **모양(Appearance)의 앱 테마**는 탭 막대와 설정 창 등 터미널 프로그램 자체의 모양입니다. 시스템 설정을 따르거나 밝게·어둡게 선택할 수 있습니다.\n- **색 구성표(Color scheme)**는 선택한 프로필의 터미널 화면에 표시되는 글자와 배경색입니다. 프로필 → 모양에서 색 구성표와 글꼴을 확인합니다. 앱 테마를 바꾼 것과 색 구성표를 바꾼 것은 서로 다른 설정입니다.\n\n**강사의 실제 화면 예:** 이 컴퓨터의 Windows Terminal 1.24.12741.0 설정에는 사용자 지정 색 구성표 **VScode**가 있으며, 기본 프로필 설정에 적용되어 있습니다. 짙은 배경과 밝은 글자의 VS Code 느낌을 보여 줍니다. 이름이 비슷해도 VS Code 앱 자체가 바뀌는 것은 아닙니다. 앱 테마에는 별도의 사용자 지정 테마가 기록되어 있지 않고 시스템 설정을 따릅니다. 강의 중 설정의 **색 구성표** 목록에서 VScode와 내장 구성표인 Campbell·One Half Dark 등을 비교합니다. 수강생의 목록에는 VScode가 없을 수 있으므로 있는 구성표 중 편한 것을 고릅니다. 이 화면만으로 VScode 구성표를 어디에서 가져왔는지는 알 수 없습니다.\n\n### 2. 기본 단축키부터 확인하기\n\n탭은 작업을 구분해 담고, 분할 창은 한 탭 안에서 여러 창을 함께 보여 줍니다. 다음은 Microsoft가 안내하는 기본 키 예시입니다. 먼저 **Ctrl+, → 동작(Actions)**에서 내 컴퓨터에 표시된 키를 확인하고, 새 탭과 분할을 시도합니다. 버전·키보드 배열·사용자 설정에 따라 표시와 동작이 다를 수 있습니다.\n\n| 할 일 | 기본 설정 예시 |\n| --- | --- |\n| 설정 열기 | Ctrl+, |\n| 새 탭 열기 | Ctrl+Shift+T |\n| 다음 / 이전 탭 | Ctrl+Tab / Ctrl+Shift+Tab |\n| 특정 번호 탭으로 이동 | Ctrl+Alt+1~8, Ctrl+Alt+9는 마지막 탭 |\n| 오른쪽 / 아래로 현재 창 복제해 분할 | Alt+Shift++ / Alt+Shift+- |\n| 자동 방향으로 현재 창 복제해 분할 | Alt+Shift+D |\n| 인접 분할 창으로 포커스 이동 | Alt+방향키 |\n| 현재 분할 창 닫기 | Ctrl+Shift+W |\n\n기호 키는 키보드 배열에 따라 입력이 다를 수 있습니다. **Ctrl+Shift+1~9는 번호 프로필의 새 탭을 여는 기본 키**로, 이미 열려 있는 번호 탭으로 이동하는 키와 다릅니다. 분할 창을 닫으면 그 창의 실행 중인 프로그램에도 영향을 줄 수 있으므로 연습용 창에서 확인합니다.\n\n### 3. 강사는 어떻게 바꾸어 쓸까요?\n\n아래는 **강사의 현재 Windows Terminal 설정 예시**입니다. 수강생 컴퓨터에 자동으로 적용되는 공통 기본값은 아닙니다. 같은 동작을 다른 키에 연결한 사례를 기본 키와 비교합니다.\n\n| 할 일 | 강사의 설정 | 비교할 기본 키 |\n| --- | --- | --- |\n| 오른쪽 / 아래로 현재 창 복제해 분할 | Ctrl+\\ / Alt+Shift+0 | Alt+Shift++ / Alt+Shift+- |\n| 자동 방향으로 현재 창 복제해 분할 | Alt+Shift+D | Alt+Shift+D |\n| 인접 분할 창으로 포커스 이동 | Ctrl+Alt+방향키 | Alt+방향키 |\n| 1~9번째로 이미 열린 탭 이동 | Ctrl+1~9 | Ctrl+Alt+1~8, Ctrl+Alt+9는 마지막 탭 |\n| 현재 분할 창 닫기 | Ctrl+W | Ctrl+Shift+W |\n\nCtrl+\\는 **Ctrl을 누른 채 백슬래시 키**를 누릅니다. 폰트나 키보드에서는 백슬래시가 원화 기호처럼 보일 수 있습니다. 강사의 설정에서는 Ctrl+Alt+Left가 왼쪽 창 이동으로 지정되어 있습니다. Microsoft 기본 설정의 같은 조합은 직전에 사용한 창으로 이동하는 동작이므로 이 키는 서로 충돌합니다. 키를 추가·변경했다고 해서 기존 기본 키가 모두 자동으로 지워지는 것은 아닙니다. 같은 조합이 다른 동작에 연결되어 있다면 무엇이 실제로 적용되는지 **동작** 목록에서 살펴봅니다.\n\n### 4. 내 키로 바꾸고 연습하기\n\n설정 → 동작에서 원하는 동작을 찾고 현재 연결 키를 확인합니다. 편집 버튼을 눌러 새 조합을 입력하고, 같은 키가 다른 동작에 쓰이지 않는지 확인한 뒤 저장합니다. 동작 이름·편집 버튼·충돌 안내는 Windows Terminal 버전에 따라 다를 수 있습니다. 강의에서는 강사의 설정을 예시로 보여 주고, 수강생은 필요할 때 자신의 편한 조합을 선택합니다. 설정을 바꿀 필요가 없다면 기본 키로 연습합니다.\n\n1. 새 탭을 열고 Ctrl+Tab으로 오갑니다. 강사의 화면에서는 Ctrl+1·Ctrl+2로 열린 탭도 전환합니다.\n2. 연습용 탭에서 강사의 Ctrl+\\ 또는 기본 Alt+Shift++로 오른쪽에 창을 복제합니다. 아래 분할과 자동 분할도 각자 **동작**에 표시된 키로 시도합니다.\n3. 강사의 Ctrl+Alt+방향키 또는 기본 Alt+방향키로 이동한 창의 테두리를 확인합니다. 각 창에서 pwd 또는 PowerShell 명령 Get-Location으로 현재 위치를 확인합니다.\n4. 연습용 분할 창을 강사의 Ctrl+W 또는 기본 Ctrl+Shift+W로 닫습니다. 분할 창이 하나뿐일 때는 탭이 닫힐 수 있으므로 실행 중인 작업을 먼저 확인합니다.\n\n**정리:** 현재 위치와 탐색기 전환, 폴더·메모 파일, Terminal과 셸의 차이, 내 설정의 탭·분할·포커스 키를 한 문장씩 설명합니다. [Microsoft 단축키 안내](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/actions), [분할 창 안내](https://learn.microsoft.com/en-us/windows/terminal/panes), [색 구성표 안내](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/color-schemes)를 필요할 때 다시 확인합니다.",
+          "body": "### 1. 기본 단축키부터 확인하기\n\n탭은 작업을 구분해 담고, 분할 창은 한 탭 안에서 여러 창을 함께 보여 줍니다. 다음은 Microsoft가 안내하는 기본 키 예시입니다. 먼저 **Ctrl+, → 동작(Actions)**에서 내 컴퓨터에 표시된 키를 확인하고, 새 탭과 분할을 시도합니다. 버전·키보드 배열·사용자 설정에 따라 표시와 동작이 다를 수 있습니다.\n\n| 할 일 | 기본 설정 예시 |\n| --- | --- |\n| 설정 열기 | Ctrl+, |\n| 새 탭 열기 | Ctrl+Shift+T |\n| 다음 / 이전 탭 | Ctrl+Tab / Ctrl+Shift+Tab |\n| 특정 번호 탭으로 이동 | Ctrl+Alt+1~8, Ctrl+Alt+9는 마지막 탭 |\n| 오른쪽 / 아래로 현재 창 복제해 분할 | Alt+Shift++ / Alt+Shift+- |\n| 자동 방향으로 현재 창 복제해 분할 | Alt+Shift+D |\n| 인접 분할 창으로 포커스 이동 | Alt+방향키 |\n| 현재 분할 창 닫기 | Ctrl+Shift+W |\n\n기호 키는 키보드 배열에 따라 입력이 다를 수 있습니다. **Ctrl+Shift+1~9는 번호 프로필의 새 탭을 여는 기본 키**로, 이미 열려 있는 번호 탭으로 이동하는 키와 다릅니다. 분할 창을 닫으면 그 창의 실행 중인 프로그램에도 영향을 줄 수 있으므로 연습용 창에서 확인합니다.\n\n### 2. 강사는 어떻게 바꾸어 쓸까요?\n\n아래는 **강사의 현재 Windows Terminal 설정 예시**입니다. 수강생 컴퓨터에 자동으로 적용되는 공통 기본값은 아닙니다. 같은 동작을 다른 키에 연결한 사례를 기본 키와 비교합니다.\n\n| 할 일 | 강사의 설정 | 비교할 기본 키 |\n| --- | --- | --- |\n| 오른쪽 / 아래로 현재 창 복제해 분할 | Ctrl+\\ / Alt+Shift+0 | Alt+Shift++ / Alt+Shift+- |\n| 자동 방향으로 현재 창 복제해 분할 | Alt+Shift+D | Alt+Shift+D |\n| 인접 분할 창으로 포커스 이동 | Ctrl+Alt+방향키 | Alt+방향키 |\n| 1~9번째로 이미 열린 탭 이동 | Ctrl+1~9 | Ctrl+Alt+1~8, Ctrl+Alt+9는 마지막 탭 |\n| 현재 분할 창 닫기 | Ctrl+W | Ctrl+Shift+W |\n\nCtrl+\\는 **Ctrl을 누른 채 백슬래시 키**를 누릅니다. 폰트나 키보드에서는 백슬래시가 원화 기호처럼 보일 수 있습니다. 강사의 설정에서는 Ctrl+Alt+Left가 왼쪽 창 이동으로 지정되어 있습니다. Microsoft 기본 설정의 같은 조합은 직전에 사용한 창으로 이동하는 동작이므로 이 키는 서로 충돌합니다. 키를 추가·변경했다고 해서 기존 기본 키가 모두 자동으로 지워지는 것은 아닙니다. 같은 조합이 다른 동작에 연결되어 있다면 무엇이 실제로 적용되는지 **동작** 목록에서 살펴봅니다.\n\n### 3. 내 키로 바꾸고 연습하기\n\n설정 → 동작에서 원하는 동작을 찾고 현재 연결 키를 확인합니다. 편집 버튼을 눌러 새 조합을 입력하고, 같은 키가 다른 동작에 쓰이지 않는지 확인한 뒤 저장합니다. 동작 이름·편집 버튼·충돌 안내는 Windows Terminal 버전에 따라 다를 수 있습니다. 강의에서는 강사의 설정을 예시로 보여 주고, 수강생은 필요할 때 자신의 편한 조합을 선택합니다. 설정을 바꿀 필요가 없다면 기본 키로 연습합니다.\n\n1. 새 탭을 열고 Ctrl+Tab으로 오갑니다. 강사의 화면에서는 Ctrl+1·Ctrl+2로 열린 탭도 전환합니다.\n2. 연습용 탭에서 강사의 Ctrl+\\ 또는 기본 Alt+Shift++로 오른쪽에 창을 복제합니다. 아래 분할과 자동 분할도 각자 **동작**에 표시된 키로 시도합니다.\n3. 강사의 Ctrl+Alt+방향키 또는 기본 Alt+방향키로 이동한 창의 테두리를 확인합니다. 각 창에서 pwd 또는 PowerShell 명령 Get-Location으로 현재 위치를 확인합니다.\n4. 연습용 분할 창을 강사의 Ctrl+W 또는 기본 Ctrl+Shift+W로 닫습니다. 분할 창이 하나뿐일 때는 탭이 닫힐 수 있으므로 실행 중인 작업을 먼저 확인합니다.\n\n**정리:** 현재 위치와 탐색기 전환, 폴더·메모 파일, Terminal과 셸의 차이, 내 설정의 탭·분할·포커스 키를 한 문장씩 설명합니다. [Microsoft 단축키 안내](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/actions), [분할 창 안내](https://learn.microsoft.com/en-us/windows/terminal/panes)를 필요할 때 다시 확인합니다.",
           "presentationPoints": [
-            "앱 테마와 색 구성표 구분: 강사의 VScode와 내장 Campbell을 비교합니다.",
+            "Ctrl+, → 동작에서 내 컴퓨터의 탭·분할 단축키를 확인합니다.",
             "분할: 기본 Alt+Shift++/- ↔ 강사 Ctrl+\\ / Alt+Shift+0",
             "창 이동: 기본 Alt+방향키 ↔ 강사 Ctrl+Alt+방향키 · Ctrl+1~9 탭"
           ]
@@ -188,12 +188,12 @@
         },
         {
           "id": "terminal-06",
-          "title": "테마·색 구성표와 탭 단축키 확인하기",
-          "description": "앱 테마와 프로필 색 구성표를 구분하고, 강사의 VScode 사용자 지정 구성표와 탭 전환 키를 기본값과 비교합니다.",
+          "title": "탭 열기와 탭 전환 단축키 확인하기",
+          "description": "설정의 동작에서 강사가 사용하는 탭 이동 키와 기본 단축키를 비교하고 직접 연습합니다.",
           "scene": "terminal",
-          "code": "Ctrl+, → 설정 → 모양: 앱 테마(시스템·밝게·어둡게)\n프로필 → 모양: 색 구성표·글꼴\n강사: 사용자 지정 VScode 색 구성표(어두운 배경)\n동작에서 새 탭·탭 이동 키 확인\n기본 Ctrl+Shift+T → 새 탭 · Ctrl+Tab → 다음 탭\n기본 Ctrl+Alt+1~8 → 번호 탭 · Ctrl+Alt+9 → 마지막 탭\n강사 Ctrl+1~9 → 1~9번째 탭 이동\n각 탭에서 pwd 또는 Get-Location으로 위치 확인",
+          "code": "Ctrl+, → 설정 → 동작에서 새 탭·탭 이동 키 확인\n기본 Ctrl+Shift+T → 새 탭 · Ctrl+Tab → 다음 탭\n기본 Ctrl+Alt+1~8 → 번호 탭 · Ctrl+Alt+9 → 마지막 탭\n강사 Ctrl+1~9 → 1~9번째 탭 이동\n각 탭에서 pwd 또는 Get-Location으로 위치 확인",
           "language": "text",
-          "output": "예상 예시:\n앱 테마와 프로필 색 구성표를 구분합니다.\n새 탭과 열린 탭 이동 키를 확인하고, 강사 화면의 VScode 구성표를 살펴봅니다. 수강생 환경의 색 구성표와 키는 다를 수 있습니다.",
+          "output": "예상 예시:\n새 탭을 열고 열린 탭 사이를 이동합니다. 강사와 수강생의 단축키는 다를 수 있으므로 동작 설정에서 확인합니다.",
           "focus": "terminal",
           "fileName": "Windows Terminal · 설정과 탭",
           "files": []
@@ -384,13 +384,13 @@
           "url": "https://learn.microsoft.com/en-us/windows/terminal/customize-settings/color-schemes"
         }
       ],
-      "closing": "현재 위치를 확인하고 Win+R 또는 explorer.exe .으로 탐색기를 열었습니다. 목록·폴더를 다룬 뒤 같은 폴더의 메모를 만들고 메모장과 PowerShell에서 저장 결과를 확인했습니다. Terminal과 셸, 테마·탭·분할을 정리하고 다음 Git 강의로 이어 갑니다.",
+      "closing": "현재 위치를 확인하고 Win+R 또는 explorer.exe .으로 탐색기를 열었습니다. 목록·폴더를 다룬 뒤 같은 폴더의 메모를 만들고 메모장과 PowerShell에서 저장 결과를 확인했습니다. Terminal과 셸, 탭·분할·단축키을 정리하고 다음 Git 강의로 이어 갑니다.",
       "presentation": {
         "caseSummary": "실제 AI 작업 화면에서 ZIP 결과물과 터미널 실행 안내를 살펴봅니다. 개발 서버의 화면 갱신, 서버의 데이터 처리, 오류 확인을 구분하고 폴더 위치 연습으로 이어갑니다.",
         "demo": {
           "program": "Windows Terminal · PowerShell · 탐색기 · 메모장",
           "file": "앞 절에서 만든 dolbeom-demo 폴더 · 새 memo.txt",
-          "command": "실제 AI 작업 캡처: ZIP 결과물과 터미널 실행 안내 소개\nGet-Location · pwd → Win+R 또는 explorer.exe . → cd . · cd .. → pwd\nGet-ChildItem · ls → 새 폴더 생성 → 빈 폴더 rmdir · 삭제 확인 → 재생성·이동 → wt -d .\n연습 폴더 pwd → Test-Path False 확인 → New-Item 또는 ni로 파일 생성\n탐색기에서 memo.txt를 메모장으로 열어 입력·Ctrl+S\nls → cat 또는 Get-Content로 파일 내용 확인\nZIP 프로젝트의 로컬 실행 사례는 설명만: 실행 안내·폴더·출력 확인\nPowerShell 버전 → Terminal 테마·탭·분할·단축키",
+          "command": "실제 AI 작업 캡처: ZIP 결과물과 터미널 실행 안내 소개\nGet-Location · pwd → Win+R 또는 explorer.exe . → cd . · cd .. → pwd\nGet-ChildItem · ls → 새 폴더 생성 → 빈 폴더 rmdir · 삭제 확인 → 재생성·이동 → wt -d .\n연습 폴더 pwd → Test-Path False 확인 → New-Item 또는 ni로 파일 생성\n탐색기에서 memo.txt를 메모장으로 열어 입력·Ctrl+S\nls → cat 또는 Get-Content로 파일 내용 확인\nZIP 프로젝트의 로컬 실행 사례는 설명만: 실행 안내·폴더·출력 확인\nPowerShell 버전 → Terminal 설정의 탭·분할·단축키",
           "expectedResult": "같은 연습 폴더에 새 메모를 만들고 메모장에 저장합니다. 탐색기 목록과 PowerShell의 cat 또는 Get-Content에서 동일한 파일과 저장 내용을 확인합니다.",
           "durationMinutes": 6
         },

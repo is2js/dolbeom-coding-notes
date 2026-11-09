@@ -17,7 +17,7 @@
 1. **위치·GUI 전환·폴더:** `Get-Location`과 `pwd` → 실제 경로만 복사해 Win+R에 붙여 넣기 또는 PowerShell에서 `explorer.exe .` → `cd .`과 `cd ..`·`pwd`로 현재·부모 폴더 비교 후 실제 경로로 돌아오기 → `Get-ChildItem`과 `ls` → `Set-Location 'C:\Users'`로 사용자 목록 확인 → `cd ~`로 자신의 쓰기 가능한 홈으로 이동·확인 → `Test-Path`가 False인지 확인 → `mkdir` 또는 `New-Item -ItemType Directory`로 생성 → 방금 만든 빈 폴더를 확인하고 `rmdir` 또는 `Remove-Item`으로 삭제 → 삭제 확인 후 재생성 → `cd` 또는 `Set-Location`으로 이동 → `pwd`·`ls`·`explorer.exe .` → 탐색기 주소줄 `wt -d .` → 열린 Terminal의 프로필·위치 확인. `C:\Users`는 위치 확인 예시이며, 폴더는 그곳이 아니라 자신의 쓰기 가능한 홈에서 만듭니다. 같은 기능의 두 명령은 비교 예시로, 폴더를 생성할 때는 둘 중 하나만 실행합니다.
 2. **GUI·메모 파일:** 앞에서 만든 `dolbeom-demo` 폴더에서 `pwd`로 경로 확인 → `Test-Path .\memo.txt`가 False일 때 `New-Item -ItemType File -Path .\memo.txt` 또는 PowerShell 별칭 `ni` → 탐색기에서 메모장으로 열기 → `Hello, Codex!` 입력·저장 → `ls`와 `cat .\memo.txt` 또는 `Get-Content -LiteralPath .\memo.txt`로 같은 파일 확인. 기존 파일이 있다면 다른 이름을 사용합니다.
 3. **호스트·셸:** Terminal·PowerShell·cmd·설치된 Git Bash 구분 → Terminal의 테마·탭·분할·단축키·시작 위치 장점 → `$PSVersionTable.PSVersion` → 기본 5.1과 선택 설치 7의 공존 확인. 7 설치는 필수가 아닙니다.
-4. **설정·정리:** Ctrl+, → 앱 테마와 프로필 색 구성표를 구분하고 강사의 사용자 지정 VScode 구성표 확인 → 동작에서 기본 키와 강사의 사용자 지정 키 비교 → 새 탭·탭 이동 → 오른쪽·아래·자동 분할 → 포커스 이동·연습 창 닫기 → 핵심 체크리스트. 강사 예시는 Ctrl+1~9, Ctrl+\, Alt+Shift+0, Ctrl+Alt+방향키, Ctrl+W이며 수강생에게 자동 적용되는 기본값은 아닙니다. Ctrl+Alt+Left의 기본 동작과 강사 설정은 서로 다릅니다. 테마와 키는 버전·설정·키보드 배열에 따라 달라질 수 있습니다.
+4. **설정·정리:** Ctrl+, → 동작에서 기본 키와 강사의 사용자 지정 키 비교 → 새 탭·탭 이동 → 오른쪽·아래·자동 분할 → 포커스 이동·연습 창 닫기 → 핵심 체크리스트. 강사 예시는 Ctrl+1~9, Ctrl+\, Alt+Shift+0, Ctrl+Alt+방향키, Ctrl+W이며 수강생에게 자동 적용되는 기본값은 아닙니다. Ctrl+Alt+Left의 기본 동작과 강사 설정은 서로 다릅니다. 키는 버전·설정·키보드 배열에 따라 달라질 수 있습니다.
 
 관련 예제 재현의 출력은 예상 예시이며 자동 실행이 아닙니다. 실제 실습은 강사가 앞에서 만든 연습 폴더와 PowerShell·탐색기·메모장을 오가며 진행합니다.
 
@@ -29,7 +29,7 @@ PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도
 
 | 순서 | 주제 | 본편 구성 | 시간 |
 | --- | --- | --- | ---: |
-| 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 강의 목표 → ZIP·서버 실제 사례 → 위치·탐색기 전환 → 연습 폴더·메모 → 셸·테마·단축키 | 30분 |
+| 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 강의 목표 → ZIP·서버 실제 사례 → 위치·탐색기 전환 → 연습 폴더·메모 → 셸·탭·분할 단축키 | 30분 |
 | 02 | Git | Codex의 변경 기록 → 버전 관리와 GitHub·PR 연결 → 수정·검증·커밋을 요청하는 프롬프트 | 25분 |
 | 03 | GitHub | 다른 프로젝트를 clone해서 분석 → 원격 보관·서버에서 받기·프로필·Pages | 20분 |
 | 04 | 마크다운 | Codex 요청 구조화 → README와 프로필 → Notion·Obsidian과 공통 문법 | 20분 |

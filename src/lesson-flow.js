@@ -16,8 +16,8 @@ const relatedStepIds = {
     'git-prompt': ['git-history-diff', 'git-07', 'git-07-switch', 'git-08', 'codex-09'],
   },
   github: {
-    'github-clone': ['github-01', 'git-09', 'github-02', 'github-03', 'git-10'],
-    'github-roles': ['github-04', 'github-05', 'github-06', 'git-12'],
+    'github-clone': ['git-09', 'github-01', 'github-02', 'github-origin-check', 'github-03', 'git-10'],
+    'github-roles': ['github-04', 'github-05', 'github-06', 'github-clone-check', 'git-12', 'github-clone-enter', 'github-clone-verify'],
   },
   markdown: {
     'markdown-map': ['codex-01'],

@@ -36,6 +36,11 @@ function commit(x,y,label,r=28) {
   return `<g stroke="${C.ink}" stroke-width="2.8"><path d="M${x-r} ${y}v22c0 19 ${r*2} 19 ${r*2} 0v-22" fill="${C.teal}"/><ellipse cx="${x}" cy="${y}" rx="${r}" ry="14" fill="${C.sage}"/><ellipse cx="${x}" cy="${y}" rx="9" ry="4" fill="${C.white}"/></g>`
     + text(x,y+67,label,{size:22,anchor:'middle',weight:700});
 }
+function remoteRepository(x,y) {
+  return rect(x+6,y+7,150,116,C.cream,7) + rect(x,y,150,116,C.sage,7)
+    + rect(x+12,y+14,126,34,C.white,5) + text(x+75,y+37,'note.txt',{size:18,anchor:'middle',mono:true,weight:700})
+    + path(`M${x+39} ${y+81}h72`,C.teal,3) + circle(x+39,y+81,8,C.amber) + circle(x+111,y+81,8,C.white);
+}
 const key = (x,y,w,label,active=false) => rect(x+2,y+5,w,37,C.cream,6) + rect(x,y,w,37,active?C.sage:C.white,6) + text(x+w/2,y+26,label,{size:20,mono:true,anchor:'middle',weight:650});
 
 function scene(p,heading,contents,footer='') {
@@ -188,30 +193,36 @@ function promptScene() {
 
 function cloneScene() {
   const p='section-github-clone';
-  return scene(p,'원격 저장소를 내 폴더로 가져오기',
-    panel(52,118,250,230,'GitHub · 원격 저장소',
-      `<path d="M111 211l61-34 70 39-61 35Z" fill="${C.sage}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M111 211v70l70 39v-69Z" fill="${C.white}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M181 251l61-35v70l-61 34Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/>`
-      + path('M127 245l35 19M127 270l35 19',C.teal,4) + circle(203,265,4,C.amber) + circle(220,255,4,C.amber),{titleSize:20})
-    + arrow(p,'M319 241h84') + flow(p,'M319 241h84') + text(360,214,'clone',{mono:true,size:25,anchor:'middle',fill:C.teal,weight:750})
-    + panel(424,118,280,230,'내 컴퓨터 · 작업 폴더',document(504,181,79,101) + folder(470,204,183,111)
-      + text(563,299,'프로젝트',{size:23,anchor:'middle',weight:750}),{titleSize:22})
-    + path('M565 361v23M369 384h304M369 384v17M521 384v17M673 384v17',C.teal,3)
-    + pill(310,409,122,'README',C.paper,true) + pill(461,409,122,'진입점',C.paper) + pill(612,409,122,'데이터',C.paper),
-    '받은 뒤에는 README · 시작 파일 · 데이터를 구분');
+  return scene(p,'내 메모 기록을 GitHub에 올리기',
+    panel(45,115,275,291,'내 컴퓨터 · 로컬 저장소',
+      folder(82,180,199,120) + pill(103,218,156,'note.txt',C.white,true)
+      + text(182,339,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
+      + text(182,374,'버전 1 · 버전 2 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
+    + arrow(p,'M335 242h88') + flow(p,'M335 242h88')
+    + text(379,218,'push',{size:23,mono:true,anchor:'middle',fill:C.teal,weight:700})
+    + panel(438,115,275,291,'GitHub · 원격 저장소',
+      remoteRepository(500,183)
+      + text(575,339,'origin',{size:21,anchor:'middle',mono:true,weight:700})
+      + text(575,374,'커밋 기록을 보관',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
+    + pill(233,443,294,'git push -u origin main',C.sage,true),
+    '로컬에서 기록한 커밋을 원격으로 전송');
 }
 
 function remoteRolesScene() {
   const p='section-github-roles';
-  return scene(p,'GitHub를 목적에 맞게 활용',
-    arrow(p,'M281 195l39 42') + arrow(p,'M442 237l40-42') + arrow(p,'M272 378l53-57') + arrow(p,'M443 321l45 57')
-    + flow(p,'M272 378l53-57') + flow(p,'M443 321l45 57',2)
-    + panel(49,108,222,130,'프로필',circle(84,186,15,C.amber) + text(116,181,'나를 소개',{size:23,weight:650}) + text(116,213,'README',{mono:true,size:21,fill:C.teal}))
-    + panel(489,108,222,130,'GitHub Pages',text(510,184,'정적 사이트 게시',{size:23,weight:650}) + text(510,215,'HTML · CSS · JS',{size:20,fill:C.teal,mono:true}))
-    + `<path d="M314 235l66-37 68 38-66 37Z" fill="${C.sage}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M314 235v66l68 38v-66Z" fill="${C.white}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/><path d="M382 273l66-37v66l-66 37Z" fill="${C.teal}" stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"/>`
-    + path('M332 267l33 18M332 289l33 18',C.teal,5) + text(381,372,'원격 저장소',{size:23,anchor:'middle',weight:750})
-    + panel(49,376,222,87,'내 컴퓨터 · push',text(70,445,'변경 기록 올리기',{size:22}),{titleSize:22})
-    + panel(489,376,222,87,'서버 · clone',text(510,445,'가져온 뒤 실행 준비',{size:21}),{titleSize:22}),
-    '원격 보관 · 프로필 소개 · 정적 게시 · 실행 준비');
+  return scene(p,'GitHub에서 다른 폴더로 복제하기',
+    panel(45,115,275,291,'GitHub · 원격 저장소',
+      remoteRepository(107,183)
+      + text(182,339,'origin',{size:21,anchor:'middle',mono:true,weight:700})
+      + text(182,374,'버전 1 · 버전 2 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
+    + arrow(p,'M335 242h88') + flow(p,'M335 242h88')
+    + text(379,218,'clone',{size:23,mono:true,anchor:'middle',fill:C.teal,weight:700})
+    + panel(438,115,275,291,'내 컴퓨터 · 새 폴더',
+      folder(475,180,199,120) + pill(496,218,156,'note.txt',C.white,true)
+      + text(575,337,'git-practice-clone',{size:19,anchor:'middle',mono:true,weight:700})
+      + text(575,374,'파일과 커밋 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
+    + pill(255,443,250,'git clone 주소',C.sage,true),
+    '다른 폴더에 복제해 파일과 기록 확인');
 }
 
 function pipeScene() {
@@ -276,13 +287,13 @@ export const toolSectionScenes = {
     svg:promptScene(),
   },
   'github-clone': {
-    title:'clone 사용 예: Codex와 저장소 구조 분석하기',
-    description:'원격 저장소가 로컬 폴더로 복제되고 README·진입점·데이터를 나누어 분석하는 구조입니다.',
+    title:'내 메모 저장소를 GitHub에 올리기',
+    description:'내 컴퓨터의 git-practice 저장소에 있는 note.txt와 버전 1·2의 커밋 기록을 push하여 GitHub 원격 저장소 origin으로 전송합니다.',
     svg:cloneScene(),
   },
   'github-roles': {
-    title:'원격 보관부터 서버·프로필·Pages까지 연결하기',
-    description:'GitHub를 중심으로 내 컴퓨터의 push, 서버의 clone·실행 준비, 프로필 소개와 Pages 정적 게시를 구분합니다.',
+    title:'다른 폴더에서 내 저장소를 다시 clone하기',
+    description:'GitHub 원격 저장소를 다른 새 폴더 git-practice-clone으로 clone하고 note.txt와 두 커밋 기록을 확인합니다.',
     svg:remoteRolesScene(),
   },
   'terminal-bonus': {

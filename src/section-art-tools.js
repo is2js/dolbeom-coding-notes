@@ -118,22 +118,42 @@ function shortcutsScene() {
 
 function diffScene() {
   const p='section-git-example';
-  return scene(p,'연습 폴더를 Git 저장소로 준비',
-    folder(73,200,192,135) + document(124,170,78,99,C.white)
-    + text(171,389,'새 연습 폴더',{size:23,anchor:'middle',weight:700})
-    + arrow(p,'M286 265h44') + flow(p,'M286 265h44')
-    + panel(351,121,351,298,'PowerShell · 연습 폴더',
-      text(374,208,'git --version',{size:24,mono:true,fill:C.teal,weight:700})
-      + text(374,257,'git init',{size:27,mono:true,weight:700})
-      + path('M374 281h302',C.line,1.5)
-      + text(374,332,'Git이 기록할 준비',{size:22})
-      + text(374,369,'메모 파일로 연습',{size:22,fill:C.muted}) + cursor(p,501,237)),
-    '별도 연습 폴더에서 Git 기록 시작');
+  return scene(p,'새 폴더 안에 Git 기록 공간 만들기',
+    panel(67,118,622,313,'git-practice/ · 연습 폴더',
+      folder(106,207,182,119) + text(197,368,'파일을 작성할 공간',{size:22,anchor:'middle',weight:700})
+      + path('M324 179v218',C.line,1.6)
+      + folder(413,207,182,119) + pill(446,245,117,'.git',C.sage,true)
+      + text(506,368,'기록과 설정 보관',{size:22,anchor:'middle',weight:700})
+      + `<rect x="402" y="193" width="214" height="147" rx="13" fill="none" stroke="${C.teal}" stroke-width="3" stroke-dasharray="9 7" class="art-motion ${p}-focus"/>`)
+    + pill(81,449,285,'git init -b main',C.paper,true)
+    + pill(392,449,285,'ls -Force로 .git 확인',C.paper),
+    '.git는 숨겨진 기록 공간 · 안의 파일은 직접 고치지 않기');
 }
 
 function versionFlowScene() {
   const p='section-git-why';
-  return scene(p,'메모의 두 버전을 차례로 기록',
+  return scene(p,'저장한 내용 중 다음 기록에 넣을 내용 선택',
+    panel(33,130,190,273,'작업 파일',
+      document(83,196,82,111,C.white) + text(128,350,'note.txt',{size:21,mono:true,anchor:'middle',weight:700})
+      + text(128,382,'version 1',{size:20,mono:true,anchor:'middle',fill:C.teal}),{titleSize:22})
+    + arrow(p,'M234 262h36') + flow(p,'M234 262h36')
+    + panel(283,130,190,273,'스테이징',
+      document(333,196,82,111,C.sage) + check(411,293,.8)
+      + text(378,350,'다음 기록에',{size:21,anchor:'middle',weight:700})
+      + text(378,382,'담을 내용',{size:21,anchor:'middle',fill:C.teal}),{titleSize:22})
+    + arrow(p,'M484 262h36') + flow(p,'M484 262h36',1.2)
+    + panel(533,130,190,273,'커밋 기록',
+      commit(628,239,'version 1',31)
+      + text(628,351,'그 시점의 상태',{size:20,anchor:'middle',weight:700})
+      + text(628,381,'메시지와 함께',{size:20,anchor:'middle',fill:C.teal}),{titleSize:22})
+    + pill(147,433,213,'git add note.txt',C.paper,true)
+    + pill(397,433,213,'git commit',C.sage,true),
+    '파일 저장 · 다음 기록 선택 · 커밋은 서로 다른 단계');
+}
+
+function twoVersionsScene() {
+  const p='section-git-diff';
+  return scene(p,'두 버전의 차이를 읽고 새 기록 남기기',
     document(75,134,145,190,C.white) + pill(91,170,109,'버전 1',C.paper)
     + arrow(p,'M240 229h55') + flow(p,'M240 229h55')
     + document(319,134,145,190,C.sage) + pill(335,170,109,'버전 2',C.light)
@@ -145,25 +165,25 @@ function versionFlowScene() {
     + text(145,435,'첫 커밋',{size:22,anchor:'middle',weight:700})
     + text(394,435,'두 번째 커밋',{size:22,anchor:'middle',weight:700})
     + pill(529,376,173,'기록 · log',C.paper),
-    '각 버전을 커밋하고 변경 차이 확인');
+    'diff로 비교 → 확인한 버전 2를 커밋');
 }
 
 function promptScene() {
   const p='section-git-prompt';
-  return scene(p,'이전 기록을 보고 최신으로 돌아오기',
-    document(89,132,132,172,C.white) + pill(103,165,101,'버전 1',C.paper)
-    + text(155,342,'잠시 확인',{size:22,anchor:'middle',weight:700})
-    + document(365,132,132,172,C.sage) + pill(379,165,101,'버전 2',C.light)
-    + text(431,342,'최신 기록',{size:22,anchor:'middle',weight:700})
-    + arrow(p,'M345 206h-98') + flow(p,'M345 206h-98')
-    + arrow(p,'M245 252h98') + flow(p,'M245 252h98',1.5)
-    + text(295,183,'이전',{size:20,anchor:'middle',fill:C.teal,weight:700})
-    + text(295,284,'복귀',{size:20,anchor:'middle',fill:C.teal,weight:700})
-    + panel(530,134,175,170,'Codex',text(547,215,'메모 수정',{size:20,weight:700})
-      + text(547,250,'확인 · 기록',{size:20,fill:C.teal,weight:700}),{titleSize:21})
-    + pill(111,369,384,'변경 사항 없는 상태에서 살펴보기',C.paper)
-    + circle(620,389,25,C.sage) + check(620,389,1.1),
-    '기록 탐색은 임시로 · 돌아온 뒤 수정과 커밋');
+  return scene(p,'HEAD는 이전 기록 확인 · main은 최신 유지',
+    pill(101,118,134,'HEAD',C.amber,true) + arrow(p,'M168 163v51')
+    + pill(525,118,134,'main',C.sage,true) + arrow(p,'M592 163v51')
+    + path('M191 241h378',C.line,4)
+    + circle(168,241,23,C.amber) + circle(592,241,23,C.sage)
+    + text(168,290,'버전 1 커밋',{size:23,anchor:'middle',weight:700})
+    + text(592,290,'버전 2 커밋',{size:23,anchor:'middle',weight:700})
+    + pill(89,315,158,'version 1',C.paper,true)
+    + pill(513,315,158,'version 2',C.paper,true)
+    + text(168,389,'지금 잠시 보는 기록',{size:21,anchor:'middle',fill:C.muted})
+    + text(592,389,'최신 작업 위치',{size:21,anchor:'middle',fill:C.muted})
+    + arrow(p,'M258 424h244') + flow(p,'M258 424h244')
+    + text(380,463,'git switch main → 복귀',{size:24,anchor:'middle',mono:true,fill:C.teal,weight:700}),
+    'main의 기록을 지우지 않고 이전 커밋에 다녀오기');
 }
 
 function cloneScene() {
@@ -236,18 +256,23 @@ export const toolSectionScenes = {
     svg:shortcutsScene(),
   },
   'git-example': {
-    title:'Git 시작하기: 연습 폴더와 저장소 만들기',
-    description:'별도 연습 폴더에 메모 파일을 준비하고 PowerShell에서 Git 버전을 확인한 뒤 git init으로 기록할 저장소를 만듭니다.',
+    title:'Git 시작하기: 새 저장소와 .git 살펴보기',
+    description:'새 git-practice 폴더 안의 작업 공간과 Git 기록과 설정을 보관하는 숨김 .git 폴더를 구분합니다. git init -b main으로 저장소를 만들고 PowerShell의 ls -Force로 .git를 확인하며 내부 파일은 직접 고치지 않습니다.',
     svg:diffScene(),
   },
   'git-why': {
-    title:'버전 1·2 기록하기: 저장·변경 확인·커밋',
-    description:'메모 파일을 버전 1과 버전 2로 수정해 두 커밋으로 기록하고, 변경 비교와 커밋 목록을 살펴봅니다.',
+    title:'첫 커밋: 작업 파일·스테이징·기록 구분하기',
+    description:'note.txt에 저장한 version 1을 git add로 다음 기록에 넣도록 선택한 뒤 git commit으로 그 시점의 상태를 기록합니다. 작업 파일, 스테이징, 커밋을 각각 다른 공간으로 보여 줍니다.',
     svg:versionFlowScene(),
+  },
+  'git-diff': {
+    title:'두 번째 커밋: 변경 비교와 버전 2 기록하기',
+    description:'기록한 note.txt의 버전 1과 수정한 버전 2 사이의 차이를 diff로 읽고, 확인한 버전 2를 새 커밋으로 남겨 두 기록을 확인합니다.',
+    svg:twoVersionsScene(),
   },
   'git-prompt': {
     title:'이전 기록에 다녀오기: 확인하고 현재로 돌아오기',
-    description:'변경 사항이 없는 상태에서 이전 버전을 임시로 확인한 뒤 최신 위치로 돌아오고, 같은 메모의 수정과 기록을 Codex에게 요청합니다.',
+    description:'main은 최신 버전 2 커밋을 가리킨 채 HEAD가 이전 버전 1 커밋을 직접 확인하는 상태입니다. 이전 기록을 읽은 뒤 git switch main으로 HEAD를 원래 브랜치로 돌려 최신 파일을 확인하며 두 커밋은 그대로 유지됩니다.',
     svg:promptScene(),
   },
   'github-clone': {

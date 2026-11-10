@@ -3,16 +3,30 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,31);
+  assert.equal(Object.keys(sectionScenes).length,32);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,31);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,32);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
+});
+
+test('beginner Git scenes separate the repository, staging, difference and temporary visit',()=>{
+  assert.match(sectionScenes['git-example'].svg,/\.git/);
+  assert.match(sectionScenes['git-example'].svg,/ls -Force/);
+  assert.match(sectionScenes['git-why'].svg,/작업 파일/);
+  assert.match(sectionScenes['git-why'].svg,/스테이징/);
+  assert.match(sectionScenes['git-why'].svg,/git add note\.txt/);
+  assert.match(sectionScenes['git-diff'].svg,/− 버전 1/);
+  assert.match(sectionScenes['git-diff'].svg,/\+ 버전 2/);
+  assert.match(sectionScenes['git-prompt'].svg,/>HEAD<\/text>/);
+  assert.match(sectionScenes['git-prompt'].svg,/>main<\/text>/);
+  assert.match(sectionScenes['git-prompt'].svg,/git switch main/);
+  assert.match(sectionScenes['git-prompt'].description,/main은 최신 버전 2.*HEAD가 이전 버전 1/);
 });
 
 test('all section graphics are self-contained accessible SVG with unique internal IDs',()=>{

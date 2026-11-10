@@ -1,0 +1,9 @@
+<dialog class="case-image-viewer" x-ref="caseImageViewer" aria-labelledby="case-image-viewer-title" @close="onCaseImageViewerClosed()" @cancel.prevent="closeCaseImageViewer()" @click="if($event.target === $el)closeCaseImageViewer()">
+  <header class="case-image-viewer-header">
+    <div><h2 id="case-image-viewer-title">사례 이미지 크게 보기</h2><p>이미지를 원래 비율로 표시합니다. 긴 이미지는 아래로 스크롤하세요.</p></div>
+    <button type="button" @click="closeCaseImageViewer()" aria-label="사례 이미지 닫기" autofocus>닫기 <span aria-hidden="true">×</span></button>
+  </header>
+  <div class="case-image-viewer-viewport" x-ref="caseImageViewport" tabindex="0" aria-label="사례 이미지 영역, 스크롤하여 전체를 볼 수 있습니다">
+    <img :src="caseImageSrc || null" :alt="caseImageAlt">
+  </div>
+</dialog>

@@ -110,7 +110,7 @@ export const presenterMethods = {
     return this.illustrationPaused || this.prefersReducedMotion || !this.artPageVisible || !['case', 'section', 'recap'].includes(this.presentationPage?.kind);
   },
   handlePresentationKeys(event) {
-    if (this.route !== 'present' || this.readerOpen || this.rehearsalOpen || this.artViewerOpen || event.defaultPrevented || event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    if (this.route !== 'present' || this.readerOpen || this.rehearsalOpen || this.artViewerOpen || this.caseImageOpen || event.defaultPrevented || event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
     if (event.key === 'Escape' && document.fullscreenElement) {
       event.preventDefault(); void this.togglePresentationFullscreen(); return;
     }

@@ -41,6 +41,28 @@ export function renderCourseInline(value) {
   return sanitizeCourseMarkup(courseMarked.parseInline(value || '', { gfm: true }));
 }
 
+// Only case media gets the viewer affordance; ordinary lesson images and editor
+// previews retain their existing behavior. Build buttons after sanitization.
+export function renderCourseCaseMarkdown(value) {
+  const template = document.createElement('template');
+  template.innerHTML = renderCourseMarkdown(value);
+  for (const image of template.content.querySelectorAll('img')) {
+    // Reuse an authored link instead of nesting an interactive button inside it.
+    const link = image.closest('a');
+    if (link?.classList.contains('case-image-trigger')) continue;
+    const button = link || document.createElement('button');
+    if (!link) button.type = 'button';
+    button.classList.add('case-image-trigger');
+    button.setAttribute('aria-label', `${image.alt || '사례 이미지'} 크게 보기`);
+    if (!link) { image.replaceWith(button); button.append(image); }
+    const label = document.createElement('span');
+    label.className = 'case-image-trigger-label';
+    label.textContent = '이미지 크게 보기';
+    button.append(label);
+  }
+  return template.innerHTML;
+}
+
 // Presentations use their short text summary, but should still show its case media.
 export function renderCourseMarkdownImages(value) {
   const template = document.createElement('template');

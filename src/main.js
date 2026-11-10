@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import { renderCourseMarkdown as markdown, renderCourseInline as markdownInline, renderCourseMarkdownImages } from './course-markdown.js';
+import { renderCourseMarkdown as markdown, renderCourseInline as markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown } from './course-markdown.js';
 import { presentationCommandGroups, presentationDemoCommands, showPresentationPoints } from './presentation-commands.js';
 import { validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite, COURSE_IDS } from './course.js';
 import { createEditor } from './editor.js';
@@ -22,11 +22,13 @@ import { sectionThumbnail } from './section-thumbnails.js';
 import { workspaceIcon } from './workspace-icons.js';
 import { topicNavigationState, topicNavigationMethods } from './topic-navigation.js';
 import { artViewerState, artViewerMethods } from './art-viewer.js';
+import { caseImageViewerState, caseImageViewerMethods } from './case-image-viewer.js';
 import { formatSiteUpdatedAt } from './site-update.js';
 import { commandUnits } from './command-copy-units.js';
 import { writeClipboard } from './clipboard.js';
 import topicNavigationHtml from './topic-navigation.html?raw';
 import artViewerHtml from './art-viewer.html?raw';
+import caseImageViewerHtml from './case-image-viewer.html?raw';
 import './styles.css';
 import './editor.css';
 import './illustrations.css';
@@ -39,6 +41,7 @@ import './home-art.css';
 import './intro-typewriter.css';
 import './topic-cards.css';
 import './art-viewer.css';
+import './case-image-viewer.css';
 import './workspace-rail.css';
 import './topic-navigation.css';
 import './site-update.css';
@@ -50,6 +53,7 @@ document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-
 document.getElementById('intro-template').innerHTML = homeHtml;
 document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml)}</template>`;
 document.getElementById('art-viewer-host').innerHTML = artViewerHtml;
+document.getElementById('art-viewer-host').insertAdjacentHTML('beforeend', caseImageViewerHtml);
 document.querySelector('.brand h1').setAttribute('x-text', 'brandTitle');
 document.querySelector('.brand-kicker').setAttribute('x-text', "course ? course.author + '이 풀어주는' : '돌범이 풀어주는'");
 const DRAFT_KEY = COURSE_STORAGE.draft;
@@ -106,7 +110,7 @@ function lessonObject(id) {
 Alpine.data('introTypewriter', introTypewriter);
 Alpine.data('courseApp', () => ({
   ...presenterState(), ...presenterMethods, ...learningState(), ...learningMethods,
-  ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods,
+  ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods, ...caseImageViewerState(), ...caseImageViewerMethods,
   loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
   siteUpdatedAt: __SITE_UPDATED_AT__, siteUpdatedLabel: formatSiteUpdatedAt(__SITE_UPDATED_AT__),
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,
@@ -114,7 +118,7 @@ Alpine.data('courseApp', () => ({
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, presentationCommandGroups, presentationDemoCommands, showPresentationPoints, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown, presentationCommandGroups, presentationDemoCommands, showPresentationPoints, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
   get brandTitle() {
     const title = (this.course?.title || 'Ai 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, '');
@@ -214,6 +218,7 @@ Alpine.data('courseApp', () => ({
       for (const key of ['route', 'lessonId', 'learningPageId', 'presentationPageId']) {
         this.$watch(key, () => {
           this.closeArtViewer({restoreFocus:false});
+          this.closeCaseImageViewer({restoreFocus:false});
           this.syncTopicNavigation();
         });
       }

@@ -8,15 +8,15 @@
   <ellipse cx="380" cy="466" rx="280" ry="26" fill="#26334b" opacity=".08" />
   <g stroke-linejoin="round">
     <rect x="98" y="51" width="205" height="34" rx="7" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.7" />
-    <text x="200.5" y="74" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">MARKDOWN / README</text>
+    <text x="200.5" y="74" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">MARKDOWN / PLAN</text>
     <path d="M114 138h191l22 22v263H114Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M104 128h197l24 24v261H104Z" fill="#fff9ec" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M301 128v24h24" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <text x="123" y="171" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">README.md</text>
+    <text x="123" y="171" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">간단한 요청</text>
     <rect x="123" y="194" width="175" height="148" rx="6" fill="#253c4b" stroke="#26334b" stroke-width="2" />
-    <text x="140" y="229" font-family="Consolas,monospace" font-size="25" font-weight="700" text-anchor="start" fill="#eff3de" stroke="none"># Git</text>
-    <text x="140" y="272" font-family="Consolas,monospace" font-size="20" font-weight="600" text-anchor="start" fill="#d8e9d6" stroke="none">- 변경 확인</text>
-    <text x="140" y="310" font-family="Consolas,monospace" font-size="19" font-weight="600" text-anchor="start" fill="#e5bf7d" stroke="none">**기록하기**</text>
+    <text x="140" y="229" font-family="Consolas,monospace" font-size="22" font-weight="700" text-anchor="start" fill="#eff3de" stroke="none"># 강의 수정</text>
+    <text x="140" y="272" font-family="Consolas,monospace" font-size="20" font-weight="600" text-anchor="start" fill="#d8e9d6" stroke="none">- 예시 추가</text>
+    <text x="140" y="310" font-family="Consolas,monospace" font-size="19" font-weight="600" text-anchor="start" fill="#e5bf7d" stroke="none">- 쉽게 설명</text>
     <path d="M350 272L408 272" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" />
     <path d="M399 265l9 7-9 7" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
     <g class="art-motion markdown-render">
@@ -25,11 +25,15 @@
     <path d="M445 138h191l22 22v263H445Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M435 128h197l24 24v261H435Z" fill="#fff9ec" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M632 128v24h24" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <text x="454" y="171" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">PREVIEW</text>
-    <text x="455" y="226" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="36" font-weight="800" text-anchor="start" fill="#26334b" stroke="none">Git</text>
+    <text x="454" y="171" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">계획 문서</text>
+    <text x="455" y="226" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="30" font-weight="800" text-anchor="start" fill="#26334b" stroke="none">작업 계획</text>
     <path d="M455 247L625 247" fill="none" stroke="#b9c5ad" stroke-width="2" stroke-linecap="round" />
     <circle cx="462" cy="281" r="4" fill="#367d7b" stroke="none" stroke-width="0" />
-    <text x="477" y="289" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="22" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">변경 확인</text>
-    <text x="454" y="347" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="24" font-weight="800" text-anchor="start" fill="#26334b" stroke="none">기록하기</text>
+    <text x="477" y="289" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="22" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">목표와 단계</text>
+    <circle cx="462" cy="319" r="4" fill="#367d7b" stroke="none" stroke-width="0" />
+    <text x="477" y="327" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="22" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">확인 방법</text>
+    <rect x="455" y="352" width="145" height="35" rx="8" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.7" />
+    <path d="M468 369l6 6 11-13" fill="none" stroke="#367d7b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="494" y="376" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="19" font-weight="700" fill="#26334b" stroke="none">검토 후 구현</text>
   </g>
 </svg>

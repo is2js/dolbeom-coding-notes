@@ -49,10 +49,11 @@ function harness(t, { hash = '#/present/terminal/case', session, blockedStorage 
   });
   const document = {
     ...eventTarget(), title: '', hidden: false, fullscreenElement: null,
-    getElementById: id => ({ focus: options => calls.focus.push({ id, options }) }),
+    getElementById: id => id === 'app' ? fullscreenRoot : ({ focus: options => calls.focus.push({ id, options }) }),
     querySelector: selector => ({ scrollTo: (...position) => calls.scroll.push({ selector, position }) }),
     async exitFullscreen() { document.fullscreenElement = null; document.emit('fullscreenchange'); },
   };
+  const fullscreenRoot = { async requestFullscreen() { document.fullscreenElement = this; document.emit('fullscreenchange'); } };
   let currentHash = hash;
   const location = {};
   Object.defineProperty(location, 'hash', {
@@ -79,7 +80,6 @@ function harness(t, { hash = '#/present/terminal/case', session, blockedStorage 
       illustrationPaused: false, prefersReducedMotion: false, artPageVisible: true,
       $refs: {
         rehearsal,
-        presentationShell: { async requestFullscreen() { document.fullscreenElement = this; document.emit('fullscreenchange'); } },
       },
       $nextTick(callback) { callback(); },
       $watch(key, callback) { watchers.set(key, callback); },
@@ -319,12 +319,47 @@ test('Alpine watch 어댑터는 연습 모달을 중복 열지 않고 전체화�
   assert.equal(h.app.fullscreenActive, true);
   h.setNow(105000);
   await h.app.exitPresentation();
-  assert.equal(h.app.fullscreenActive, false);
+  assert.equal(h.app.fullscreenActive, true, '발표 종료 후에도 전체화면을 유지한다');
+  assert.equal(h.document.fullscreenElement, h.document.getElementById('app'));
   assert.equal(h.app.route, 'learn');
   assert.equal(h.location.hash, '#/lesson/git/section-changes');
   assert.deepEqual(h.saved(), { lessonId: 'git', pageId: 'live', timers: { git: { elapsedMs: 5000, startedAt: null } } });
   assert.deepEqual(h.calls.shownLessons, ['git']);
   assert.deepEqual(h.calls.shownPages, ['section-changes']);
+});
+
+test('P toggles presentation at the same page while F independently toggles fullscreen, including button focus', async t => {
+  const h = harness(t, { hash: '#/present/terminal/section-location' }); h.flushRoute(true);
+  const button = { closest: selector => selector.includes('button') ? { tagName: 'BUTTON' } : null };
+  function press(key, target = button, patch = {}) {
+    let prevented = false;
+    h.document.emit('keydown', { key, code: `Key${key.toUpperCase()}`, target, preventDefault() { prevented = true; }, ...patch });
+    return prevented;
+  }
+  assert.equal(press('f'), true);
+  await Promise.resolve();
+  assert.equal(h.document.fullscreenElement, h.document.getElementById('app'));
+  assert.equal(press('p'), true);
+  assert.equal(h.location.hash, '#/lesson/terminal/section-location');
+  assert.equal(h.app.route, 'learn');
+  assert.equal(h.document.fullscreenElement, h.document.getElementById('app'));
+  assert.equal(press('f'), true);
+  await Promise.resolve();
+  assert.equal(h.document.fullscreenElement, null);
+  const input = { isContentEditable: false, closest: () => ({ tagName: 'TEXTAREA' }) };
+  assert.equal(press('f', input), false);
+  assert.equal(press('p', input), false);
+  h.app.route = 'present';
+  for (const patch of [{isComposing:true}, {ctrlKey:true}, {metaKey:true}, {altKey:true}, {shiftKey:true}, {repeat:true}]) {
+    assert.equal(press('p', button, patch), false);
+    assert.equal(press('f', button, patch), false);
+  }
+  for (const modal of ['readerOpen', 'rehearsalOpen', 'artViewerOpen', 'caseImageOpen', 'topicNavigationOpen', 'drawer']) {
+    h.app[modal] = true;
+    assert.equal(press('p'), false);
+    assert.equal(press('f'), false);
+    h.app[modal] = false;
+  }
 });
 
 test('발표 종료는 현재 주제와 설명에 대응하는 강의 화면으로 돌아간다', async t => {

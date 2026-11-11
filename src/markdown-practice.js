@@ -21,6 +21,54 @@ function replace(source, start, end, text, first = 0, last = text.length) {
   return { source: source.slice(0, start) + text + source.slice(end), start: start + first, end: start + last };
 }
 
+// A collapsed Tab inserts spaces at the caret. A selection changes each
+// touched line; an ending newline does not include the next line.
+export function indentMarkdown(source, start, end, width = 4, outdent = false) {
+  source = String(source ?? '');
+  [start, end] = range(source, start, end);
+  width = Number(width) === 2 ? 2 : 4;
+  if (start === end && !outdent) return replace(source, start, end, ' '.repeat(width), width, width);
+
+  const firstLine = start === 0 ? 0 : source.lastIndexOf('\n', start - 1) + 1;
+  const lastPosition = end > start && source[end - 1] === '\n' ? end - 1 : end;
+  let lastLineEnd = source.indexOf('\n', lastPosition);
+  if (lastLineEnd < 0) lastLineEnd = source.length;
+  const lines = source.slice(firstLine, lastLineEnd).split('\n');
+  let offset = firstLine;
+  let newStart = start, newEnd = end;
+  const result = lines.map(line => {
+    let remove = 0, addition = '';
+    if (outdent) {
+      remove = line.startsWith('\t') ? 1 : (line.match(/^ */)?.[0].length || 0);
+      remove = Math.min(remove, width);
+    } else addition = ' '.repeat(width);
+    const translate = position => position < offset ? 0 : addition.length - Math.min(remove, position - offset);
+    newStart += translate(start);
+    newEnd += translate(end);
+    offset += line.length + 1;
+    return addition + line.slice(remove);
+  }).join('\n');
+  return { source: source.slice(0, firstLine) + result + source.slice(lastLineEnd), start: newStart, end: newEnd };
+}
+
+// insertText participates in the browser's native undo stack in Chromium.
+// setRangeText is the safe fallback for browsers without that editing command.
+function replaceWithUndo(input, before, after) {
+  let left = 0;
+  while (left < before.length && left < after.length && before[left] === after[left]) left++;
+  let right = 0;
+  while (right < before.length - left && right < after.length - left && before[before.length - 1 - right] === after[after.length - 1 - right]) right++;
+  const end = before.length - right;
+  const text = after.slice(left, after.length - right);
+  input.setSelectionRange(left, end);
+  let inserted = false;
+  try { inserted = document.execCommand('insertText', false, text); } catch { /* unsupported browser */ }
+  if (!inserted) {
+    input.setRangeText(text, left, end, 'end');
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+}
+
 const sample = [
   '# 마크다운 문법 연습', '', '## 제목과 글자',
   '**굵게**, *기울임*, ~~취소선~~, `인라인 코드`', '',
@@ -87,9 +135,26 @@ export function markdownPractice(body, { render = renderPracticeMarkdown, copy =
     source: original,
     message: '', selectionStart: original.length, selectionEnd: original.length,
     insertPanel: '', linkLabel: '', linkUrl: 'https://', imageLabel: '', imageUrl: 'https://', tableRows: 2, tableColumns: 2,
-    imageSources: [],
+    imageSources: [], indentWidth: '4', tabInsertsSpaces: true,
     get preview() { return render(this.source, { allowedImageSources: this.imageSources }); },
     rememberSelection() { const input = this.$refs?.source; if (input) { this.selectionStart = input.selectionStart; this.selectionEnd = input.selectionEnd; } },
+    handleIndentKey(event) {
+      if (event.isComposing) return;
+      if (event.ctrlKey && !event.altKey && !event.metaKey && !event.shiftKey && event.key.toLowerCase() === 'm') {
+        event.preventDefault(); this.tabInsertsSpaces = !this.tabInsertsSpaces;
+        this.message = this.tabInsertsSpaces ? 'Tab으로 들여씁니다.' : 'Tab으로 다음 요소로 이동합니다. Ctrl+M으로 들여쓰기를 다시 켭니다.';
+        return;
+      }
+      if (event.key !== 'Tab' || event.ctrlKey || event.altKey || event.metaKey || !this.tabInsertsSpaces) return;
+      const input = event.currentTarget;
+      if (!input) return;
+      event.preventDefault();
+      const before = input.value;
+      const result = indentMarkdown(before, input.selectionStart, input.selectionEnd, this.indentWidth, event.shiftKey);
+      if (before !== result.source) replaceWithUndo(input, before, result.source);
+      this.source = input.value; this.selectionStart = result.start; this.selectionEnd = result.end;
+      input.setSelectionRange(result.start, result.end);
+    },
     focusSelection(start, end) {
       const apply = () => { const input = this.$refs?.source; if (input) { input.focus(); input.setSelectionRange(start, end); } };
       if (this.$nextTick) this.$nextTick(apply); else apply();

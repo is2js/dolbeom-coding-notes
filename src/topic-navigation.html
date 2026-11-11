@@ -11,7 +11,7 @@
         </ol>
       </div>
     </div>
-    <button type="button" class="topic-presentation-entry" x-show="route !== 'present'" @click="openPresentation(lessonId,learningPageId)" aria-label="현재 위치에서 발표 모드 열기 (P)" aria-keyshortcuts="P" title="발표 모드 단축키: P"><span x-html="icon('expand')"></span><span>이 위치에서 발표 <kbd>P</kbd></span></button>
+    <div class="topic-navigation-actions" x-show="route !== 'present'"><button type="button" class="topic-presentation-entry" @click="openPresentation(lessonId,learningPageId)" aria-label="현재 위치에서 발표 모드 열기 (P)" aria-keyshortcuts="P" title="발표 모드 단축키: P"><span x-html="icon('expand')"></span><span>이 위치에서 발표 <kbd>P</kbd></span></button><button type="button" class="topic-presentation-entry" x-show="fullscreenActive" @click="togglePresentationFullscreen()" aria-label="전체화면 해제 (F)" aria-keyshortcuts="F" title="전체화면 해제: F"><span x-html="icon('close')"></span><span>전체화면 해제 <kbd>F</kbd></span></button></div>
   </div>
 </nav>
 <nav class="section-navigation" :data-section-navigation="route" aria-label="하위 주제 이동">

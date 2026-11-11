@@ -1,6 +1,7 @@
 /* A compact topic dropdown followed by illustrated lesson-step buttons. */
 .topic-navigation { position: relative; z-index: 35; min-width: 0; padding: 0; border: 0; background: transparent; }
 .topic-navigation-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.topic-navigation-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 .topic-picker-anchor { position: relative; width: min(100%,480px); min-width: 0; }
 .topic-navigation-toggle { display: flex; align-items: center; gap: 11px; width: 100%; min-height: 62px; padding: 8px 13px 8px 9px; border: 1px solid #bfb298; border-radius: 9px; background: #f5f1e4; color: #20314b; text-align: left; box-shadow: 0 2px 0 #b6a78a18; transition: border-color .16s ease, background .16s ease; }
 .topic-navigation-toggle:hover, .topic-navigation-toggle[aria-expanded='true'] { border-color: #378696; background: #e9eee2; }

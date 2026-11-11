@@ -111,9 +111,21 @@ export const presenterMethods = {
     return this.illustrationPaused || this.prefersReducedMotion || !this.artPageVisible || !['case', 'section', 'recap'].includes(this.presentationPage?.kind);
   },
   handlePresentationKeys(event) {
-    if (this.route !== 'present' || this.readerOpen || this.rehearsalOpen || this.artViewerOpen || this.caseImageOpen || event.defaultPrevented || event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
-    if (event.key === 'Escape' && document.fullscreenElement) {
+    if (!['learn', 'present'].includes(this.route) || this.readerOpen || this.rehearsalOpen || this.artViewerOpen || this.caseImageOpen || this.topicNavigationOpen || this.drawer || event.defaultPrevented || event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    if (this.route === 'present' && event.key === 'Escape' && document.fullscreenElement) {
       event.preventDefault(); void this.togglePresentationFullscreen(); return;
+    }
+    // P/F remain available after clicking a navigation or fullscreen button,
+    // but must not intercept text entry, select controls or an open dialog.
+    const editable = event.target?.isContentEditable || event.target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], dialog[open]');
+    if (editable) return;
+    const key = String(event.key || '').toLowerCase();
+    if (event.code === 'KeyF' || key === 'f') {
+      event.preventDefault(); void this.togglePresentationFullscreen(); return;
+    }
+    if (this.route !== 'present') return;
+    if (event.code === 'KeyP' || key === 'p') {
+      event.preventDefault(); void this.exitPresentation(); return;
     }
     if (event.target?.closest?.('input, textarea, select, button, a, [contenteditable="true"], dialog[open]')) return;
     if (!['ArrowLeft', 'ArrowRight', ' '].includes(event.key)) return;
@@ -163,15 +175,14 @@ export const presenterMethods = {
         ? (section ? `section-${section.id}` : 'case') : 'case';
     const lessonId = this.lessonId;
     this.pausePresentationTimers(); this.persistPresentation();
-    if (document.fullscreenElement) {
-      try { await document.exitFullscreen(); } catch { /* The presentation still exits if the browser rejects fullscreen changes. */ }
-    }
     this.showLesson(lessonId, learningPage);
   },
   async togglePresentationFullscreen() {
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
-      else if (this.$refs.presentationShell?.requestFullscreen) await this.$refs.presentationShell.requestFullscreen();
+      // #app outlives the presentation's x-if subtree; switching back to the
+      // lesson must not remove the element that owns browser fullscreen.
+      else if (document.getElementById('app')?.requestFullscreen) await document.getElementById('app').requestFullscreen();
       else this.notify('이 브라우저에서는 현재 발표 화면을 그대로 사용해 주세요.');
     } catch { this.notify('전체화면을 열지 못했습니다. 현재 발표 화면에서 계속 진행할 수 있습니다.'); }
   },

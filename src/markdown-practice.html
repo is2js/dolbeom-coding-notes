@@ -9,6 +9,11 @@
     <select aria-label="코드와 구분선 삽입" @change="if ($event.target.value) apply($event.target.value); $event.target.value = ''"><option value="">코드·기타</option><option value="inlineCode">인라인 코드 · `</option><option value="codeBlock">코드 블록 · ```</option><option value="rule">구분선 · ---</option><option value="lineBreak">줄바꿈 · 공백 2칸</option><option value="sample">종합 문법 예제</option></select>
   </div>
   <p class="markdown-practice-hint">글자를 선택하면 그 부분에 서식을 넣습니다. 체크리스트는 줄 앞에 <code>- [ ] 할 일</code> 또는 <code>- [x] 완료</code>로 작성합니다.</p>
+  <div class="markdown-practice-indentation">
+    <label>Tab 들여쓰기 <select x-model="indentWidth" aria-label="Tab 들여쓰기 너비"><option value="4">공백 4칸</option><option value="2">공백 2칸</option></select></label>
+    <button type="button" @click="tabInsertsSpaces = !tabInsertsSpaces" :aria-pressed="tabInsertsSpaces" x-text="tabInsertsSpaces ? 'Tab: 들여쓰기' : 'Tab: 포커스 이동'"></button>
+    <span>Shift+Tab: 내어쓰기 · Ctrl+M: Tab 동작 전환</span>
+  </div>
   <div class="markdown-practice-insert" x-show="insertPanel === 'table'" x-cloak>
     <div class="markdown-practice-fields"><label :for="$id('practice-table-columns')">열 수<input :id="$id('practice-table-columns')" type="number" min="1" max="6" x-model="tableColumns"></label><label :for="$id('practice-table-rows')">내용 행 수<input :id="$id('practice-table-rows')" type="number" min="1" max="10" x-model="tableRows"></label></div>
     <div class="markdown-practice-panel-actions"><button type="button" @click="apply('table', {columns: tableColumns, rows: tableRows})">표 삽입</button><button type="button" @click="insertPanel = ''">닫기</button></div>
@@ -23,6 +28,6 @@
     <p class="markdown-practice-hint">PNG·JPEG·GIF·WebP, 최대 10MB. 원문에 스크린샷을 붙여넣어도 됩니다. 로컬 이미지는 이 창에서만 보이며 GitHub나 내 폴더에 저장되지 않습니다. 외부 주소 이미지는 해당 사이트에서 불러옵니다.</p>
   </div>
   <p class="markdown-practice-empty" x-show="!original">연습 예제가 없습니다. 빈 원문에 입력하거나 삽입 도구로 시작해 보세요.</p>
-  <div class="markdown-practice-grid"><div class="markdown-practice-input"><label :for="$id('practice-source')">마크다운 원문</label><textarea x-ref="source" :id="$id('practice-source')" x-model="source" @select="rememberSelection()" @click="rememberSelection()" @keyup="rememberSelection()" @input="rememberSelection()" @paste="pasteImage($event)" spellcheck="false" placeholder="여기에 마크다운을 입력하세요"></textarea></div><div class="markdown-practice-output"><h4 :id="$id('practice-preview')">즉시 미리보기</h4><div class="markdown-body" :aria-labelledby="$id('practice-preview')" x-html="preview"></div></div></div>
+  <div class="markdown-practice-grid"><div class="markdown-practice-input"><label :for="$id('practice-source')">마크다운 원문</label><textarea x-ref="source" :id="$id('practice-source')" x-model="source" @keydown="handleIndentKey($event)" @select="rememberSelection()" @click="rememberSelection()" @keyup="rememberSelection()" @input="rememberSelection()" @paste="pasteImage($event)" spellcheck="false" placeholder="여기에 마크다운을 입력하세요"></textarea></div><div class="markdown-practice-output"><h4 :id="$id('practice-preview')">즉시 미리보기</h4><div class="markdown-body" :aria-labelledby="$id('practice-preview')" x-html="preview"></div></div></div>
   <p class="markdown-practice-status" role="status" aria-live="polite" x-text="message"></p>
 </section>

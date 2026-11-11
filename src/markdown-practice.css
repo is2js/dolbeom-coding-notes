@@ -10,6 +10,9 @@
 .markdown-practice-toolbar select { max-width:100%; font-size:12px; }
 .markdown-practice-hint { margin:8px 0 0; color:#435a56; font-size:12px; line-height:1.6; }
 .markdown-practice-hint code { font-size:inherit; }
+.markdown-practice-indentation { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:9px; color:#435a56; font-size:12px; line-height:1.5; }
+.markdown-practice-indentation label { display:flex; align-items:center; gap:6px; }
+.markdown-practice-indentation select, .markdown-practice-indentation button { min-height:36px; padding:6px 9px; border:1px solid #a8bca8; border-radius:6px; background:#fffdf5; color:#233b3c; font:inherit; font-weight:600; }
 .markdown-practice-insert { margin-top:10px; padding:10px; border:1px solid #c4d1bd; border-radius:8px; background:#e9f0e3; }
 .markdown-practice-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
 .markdown-practice-fields label { display:flex; min-width:0; flex-direction:column; gap:4px; font-size:12px; color:#344942; }
@@ -49,4 +52,4 @@
 }
 @container (max-width: 500px) { .markdown-practice-grid { grid-template-columns: minmax(0,1fr); } .markdown-practice-input textarea, .markdown-practice-output .markdown-body { height: 210px; } }
 @container (max-width: 360px) { .markdown-practice-fields { grid-template-columns:minmax(0,1fr); } }
-@media (max-width: 720px) { .markdown-practice-actions button, .markdown-practice-toolbar button, .markdown-practice-toolbar select, .markdown-practice-panel-actions button, .markdown-practice-file { min-height: 44px; } .markdown-practice-input textarea, .markdown-practice-fields input { font-size: 16px; } }
+@media (max-width: 720px) { .markdown-practice-actions button, .markdown-practice-toolbar button, .markdown-practice-toolbar select, .markdown-practice-panel-actions button, .markdown-practice-file, .markdown-practice-indentation button, .markdown-practice-indentation select { min-height: 44px; } .markdown-practice-input textarea, .markdown-practice-fields input { font-size: 16px; } }

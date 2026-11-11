@@ -1,6 +1,34 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { practiceSeed, markdownPractice, editMarkdown } from '../src/markdown-practice.js';
+import { practiceSeed, markdownPractice, editMarkdown, indentMarkdown } from '../src/markdown-practice.js';
+
+test('Tab inserts four spaces by default and two spaces when selected', () => {
+  assert.deepEqual(indentMarkdown('abc', 1, 1), {source: 'a    bc', start: 5, end: 5});
+  assert.deepEqual(indentMarkdown('abc', 1, 1, 2), {source: 'a  bc', start: 3, end: 3});
+});
+
+test('selected lines indent and outdent without including a line after the trailing newline', () => {
+  const text = '- one\n- two\nnext';
+  const indented = indentMarkdown(text, 0, 12, 4);
+  assert.deepEqual(indented, {source: '    - one\n    - two\nnext', start: 4, end: 20});
+  assert.deepEqual(indentMarkdown(indented.source, indented.start, indented.end, 4, true), {source: text, start: 0, end: 12});
+  assert.deepEqual(indentMarkdown('  one\n\ttwo', 0, 10, 4, true), {source: 'one\ntwo', start: 0, end: 7});
+  assert.deepEqual(indentMarkdown('    abc', 5, 5, 4, true), {source: 'abc', start: 1, end: 1});
+});
+
+test('Ctrl+M allows keyboard focus navigation and toggles back to indentation', () => {
+  const practice = markdownPractice('', {render: text => text});
+  let prevented = false;
+  const event = {key:'m', ctrlKey:true, altKey:false, metaKey:false, shiftKey:false, preventDefault(){ prevented = true; }};
+  practice.handleIndentKey(event);
+  assert.equal(prevented, true);
+  assert.equal(practice.tabInsertsSpaces, false);
+  let tabPrevented = false;
+  practice.handleIndentKey({key:'Tab', ctrlKey:false, altKey:false, metaKey:false, shiftKey:false, preventDefault(){ tabPrevented = true; }});
+  assert.equal(tabPrevented, false);
+  practice.handleIndentKey(event);
+  assert.equal(practice.tabInsertsSpaces, true);
+});
 
 test('selects the first authored Markdown example without truncating its nested code fence', () => {
   const body = ['설명', '', '````markdown', '# 계획', '', '```js', 'console.log("ok")', '```', '````', '', '```markdown', '# 다른 예제', '```'].join('\n');

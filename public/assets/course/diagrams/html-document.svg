@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" role="img" aria-labelledby="document-title document-desc">
+  <title id="document-title">HTML 문서의 head와 body</title>
+  <desc id="document-desc">html 안에 문서 정보인 head와 화면 내용인 body가 있습니다. title은 브라우저 탭 제목이고 body의 article 안에는 화면 제목 h1, button, p가 놓입니다.</desc>
+  <rect x="2" y="2" width="756" height="546" rx="22" fill="#f2e6ce" stroke="#25334b" stroke-width="3"/>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle"><text x="380" y="57" font-size="32" font-weight="700">문서 정보와 화면 내용을 나눕니다</text></g>
+  <rect x="235" y="86" width="290" height="61" rx="12" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
+  <text x="380" y="127" fill="#25334b" stroke="none" font-family="Consolas,IBM Plex Mono,monospace" font-size="32" text-anchor="middle">&lt;html lang="ko"&gt;</text>
+  <path d="M380 147v25H205v29m175-29h175v29" fill="none" stroke="#287d7b" stroke-width="3"/>
+  <g stroke="#25334b" stroke-width="3"><rect x="40" y="201" width="330" height="260" rx="15" fill="#dce8d6"/><rect x="390" y="201" width="330" height="260" rx="15" fill="#fffaf0"/></g>
+  <g fill="#25334b" stroke="none" text-anchor="middle" font-family="Consolas,IBM Plex Mono,monospace" font-size="32"><text x="205" y="244">&lt;head&gt;</text><text x="555" y="244">&lt;body&gt;</text></g>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27"><text x="64" y="294">title → 탭 제목</text><text x="64" y="337">meta → 문자 정보</text><text x="64" y="380">link → CSS 연결</text><text x="64" y="423">script → JS 연결</text></g>
+  <rect x="415" y="267" width="280" height="173" rx="12" fill="#f0d6a4" stroke="#25334b" stroke-width="2.5"/>
+  <g fill="#25334b" stroke="none" font-family="Consolas,IBM Plex Mono,monospace" font-size="29"><text x="442" y="308">article.card</text><text x="466" y="348">h1 → Git</text><text x="466" y="385">button</text><text x="466" y="422">p → 설명</text></g>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle" font-size="27"><text x="205" y="506">문서를 위한 정보</text><text x="555" y="506">페이지 안의 내용</text></g>
+</svg>

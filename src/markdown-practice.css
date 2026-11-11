@@ -1,0 +1,33 @@
+.markdown-practice { container-type: inline-size; margin: 18px 0; padding: 16px; border: 1px solid #c8d4c2; border-radius: 14px; background: #f2f6ec; color: #203349; }
+.markdown-practice-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.markdown-practice-header h3 { margin: 0; font-size: 17px; line-height: 1.4; font-weight: 750; }
+.markdown-practice-header p, .markdown-practice-notice, .markdown-practice-empty { margin: 6px 0 0; font-size: 12px; line-height: 1.6; color: #435a56; }
+.markdown-practice-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.markdown-practice-actions button { min-height: 38px; padding: 7px 11px; border: 1px solid #a8bca8; border-radius: 7px; background: #fffdf5; color: #233b3c; font-size: 12px; font-weight: 700; }
+.markdown-practice-actions button:disabled { opacity: .5; }
+.markdown-practice-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-top: 13px; }
+.markdown-practice-input, .markdown-practice-output { min-width: 0; }
+.markdown-practice-input label, .markdown-practice-output h4 { display: block; margin: 0 0 6px; color: #344942; font-size: 12px; font-weight: 700; }
+.markdown-practice-input textarea, .markdown-practice-output .markdown-body { width: 100%; height: 260px; overflow: auto; padding: 12px; border: 1px solid #becbb9; border-radius: 8px; background: #fffdf7; color: #263449; box-sizing: border-box; }
+.markdown-practice-input textarea { display: block; resize: vertical; font: 13px/1.65 Consolas, 'Malgun Gothic', monospace; }
+.markdown-practice-output .markdown-body { overflow-wrap: anywhere; font-size: 13px; line-height: 1.7; }
+.markdown-practice-output .markdown-body h1, .markdown-practice-output .markdown-body h2, .markdown-practice-output .markdown-body h3 { font-size: 1.1em; line-height: 1.4; }
+.markdown-practice-output .markdown-body pre { max-width: 100%; overflow-x: auto; }
+.markdown-practice-status { margin: 0; font-size: 12px; line-height: 1.5; }
+.markdown-practice-status:not(:empty) { margin-top: 8px; }
+.presentation-markdown-practice { margin: 12px 0 18px; }
+.presentation-markdown-practice > summary { display: inline-block; padding: 10px 14px; border: 1px solid #a8bca8; border-radius: 7px; background: #edf3e8; color: #244d40; font-size: 14px; font-weight: 700; cursor: pointer; }
+/* The small laptop presentation viewport needs both fields visible together.
+   Leave the section's normal illustration and points intact when closed. */
+@media (min-width: 721px) {
+  .presentation-layout:has(.presentation-markdown-practice[open]) { display: block; padding-top: 0; }
+  .presentation-layout:has(.presentation-markdown-practice[open]) > .presentation-figure,
+  .presentation-layout:has(.presentation-markdown-practice[open]) .presentation-points { display: none !important; }
+  .presentation-markdown-practice[open] { margin: 0; scroll-margin-top: 0; }
+  .presentation-markdown-practice[open] .markdown-practice { margin: 8px 0; padding: 12px; }
+  .presentation-markdown-practice[open] .markdown-practice-grid { margin-top: 8px; }
+  .presentation-markdown-practice[open] .markdown-practice-input textarea,
+  .presentation-markdown-practice[open] .markdown-practice-output .markdown-body { height: clamp(160px, 28vh, 230px); }
+}
+@container (max-width: 500px) { .markdown-practice-grid { grid-template-columns: minmax(0,1fr); } .markdown-practice-input textarea, .markdown-practice-output .markdown-body { height: 210px; } }
+@media (max-width: 720px) { .markdown-practice-actions button { min-height: 44px; } .markdown-practice-input textarea { font-size: 16px; } }

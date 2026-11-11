@@ -35,6 +35,7 @@ const scenes = {
   'markdown-code': page(18,19,label(25,52,'MD',17))+path('M71 51h18m0-20v40m0-40h12m-12 20h12m-12 20h12',teal,3)+[0,1,2].map(i=>box(105,21+i*23,34,17,i===1?sage:cream,3)).join(''),
   'codex-bonus': page(21,16,rows(30,40))+path('M95 28a26 26 0 1 1-7 47m7-59v12h12',teal,4),
   'tools-map': window(13,24,124,62,path('M50 38v48')+path('M62 50h52','#a65d4e',4)+path('M62 63h52',teal,4)+path('M24 49h15m-15 10h15')),
+  'tools-vscode-setup': window(8,26,42,55,path('M29 48v18m-6-6 6 6 6-6',teal,3))+arrow(54,54,10)+box(70,32,31,43,sage)+check(77,55)+arrow(105,54,6)+page(115,30,path('M122 54h20m-20 9h15',teal,2)),
   'tools-vscode': window(15,20,123,72,box(29,43,92,24,'#e0ebd8')+path('M38 53h44')+`<circle cx="103" cy="54" r="6" fill="none"/>`+path('M108 59l7 7')),
   'tools-pycharm': window(13,20,91,67,path('M25 45l9 7-9 7m23-14-9 14',teal,3))+box(86,60,58,27,gold)+label(95,79,'Ctrl',14),
   'codex-context': window(16,16,123,78,path('M54 30v64m0-24h85')+folder(24,41,22,17)+path('M66 45h47m-47 10h32')+label(65,86,'&gt;_',16)),

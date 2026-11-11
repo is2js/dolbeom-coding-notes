@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" role="img" aria-labelledby="element-title element-desc">
+  <title id="element-title">HTML 제목 요소의 세 부분</title>
+  <desc id="element-desc">h1 시작 태그, Git이라는 내용, h1 끝 태그를 합해 제목 요소 하나를 만듭니다.</desc>
+  <rect x="2" y="2" width="756" height="546" rx="22" fill="#f2e6ce" stroke="#25334b" stroke-width="3"/>
+  <ellipse cx="380" cy="442" rx="294" ry="19" fill="#25334b" opacity=".08"/>
+  <g fill="#25334b" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" stroke="none" text-anchor="middle">
+    <text x="380" y="61" font-size="32" font-weight="700">제목 요소는 세 부분으로 읽습니다</text>
+    <text x="380" y="105" font-size="26" fill="#4b5a65">제목 하나를 만드는 코드</text>
+  </g>
+  <path d="M51 169h658v143l-9 9H60l-9-9Z" fill="#d7c6a7" stroke="#25334b" stroke-width="3"/>
+  <rect x="51" y="159" width="649" height="153" rx="14" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
+  <rect x="78" y="189" width="190" height="91" rx="12" fill="#dce8d6"/>
+  <rect x="288" y="189" width="145" height="91" rx="12" fill="#f0d6a4"/>
+  <rect x="453" y="189" width="220" height="91" rx="12" fill="#dce8d6"/>
+  <g fill="#25334b" font-family="Consolas,IBM Plex Mono,monospace" font-size="46" text-anchor="middle" stroke="none">
+    <text x="173" y="249">&lt;h1&gt;</text><text x="360" y="249">Git</text><text x="563" y="249">&lt;/h1&gt;</text>
+  </g>
+  <g stroke="#287d7b" stroke-width="3" fill="none" stroke-linecap="round"><path d="M173 283v44M360 283v44M563 283v44"/><path d="M82 383v20h588v-20"/></g>
+  <g fill="#25334b" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle" stroke="none">
+    <text x="173" y="362" font-size="28" font-weight="700">시작 태그</text><text x="360" y="362" font-size="28" font-weight="700">내용</text><text x="563" y="362" font-size="28" font-weight="700">끝 태그</text>
+    <text x="380" y="449" font-size="29" font-weight="700">세 부분을 합쳐 제목 요소 하나</text>
+    <text x="380" y="503" font-size="26">태그는 내용이 어떤 역할인지 알려줍니다</text>
+  </g>
+</svg>

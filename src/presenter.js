@@ -2,6 +2,7 @@ import {
   buildPresentationPages, parsePresentationRoute, readPresentationSession, writePresentationSession,
   createDemoTimer, elapsedDemoMs, startDemoTimer, pauseDemoTimer, resetDemoTimer,
 } from './presentation.js';
+import { getRelatedSteps } from './lesson-flow.js';
 
 let sessionStore = null;
 const phaseNames = { intro: '강의 목표', case: '시작 사례', section: '핵심 개념', demo: '실전 예고', live: '실전 진행', recap: '복귀 정리' };
@@ -180,6 +181,14 @@ export const presenterMethods = {
       this.readerOpen = true;
       this.$nextTick(() => setTimeout(() => this.scrollReader('reader-case'), 50));
     }
+  },
+  openPresentationRehearsal() {
+    // Sections have their own authored demonstrations. Start at the first one
+    // in the lesson's current order instead of an unrelated previous step.
+    const related = getRelatedSteps(this.lesson, this.presentationPage);
+    if (related.length) this.stepIndex = related[0].index;
+    else if (!Number.isInteger(this.stepIndex) || this.stepIndex < 0 || this.stepIndex >= (this.lesson.steps?.length || 0)) this.stepIndex = 0;
+    this.rehearsalOpen = true;
   },
   async copyPresentationCommand() {
     try { await navigator.clipboard.writeText(this.presentationData.demo.command); this.notify('시연 내용을 복사했습니다. 준비한 실습 프로젝트에서 확인해 주세요.'); }

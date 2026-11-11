@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" role="img" aria-labelledby="attributes-title attributes-desc">
+  <title id="attributes-title">HTML 속성의 이름과 값</title>
+  <desc id="attributes-desc">button의 id와 type은 시작 태그에 적는 속성입니다. class card는 CSS 선택자 점 card와, id toggle은 JavaScript에서 쓰는 해시 toggle 선택자와 연결됩니다.</desc>
+  <rect x="2" y="2" width="756" height="546" rx="22" fill="#f2e6ce" stroke="#25334b" stroke-width="3"/>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle"><text x="380" y="60" font-size="32" font-weight="700">속성은 시작 태그에 붙는 추가 정보</text></g>
+  <path d="M37 98h686v86l-9 9H46l-9-9Z" fill="#d7c6a7" stroke="#25334b" stroke-width="3"/>
+  <rect x="37" y="89" width="677" height="95" rx="12" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
+  <text x="375" y="149" fill="#25334b" font-family="Consolas,IBM Plex Mono,monospace" font-size="30" text-anchor="middle" stroke="none">&lt;button id="toggle" type="button"&gt;</text>
+  <g stroke="#25334b" stroke-width="3"><rect x="47" y="223" width="310" height="133" rx="13" fill="#dce8d6"/><rect x="403" y="223" width="310" height="133" rx="13" fill="#f0d6a4"/></g>
+  <g fill="#25334b" stroke="none" text-anchor="middle">
+    <g font-family="Consolas,IBM Plex Mono,monospace" font-size="32"><text x="202" y="273">id="toggle"</text><text x="558" y="273">type="button"</text></g>
+    <g font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27"><text x="202" y="321">id는 이름 · toggle은 값</text><text x="558" y="321">버튼 종류를 지정</text></g>
+  </g>
+  <g stroke="#287d7b" stroke-width="3" stroke-linecap="round" fill="none"><path d="M202 192v23m-6-7 6 7 6-7M558 192v23m-6-7 6 7 6-7"/></g>
+  <rect x="47" y="383" width="666" height="119" rx="13" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
+  <g font-family="Consolas,IBM Plex Mono,monospace" fill="#25334b" stroke="none" font-size="29"><text x="72" y="429">class="card"</text><text x="72" y="475">id="toggle"</text></g>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27"><text x="340" y="429">→ CSS에서 .card 선택</text><text x="340" y="475">→ JS에서 #toggle 선택</text></g>
+</svg>

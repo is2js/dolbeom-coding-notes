@@ -16,6 +16,9 @@
     </main>
 
     <article class="lesson-current-note" aria-labelledby="learning-current-title"><header><span class="lesson-current-label" x-text="learningPage.kind === 'case' ? '먼저 소개할 사례' : learningPage.kind === 'recap' ? '이 주제의 마무리' : '지금 설명할 본문'"></span><button type="button" class="lesson-edit-current" x-show="learningPage.kind !== 'recap'" @click="openEditor(learningPage.kind === 'section' ? learningPage.section.id : 'case')">이 내용 수정 ↗</button></header><h2 id="learning-current-title" x-text="learningTitle"></h2><p class="lesson-current-cue" x-text="learningCue"></p>
+      <template x-if="lessonId === 'markdown' && learningPage.kind === 'section' && learningPage.section.id === 'markdown-map'">
+        <!-- MARKDOWN_PRACTICE -->
+      </template>
       <div class="lesson-current-prose" tabindex="0" aria-label="현재 강의 본문">
         <template x-if="learningPage.kind === 'case'"><div><span class="case-label" x-text="lesson.case.kind === 'real' ? '돌범의 실제 개발 사례' : '수업용 예시'"></span><div class="markdown-body" @click="openCaseImageFromEvent($event)" x-html="renderCourseCaseMarkdown(lesson.case.body)"></div><p class="lesson-current-question" x-html="markdownInline(lesson.case.question)"></p></div></template>
         <template x-if="learningPage.kind === 'section'"><div class="markdown-body" x-html="markdown(learningPage.section.body)"></div></template>

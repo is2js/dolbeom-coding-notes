@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 28 core sections appear once in case, authored section order, recap flows', () => {
+test('all 29 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,7 +25,7 @@ test('all 28 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 28);
+  assert.equal(total, 29);
 });
 
 test('every core section has related examples and the registry covers the existing step IDs', () => {
@@ -54,8 +54,9 @@ test('terminal, README, Python keymap and template pages select examples for the
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-shortcuts')), ['terminal-06', 'terminal-07']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-tools-markdown')), ['tools-08', 'tools-10']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-markdown-typora-images')), ['typora-01', 'typora-02']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode-setup')), ['ide-vscode-setup', 'ide-vscode-code']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode')), ['tools-01', 'tools-02', 'tools-03']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), ['tools-06', 'ide-keymap', 'tools-07']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), ['ide-pycharm-setup', 'tools-06', 'ide-keymap', 'tools-07']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-html')), ['html-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-css')), ['css-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-javascript')), ['javascript-practice']);
@@ -85,7 +86,7 @@ test('deleted step IDs are removed and unregistered new steps are not accidental
   lesson.steps = lesson.steps.filter(step => step.id !== 'ide-keymap');
   lesson.steps.unshift({ ...lesson.steps[0], id: 'custom-demo', title: 'Python keymap 비슷한 제목' });
   const related = getRelatedSteps(lesson, 'section-tools-pycharm');
-  assert.deepEqual(stepIds(related), ['tools-06', 'tools-07']);
+  assert.deepEqual(stepIds(related), ['ide-pycharm-setup', 'tools-06', 'tools-07']);
   related.forEach(({ step, index }) => assert.equal(lesson.steps[index], step));
 });
 
@@ -102,7 +103,7 @@ test('renamed titles and reordered lessons, sections and steps preserve stable r
   assert.deepEqual(parseLessonRoute(address, value), { lessonId: 'ide', pageId: 'section-tools-pycharm' });
   const page = buildLessonFlow(lesson).find(item => item.id === 'section-tools-pycharm');
   assert.equal(page.title, '바뀐 Python 절 제목');
-  assert.deepEqual(stepIds(getRelatedSteps(lesson, page)), ['tools-07', 'ide-keymap', 'tools-06']);
+  assert.deepEqual(stepIds(getRelatedSteps(lesson, page)), ['tools-07', 'ide-keymap', 'tools-06', 'ide-pycharm-setup']);
   getRelatedSteps(lesson, page).forEach(({ step, index }) => assert.equal(step, lesson.steps[index]));
   assert.deepEqual(buildLessonFlow(lesson).filter(item => item.kind === 'section').map(item => item.section.id), lesson.sections.filter(section => !section.optional).map(section => section.id));
 });

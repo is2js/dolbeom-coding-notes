@@ -376,3 +376,38 @@ test('21단계 템플릿 시연에서 4단계 GitHub 발표로 이동하면 시�
   assert.equal(`${h.app.stepIndex + 1}/${h.app.lesson.steps.length}`, '1/4');
   assert.equal(h.app.lesson.steps[h.app.stepIndex].id, 'github-1');
 });
+
+test('현재 발표 소주제의 준비된 재현은 연결된 첫 시연으로 열리고 선택과 이동이 가능하다', t => {
+  const h = harness(t, { hash: '#/present/markdown/section-markdown-typora-images' });
+  h.course.lessons.push({
+    id: 'markdown', shortTitle: '마크다운', case: { title: '사례' },
+    sections: [
+      { id: 'markdown-map', title: '문법 연습', optional: false },
+      { id: 'markdown-typora-images', title: 'Typora 이미지', optional: false },
+      { id: 'custom-section', title: '직접 추가한 소주제', optional: false },
+    ],
+    steps: [{ id: 'codex-01' }, { id: 'tools-08' }, { id: 'typora-01' }, { id: 'typora-02' }],
+  });
+  assert.equal(h.flushRoute(true), true);
+  h.app.stepIndex = 0;
+  h.app.openPresentationRehearsal();
+  assert.equal(h.app.lesson.steps[h.app.stepIndex].id, 'typora-01');
+  assert.equal(h.app.rehearsalOpen, true);
+  h.app.stepIndex = 3; // The select and next-step control remain independent.
+  assert.equal(h.app.lesson.steps[h.app.stepIndex].id, 'typora-02');
+  h.app.rehearsalOpen = false;
+  h.app.goPresentationPage('section-markdown-map'); h.flushRoute();
+  h.app.openPresentationRehearsal();
+  assert.equal(h.app.lesson.steps[h.app.stepIndex].id, 'codex-01');
+  h.app.rehearsalOpen = false;
+  h.app.goPresentationPage('section-markdown-typora-images'); h.flushRoute();
+  h.app.lesson.steps.reverse();
+  h.app.openPresentationRehearsal();
+  assert.equal(h.app.lesson.steps[h.app.stepIndex].id, 'typora-02', 'author demonstration order is respected');
+  h.app.rehearsalOpen = false;
+  h.app.goPresentationPage('section-custom-section'); h.flushRoute();
+  h.app.stepIndex = 99;
+  h.app.openPresentationRehearsal();
+  assert.equal(h.app.stepIndex, 0, 'an unlinked section clamps an invalid selection');
+  assert.equal(h.app.lesson.steps[h.app.stepIndex].id, 'typora-02');
+});

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" role="img" aria-labelledby="js-title js-desc">
+  <title id="js-title">버튼 클릭과 설명 펼치기</title>
+  <desc id="js-desc">JavaScript가 id로 버튼과 설명을 찾고 버튼의 click 이벤트에 동작을 연결합니다. 클릭하면 설명 요소의 hidden 상태를 바꿔 화면에 보이거나 숨겨지게 합니다.</desc>
+  <rect x="2" y="2" width="756" height="546" rx="22" fill="#f2e6ce" stroke="#25334b" stroke-width="3"/>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle"><text x="380" y="57" font-size="32" font-weight="700">HTML의 이름에 동작을 연결합니다</text></g>
+  <g stroke="#25334b" stroke-width="3"><rect x="44" y="91" width="672" height="110" rx="14" fill="#fffaf0"/><rect x="44" y="236" width="672" height="100" rx="14" fill="#dce8d6"/><rect x="44" y="371" width="672" height="121" rx="14" fill="#fffaf0"/></g>
+  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="28" font-weight="700"><text x="67" y="131">1. 요소 찾기</text><text x="67" y="277">2. 클릭 연결</text><text x="67" y="413">3. 상태 바꾸기</text></g>
+  <g fill="#25334b" stroke="none" font-family="Consolas,IBM Plex Mono,monospace" font-size="29"><text x="291" y="132">#toggle → button</text><text x="291" y="177">#detail → detail</text><text x="291" y="278">click → 동작 실행</text><text x="291" y="321">addEventListener</text><text x="291" y="413">detail.hidden =</text><text x="291" y="458">!detail.hidden</text></g>
+  <g stroke="#287d7b" stroke-width="3" fill="none" stroke-linecap="round"><path d="M380 205v25m-7-7 7 7 7-7M380 340v25m-7-7 7 7 7-7"/></g>
+  <text x="380" y="529" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" fill="#25334b" stroke="none" text-anchor="middle" font-size="27">클릭할 때 설명의 숨김 상태를 반대로 바꿉니다</text>
+</svg>

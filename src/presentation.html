@@ -49,6 +49,7 @@
         </div></template>
 
         <template x-if="presentationPage?.kind === 'section'"><div>
+          <template x-if="lessonId === 'markdown' && presentationPage.section.id === 'markdown-map'"><details class="presentation-markdown-practice" @toggle="if ($el.open) $nextTick(() => $el.scrollIntoView({block:'start'}))"><summary>마크다운 실시간 연습 열기</summary><!-- MARKDOWN_PRACTICE --></details></template>
           <ol class="presentation-points" x-show="showPresentationPoints(lessonId, presentationPage)"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-html="markdownInline(point)"></p></li></template></ol>
           <div class="presentation-prose" x-show="!presentationPage.points?.length" x-html="markdown(presentationPage.section.body)"></div>
           <section class="presentation-command-examples" :class="{ 'is-first': lessonId === 'terminal' }" aria-label="이 절의 명령어와 설명" x-show="presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length">
@@ -84,7 +85,7 @@
 
   <footer class="presentation-footer">
     <div class="presentation-navigation"><button type="button" class="presentation-previous" @click="movePresentation(-1)" :disabled="presentationAtBoundary(-1)" aria-label="이전 발표 화면"><span x-html="icon('chevronLeft')"></span>이전</button><div class="presentation-position"><label for="presentation-page-select" class="sr-only">발표 단계 선택</label><select id="presentation-page-select" :value="presentationPageId" @change="goPresentationPage($event.target.value)"><template x-for="page in presentationPages" :key="page.id"><option :value="page.id" :selected="page.id === presentationPageId" x-text="presentationPageLabel(page)"></option></template></select><span x-text="(presentationPageIndex + 1) + ' / ' + presentationPages.length"></span><div class="presentation-progress" aria-hidden="true"><i :style="'width:' + (presentationPageIndex + 1) / presentationPages.length * 100 + '%'"></i></div></div></div>
-    <div class="presentation-resources"><span class="presentation-key-hint">← → / Space</span><button x-show="presentationPage?.kind !== 'intro'" type="button" @click="openPresentationBody()"><span x-html="icon('book')"></span>본문 보기</button><button x-show="presentationPage?.kind !== 'intro'" type="button" @click="rehearsalOpen = true"><span x-html="icon('play')"></span>준비된 재현 보기</button></div>
+    <div class="presentation-resources"><span class="presentation-key-hint">← → / Space</span><button x-show="presentationPage?.kind !== 'intro'" type="button" @click="openPresentationBody()"><span x-html="icon('book')"></span>본문 보기</button><button x-show="presentationPage?.kind !== 'intro'" type="button" @click="openPresentationRehearsal()"><span x-html="icon('play')"></span>준비된 재현 보기</button></div>
     <button type="button" class="presentation-next" @click="movePresentation(1)" :disabled="presentationAtBoundary(1)"><span x-text="presentationNextLabel()"></span><span x-html="icon('arrow')"></span></button>
   </footer>
 

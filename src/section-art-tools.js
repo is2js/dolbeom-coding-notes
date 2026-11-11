@@ -268,6 +268,27 @@ function pipeScene() {
     'ls · select는 PowerShell의 기본 별칭');
 }
 
+function vscodeSetupScene() {
+  const p='section-tools-vscode-setup';
+  return scene(p,'VS Code 설치부터 같은 문서 열기까지',
+    panel(34,124,211,294,'공식 다운로드',
+      text(139,201,'Windows',{size:25,anchor:'middle',weight:700})
+      + document(99,225,80,100,C.sage)
+      + text(139,377,'설치 파일 받기',{size:22,anchor:'middle'}),{titleSize:22})
+    + arrow(p,'M255 271h16') + flow(p,'M255 271h16')
+    + panel(279,124,211,294,'User Setup 설치',
+      rect(300,190,169,59,C.paper,8) + check(323,222,.7)
+      + text(341,226,'옵션 확인',{size:21,weight:650})
+      + text(385,296,'설치 완료',{size:25,anchor:'middle',weight:700})
+      + text(385,345,'편집기 열기',{size:22,anchor:'middle'}),{titleSize:20})
+    + arrow(p,'M500 271h16') + flow(p,'M500 271h16',1)
+    + panel(524,124,211,294,'폴더 열기',
+      folder(549,190,157,101) + pill(548,229,160,'README.md',C.white,true)
+      + text(629,340,'git-practice-clone',{size:18,anchor:'middle',mono:true})
+      + text(629,379,'같은 README',{size:22,anchor:'middle',fill:C.teal,weight:700}),{titleSize:22}),
+    '설치 후 앞에서 만든 복제본의 문서를 다시 엽니다');
+}
+
 function errorReportScene() {
   const p='section-git-bonus';
   const rows=[['현재 폴더','git-practice'],['현재 브랜치','main'],['실행 명령','git push'],['오류 전문','오류 원문 전체 첨부'],['보존할 작업','note.txt의 내 수정']];
@@ -278,6 +299,11 @@ function errorReportScene() {
 }
 
 export const toolSectionScenes = {
+  'tools-vscode-setup': {
+    title:'VS Code 설치와 기본 설정',
+    description:'공식 Windows 다운로드에서 User Setup 설치 파일을 받고 옵션을 확인해 설치한 뒤, 앞에서 만든 git-practice-clone 폴더를 열어 같은 README.md를 확인합니다.',
+    svg:vscodeSetupScene(),
+  },
   'terminal-example': {
     title:'첫 명령: 현재 위치와 폴더를 오가며 연습하기',
     description:'PowerShell에서 pwd(Get-Location의 별칭)로 현재 위치를 확인하고 Win+R이나 explorer.exe .으로 같은 폴더를 엽니다. cd .과 cd ..로 현재와 부모 폴더를 살펴보고 ls로 목록을 확인합니다. mkdir로 만든 빈 연습 폴더를 삭제하고 다시 만든 후 cd로 들어갑니다. 탐색기 주소창의 wt -d .으로 해당 위치에서 Windows Terminal을 엽니다.',

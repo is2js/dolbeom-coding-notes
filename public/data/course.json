@@ -1363,9 +1363,9 @@
       "durationMinutes": 39,
       "case": {
         "kind": "real",
-        "title": "간단한 요청에서 Plan 모드의 구체적인 계획까지",
-        "body": "### 간단한 요청을 먼저 전달합니다\n\n이 강의노트를 만들 때 저는 Codex에 강의 흐름을 번호 목록으로 요청했습니다. 아래는 당시 요청 가운데 핵심 한 항목을 발췌한 내용입니다.\n\n```markdown\n2. 강의 시작의 목표 화면과 주제를 이어줄 공통 프로젝트를 심도있고 쉬운 버전으로 잘 구성해줘.\n```\n\n### Plan 모드에서 계획을 확인합니다\n\nCodex는 구현 전에 목표 화면, 공통 실습, 시간과 확인 방법을 나눈 계획을 제시했습니다. 아래는 당시 계획의 일부를 발췌하고 짧게 요약한 내용입니다.\n\n```markdown\n## 강의 목표와 공통 실습 흐름 구성\n\n### 강의 시작\n\n- 기존 소개 화면에 **수강 후 할 수 있는 일**을 추가합니다.\n- 발표 모드에는 첫 터미널 사례 전에 **강의 목표 화면**을 둡니다.\n\n### 첫 Codex 사례와 공통 실습\n\n- 공통 실습은 기존 Git 강의 카드를 확장해 일곱 주제에서 이어갑니다.\n\n### 템플릿과 시간 구성\n\n- 같은 카드에서 **HTML → CSS → JavaScript**를 먼저 직접 작성합니다.\n\n### 확인과 유지\n\n- 주제별 실습이 같은 카드로 이어지는지 확인합니다.\n```\n\n짧은 요청에 비해 계획에는 **무엇을 만들지, 어떤 순서로 진행할지, 무엇을 확인할지**가 더 구체적으로 나뉩니다. 제목 `##`, `###`과 목록 `-`를 사용해 내용을 구분하기 때문에 구현 전에 빠진 조건이나 바꾸고 싶은 부분을 읽고 이야기할 수 있습니다. 계획은 대화에 제시된 내용이며 별도의 Markdown 파일이 자동으로 만들어진다는 뜻은 아닙니다.\n\n그 후 저는 계획을 확인하고 구현을 요청했습니다. 필요하면 계획을 고쳐 달라고 한 뒤 진행할 수도 있습니다. Plan 모드의 출력 형식과 구체성은 요청과 상황에 따라 달라지며, Markdown 없이 평문으로 요청해도 됩니다. [OpenAI의 Plan 모드 안내](https://developers.openai.com/blog/run-long-horizon-tasks-with-codex)\n\n### 이 강의에서 원문과 미리보기 함께 보기\n\n[마크다운 시작 사례 편집기 열기](#/editor/markdown/case)를 누르면 왼쪽의 Markdown 원문과 오른쪽의 즉시 미리보기를 나란히 볼 수 있습니다. 제목과 목록이 화면에서 어떻게 표시되는지 비교해 보세요.\n\n편집기는 실제 강의 내용을 수정하는 곳입니다. 로컬 개발 서버에서는 유효한 변경이 프로젝트 파일에도 자동 저장되고, GitHub Pages에서는 현재 브라우저에만 저장됩니다. 이 링크를 열기만 해서는 내용이 바뀌지 않습니다.",
-        "question": "간단한 요청에 비해 계획에는 어떤 항목이 더 구체적으로 나타났나요? 구현하기 전에 무엇을 확인하고 싶나요?"
+        "title": "실제 Codex 계획문에 담긴 마크다운 문법",
+        "body": "### 간단한 요청에서 계획까지\n\n2026년 11월 6일, 이 강의노트의 모바일 디자인을 바꾸기 위해 Codex에 다음처럼 요청했습니다. 아래는 실제 요청입니다.\n\n```text\n목차 수정 추가 하기 전에, 주제변경버튼이나 이미지 표현 부분들을 모바일까지 고려해서 참고하여 디자인을 개선하고 참고사이트를 따로 기록도해줘. 최초 참고 사이트랑 같이\n```\n\n### Codex가 제시한 계획을 살펴봅니다\n\nCodex는 Plan 모드에서 구현 전에 아래와 같이 계획을 제시했습니다. 당시 계획에서 관련 부분만 **원문 그대로 발췌**했으며, 나머지 항목과 표의 일부 행은 생략했습니다. 이 내용은 당시 계획이므로 현재 강의 화면의 사양과 다를 수 있습니다.\n\n```markdown\n# 모바일 주제 탐색과 강의 그림 디자인 개선\n\n## 개선 방향\n\n기존 크림색 배경·세이지색 강조·입체 작업대 분위기를 유지하면서, **주제 선택 → 현재 설명 확인 → 그림과 본문 이해**가 쉽게 이어지도록 다듬습니다. 이번 작업은 화면 디자인과 조작 방식을 대상으로 하며 강의 내용과 순서는 유지합니다.\n\n## 화면과 이미지\n\n- **주제 카드 통일:** 홈·강의·발표에 동일한 주제별 SVG 썸네일을 사용합니다. 그림을 글자 뒤에 흐리게 겹치는 배치에서 그림 영역과 제목 영역을 나누는 배치로 바꿉니다. 번호·제목·예상 시간을 표시하고, 현재 주제는 테두리와 배경색, `현재` 문구로 구분합니다.\n- **그림 확대:** 강의와 발표 화면에 `그림 크게 보기`를 추가합니다. 대화상자에서 `화면 맞춤 / 원본 크기`를 전환하고 원본 크기에서는 내부 스크롤로 확인합니다. 닫기·Esc·초점 복귀를 지원하고, 주제나 절을 이동하면 확대 화면도 닫습니다.\n\n## 참고 사이트 기록\n\n저장소의 **`DESIGN_REFERENCES.md`**에 확인일, 참고 URL, 관찰한 요소, 실제 적용 위치를 정리하고 README에서 연결합니다.\n\n| 참고 사이트 | 적용할 관점 |\n|---|---|\n| [Learn Arduino — 최초 참고](https://learn-arduino-red.vercel.app/) | 크림색 작업대, 입체 그림 중심 구성, 그림이 있는 주제 선택 |\n| [한입 바이브코딩 핸드북](https://vibe.onebitefe.com/) | 주제와 소주제의 계층, 본문·시각자료·예제의 구분 |\n```\n\n계획에는 `#`과 `##` 제목, `-` 목록, `**굵게**`, 백틱으로 감싼 인라인 코드, `[이름](주소)` 링크, `|`로 나눈 표가 함께 사용됐습니다. 원문과 표시된 결과를 비교하면 작업을 시작하기 전에 무엇을 바꾸고 무엇을 확인할지 읽기 쉽습니다. 계획은 대화에 제시된 내용이며 별도의 Markdown 파일이 자동으로 만들어진다는 뜻은 아닙니다.\n\n그 후 저는 계획을 확인하고 구현을 요청했습니다. 필요하면 계획을 고쳐 달라고 한 뒤 진행할 수도 있습니다. Plan 모드의 출력 형식과 구체성은 요청과 상황에 따라 달라지며, Markdown 없이 평문으로 요청해도 됩니다. [OpenAI의 Plan 모드 안내](https://developers.openai.com/blog/run-long-horizon-tasks-with-codex)\n\n### 이 강의에서 원문과 미리보기 함께 보기\n\n[마크다운 시작 사례 편집기 열기](#/editor/markdown/case)를 누르면 왼쪽의 Markdown 원문과 오른쪽의 즉시 미리보기를 나란히 볼 수 있습니다. 제목과 목록이 화면에서 어떻게 표시되는지 비교해 보세요.\n\n편집기는 실제 강의 내용을 수정하는 곳입니다. 로컬 개발 서버에서는 유효한 변경이 프로젝트 파일에도 자동 저장되고, GitHub Pages에서는 현재 브라우저에만 저장됩니다. 이 링크를 열기만 해서는 내용이 바뀌지 않습니다.",
+        "question": "계획의 제목·목록·링크·표는 각각 어떤 내용을 읽기 쉽게 나누나요?"
       },
       "objectives": [
         "Codex가 제시한 계획의 제목·목록·강조·링크·코드를 직접 바꾸고 원문과 결과를 비교한다.",
@@ -1379,11 +1379,11 @@
           "title": "Codex 계획문으로 마크다운 문법 연습하기",
           "minutes": 10,
           "optional": false,
-          "body": "### 방금 본 계획문에서 시작합니다\n\n시작 사례의 Codex 계획은 제목과 목록으로 내용을 나누었습니다. 이번에는 그 계획의 일부를 학습용으로 짧게 바꾸어, 기호 하나가 화면에서 어떻게 보이는지 직접 연습합니다. 실제 계획이나 강의 원본을 덮어쓰지 않도록 **연습용 복사본**에서 진행합니다.\n\n아래 연습 원문을 복사해 [Dillinger 웹 편집기](https://dillinger.io/)에 붙여 넣고, 원문을 고치면서 옆의 미리보기를 비교해 봅니다. 공개된 강의용 문구만 사용하고 개인 정보나 실제 프로젝트 전문은 외부 편집기에 넣지 않습니다. 별도로 [마크다운 한국어 연습 사이트](https://www.markdowntutorial.com/kr/) 또는 [CommonMark 대화형 튜토리얼](https://commonmark.org/help/tutorial/)(영어)에 들어가면 각 사이트가 제시하는 단계별 문제를 풀 수 있습니다. [GitHub의 한국어 마크다운 가이드](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)는 문법을 찾아보는 참고 자료입니다. 사이트 UI와 제공 언어는 바뀔 수 있습니다.\n\n````markdown\n# 강의 목표와 공통 실습\n\n## 강의 시작\n- **수강 후 할 수 있는 일**을 소개합니다.\n- 계획을 확인하고 필요한 부분을 바꿉니다.\n\n## 확인할 자료\n[GitHub 마크다운 안내](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)\n같은 프로젝트의 `README.md`를 확인합니다.\n\n```text\n완료 확인: 수정한 내용이 화면에 보입니다.\n```\n````\n\n1. `#` 뒤에 공백을 넣고 큰 제목을 작성한 다음, `##`으로 그 안의 소제목을 만듭니다.\n2. `-` 뒤에 공백을 두고 목록을 만들고, 중요한 말의 앞뒤에 `**`를 붙여 강조해 봅니다.\n3. `[보이는 이름](주소)`의 이름을 바꾸고 링크가 열리는지 확인합니다. 한 쌍의 백틱은 `README.md`처럼 짧은 코드를 구분합니다.\n4. 세 개의 백틱을 위아래에 두어 여러 줄 코드 블록을 만들고, 예시 문구를 바꿔 원문과 결과를 비교합니다. 코드 블록은 표시만 할 뿐 명령을 실행하지 않습니다.\n\n**직접 확인:** 제목·목록·강조·링크·코드 블록을 한 번씩 바꾸고 결과가 어떻게 달라졌는지 말합니다. 마크다운은 요청을 읽기 쉽게 정리하는 방법이며, Codex에 요청할 때 반드시 써야 하는 형식은 아닙니다.\n\n**이 강의 편집기에서 보기:** [시작 사례 편집기](#/editor/markdown/case)는 왼쪽 원문과 오른쪽 즉시 미리보기를 보여 줍니다. 이 편집기는 **실제 강의 내용을 바꾸는 곳**이므로 원문을 읽고 비교하는 용도로만 살펴봅니다. 로컬 편집기에서 내용을 고치면 유효한 변경은 프로젝트 파일에도 자동 저장됩니다. 별도 문법 실습은 위의 웹 편집기와 대화형 튜토리얼을 사용합니다.",
+          "body": "### 실제 계획문에서 시작합니다\n\n2026년 11월 6일 이 강의노트의 모바일 디자인 개선을 위해 Codex가 제시한 계획에서 일부를 **원문 그대로 발췌**했습니다. 나머지 항목과 표의 일부 행은 생략했습니다. 당시 계획은 현재 사양과 다를 수 있습니다.\n\n본문에 있는 연습 영역에서 아래 원문을 고치고 미리보기의 변화를 살펴봅니다. 이는 강의 원본과 별도로 사용하는 문법 연습입니다.\n\n```markdown\n# 모바일 주제 탐색과 강의 그림 디자인 개선\n\n## 개선 방향\n\n기존 크림색 배경·세이지색 강조·입체 작업대 분위기를 유지하면서, **주제 선택 → 현재 설명 확인 → 그림과 본문 이해**가 쉽게 이어지도록 다듬습니다. 이번 작업은 화면 디자인과 조작 방식을 대상으로 하며 강의 내용과 순서는 유지합니다.\n\n## 화면과 이미지\n\n- **주제 카드 통일:** 홈·강의·발표에 동일한 주제별 SVG 썸네일을 사용합니다. 그림을 글자 뒤에 흐리게 겹치는 배치에서 그림 영역과 제목 영역을 나누는 배치로 바꿉니다. 번호·제목·예상 시간을 표시하고, 현재 주제는 테두리와 배경색, `현재` 문구로 구분합니다.\n- **그림 확대:** 강의와 발표 화면에 `그림 크게 보기`를 추가합니다. 대화상자에서 `화면 맞춤 / 원본 크기`를 전환하고 원본 크기에서는 내부 스크롤로 확인합니다. 닫기·Esc·초점 복귀를 지원하고, 주제나 절을 이동하면 확대 화면도 닫습니다.\n\n## 참고 사이트 기록\n\n저장소의 **`DESIGN_REFERENCES.md`**에 확인일, 참고 URL, 관찰한 요소, 실제 적용 위치를 정리하고 README에서 연결합니다.\n\n| 참고 사이트 | 적용할 관점 |\n|---|---|\n| [Learn Arduino — 최초 참고](https://learn-arduino-red.vercel.app/) | 크림색 작업대, 입체 그림 중심 구성, 그림이 있는 주제 선택 |\n| [한입 바이브코딩 핸드북](https://vibe.onebitefe.com/) | 주제와 소주제의 계층, 본문·시각자료·예제의 구분 |\n```\n\n1. `#` 뒤에 공백을 넣고 큰 제목을 작성한 다음, `##`으로 그 안의 소제목을 만듭니다.\n2. `-` 뒤에 공백을 두고 목록을 만들고, 중요한 말의 앞뒤에 `**`를 붙여 강조해 봅니다.\n3. 백틱으로 감싼 `현재`를 바꾸고, `[보이는 이름](주소)` 링크의 이름을 바꿔 봅니다.\n4. 표의 `|` 구분선과 제목 행을 살펴본 뒤 사이트 행을 하나 추가합니다.\n\n### 추가 문법 연습: 코드 블록\n\n아래는 **실제 계획 원문에 없던 별도 연습 예제**입니다. 세 개의 백틱을 위아래에 놓으면 여러 줄을 코드 블록으로 표시할 수 있습니다. 코드 블록은 표시만 하며 명령을 실행하지 않습니다.\n\n````markdown\n```text\n완료 확인: 수정한 내용이 화면에 보입니다.\n```\n````\n\n**직접 확인:** 제목·목록·강조·인라인 코드·링크·표를 바꾸고 결과가 어떻게 달라졌는지 말합니다. 마크다운은 요청을 읽기 쉽게 정리하는 방법이며, Codex에 요청할 때 반드시 써야 하는 형식은 아닙니다.\n\n**웹에서 더 연습하기:** [마크다운 한국어 연습 사이트](https://www.markdowntutorial.com/kr/) 또는 [CommonMark 대화형 튜토리얼](https://commonmark.org/help/tutorial/)(영어)에서 각 사이트가 제시하는 단계별 문제를 풀 수 있습니다. [GitHub의 한국어 마크다운 가이드](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)는 문법을 찾아보는 참고 자료입니다. 사이트 UI와 제공 언어는 바뀔 수 있습니다.\n\n**이 강의 편집기에서 보기:** [시작 사례 편집기](#/editor/markdown/case)는 왼쪽 원문과 오른쪽 즉시 미리보기를 보여 줍니다. 이 편집기는 **실제 강의 내용을 바꾸는 곳**이므로 원문을 읽고 비교하는 용도로만 살펴봅니다. 로컬 편집기에서 내용을 고치면 유효한 변경은 프로젝트 파일에도 자동 저장됩니다. 문법 실습은 본문의 별도 연습 영역이나 웹 튜토리얼을 사용합니다.",
           "presentationPoints": [
-            "Codex 계획문의 제목과 목록을 출발점으로 삼습니다.",
-            "제목·목록·강조·링크·코드를 직접 바꾸어 확인합니다.",
-            "웹 연습 사이트와 한국어 가이드로 이어서 연습합니다."
+            "실제 Codex 계획의 제목·목록·강조·인라인 코드·링크·표를 살펴봅니다.",
+            "본문의 연습 영역에서 원문을 직접 바꾸고 미리보기를 비교합니다.",
+            "웹 튜토리얼에서 마크다운 문법 문제를 더 풀어 봅니다."
           ]
         },
         {
@@ -1405,7 +1405,7 @@
           "optional": false,
           "body": "### 그림은 글자 안에 들어가는 것이 아니라 파일을 가리킵니다\n\n앞에서 만든 `git-practice-clone`의 **README.md**를 이어 사용합니다. Markdown의 `![이미지 설명](assets/파일이름.png)`에서 괄호 안은 그림 파일의 위치입니다. 같은 폴더의 `assets` 안에 실제 파일이 있어야 하며, 아래 파일명은 설명용 예시입니다. 내 컴퓨터에서 생성된 **실제 파일명**은 다를 수 있습니다.\n\nTypora는 Markdown 편집기입니다. [공식 사이트](https://typora.io/)에서 Windows용을 따로 준비합니다. 공식 안내상 안정판은 **15일 체험 후 일회성 유료 라이선스**가 필요하며 조건은 바뀔 수 있습니다. 설치 없이도 이미지와 상대경로의 관계는 아래 설명으로 이해할 수 있습니다. [체험·구매 안내](https://support.typora.io/purchase/)\n\n### 1. 복제본의 문서와 이미지 저장 위치를 확인합니다\n\nTypora에서 **파일 → 열기**로 앞에서 만든 `git-practice-clone/README.md`를 엽니다. 원본 `git-practice`가 아니라 복제본인지 경로를 확인하고 기존 내용을 보존합니다. 문서가 저장되어 있어야 상대경로의 기준 폴더가 정해집니다.\n\nTypora **파일 → 환경설정 → 이미지(Image)**에서 이미지 삽입 시 **`./assets` 경로로 이미지 복사**를 고르고, **가능하다면 상대적 위치 사용**을 켭니다. 버전에 따라 ‘주어진 폴더로 이미지 복사 허용’과 ‘로컬 이미지에 위 규칙을 적용’을 추가로 켜야 할 수 있습니다. 메뉴 이름과 위치는 버전과 언어에 따라 다릅니다. 이미지 파일을 끌어다 놓을 때 기본 동작은 원본 경로를 참조할 수 있으므로 자동 복사를 기본값이라고 가정하지 않습니다. [Typora 이미지 설정 공식 안내](https://support.typora.io/Images/)\n\n### 2. 스크린샷이나 복사한 그림을 붙여넣습니다\n\n개인정보가 없는 연습 화면을 **Win+Shift+S**로 캡처하거나 그림 데이터를 복사해, README의 원하는 위치에 **Ctrl+V**로 붙여넣습니다. Typora가 저장 위치를 묻는다면 복제본 안의 `assets` 폴더를 선택합니다. 이미지가 화면에 나타나면 **Ctrl+S**로 README를 저장합니다.\n\n탐색기에서 복제본의 `assets` 폴더에 실제 이미지 파일이 만들어졌는지 확인합니다. Typora의 소스 코드 보기에서 생성된 `![설명](assets/실제파일명.png)`을 확인하고, 필요하면 `설명`을 그림의 내용으로 바꿉니다. 경로와 확장자는 Typora가 만든 실제 값을 사용합니다. 웹에서 복사한 것이 이미지 데이터가 아닌 URL이면 결과가 다를 수 있으므로 위치를 반드시 확인합니다. 그림이 보이지 않으면 문서 저장 위치·파일 존재·상대경로를 다시 살펴봅니다.\n\n### 3. 문서와 그림을 GitHub에 함께 올립니다\n\nPowerShell에서 **복제본 폴더**인지 `pwd`로 확인하고 변경 내역과 연결된 원격을 살펴봅니다. `pwd`는 Windows PowerShell `Get-Location`의 기본 별칭입니다. cmd에서는 `cd`, macOS 기본 셸에서는 `pwd`를 사용합니다. `git` 명령은 Git 프로그램의 명령입니다.\n\n```powershell\npwd\ngit status --short --untracked-files=all\ngit branch --show-current\ngit remote -v\ngit config --get user.name\ngit config --get user.email\n```\n\n`main`에 있고 `origin`이 **내 연습 저장소**를 가리키며, README와 방금 만든 `assets` 이미지가 보이는지 확인합니다. 원격 주소가 맞으면 다음 명령으로 원격 상태를 가져와 확인합니다. `fetch`는 원격의 정보를 가져오며 내 작업 파일을 변경하거나 업로드하지 않습니다. 인증이나 네트워크 오류가 나오면 멈춥니다.\n\n```powershell\ngit fetch origin\ngit status -sb\ngit log --oneline origin/main..main\n```\n\n`origin/main`은 **마지막으로 가져온 원격 추적 참조**이며 실시간으로 바뀌지 않습니다. 방금 `fetch`가 성공했을 때 이를 기준으로 로컬에만 있는 커밋을 확인할 수 있습니다. 원격이 앞서 있거나 예상하지 못한 기록이 있다면 병합·덮어쓰기를 서두르지 말고 멈춥니다. 복제본은 별개의 저장소이므로 이전 폴더에만 지정한 작성자 정보는 복제본에 자동으로 적용되지 않습니다. 위에서 이름이나 이메일이 비어 있다면 아래 값 **내 이름**과 **내 이메일**을 사용할 값으로 바꾸어 이 저장소에만 설정합니다. 아래 예시 글자를 그대로 쓰지 않습니다.\n\n```powershell\ngit config --local user.name \"내 이름\"\ngit config --local user.email \"내 이메일\"\n```\n\n공개 저장소에 올릴 경우 커밋 작성자 이메일과 이미지가 공개될 수 있으므로 내용을 먼저 확인합니다. `git log --oneline origin/main..main`에 보이는 커밋은 마지막으로 가져온 `origin/main`에 아직 없는 로컬 커밋입니다. 예상하지 못한 커밋이나 파일, 다른 원격 또는 잘못된 경로가 보이면 멈춥니다.\n\n아래 명령은 `assets`에 **방금 확인한 실습 이미지 외에 추가할 파일이 없을 때만** 실행합니다. 다른 파일이 있다면 폴더 전체 대신 실제 파일 경로만 선택합니다. `git diff --cached --name-only`에서 README와 원하는 이미지 경로만 선택됐는지 확인한 뒤 다음 단계로 갑니다.\n\n```powershell\ngit add -- README.md assets/\ngit diff --cached --name-only\ngit status\n```\n\n선택한 내용이 맞고 기존에 스테이징된 다른 변경이 없다면 커밋합니다. `git push origin main`은 현재 연습 저장소의 `main` 기록을 `origin`의 `main`으로 보냅니다. 원격 주소와 브랜치를 앞에서 확인한 경우에만 실행합니다.\n\n```powershell\ngit commit -m \"Add README image\"\ngit push origin main\n```\n\nGitHub 저장소의 `main`에서 README와 이미지 파일을 확인하고 문서에 그림이 표시되는지 확인합니다. 인증 요청이나 충돌이 나타나면 결과를 읽고 멈춥니다. **Typora에 붙여넣기만 해서는 GitHub에 올라가지 않습니다.** Typora의 별도 이미지 호스팅 업로드 기능은 이 실습의 Git 커밋·push와 다른 방식입니다. 복제본의 변경은 원본 폴더에도 자동으로 반영되지 않습니다.\n\n**다음 강의로:** VS Code에서 같은 복제본의 README를 열어 원문과 미리보기, 이미지 경로를 다시 확인합니다.",
           "presentationPoints": [
-            "클립보드 이미지를 문서 옆 assets에 저장하고 상대경로를 확인합니다.",
+            "Typora 환경설정에서 assets와 상대경로를 고른 뒤 캡처를 붙여넣고 실제 파일을 확인합니다.",
             "README와 실제 이미지 파일을 선택해 커밋·push합니다.",
             "Typora의 외부 업로드와 GitHub push를 구분합니다."
           ]
@@ -1462,15 +1462,15 @@
         {
           "id": "codex-01",
           "title": "Codex 계획문으로 마크다운 문법 연습",
-          "description": "시작 사례의 계획을 짧게 재구성한 연습 원문에서 제목·목록·강조·링크를 바꾸고 결과를 비교합니다.",
+          "description": "실제 Codex 계획의 발췌에서 제목·목록·강조·인라인 코드·링크·표를 읽고 결과를 비교합니다.",
           "scene": "code",
-          "code": "# 강의 목표와 공통 실습\n## 강의 시작\n- **수강 후 할 수 있는 일**을 소개합니다.\n- 계획을 확인하고 필요한 부분을 바꿉니다.\n[GitHub 마크다운 안내](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)\n같은 프로젝트의 `README.md`를 확인합니다.",
+          "code": "# 모바일 주제 탐색과 강의 그림 디자인 개선\n\n## 개선 방향\n\n기존 크림색 배경·세이지색 강조·입체 작업대 분위기를 유지하면서, **주제 선택 → 현재 설명 확인 → 그림과 본문 이해**가 쉽게 이어지도록 다듬습니다. 이번 작업은 화면 디자인과 조작 방식을 대상으로 하며 강의 내용과 순서는 유지합니다.\n\n## 화면과 이미지\n\n- **주제 카드 통일:** 홈·강의·발표에 동일한 주제별 SVG 썸네일을 사용합니다. 그림을 글자 뒤에 흐리게 겹치는 배치에서 그림 영역과 제목 영역을 나누는 배치로 바꿉니다. 번호·제목·예상 시간을 표시하고, 현재 주제는 테두리와 배경색, `현재` 문구로 구분합니다.\n- **그림 확대:** 강의와 발표 화면에 `그림 크게 보기`를 추가합니다. 대화상자에서 `화면 맞춤 / 원본 크기`를 전환하고 원본 크기에서는 내부 스크롤로 확인합니다. 닫기·Esc·초점 복귀를 지원하고, 주제나 절을 이동하면 확대 화면도 닫습니다.\n\n## 참고 사이트 기록\n\n저장소의 **`DESIGN_REFERENCES.md`**에 확인일, 참고 URL, 관찰한 요소, 실제 적용 위치를 정리하고 README에서 연결합니다.\n\n| 참고 사이트 | 적용할 관점 |\n|---|---|\n| [Learn Arduino — 최초 참고](https://learn-arduino-red.vercel.app/) | 크림색 작업대, 입체 그림 중심 구성, 그림이 있는 주제 선택 |\n| [한입 바이브코딩 핸드북](https://vibe.onebitefe.com/) | 주제와 소주제의 계층, 본문·시각자료·예제의 구분 |",
           "language": "markdown",
-          "output": "큰 제목 → 소제목 → 목록과 강조 → 링크 → 짧은 코드\n한국어 대화형 마크다운 연습 사이트에서 직접 풀어 봅니다.",
+          "output": "큰 제목 → 소제목 → 목록과 강조 → 인라인 코드 → 링크와 표\n실제 계획 발췌를 살펴보고 한국어 대화형 연습 사이트에서 추가로 풀어 봅니다.",
           "focus": "files",
-          "fileName": "계획 원문 · 학습용 재구성",
+          "fileName": "실제 Codex 계획 원문 · 일부 발췌",
           "files": [
-            "계획 원문 · 학습용 재구성"
+            "실제 Codex 계획 원문 · 일부 발췌"
           ]
         },
         {
@@ -1666,7 +1666,7 @@
       ],
       "closing": "Codex 계획문으로 제목·목록·강조·링크·코드를 직접 바꾸어 보았습니다. 복제본 README와 Typora의 이미지 파일·상대경로를 확인하고 필요한 파일을 선택해 GitHub에 올렸습니다. 다음 IDE에서는 같은 복제본의 README를 열어 원문과 미리보기를 비교합니다.",
       "presentation": {
-        "caseSummary": "이 강의노트를 위한 실제 요청과 Plan 모드에서 제시된 계획의 발췌를 비교합니다. 구현 전에 목표·순서·확인 방법을 검토합니다. [강의 편집기 열기](#/editor/markdown/case)에서 왼쪽 원문과 오른쪽 즉시 미리보기를 비교합니다. 편집 내용은 자동 저장됩니다.",
+        "caseSummary": "이 강의노트의 실제 모바일 디자인 개선 요청과 Codex 계획 발췌를 비교합니다. 제목·목록·강조·인라인 코드·링크·표를 살펴보고 구현 전에 계획을 검토합니다. [강의 편집기 열기](#/editor/markdown/case)에서 원문과 미리보기를 비교할 수 있으며 실제 편집 내용은 자동 저장됩니다.",
         "demo": {
           "program": "웹 브라우저 · Typora · Windows PowerShell",
           "file": "git-practice-clone의 README.md 및 assets 이미지",
@@ -1684,7 +1684,7 @@
       "shortTitle": "IDE",
       "subtitle": "Codex 변경 확인부터 VS Code에서 HTML·CSS·JavaScript 화면 실습까지 연결하기",
       "icon": "code",
-      "durationMinutes": 45,
+      "durationMinutes": 55,
       "case": {
         "kind": "example",
         "title": "Codex가 고친 파일을 PyCharm에서 어떻게 확인할까요?",
@@ -1692,11 +1692,9 @@
         "question": "IDE에서 Codex의 변경을 확인한 뒤 Markdown을 미리 보고 HTML 화면을 어떻게 확인할까요?"
       },
       "objectives": [
-        "준비된 PyCharm diff에서 Codex가 바꾼 파일 경로와 요청 밖 변경을 확인한다.",
-        "무료 코드 편집기인 VS Code의 파일 찾기·내용 검색·명령 팔레트·미리보기 단축키를 구분한다.",
-        "PyCharm의 Python 인터프리터·실행 설정과 VSCode Keymap 플러그인의 역할을 설명한다.",
-        "IDE 안의 터미널·Git·GitHub·Markdown 기능과 각각의 저장·기록·공유 단계를 연결한다.",
-        "VS Code에서 같은 강의 카드에 HTML 구조, CSS 스타일, JavaScript 클릭 동작을 차례로 적용한다."
+        "VS Code를 설치하고 앞서 만든 복제본 폴더와 README를 연다.",
+        "검색과 Markdown 미리보기, PyCharm의 기본 설치와 선택적 키맵을 구분한다.",
+        "태그·속성·CSS 선언·클릭 흐름을 읽고 같은 강의 카드에 HTML·CSS·JavaScript를 적용한다."
       ],
       "sections": [
         {
@@ -1712,11 +1710,23 @@
           ]
         },
         {
+          "id": "tools-vscode-setup",
+          "title": "VS Code 설치하고 내 실습 폴더 열기",
+          "minutes": 8,
+          "optional": false,
+          "body": "### 편집할 작업대를 준비합니다\n\n앞에서 만든 `git-practice-clone`에는 메모, README와 이미지가 있습니다. 이제 이 폴더를 코드 편집기에서 열어 파일을 찾고 화면을 확인합니다. 이미 VS Code가 설치되어 있다면 버전을 확인하고 폴더 열기부터 따라갑니다.\n\n### 1. Windows 설치 파일 선택\n\n[VS Code 공식 다운로드](https://code.visualstudio.com/Download)에서 내 Windows와 프로세서에 맞는 설치 파일을 받습니다. 일반적인 개인 PC는 **User Installer**를 선택하면 됩니다. Visual Studio와 Visual Studio Code는 다른 제품입니다.\n\n| 설치 방식 | 누구에게 설치하나요? | 권한과 위치 |\n| --- | --- | --- |\n| User Setup | 현재 Windows 사용자 | 일반적으로 관리자 권한 없이 사용자 폴더에 설치 |\n| System Setup | 이 PC의 모든 사용자 | 관리자 권한이 필요하며 Program Files에 설치 |\n\n설치 화면의 안내를 읽고 진행합니다. **Add to PATH**는 터미널에서 `code` 명령으로 편집기를 열 수 있게 하는 옵션입니다. 폴더 우클릭의 **Open with Code**가 보이면 편하게 폴더를 여는 선택 기능으로 사용할 수 있습니다. 추가 AI 서비스나 계정 연결은 이번 파일 편집 실습의 필수 준비가 아닙니다. [Windows 설치 공식 안내](https://code.visualstudio.com/docs/setup/windows)\n\n### 2. 같은 복제본 열기\n\n설치 후에는 기존 터미널을 닫고 새 PowerShell 창을 엽니다. 새로 반영된 PATH를 읽기 위해서입니다. 먼저 버전을 확인합니다.\n\n```powershell\ncode --version\n```\n\n파일 탐색기에서 앞서 작업한 `git-practice-clone`의 실제 경로를 확인합니다. VS Code의 **파일 → 폴더 열기**로 그 폴더를 선택하면 왼쪽 탐색기에 `README.md`, `note.txt`, `branch-note.txt`와 준비한 이미지 폴더가 보입니다. 파일 하나만 여는 것과 프로젝트 폴더를 여는 것을 구분합니다.\n\n터미널이 같은 복제본 안에 있다면 아래처럼 열 수도 있습니다. `pwd`는 Windows PowerShell의 `Get-Location` 기본 별칭이며, `code`는 VS Code 프로그램의 명령입니다. Windows cmd에서는 현재 위치 확인에 `cd`, macOS 기본 셸에서는 `pwd`를 사용합니다. macOS에서 `code`를 사용하려면 해당 운영체제의 별도 PATH 설정이 필요할 수 있습니다.\n\n```powershell\npwd\ncode .\n```\n\n`code`를 찾지 못한다면 새 터미널인지 확인하고 설치 때 **Add to PATH**를 선택했는지 살펴봅니다. 당장은 시작 메뉴에서 VS Code를 열고 **폴더 열기**로 진행할 수 있습니다. 앞에서 직접 만든 연습 폴더를 열었는지 확인한 뒤 작업합니다.\n\n### 3. 화면을 읽기 좋게 맞추기\n\n`Ctrl+Shift+P`로 명령 팔레트를 열어 **Configure Display Language**를 찾습니다. 한국어를 원하면 Korean Language Pack을 설치하고 다시 시작합니다. 영어 메뉴를 유지해도 됩니다. [표시 언어 공식 안내](https://code.visualstudio.com/docs/configure/locales)\n\n설정 화면 `Ctrl+,`에서 **Font Size**를 찾아 녹화 화면에서도 읽히는 크기로 조절합니다. `Alt+Z`로 긴 문장의 줄바꿈을 켜고 꺼 보며 README가 어떻게 보이는지 비교합니다. 기본 화면의 탐색기, 편집 영역, 하단 터미널 위치를 한 번씩 가리킵니다. 저장은 `Ctrl+S`로 직접 확인합니다.\n\n### 4. 필요한 기능부터 확인하기\n\nMarkdown 미리보기와 HTML·CSS·JavaScript의 기본 편집 기능은 VS Code에 포함되어 있습니다. 이 강의의 첫 카드 실습은 확장을 추가하지 않아도 진행할 수 있습니다. 최신 VS Code에는 HTML 파일의 **Open in Integrated Browser** 미리보기도 있습니다. 메뉴가 없는 구버전에서는 파일을 외부 브라우저로 열어 저장·새로고침하거나, 뒤에서 소개하는 선택적 로컬 서버를 사용합니다.\n\n코드를 읽기 좋게 정돈할 때는 Windows 기본 키 **Shift+Alt+F** 또는 명령 팔레트의 **Format Document**를 사용합니다. 필요하면 설정의 **Format On Save**를 선택해 저장 시 서식을 적용할 수 있습니다. Prettier 같은 별도 포매터는 선택 사항이며, ESLint는 프로젝트의 규칙과 설정을 함께 준비하는 도구입니다. 이번 작은 카드에 둘을 필수로 설치하지 않아도 됩니다. [기본 편집·서식 공식 안내](https://code.visualstudio.com/docs/editing/codebasics)\n\n**직접 확인:** 왼쪽 탐색기에서 앞서 만든 세 파일을 찾고 `README.md`를 엽니다. 다음 절에서는 파일명 검색, 내용 검색과 나란한 미리보기를 연습합니다.",
+          "presentationPoints": [
+            "개인 PC는 User Setup을 기준으로 설치하고 PATH와 새 터미널을 확인합니다.",
+            "앞서 만든 git-practice-clone 폴더를 열어 메모와 README를 찾습니다.",
+            "한국어·글자 크기·줄바꿈을 조절하고 기본 기능으로 실습을 시작합니다."
+          ]
+        },
+        {
           "id": "tools-vscode",
           "title": "무료 VS Code에서 필수 단축키로 찾아보기",
           "minutes": 6,
           "optional": false,
-          "body": "### Codex 변경 확인에서 문서 편집으로 이어갑니다\n\n앞에서 IDE로 Codex가 바꾼 파일과 결과를 확인했습니다. 이번에는 별도 강사 시연을 마치고 앞서 사용한 **git-practice-clone 복제본**으로 돌아옵니다. VS Code에서 파일 → 폴더 열기로 복제본의 실제 경로를 선택한 뒤, 마크다운 강의에서 만든 같은 README.md를 직접 수정하며 IDE의 또 다른 편의를 봅니다. 기존 git-practice 원본 폴더가 아니라 복제본인지 탐색기의 경로와 파일 목록으로 확인합니다. 원문을 고치면서 표시 결과도 같은 작업대에서 확인할 수 있습니다.\n\nVS Code는 개인·상업 용도로 무료로 사용할 수 있는 코드 편집기입니다. 디버깅·작업 실행·버전 관리와 확장으로 IDE처럼 개발할 수 있습니다. Visual Studio라는 별도의 IDE와 이름을 혼동하지 않습니다. 편집기 무료 사용과 선택적 AI 서비스·확장의 이용 조건은 구분합니다. 수업은 설치·로그인 없이 준비된 예제로 시작합니다.\n\nWindows 기본 단축키에서 Ctrl+P는 파일 이름으로 빠르게 여는 기능입니다. README.md처럼 파일명을 알고 있을 때 사용합니다. Ctrl+Shift+F는 프로젝트의 파일 내용 전체 검색입니다. README의 “확인 방법”이라는 문구를 알고 있을 때 사용합니다. 둘은 검색 대상이 달라서, 문구를 파일명 검색에 넣고 결과가 없다고 파일이 없다고 판단하지 않습니다.\n\nCtrl+Shift+P는 명령 팔레트입니다. 명령 이름으로 기능을 찾을 수 있으므로 단축키를 모두 외울 필요가 없습니다. Ctrl+S는 현재 파일 저장이고, Ctrl+Shift+V는 Markdown 파일의 미리보기입니다. Ctrl와 백틱(`)은 통합 터미널을 표시합니다. 단축키는 운영체제·키보드 배열·사용자 설정·확장에 따라 달라질 수 있어, 동작하지 않으면 메뉴와 Keyboard Shortcuts 화면에서 실제 연결을 확인합니다.\n\n복제본에서 Ctrl+P로 앞서 만든 README.md를 열고 Ctrl+Shift+F로 “확인 방법”을 찾습니다. Windows 기본 키 기준 **Ctrl+K를 누른 뒤 V**를 누르면 Markdown 원문 옆에 미리보기가 열립니다. # 제목이나 목록 한 줄을 수정하며 오른쪽 표시가 바뀌는 것을 확인하고 Ctrl+S로 저장합니다. Ctrl+Shift+V는 현재 편집기 그룹에서 미리보기를 여는 다른 방법입니다. 보이는 문서는 같은 README이며, 미리보기가 GitHub에 자동으로 게시한다는 뜻은 아닙니다.\n\n이어 명령 팔레트에서 Keyboard Shortcuts를 찾아 보는 흐름을 익힙니다. 단축키나 미리보기 위치가 다르면 메뉴에서 Markdown: Open Preview to the Side를 찾습니다. [VS Code Markdown 안내](https://code.visualstudio.com/docs/languages/markdown)에서 기본 기능과 키 조합을 확인할 수 있습니다.\n\n**같이 확인:** “파일 이름을 안다”, “화면 문구만 안다”, “실행할 기능 이름을 안다”라는 세 상황에 맞는 단축키를 골라 봅니다. 원하는 파일과 기능에 정확히 도착하면 성공입니다.",
+          "body": "### 같은 문서를 찾아 나란히 읽습니다\n\n설치와 기본 설정을 마쳤다면 앞서 사용한 **git-practice-clone 복제본**을 엽니다. 별도로 준비한 강사의 Codex 변경 시연에서 돌아와, 내가 만든 `README.md`를 직접 고칩니다. 탐색기의 경로와 파일 목록으로 같은 복제본인지 확인합니다.\n\nVS Code는 개인·상업 용도로 무료로 사용할 수 있는 코드 편집기입니다. 디버깅·작업 실행·버전 관리와 확장으로 여러 개발 기능을 연결할 수 있습니다. 편집기의 무료 사용과 선택적 AI 서비스의 이용 조건은 각각 확인합니다.\n\n### 파일 이름, 파일 내용, 기능 이름으로 찾아보기\n\n| 알고 있는 것 | Windows 기본 키 | 이 실습에서 찾을 것 |\n| --- | --- | --- |\n| 파일 이름 | `Ctrl+P` | `README.md` |\n| 문서 안의 문구 | `Ctrl+Shift+F` | `확인 방법` |\n| 실행할 기능의 이름 | `Ctrl+Shift+P` | `Markdown: Open Preview to the Side` |\n\n세 가지를 차례로 실행합니다. 파일명 검색에 문서의 문장을 넣었을 때 결과가 없는 이유도 설명해 봅니다. 메뉴 언어·운영체제·사용자 설정에 따라 키와 이름이 다를 수 있으므로, 원하는 기능을 명령 팔레트에서 찾아 현재 키를 확인합니다.\n\n### README 원문과 결과를 함께 보기\n\n`README.md`를 열고 **Ctrl+K를 누른 뒤 V**를 누르면 Markdown 미리보기가 옆에 열립니다. `Ctrl+Shift+V`는 현재 편집기 그룹에서 미리보기를 여는 다른 방법입니다. 다음처럼 앞에서 작성한 제목을 찾습니다.\n\n```markdown\n# Git 연습 메모\n\n## 확인 방법\n- note.txt에서 version 2를 확인합니다.\n```\n\n**한 가지 수정:** 첫 제목을 `나의 Git 연습 메모`로 바꾸어 미리보기의 변화를 확인하고 `Ctrl+S`로 저장합니다. 원문을 저장하는 단계, Git으로 커밋하는 단계, GitHub에 push하는 단계가 각각 필요하다는 점을 다시 확인합니다. 기본 Markdown 미리보기에는 별도 확장 설치가 필요하지 않습니다. [VS Code Markdown 공식 안내](https://code.visualstudio.com/docs/languages/markdown)\n\n통합 터미널은 Ctrl와 백틱(`)으로 표시할 수 있습니다. 현재 폴더를 확인한 뒤 필요한 명령을 실행합니다. 화면의 위치만 외우기보다 파일·문구·기능 가운데 무엇을 찾는지 먼저 정합니다.",
           "presentationPoints": [
             "VS Code는 무료 코드 편집기이며 여러 개발 기능을 연결합니다.",
             "Ctrl+P는 파일명, Ctrl+Shift+F는 내용, Ctrl+Shift+P는 명령입니다.",
@@ -1725,14 +1735,14 @@
         },
         {
           "id": "tools-pycharm",
-          "title": "Python용 PyCharm과 VS Code 키맵의 역할",
-          "minutes": 5,
+          "title": "PyCharm 간단 설치와 VS Code 키맵 이해하기",
+          "minutes": 7,
           "optional": false,
-          "body": "### 실행 환경과 손에 익은 조작을 구분합니다\n\nPyCharm은 Python 개발을 중심으로 편집·실행·디버깅을 연결하는 IDE입니다. 2026년 10월 JetBrains 공식 안내에 따르면 현재 통합 PyCharm은 이전 Community의 핵심 기능과 Jupyter Notebook 지원 등 핵심 기능을 무료로 제공합니다. 추가 Pro 기능은 별도 구독 범위이고 설치 시 제공되는 Pro 체험과 무료 핵심 기능을 혼동하지 않습니다. 수업에서는 준비된 환경과 핵심 기능을 사용합니다.\n\nPython 파일을 열었다는 사실만으로 실행 환경이 정해지는 것은 아닙니다. 설정표에서 프로젝트 인터프리터의 실행 파일 경로, 실행할 스크립트, Working directory를 확인합니다. 같은 스크립트도 Python과 작업 폴더가 다르면 결과가 달라질 수 있습니다. 예제의 sys.executable 출력은 어떤 Python으로 실행되었는지 확인하는 단서입니다.\n\nVS Code 단축키에 익숙하다면 PyCharm에서 VSCode Keymap 플러그인을 사용할 수 있습니다. JetBrains의 공식 이전 안내가 소개하는 선택 사항이며, VS Code와 비슷한 키 조합을 제공하는 역할입니다. 모든 화면·기능·단축키가 완전히 같아지는 것은 아니고 Python 인터프리터나 Git 설정을 바꾸는 기능도 아닙니다. 키맵은 기능을 부르는 키의 연결이고, 기능 자체와 구분합니다.\n\n사전 준비한 PyCharm에서 현재 키맵과 VSCode 키맵을 비교하고, 같은 찾기 기능을 각각의 키 조합으로 실행합니다. 나중에 적용할 때는 현재 키맵과 키 충돌을 확인합니다. 모르는 동작은 Find Action이나 메뉴로 찾아 현재 단축키를 확인할 수 있습니다.\n\n**같이 확인:** 준비된 Python 출력의 실행 파일 경로를 설정표와 대조합니다. 이어 “단축키를 바꾸면 실행할 Python도 바뀌는가”에 답해 봅니다. 키맵은 조작 방식, 인터프리터는 실행 환경이라는 구분을 말할 수 있으면 됩니다.",
+          "body": "### Python 작업을 위한 또 하나의 편집기\n\nPyCharm은 Python 개발을 중심으로 편집·실행·디버깅을 연결하는 IDE입니다. [공식 다운로드](https://www.jetbrains.com/pycharm/download/)에서 Windows용을 받습니다. 현재는 통합 PyCharm 제품이며 핵심 기능은 무료입니다. 처음 설치하면 30일 Pro 체험이 제공되고, 체험 뒤에도 무료 핵심 기능을 계속 사용할 수 있습니다. 추가 Pro 기능의 구독과 구분합니다. [공식 설치 안내](https://www.jetbrains.com/help/pycharm/installation-guide.html)\n\n### 1. 설치하고 같은 폴더 열기\n\n다운로드한 Windows 설치 프로그램을 실행하고 안내를 따라 설치합니다. 여러 JetBrains 제품을 관리하려면 Toolbox App도 사용할 수 있습니다. 설치 옵션의 **Open Folder as Project**는 폴더 우클릭에서 프로젝트를 여는 편의 기능입니다. `.py` 파일 연결과 PATH 추가는 필요한 경우 선택합니다.\n\n시작 메뉴에서 PyCharm을 실행하고 **Open**으로 연습 복제본의 실제 폴더를 엽니다. 이미 프로젝트가 열려 있다면 **파일 → 열기**에서 선택합니다. 앞의 README와 메모 파일이 보이는지 확인합니다. PyCharm을 실행하기 위한 Java 환경은 제품에 포함되어 있습니다.\n\n### 2. 편집기와 Python 실행 환경 구분하기\n\nREADME를 열어 읽는 단계에서는 Python을 새로 설치하지 않아도 됩니다. Python 코드를 실행할 때는 별도로 Python 인터프리터가 필요합니다. 준비된 Python 시연에서는 **인터프리터의 실행 파일**, **실행할 스크립트**, **Working directory**를 각각 확인합니다. 같은 스크립트도 Python과 작업 폴더에 따라 결과가 달라질 수 있습니다. [인터프리터 공식 안내](https://www.jetbrains.com/help/pycharm/configuring-python-interpreter.html)\n\n### 3. 익숙한 키 조합 사용하기\n\nVS Code 키 조합을 쓰고 싶다면 설정의 **Plugins**에서 선택적 **VSCode Keymap** 플러그인을 찾아 설치하고, **Keymap**에서 적용합니다. 버전에 따라 재시작 안내가 나올 수 있습니다. 기존 키맵 이름을 먼저 확인해 두고 같은 파일 찾기 기능을 비교합니다.\n\n키맵은 기능에 연결된 키를 바꾸는 설정입니다. Python 인터프리터나 Git 설정을 바꾸지 않으며 모든 기능이 VS Code와 같아지는 것도 아닙니다. 키가 충돌하거나 기능을 모르겠다면 메뉴나 **Find Action**에서 찾아봅니다. [VS Code에서 이전하는 공식 안내](https://www.jetbrains.com/help/pycharm/migrating-from-vsc-to-pycharm.html)\n\n**직접 확인:** 같은 README의 경로를 확인하고, 현재 키맵으로 파일 찾기를 실행합니다. 이어 강사가 준비한 Python 설정표에서 인터프리터·스크립트·작업 폴더를 구분합니다. 준비된 실행 시연은 별도 강사 프로젝트이며 내 메모 복제본과 구분합니다.",
           "presentationPoints": [
-            "통합 PyCharm의 무료 핵심 기능과 추가 Pro 기능을 구분합니다.",
-            "Python 실행 파일·스크립트·작업 폴더를 각각 확인합니다.",
-            "VSCode Keymap은 선택적 플러그인이며 실행 환경을 바꾸지 않습니다."
+            "공식 설치 프로그램으로 PyCharm을 설치하고 폴더를 엽니다.",
+            "무료 핵심 기능·30일 Pro 체험과 Python 실행 환경을 구분합니다.",
+            "VSCode Keymap은 선택적 설정이며 같은 기능의 키를 비교합니다."
           ]
         },
         {
@@ -1752,11 +1762,11 @@
           "title": "HTML: 강의 카드의 내용과 구조 만들기",
           "minutes": 11,
           "optional": false,
-          "body": "### 내용과 구조를 만듭니다\n\n### 카드 코드의 작은 조각부터 읽기\n\n`<h1>Git</h1>`에서 `<h1>`은 제목의 시작 태그, `Git`은 내용, `</h1>`은 끝 태그입니다. 이 세 부분을 합쳐 제목 요소라고 부릅니다. `<p>...</p>`는 설명 문단, `<button>...</button>`은 버튼입니다. 아래 카드에서는 버튼이 설명 문단보다 먼저 적혀 있어 화면에서도 같은 순서로 확인합니다.\n\n`<article class=\"card\">`와 `</article>` 사이가 카드의 묶음입니다. `class=\"card\"`는 다음 CSS에서 카드 모양을 고르는 이름이고 `id=\"toggle\"`은 이후 JavaScript에서 버튼을 찾을 때 사용할 이름입니다. 이 속성만 붙였다고 색상이나 클릭 동작이 자동으로 만들어지지는 않습니다.\n\n`<head>`의 `<title>`은 브라우저 탭 제목이고, `<body>`의 `<h1>`은 페이지 안의 제목입니다. `<img>`처럼 내용과 종료 태그가 없는 요소도 있지만, 이번에는 필요한 제목·버튼·문단부터 익힙니다.\n\nVS Code에서 별도의 빈 연습 폴더를 열고 index.html 파일을 만듭니다. 아래 코드를 입력하거나 붙여 넣고 Ctrl+S로 저장합니다.\n\n~~~html\n<!doctype html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>나의 강의 카드</title>\n</head>\n<body>\n  <article class=\"card\">\n    <h1>Git</h1>\n    <button id=\"toggle\" type=\"button\">설명 보기</button>\n    <p id=\"detail\">변경을 확인하고 기록합니다.</p>\n  </article>\n</body>\n</html>\n~~~\n\n파일 탐색기에서 저장한 index.html을 브라우저로 열어 제목, 버튼, 설명을 확인합니다. 아직 버튼을 눌러도 아무 일도 일어나지 않습니다. HTML은 제목과 버튼처럼 화면에 담을 내용과 구조를 표현합니다. 이 단계는 준비한 연습이며 실제 Codex 대화가 아닙니다.\n\n**같이 확인:** 코드의 Git 제목을 찾아 화면에서 같은 내용을 가리킵니다. 제목을 수정해 저장하고 브라우저를 새로고침하면 표시가 바뀌는지도 확인합니다. 다음 단계는 같은 파일에 스타일을 연결합니다.\n\n### 선택: VS Code에서 로컬 서버로 확인하기\n\n방금은 파일을 브라우저에서 직접 열었습니다. 이 간단한 카드 예제는 서버 없이도 확인할 수 있습니다. 저장할 때 브라우저를 자동으로 새로고침하며 확인하고 싶다면, 별도로 설치한 [Live Server 확장](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)을 사용할 수 있습니다. VS Code의 기본 기능이 아닌 Ritwick Dey의 확장이므로 촬영 전 설치와 동작을 준비합니다.\n\n1. VS Code에서 확장 메뉴를 열고 게시자 Ritwick Dey의 **Live Server**를 찾아 설치합니다.\n2. 연습 폴더를 열고 저장한 index.html을 탐색기에서 우클릭해 **Open with Live Server**를 선택합니다. 상태 표시줄의 **Go Live**로 시작할 수도 있습니다.\n3. 브라우저에 열린 주소와 Git 카드가 보이는지 확인하고, 제목을 바꿔 저장했을 때 화면이 다시 표시되는지 살펴봅니다. 브라우저가 열리지 않으면 표시된 주소와 폴더·확장 설정을 확인하고, 필요하면 수동으로 새로고침합니다.\n4. 실습을 마치면 상태 표시줄이나 명령 팔레트의 **Live Server: Stop Live Server**로 서버를 종료합니다.\n\n이 로컬 서버는 연습용 정적 파일을 제공하는 도구입니다. 파일을 직접 여는 것과 주소 방식이 다르지만, 이것만으로 사이트가 GitHub Pages에 배포되거나 FastAPI 같은 백엔드가 실행되는 것은 아닙니다. 프로젝트마다 필요한 실행 방법은 다르므로 해당 프로젝트의 안내를 확인합니다. 확장이 준비되지 않았다면 파일을 직접 여는 기본 실습으로 계속합니다.\n\n**준비된 완성본:** [완성된 강의 카드 열기](./examples/course-card/03-javascript/index.html). 시연 전에 완성된 모습을 확인하고, 실습은 별도의 빈 폴더에서 시작합니다.\n\n**공통 실습 단계 확인:** [HTML만 있는 카드](./examples/course-card/01-html/index.html) → [CSS를 더한 카드](./examples/course-card/02-css/index.html) → [JavaScript까지 더한 완성 카드](./examples/course-card/03-javascript/index.html)를 차례로 확인합니다. 첫 사례의 ZIP은 별도의 실제 작업 사례이고, 지금은 강의용 카드 복사본을 직접 만듭니다.",
+          "body": "### 먼저 만들 화면을 확인합니다\n\n이번 웹 기초 실습은 **강의 카드**를 만듭니다. 제목은 Git, 버튼은 설명 보기, 설명은 변경을 확인하고 기록합니다입니다. [완성 카드](./examples/course-card/03-javascript/index.html)를 잠깐 본 뒤, 별도의 빈 카드 연습 폴더에서 HTML → CSS → JavaScript 순서로 직접 완성합니다. 기존 메모 복제본과 파일이 섞이지 않도록 열어 둔 폴더를 확인합니다.\n\n브라우저는 HTML의 구조, CSS의 모양, JavaScript의 동작을 읽어 화면을 만듭니다. 인터넷에서 웹 페이지를 열 때는 브라우저가 서버에 자료를 요청하고 응답을 받습니다. 이번에는 내 컴퓨터에 있는 작은 파일을 먼저 열어 보며, 요청·응답과 프론트엔드·백엔드의 자세한 관계는 다음 주제에서 이어갑니다.\n\n### 1. 태그와 내용으로 화면의 구조 표현하기\n\n짧은 제목 하나부터 읽습니다.\n\n```html\n<h1>Git</h1>\n```\n\n![h1의 시작 태그, Git 내용, 끝 태그를 나누어 읽는 설명 그림](./assets/course/diagrams/html-element.svg)\n\n`<h1>`은 제목의 시작 태그, `Git`은 내용, `</h1>`은 끝 태그입니다. 이 묶음을 요소라고 부릅니다. `<p>...</p>`는 문단, `<button>...</button>`은 버튼입니다. HTML은 브라우저에 담을 내용과 구조를 표현합니다.\n\n### 2. 속성으로 요소에 정보 붙이기\n\n```html\n<article class=\"card\">\n  <h1>Git</h1>\n  <button id=\"toggle\" type=\"button\">설명 보기</button>\n  <p id=\"detail\">변경을 확인하고 기록합니다.</p>\n</article>\n```\n\n![HTML 요소의 속성 이름과 값, class와 id의 연결 대상을 설명하는 그림](./assets/course/diagrams/html-attributes.svg)\n\n`article`은 이 카드 내용을 묶습니다. `class=\"card\"`는 다음 CSS에서 카드 모양을 고를 이름이고, `id=\"toggle\"`과 `id=\"detail\"`은 JavaScript에서 버튼과 설명을 찾을 때 사용합니다. `type=\"button\"`은 이 요소가 일반 버튼임을 나타냅니다. 속성은 보통 시작 태그 안에 적습니다. 속성 이름과 값 사이의 `=`와 값의 따옴표를 함께 확인합니다.\n\n**한 가지 확인:** 아직 색이나 버튼 동작을 만들지 않았습니다. 이 코드에서 버튼 다음에 적힌 설명 문단이 화면에서도 다음에 보이는지 예상해 봅니다.\n\n### 3. HTML 문서의 기본 틀에 넣기\n\n![HTML 문서에서 head의 탭 제목과 body의 화면 내용이 나뉘는 설명 그림](./assets/course/diagrams/html-document.svg)\n\n`head`에는 문서의 정보가, `body`에는 페이지에 표시할 내용이 들어갑니다. `title`은 브라우저 탭 이름이고 `h1`은 페이지 안의 제목입니다. `meta charset=\"utf-8\"`은 한글을 포함한 문자의 인코딩을 알립니다. `meta`처럼 끝 태그를 쓰지 않는 요소도 있습니다.\n\nVS Code의 카드 연습 폴더에서 `index.html`을 만들고 아래 코드를 저장합니다.\n\n~~~html\n<!doctype html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>나의 강의 카드</title>\n</head>\n<body>\n  <article class=\"card\">\n    <h1>Git</h1>\n    <button id=\"toggle\" type=\"button\">설명 보기</button>\n    <p id=\"detail\">변경을 확인하고 기록합니다.</p>\n  </article>\n</body>\n</html>\n~~~\n\n### 4. 저장한 화면을 열고 한 곳 바꾸기\n\n최신 VS Code에서는 탐색기나 편집기 탭의 `index.html`을 우클릭해 **Open in Integrated Browser**를 선택하거나 상단의 **Show Preview** 아이콘을 누를 수 있습니다. HTML 미리보기는 수정 내용을 확인하는 작업대입니다. 메뉴가 없는 구버전이라면 파일 탐색기에서 `index.html`을 외부 브라우저로 열고 저장 후 새로고침합니다. 이 간단한 카드는 파일을 직접 열어도 확인할 수 있습니다. [VS Code HTML 공식 안내](https://code.visualstudio.com/docs/languages/html)\n\n**한 가지 수정:** `<h1>Git</h1>`의 Git을 바꾸어 저장하고 화면의 제목만 바뀌는지 확인한 뒤 원래대로 돌립니다. `<title>`의 글자는 탭 이름에 표시되는지도 비교합니다. 아직 버튼을 눌러도 설명의 표시 상태는 바뀌지 않습니다.\n\n### 선택: 로컬 서버로 확인하기\n\n강사가 별도로 준비한 [Live Server 확장](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)을 사용할 수도 있습니다. 게시자는 Ritwick Dey이며 VS Code의 기본 기능과 구분합니다. 설치한 환경에서는 카드 폴더를 열고 `index.html` 우클릭의 **Open with Live Server** 또는 상태 표시줄의 **Go Live**로 시작합니다. 표시된 주소에서 카드를 확인하고, 마치면 **Live Server: Stop Live Server**로 종료합니다.\n\n로컬 서버는 연습 파일을 제공하는 도구입니다. 실행했다고 GitHub Pages에 배포되거나 FastAPI 같은 백엔드가 준비되는 것은 아닙니다. 확장이 없다면 기본 미리보기나 외부 브라우저 실습을 이어갑니다.\n\n**단계 예제:** [HTML 카드](./examples/course-card/01-html/index.html) → [CSS 카드](./examples/course-card/02-css/index.html) → [JavaScript 완성 카드](./examples/course-card/03-javascript/index.html). 다음 단계에서는 같은 카드에 모양을 더합니다.",
           "presentationPoints": [
-            "VS Code의 연습 폴더에 index.html을 만들고 저장합니다.",
-            "직접 열거나 선택적인 Live Server로 브라우저 화면을 확인합니다.",
-            "태그·내용·닫는 태그와 탭 제목·화면 제목을 구분합니다."
+            "시작 태그·내용·끝 태그와 속성을 작은 코드에서 읽습니다.",
+            "head의 탭 정보와 body의 화면 내용을 구분해 index.html을 저장합니다.",
+            "내장 미리보기 또는 외부 브라우저로 열어 제목 하나를 바꿔 확인합니다."
           ]
         },
         {
@@ -1764,7 +1774,7 @@
           "title": "CSS: 같은 강의 카드 꾸미기",
           "minutes": 7,
           "optional": false,
-          "body": "### 같은 카드의 모양을 바꿉니다\n\n앞에서 만든 연습 폴더에 style.css 파일을 추가하고 다음 내용을 저장합니다.\n\n~~~css\nbody {\n  font-family: sans-serif;\n  background: #f1f5f9;\n  padding: 24px;\n}\n.card {\n  max-width: 320px;\n  padding: 24px;\n  border-radius: 12px;\n  background: white;\n}\nbutton {\n  padding: 8px 12px;\n  cursor: pointer;\n}\n~~~\n\n### 이 한 줄의 뜻\n\n`.card { padding: 24px; }`에서 `.card`는 class가 card인 요소를 고르는 **선택자**, `padding`은 안쪽 여백을 정하는 **속성**, `24px`은 그 **값**입니다. HTML의 `class=\"card\"`와 CSS의 `.card`가 연결되며, 점은 CSS 선택자에 쓰는 표시입니다.\n\nindex.html의 head 안, 닫는 head 태그 앞에 다음 한 줄을 추가하고 저장합니다.\n\n~~~html\n<link rel=\"stylesheet\" href=\"style.css\">\n~~~\n\n브라우저를 새로고침해 배경색, 카드의 흰색 배경과 여백, 둥근 모서리가 적용되는지 확인합니다. CSS는 내용을 새로 만드는 대신 HTML 요소의 모양을 정합니다. 파일 이름과 위치가 다르면 스타일이 적용되지 않으므로 같은 폴더에 저장했는지 확인합니다.\n\n**같이 확인:** CSS의 padding: 24px을 32px로 바꾸어 저장·새로고침하고 여백이 달라지는지 살펴봅니다.\n\n**단계 예제:** [CSS 카드](./examples/course-card/02-css/index.html)를 열어 HTML만 있던 카드와 모양을 비교합니다.",
+          "body": "### 같은 카드에 모양을 더합니다\n\nHTML로 만든 제목·버튼·설명은 그대로 두고 여백과 색을 더합니다. 먼저 카드의 여백을 정하는 작은 규칙 하나를 읽습니다.\n\n```css\n.card {\n  padding: 24px;\n}\n```\n\n![CSS 규칙의 선택자 card, 속성 padding, 값 24px을 나누어 읽는 설명 그림](./assets/course/diagrams/css-declaration.svg)\n\n`.card`는 `class=\"card\"`인 HTML 요소를 고르는 **선택자**, `padding`은 안쪽 여백을 정하는 **속성**, `24px`은 그 **값**입니다. 중괄호 안에 선언을 적고 세미콜론으로 마칩니다. HTML의 class 이름에는 점을 쓰지 않고 CSS에서 `.card`라고 선택합니다.\n\n### 1. 스타일 파일 저장하기\n\n앞서 만든 카드 폴더에 `style.css`를 만들고 다음 내용을 저장합니다.\n\n~~~css\nbody {\n  font-family: sans-serif;\n  background: #f1f5f9;\n  padding: 24px;\n}\n.card {\n  max-width: 320px;\n  padding: 24px;\n  border-radius: 12px;\n  background: white;\n}\nbutton {\n  padding: 8px 12px;\n  cursor: pointer;\n}\n~~~\n\n`body`는 페이지 전체의 글꼴·배경과 여백을, `.card`는 카드의 크기·배경·둥근 모서리를, `button`은 버튼의 여백과 커서를 정합니다.\n\n### 2. HTML과 CSS 연결하기\n\n`index.html`의 `head` 안, 닫는 `</head>` 앞에 아래 줄을 넣고 저장합니다.\n\n~~~html\n<link rel=\"stylesheet\" href=\"style.css\">\n~~~\n\n`href`의 파일 이름과 실제 `style.css` 위치가 같아야 합니다. 브라우저를 새로고침해 연한 배경, 흰색 카드와 여백이 보이는지 확인합니다. 바뀌지 않으면 두 파일의 위치·파일명·저장 여부부터 살펴봅니다.\n\n**한 가지 수정:** `.card` 안의 `padding: 24px`만 `32px`로 바꾸어 카드 안쪽 여백을 비교한 뒤 **24px로 되돌립니다.** 뒤의 템플릿 비교도 24px을 기준으로 진행합니다.\n\n**단계 예제:** [CSS 카드](./examples/course-card/02-css/index.html)를 HTML 카드와 나란히 비교합니다. 다음 단계에서는 같은 버튼에 동작을 연결합니다.",
           "presentationPoints": [
             "style.css를 만들고 index.html에 연결합니다.",
             "저장 후 새로고침해 색상과 여백을 확인합니다.",
@@ -1776,7 +1786,7 @@
           "title": "JavaScript: 버튼 클릭으로 설명 펼치기",
           "minutes": 7,
           "optional": false,
-          "body": "### 버튼 클릭에 반응하게 만듭니다\n\n앞에서 만든 index.html의 버튼과 설명 줄을 다음처럼 수정합니다. hidden은 처음에 설명을 숨기고 aria-expanded는 버튼의 펼침 상태를 전달합니다.\n\n~~~html\n<button id=\"toggle\" type=\"button\" aria-expanded=\"false\">설명 보기</button>\n<p id=\"detail\" hidden>변경을 확인하고 기록합니다.</p>\n~~~\n\n같은 연습 폴더에 script.js를 만들고 다음 코드를 저장합니다.\n\n~~~javascript\nconst button = document.querySelector('#toggle');\nconst detail = document.querySelector('#detail');\n\nbutton.addEventListener('click', () => {\n  const isHidden = detail.hidden;\n  detail.hidden = !isHidden;\n  button.setAttribute('aria-expanded', String(isHidden));\n});\n~~~\n\n### 코드가 하는 일을 세 단계로 보기\n\n1. `querySelector('#toggle')`과 `querySelector('#detail')`로 HTML의 버튼과 설명을 찾습니다. 여기서 #은 id를 고르는 CSS 선택자 표시입니다.\n2. `addEventListener('click', ...)`로 버튼 클릭이 일어날 때 실행할 동작을 연결합니다.\n3. `hidden` 값을 반대로 바꿔 설명을 열거나 닫고 `aria-expanded`에도 현재 펼침 상태를 반영합니다.\n\n화면에 처음 보이는지와 클릭했을 때 바뀌는지를 나누어 확인합니다. HTML의 id, JavaScript의 선택자, 연결한 파일 이름이 일치해야 이 예제가 작동합니다.\n\nindex.html의 head 안에 아래 줄을 추가하고 저장합니다. defer는 HTML을 읽은 뒤 스크립트를 실행하도록 합니다.\n\n~~~html\n<script defer src=\"script.js\"></script>\n~~~\n\n브라우저를 새로고침하면 설명이 처음에는 숨겨집니다. 버튼을 클릭하면 설명이 나타나고 다시 클릭하면 숨겨집니다. 키보드로 버튼을 선택해 Enter나 Space를 눌러도 같은지 확인합니다. 동작하지 않으면 세 파일이 같은 폴더에 있는지, 저장과 새로고침을 했는지 확인합니다.\n\n**같이 확인:** HTML은 구조, CSS는 모양, JavaScript는 버튼 클릭에 따른 동작을 담당한다고 구분합니다. 이것이 다음 단원에서 다룰 프론트엔드 작업의 한 예입니다.\n\n**단계 예제:** [완성된 카드](./examples/course-card/03-javascript/index.html)에서 버튼을 클릭하고 Enter·Space로도 펼쳐 봅니다.",
+          "body": "### 같은 버튼에 클릭 동작 연결하기\n\nHTML로 만든 버튼을 누르면 설명이 펼쳐지고 다시 누르면 접히게 만듭니다. 그림에서 **요소 찾기 → 클릭 듣기 → 상태 바꾸기**를 먼저 따라봅니다.\n\n![JavaScript가 버튼과 설명을 찾고 클릭을 기다린 뒤 hidden과 aria-expanded 상태를 바꾸는 흐름](./assets/course/diagrams/javascript-flow.svg)\n\n### 1. 처음 보일 상태 정하기\n\n앞서 만든 `index.html`의 버튼과 설명 줄을 바꿉니다. `hidden`은 설명을 처음에 숨기고, `aria-expanded=\"false\"`는 버튼의 펼침 상태를 전달합니다.\n\n~~~html\n<button id=\"toggle\" type=\"button\" aria-expanded=\"false\">설명 보기</button>\n<p id=\"detail\" hidden>변경을 확인하고 기록합니다.</p>\n~~~\n\n### 2. 클릭할 때 할 일 적기\n\n같은 카드 폴더에 `script.js`를 만들고 다음 코드를 저장합니다.\n\n~~~javascript\nconst button = document.querySelector('#toggle');\nconst detail = document.querySelector('#detail');\n\nbutton.addEventListener('click', () => {\n  const isHidden = detail.hidden;\n  detail.hidden = !isHidden;\n  button.setAttribute('aria-expanded', String(isHidden));\n});\n~~~\n\n첫 두 줄은 HTML의 `id`로 버튼과 설명을 찾습니다. 여기서 `#toggle`은 id가 toggle인 요소를 고르는 선택자입니다. `addEventListener('click', ...)`는 클릭할 때 실행할 동작을 연결합니다. `detail.hidden`의 현재 값을 읽고 반대로 바꿔 표시·숨김을 전환하며 버튼의 `aria-expanded`도 함께 바꿉니다.\n\n### 3. HTML에 연결하고 결과 확인하기\n\n`index.html`의 `head` 안에 아래 줄을 추가합니다. `defer`는 HTML을 읽은 뒤 스크립트를 실행하도록 합니다. 세 파일을 모두 저장한 뒤 미리보기를 새로고침합니다.\n\n~~~html\n<script defer src=\"script.js\"></script>\n~~~\n\n처음에는 설명이 숨겨져 있어야 합니다. 버튼을 한 번 클릭하면 설명이 나타나고, 다시 클릭하면 숨겨집니다. Tab으로 버튼을 선택해 Enter나 Space를 눌러도 같은지 확인합니다. 동작하지 않으면 `toggle`·`detail` 이름과 파일 연결, 저장 여부를 대조합니다.\n\n**한 가지 수정:** 설명 문장만 나의 소개로 바꾸어 저장하고, 같은 버튼 동작이 유지되는지 확인합니다. HTML의 내용, CSS의 모양, JavaScript의 동작이 같은 카드에 함께 적용되었습니다.\n\n**단계 예제:** [완성 카드](./examples/course-card/03-javascript/index.html)의 클릭·키보드 동작을 확인합니다. 다음 단원에서는 이 카드가 프론트엔드에 어떻게 속하고 백엔드와 어떻게 연결되는지 살펴봅니다.",
           "presentationPoints": [
             "script.js를 연결하고 버튼 클릭을 처리합니다.",
             "클릭마다 설명이 보이고 숨겨지는지 확인합니다.",
@@ -1837,6 +1847,36 @@
           ]
         },
         {
+          "id": "ide-vscode-setup",
+          "title": "VS Code 설치와 기본 화면 준비",
+          "description": "Windows User Setup을 기준으로 PATH와 선택 옵션을 읽고 설치합니다. 이미 설치되어 있으면 새 설치 대신 버전과 화면 설정만 확인합니다.",
+          "scene": "vscode",
+          "code": "공식 다운로드 → Windows User Installer\n설치 옵션: Add to PATH 확인\n선택: Open with Code · 한국어 표시 언어\n설정: 글자 크기 · Alt+Z 줄바꿈",
+          "language": "text",
+          "output": "설치 후 시작 메뉴에서 VS Code가 열립니다. AI 서비스 연결과 확장 설치는 이번 기본 실습에 필수가 아닙니다.",
+          "focus": "ide",
+          "fileName": "VS Code · 설치와 기본 설정",
+          "files": [
+            "README.md"
+          ]
+        },
+        {
+          "id": "ide-vscode-code",
+          "title": "새 터미널에서 같은 폴더 열기",
+          "description": "설치 후 새 PowerShell을 열고 버전을 확인합니다. pwd가 앞서 만든 복제본을 가리킬 때 code .으로 열어 같은 파일을 확인합니다. pwd는 Windows PowerShell의 Get-Location 기본 별칭입니다.",
+          "scene": "terminal",
+          "code": "code --version\npwd\ncode .",
+          "language": "powershell",
+          "output": "code 버전 확인 → 현재 경로 확인 → 같은 복제본이 VS Code에서 열림\ncode를 찾지 못하면 새 터미널과 설치 PATH를 확인하거나 파일 → 폴더 열기를 사용합니다.",
+          "focus": "terminal",
+          "fileName": "git-practice-clone · PowerShell",
+          "files": [
+            "README.md",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
           "id": "tools-01",
           "title": "복제본을 VS Code에서 열기",
           "description": "GitHub에서 복제하고 README를 만든 git-practice-clone의 실제 경로를 폴더 열기로 선택합니다.",
@@ -1879,6 +1919,21 @@
           "fileName": "README.md · Command Palette",
           "files": [
             "README.md"
+          ]
+        },
+        {
+          "id": "ide-pycharm-setup",
+          "title": "PyCharm 설치하고 폴더 열기",
+          "description": "공식 Windows 설치 프로그램을 준비하고 무료 핵심 기능과 30일 Pro 체험을 구분합니다. 파일 탐색과 Python 실행 환경 준비는 다른 단계입니다.",
+          "scene": "pycharm",
+          "code": "공식 다운로드 → Windows 설치 프로그램\n설치: Open Folder as Project 등 선택 옵션 확인\n시작 메뉴 → PyCharm → Open → 메모 복제본\n선택: Plugins → VSCode Keymap → Keymap 적용",
+          "language": "text",
+          "output": "같은 README와 메모 파일이 열립니다. Python 실행에는 인터프리터가 별도로 필요하며, 키맵은 기능을 부르는 키 조합을 바꿉니다.",
+          "focus": "ide",
+          "fileName": "PyCharm · 설치와 폴더 열기",
+          "files": [
+            "README.md",
+            "note.txt"
           ]
         },
         {
@@ -1944,7 +1999,7 @@
         {
           "id": "html-practice",
           "title": "HTML로 강의 카드 만들기",
-          "description": "별도 연습 폴더에 index.html을 만들고 저장한 뒤 브라우저에서 엽니다. 버튼 동작은 아직 연결하지 않았습니다. 선택 사항: 사전 설치한 Live Server 확장으로 로컬 서버를 열어 확인할 수도 있습니다. <h1>의 시작 태그·내용·끝 태그와 title·h1의 표시 위치를 짚습니다.",
+          "description": "별도 카드 연습 폴더에 index.html을 만들고 저장합니다. 작은 태그·속성·문서 그림을 읽고 내장 미리보기 또는 외부 브라우저로 같은 카드를 확인합니다. 버튼 동작은 아직 연결하지 않았습니다.",
           "scene": "vscode",
           "code": "<!doctype html>\n<html lang=\"ko\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>나의 강의 카드</title>\n</head>\n<body>\n  <article class=\"card\">\n    <h1>Git</h1>\n    <button id=\"toggle\" type=\"button\">설명 보기</button>\n    <p id=\"detail\">변경을 확인하고 기록합니다.</p>\n  </article>\n</body>\n</html>",
           "language": "html",
@@ -1958,7 +2013,7 @@
         {
           "id": "css-practice",
           "title": "CSS로 강의 카드 꾸미기",
-          "description": "같은 폴더에 style.css를 저장하고 index.html의 head 안에 link 태그를 넣습니다. 저장 후 새로고침합니다. .card는 선택자, padding은 속성, 24px은 값입니다.",
+          "description": "같은 폴더에 style.css를 저장하고 index.html의 head에 link 태그를 넣습니다. 선택자·속성·값 그림을 읽고 .card의 여백을 24px에서 32px로 비교한 뒤 24px로 되돌립니다.",
           "scene": "vscode",
           "code": "body {\n  font-family: sans-serif;\n  background: #f1f5f9;\n  padding: 24px;\n}\n.card {\n  max-width: 320px;\n  padding: 24px;\n  border-radius: 12px;\n  background: white;\n}\nbutton {\n  padding: 8px 12px;\n  cursor: pointer;\n}",
           "language": "css",
@@ -1973,7 +2028,7 @@
         {
           "id": "javascript-practice",
           "title": "JavaScript로 설명 펼치기",
-          "description": "버튼에 aria-expanded=\"false\", 설명에 hidden을 추가합니다. script.js를 저장하고 head 안에 defer script 태그를 넣은 뒤 새로고침합니다. 요소 찾기 → 클릭 듣기 → 숨김과 펼침 상태 바꾸기로 나누어 읽습니다.",
+          "description": "기존 HTML과 CSS 카드에 hidden과 aria-expanded를 추가하고 script.js를 defer로 연결합니다. 요소 찾기 → 클릭 듣기 → 상태 바꾸기 그림과 코드의 각 부분을 대응합니다.",
           "scene": "vscode",
           "code": "const button = document.querySelector('#toggle');\nconst detail = document.querySelector('#detail');\n\nbutton.addEventListener('click', () => {\n  const isHidden = detail.hidden;\n  detail.hidden = !isHidden;\n  button.setAttribute('aria-expanded', String(isHidden));\n});",
           "language": "javascript",
@@ -2077,16 +2132,32 @@
         {
           "title": "참고한 공개 핸드북 · CSS로 꾸미기",
           "url": "https://vibe.onebitefe.com/lessons/s05-c04-css"
+        },
+        {
+          "title": "VS Code Windows 설치",
+          "url": "https://code.visualstudio.com/docs/setup/windows"
+        },
+        {
+          "title": "VS Code 표시 언어",
+          "url": "https://code.visualstudio.com/docs/configure/locales"
+        },
+        {
+          "title": "VS Code HTML 미리보기",
+          "url": "https://code.visualstudio.com/docs/languages/html"
+        },
+        {
+          "title": "PyCharm 설치",
+          "url": "https://www.jetbrains.com/help/pycharm/installation-guide.html"
         }
       ],
-      "closing": "Codex의 변경은 프로젝트 경로·diff·실행 결과로 확인합니다. README 원문과 미리보기, HTML 직접 열기와 선택적인 로컬 서버를 확인하고, VS Code의 찾기, PyCharm의 Python 실행 환경과 키맵을 구분하고, 통합 도구에서도 저장·커밋·GitHub 공유를 각각 확인합니다. 이어서 VS Code에서 한 카드의 HTML 구조, CSS 모양, JavaScript 버튼 동작을 만들었습니다. 다음 단원에서 이 화면이 프론트엔드에 어떻게 속하고 백엔드와 어떻게 연결되는지 살펴봅니다.",
+      "closing": "VS Code 설치·기본 설정 후 앞서 만든 복제본의 README를 검색하고 미리보기로 확인했습니다. PyCharm 설치와 무료 핵심 기능, Python 인터프리터와 키맵의 역할도 구분했습니다. 별도의 강의 카드 폴더에서는 태그와 속성, CSS 선택자·속성·값, JavaScript 클릭 흐름을 그림과 코드로 읽고 같은 화면을 완성했습니다. 다음 단원에서 이 카드가 프론트엔드에 속하는 이유와 백엔드와의 관계를 살펴봅니다.",
       "presentation": {
-        "caseSummary": "별도로 준비된 강의노트 프로젝트의 가상 사례에서 Codex가 바꾼 제목과 요청 밖 ID 변경을 PyCharm diff로 찾습니다. 그 다음 메모 복제본으로 돌아와 앞서 만든 README의 나란한 미리보기와 무료 VS Code의 필수 조작, PyCharm의 Python 환경과 선택적 VSCode 키맵, 통합 도구의 확인 흐름으로 이어갑니다. 이어서 수업용 카드 예제로 HTML·CSS·JavaScript를 VS Code에서 한 단계씩 작성합니다.",
+        "caseSummary": "별도 강사 시연에서 Codex의 변경을 확인한 뒤 VS Code 설치·기본 설정과 같은 메모 복제본의 README 미리보기를 연습합니다. PyCharm의 간단한 설치와 선택적 키맵도 구분합니다. 이어 별도의 강의 카드 폴더에서 태그·속성·문서 구조 그림을 읽고 HTML·CSS·JavaScript를 한 단계씩 적용합니다.",
         "demo": {
           "program": "PyCharm · VS Code · 브라우저",
           "file": "별도 강사 시연 public/data/course.json · 메모 복제본 README.md · 별도 연습 폴더의 index.html, style.css, script.js",
-          "command": "PyCharm에서 별도 준비한 Codex 변경 diff와 경로 확인\nVS Code에서 git-practice-clone 폴더 열기 → README 원문·미리보기 확인·수정·저장\nVS Code 연습 폴더에서 index.html 저장 → 브라우저 확인 (선택: 준비한 Live Server)\nstyle.css 작성·연결 → 저장·새로고침 → 카드 모양 확인\nscript.js 작성·연결 → 저장·새로고침 → 버튼으로 설명 펼치기·접기",
-          "expectedResult": "Codex 변경을 IDE에서 확인합니다. 같은 강의 카드가 HTML 내용, CSS 모양, JavaScript 클릭 동작을 차례로 갖추며 버튼 클릭과 키보드 조작으로 설명을 펼치고 접습니다.",
+          "command": "VS Code 설치 옵션·새 터미널 확인 → 메모 복제본 폴더 열기\nREADME 검색·미리보기 확인 → 같은 문서 한 줄 수정·저장\nPyCharm 설치 안내·폴더 열기 → 선택적 키맵과 인터프리터 구분\n별도 카드 폴더에서 태그·속성·문서 그림 확인 → index.html 저장·미리보기\nstyle.css 작성·연결 → 24px 여백 확인\nscript.js 작성·연결 → 버튼과 Enter·Space로 펼치기·접기",
+          "expectedResult": "편집기를 준비해 앞서 만든 README를 확인합니다. 동일한 Git 강의 카드가 HTML 구조, CSS 모양, JavaScript 클릭 동작을 차례로 갖추며 각 도해와 실제 파일의 연결을 설명할 수 있습니다.",
           "durationMinutes": 8
         },
         "returnSummary": "IDE에서 파일과 실행 결과를 확인하고, 같은 카드에 HTML 구조·CSS 모양·JavaScript 동작을 차례로 더했습니다. 다음은 이 실습과 프론트엔드의 관계, 백엔드와의 연결입니다."

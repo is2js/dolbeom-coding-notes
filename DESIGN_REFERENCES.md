@@ -1,6 +1,6 @@
 # 강의 노트 디자인 참고 기록
 
-확인일: 2026년 11월 6일
+최근 확인일: 2026년 11월 11일 (최초 디자인 참고 기록: 2026년 11월 6일)
 
 돌범의 강의 노트는 크림색 작업대와 세이지색 강조, 입체 SVG를 바탕으로 구성합니다. 아래 사이트에서 관찰한 탐색 방식과 시각자료의 역할을 강의 노트에 맞게 재구성했습니다. 강의 내용의 출처와 UI 디자인의 참고는 구분합니다.
 
@@ -21,6 +21,20 @@
 | 한 입 크기로 잘라먹는 바이브코딩 핸드북 | [공개 핸드북](https://vibe.onebitefe.com/) | 주제와 소주제의 계층, 본문과 시각자료·라이브 데모의 구분 | 주제 탐색과 현재 소주제 표시를 분리하고, 본문에 맞춘 그림 및 관련 예제를 함께 연결합니다. 공개 화면의 탐색 구조를 참고했습니다. |
 | Microsoft Learn | [웹 개발 입문 모듈의 소개 화면](https://learn.microsoft.com/en-us/training/modules/get-started-with-web-development/1-introduction) | 현재 단위와 전체 단위 수, 펼쳐 보는 모듈 메뉴, 다음 단위 안내, 이미지 확대 링크 | 현재 순서와 제목을 함께 표시합니다. 모바일에서는 현재 주제를 먼저 보여주고 전체 주제 목록을 펼치며, 세부 그림을 크게 볼 수 있게 합니다. |
 | Brilliant | [공개 소개 화면](https://brilliant.org/) | 개념별 그림과 설명의 묶음, 선택 상태가 분명한 주제 전환 | 일곱 주제의 그림과 글자 영역을 분리하고 실제 설명 장면에 캡션을 붙입니다. 강의 사례·예제와 SVG는 자체 제작합니다. |
+
+## 웹 기초와 편집기 설치 구성
+
+확인일: 2026년 11월 11일. 한입 바이브코딩 핸드북의 아래 공개 강의를 브라우저에서 확인했습니다. 학습 순서와 설명용 도해의 역할을 참고하며, 강의 카드 프로젝트와 기존 크림·세이지 그림체로 다시 구성합니다. 참고 강의의 타이머 프로젝트, 문구, 코드와 이미지 파일은 복제하지 않습니다.
+
+| 확인한 화면과 URL | 관찰한 구성·도해의 역할 | 자체 구현 적용 위치 |
+| --- | --- | --- |
+| [인터넷과 웹](https://vibe.onebitefe.com/lessons/s05-c01-internet-web) | 학습 목표를 먼저 제시하고 브라우저 요청·서버 응답·화면 표시를 그림과 짧은 설명으로 연결합니다. HTML·CSS·JavaScript가 필요한 이유를 전체 흐름에서 소개합니다. | 기존 프론트엔드·백엔드 설명과 IDE의 강의 카드 실습을 연결합니다. 카드의 내용·모양·동작을 같은 화면에서 확인합니다. |
+| [HTML로 배치하기](https://vibe.onebitefe.com/lessons/s05-c02-html-layout), [HTML 핵심 태그 살펴보기](https://vibe.onebitefe.com/lessons/s05-c03-html-tags) | 짧은 태그 원문과 표시 결과를 가까이 두고, 시작·내용·끝 및 속성의 이름·값을 화살표와 라벨로 구분합니다. 문서 골격도 별도로 설명합니다. | `tools-html` 본문 중간에 자체 도해 `public/assets/course/diagrams/html-element.svg`, `html-attributes.svg`, `html-document.svg`를 배치합니다. 현재 카드의 `Git` 제목, 버튼과 설명을 사용합니다. |
+| [CSS로 꾸미기](https://vibe.onebitefe.com/lessons/s05-c04-css), [JavaScript로 움직이기](https://vibe.onebitefe.com/lessons/s05-c05-javascript), [HTML·CSS·JS 프로젝트](https://vibe.onebitefe.com/lessons/s05-c06-html-css-js-project) | 선택자·속성·값 및 HTML class와 CSS의 연결을 분해하고, 이벤트가 동작을 실행해 화면을 바꾸는 과정을 나타냅니다. 기능을 단계별로 더한 후 결과를 확인합니다. | `tools-css`의 `css-declaration.svg`, `tools-javascript`의 `javascript-flow.svg`에서 현재 카드의 24px 여백과 설명 펼치기 흐름을 표현합니다. HTML → CSS → JavaScript의 기존 카드 완성 단계를 유지합니다. |
+| [VS Code 소개](https://vibe.onebitefe.com/lessons/s04-c01-vscode-intro), [VS Code 설치·사용법](https://vibe.onebitefe.com/lessons/s04-c02-vscode-install) | 설치부터 폴더 열기·파일 저장·확장·설정·통합 터미널까지 화면별 작업을 작게 나누고, 사용자가 눌러야 할 기능의 역할을 설명합니다. | 새 `tools-vscode-setup`과 기존 `tools-vscode`에 Windows 설치·기본 설정·같은 README 열기 순서를 구성합니다. `tools-pycharm`에는 짧은 설치·첫 폴더 열기 안내를 같은 원칙으로 덧붙입니다. |
+
+- 본문 도해는 JSON의 일반 이미지 문법으로 연결하고, `src/course-markdown.js`에서 위 다섯 SVG 파일명만 명시적으로 허용합니다. 일반 강의 본문과 발표의 본문 보기에서 같은 자료를 사용합니다.
+- 기술 내용은 참고 화면과 별도로 [MDN HTML 기본 문법](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax), [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element), [VS Code Windows 설치](https://code.visualstudio.com/docs/setup/windows), [기본 편집·서식](https://code.visualstudio.com/docs/editing/codebasics), [표시 언어](https://code.visualstudio.com/docs/configure/locales), [PyCharm 설치](https://www.jetbrains.com/help/pycharm/installation-guide.html)로 확인합니다. HTML의 빈 요소, 내장 포매터와 선택 확장, 실제 터미널 경로와 버전별 설치 화면을 정확히 구분합니다.
 
 ## 강의 개념 그림 참고
 

@@ -26,6 +26,8 @@ import { caseImageViewerState, caseImageViewerMethods } from './case-image-viewe
 import { formatSiteUpdatedAt } from './site-update.js';
 import { commandUnits } from './command-copy-units.js';
 import { writeClipboard } from './clipboard.js';
+import { markdownPractice } from './markdown-practice.js';
+import markdownPracticeHtml from './markdown-practice.html?raw';
 import topicNavigationHtml from './topic-navigation.html?raw';
 import artViewerHtml from './art-viewer.html?raw';
 import caseImageViewerHtml from './case-image-viewer.html?raw';
@@ -47,11 +49,12 @@ import './topic-navigation.css';
 import './site-update.css';
 import './command-copy.css';
 import './prose.css';
+import './markdown-practice.css';
 
 document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
-document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml);
+document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml).replace('<!-- MARKDOWN_PRACTICE -->', markdownPracticeHtml.replace('PRACTICE_BODY', 'learningPage.section.body'));
 document.getElementById('intro-template').innerHTML = homeHtml;
-document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml)}</template>`;
+document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml).replace('<!-- MARKDOWN_PRACTICE -->', markdownPracticeHtml.replace('PRACTICE_BODY', 'presentationPage.section.body'))}</template>`;
 document.getElementById('art-viewer-host').innerHTML = artViewerHtml;
 document.getElementById('art-viewer-host').insertAdjacentHTML('beforeend', caseImageViewerHtml);
 document.querySelector('.brand h1').setAttribute('x-text', 'brandTitle');
@@ -108,6 +111,7 @@ function lessonObject(id) {
   return `<svg viewBox="0 0 74 74" fill="none" ${common} aria-hidden="true">${objects[objectKey] || objects.tools}</svg>`;
 }
 Alpine.data('introTypewriter', introTypewriter);
+Alpine.data('markdownPractice', markdownPractice);
 Alpine.data('courseApp', () => ({
   ...presenterState(), ...presenterMethods, ...learningState(), ...learningMethods,
   ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods, ...caseImageViewerState(), ...caseImageViewerMethods,

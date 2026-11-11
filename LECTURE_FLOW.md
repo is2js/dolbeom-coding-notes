@@ -15,7 +15,7 @@
 터미널의 네 본편 절은 다음 순서로 연습합니다.
 
 1. **위치·GUI 전환·폴더:** `Get-Location`과 `pwd` → 실제 경로만 복사해 Win+R에 붙여 넣기 또는 PowerShell에서 `explorer.exe .` → `cd .`과 `cd ..`·`pwd`로 현재·부모 폴더 비교 후 실제 경로로 돌아오기 → `Get-ChildItem`과 `ls` → `Set-Location 'C:\Users'`로 사용자 목록 확인 → `cd ~`로 자신의 쓰기 가능한 홈으로 이동·확인 → `Test-Path`가 False인지 확인 → `mkdir` 또는 `New-Item -ItemType Directory`로 생성 → 방금 만든 빈 폴더를 확인하고 `rmdir` 또는 `Remove-Item`으로 삭제 → 삭제 확인 후 재생성 → `cd` 또는 `Set-Location`으로 이동 → `pwd`·`ls`·`explorer.exe .` → 탐색기 주소줄 `wt -d .` → 열린 Terminal의 프로필·위치 확인. `C:\Users`는 위치 확인 예시이며, 폴더는 그곳이 아니라 자신의 쓰기 가능한 홈에서 만듭니다. 같은 기능의 두 명령은 비교 예시로, 폴더를 생성할 때는 둘 중 하나만 실행합니다.
-2. **GUI·메모 파일:** 앞에서 만든 `dolbeom-demo` 폴더에서 `pwd`로 경로 확인 → `Test-Path .\memo.txt`가 False일 때 `New-Item -ItemType File -Path .\memo.txt` 또는 PowerShell 별칭 `ni` → 탐색기에서 메모장으로 열기 → `Hello, Codex!` 입력·저장 → `ls`와 `cat .\memo.txt` 또는 `Get-Content -LiteralPath .\memo.txt`로 같은 파일 확인. 기존 파일이 있다면 다른 이름을 사용합니다.
+2. **GUI·메모 파일:** 앞에서 만든 `git-practice` 폴더에서 `pwd`로 경로 확인 → `Test-Path .\note.txt`가 False일 때 `New-Item -ItemType File -Path .\note.txt` 또는 PowerShell 별칭 `ni` → 탐색기에서 메모장으로 열기 → `Hello, Codex!` 입력·저장 → `ls`와 `cat .\note.txt` 또는 `Get-Content -LiteralPath .\note.txt`로 같은 파일 확인. 기존 파일이 있다면 다른 이름을 사용합니다.
 3. **호스트·셸:** Terminal·PowerShell·cmd·설치된 Git Bash 구분 → Terminal의 테마·탭·분할·단축키·시작 위치 장점 → `$PSVersionTable.PSVersion` → 기본 5.1과 선택 설치 7의 공존 확인. 7 설치는 필수가 아닙니다.
 4. **설정·정리:** Ctrl+, → 작업에서 기본 키와 강사의 사용자 지정 키 비교 → 새 탭·탭 이동 → 오른쪽·아래 분할 → 포커스 이동·연습 창 닫기 → 핵심 체크리스트. 강사 예시는 Ctrl+1~9, Ctrl+Shift+\, Ctrl+Shift+-, Ctrl+Alt+방향키, Ctrl+W이며 수강생에게 자동 적용되는 기본값은 아닙니다. Ctrl+Alt+Left의 기본 동작과 강사 설정은 서로 다릅니다. 키는 버전·설정·키보드 배열에 따라 달라질 수 있습니다.
 
@@ -40,11 +40,11 @@ PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도
 
 실전 전환 시간은 각 주제의 본편 시간에 포함됩니다. 보충 노트 30분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
 
-터미널과 Git은 실제 작업 화면으로 시작합니다. Git에서는 별도의 빈 폴더에 메모 파일을 만들고 버전 1·2를 커밋합니다. 파일을 저장하고 닫은 뒤 상태가 깨끗한지 확인하고, 이전 커밋에서 내용을 읽은 뒤 `git switch main`으로 돌아옵니다. main은 최신 기록을 유지하며 HEAD의 확인 위치만 바뀐다는 점을 그림과 함께 설명합니다. GitHub에서는 같은 `git-practice` 저장소를 본인이 만든 빈 원격에 push하고 다른 새 폴더에서 clone합니다. Markdown에서는 복제본에 없는 README를 새로 작성하고 별도로 준비한 카드 README와 비교합니다. 강사가 직접 저장소를 만들고 인증합니다.
+터미널과 Git은 실제 작업 화면으로 시작합니다. Git에서는 터미널에서 만든 같은 git-practice/note.txt를 다시 열어 version 1로 수정하고 버전 1·2를 커밋합니다. 초기화 전 .git과 상위 저장소가 없는지 확인합니다. 파일을 저장하고 닫은 뒤 상태가 깨끗한지 확인하고, 이전 커밋에서 내용을 읽은 뒤 `git switch main`으로 돌아옵니다. main은 최신 기록을 유지하며 HEAD의 확인 위치만 바뀐다는 점을 그림과 함께 설명합니다. GitHub에서는 같은 `git-practice` 저장소를 본인이 만든 빈 원격에 push하고 다른 새 폴더에서 clone합니다. Markdown에서는 git-practice-clone 복제본에 없는 README를 새로 작성하고 별도로 준비한 카드 README와 비교합니다. 이후 IDE에서 같은 복제본의 README를 열며, 복제본 수정은 원본이나 GitHub에 자동 반영되지 않습니다. 강사가 직접 저장소를 만들고 인증합니다.
 
 GitHub 실습에서는 저장소 이름과 공개 여부를 스스로 선택하고, README·.gitignore·license가 없는 빈 저장소의 HTTPS 주소를 복사합니다. 기존 `origin` 유무와 로컬 기록을 먼저 확인하며, 주소가 맞을 때만 push합니다. 다른 부모 폴더와 clone 대상 이름이 존재하지 않는지 확인하고 복제한 뒤 `note.txt`의 version 2, `branch-note.txt`와 병합 기록을 읽습니다. 명령 예시의 `YOUR-USERNAME`은 실제 주소로 바꿔야 합니다. 인증 정보는 화면이나 URL에 노출하지 않습니다.
 
-Git의 네 본편 절은 8분·9분·9분·9분입니다. 첫 절은 파일 저장과 스냅샷, Git 설치·도움말, 새 저장소와 숨김 `.git`을 다룹니다. 두 번째 절은 메모 `version 1`을 저장하고 상태→스테이징→커밋으로 첫 기록을 남깁니다. 세 번째 절은 `version 2`를 저장하고 일반 `diff`(작업 파일↔스테이징)와 `diff --staged`(스테이징↔최신 커밋)를 비교한 뒤 기록합니다. 마지막 절은 ID·메시지·HEAD·main을 읽고 깨끗한 상태에서 이전 커밋을 확인한 뒤 `git switch main`으로 복귀합니다. 명령을 한꺼번에 실행하지 않도록 메모장 저장·종료, 폴더·상태 확인, 실제 전환은 시연에서도 단계로 분리했습니다.
+Git의 다섯 본편 절은 총 45분입니다. 앞에서 만든 메모와 연습 폴더를 확인하고 기존 저장소가 없을 때 Git을 초기화합니다. 같은 파일을 version 1로 고쳐 첫 커밋을 만들고, version 2를 저장하며 일반 diff와 staged diff를 비교합니다. 이전 커밋을 살펴본 뒤 main으로 복귀하고 별도 브랜치의 새 파일을 병합합니다. 메모장 저장·종료와 상태 확인은 각 단계에서 분리합니다.
 
 개념을 구성할 때 [Git 기초 강의 기록](<https://blog.chojaeseong.com/git/%EC%9A%B0%ED%85%8C%EC%BD%94/2022/02/17/%EC%A4%80)-upstream%EA%B3%BC-git%EA%B0%9D%EC%B2%B4-%EA%B0%95%EC%9D%98(%EC%99%84).html>)의 도움말·저장소·스냅샷·참조 설명을 참고했습니다. 본편은 초보자의 파일 기록 실습에 집중하며 원격 추적 설정과 Git 객체 내부 명령은 다루지 않습니다.
 

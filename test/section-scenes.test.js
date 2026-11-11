@@ -17,6 +17,8 @@ test('the authored section scenes have stable keys and matching artwork and acce
 
 test('beginner Git scenes separate the repository, staging, difference and temporary visit',()=>{
   assert.match(sectionScenes['git-example'].svg,/\.git/);
+  assert.match(sectionScenes['git-example'].svg,/note\.txt/);
+  assert.match(sectionScenes['git-example'].description,/터미널에서 만든 git-practice 폴더의 note\.txt/);
   assert.match(sectionScenes['git-example'].svg,/ls -Force/);
   assert.match(sectionScenes['git-why'].svg,/작업 파일/);
   assert.match(sectionScenes['git-why'].svg,/스테이징/);
@@ -86,7 +88,8 @@ test('the first terminal scene highlights pwd and identifies its PowerShell alia
 
 test('the GUI/CLI scene connects a saved note with the same PowerShell file',()=>{
   const scene = sectionScenes['terminal-gui-cli'];
-  assert.match(scene.svg, /memo\.txt/);
+  assert.match(scene.svg, /note\.txt/);
+  assert.match(scene.description, /note\.txt/);
   assert.match(scene.svg, /Get-Content/);
   assert.match(scene.svg, /Get-Content \/ cat/);
   assert.match(scene.svg, /Ctrl\+S/);

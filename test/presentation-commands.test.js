@@ -36,11 +36,11 @@ test('presentation command examples use the current section source and keep adja
   assert.equal(explorerLaunch.explorerAddress, true, '탐색기 입력 위치를 기본으로 표시한다');
   assert.equal(presentationCommandGroups('터미널에서 실행합니다.\n\n```text\nwt -d .\n```')[0].explorerAddress, false);
   assert.match(result, /방금 새로 만든 빈/);
-  assert.doesNotMatch(result, /ls -Force \.\\dolbeom-demo/);
+  assert.doesNotMatch(result, /ls -Force \.\\git-practice/);
   assert.doesNotMatch(result, /-WhatIf/);
   assert.match(result, /N으로 취소/);
   assert.match(result, /경로는 컴퓨터마다/);
-  assert.equal(groups.find(group => group.code.includes('rmdir .\\dolbeom-demo')).destructive, true);
+  assert.equal(groups.find(group => group.code.includes('rmdir .\\git-practice')).destructive, true);
   assert.deepEqual(presentationCommandGroups('문장에 `cd ..`만 등장합니다.'), []);
 });
 

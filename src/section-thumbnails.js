@@ -21,7 +21,7 @@ const scenes = {
   'terminal-host-shell': window(19,18,118,72,box(28,39,42,39,'#d9e6d0')+box(78,39,49,39,'#ead5ad')+label(34,66,'&gt;_',17)+label(87,66,'C:',17)),
   'terminal-shortcuts': keys('Alt','↔')+path('M19 86h125',teal),
   'terminal-bonus': window(10,23,63,59,label(21,61,'&gt;_',20))+path('M80 35v42',teal,4)+window(89,23,58,59,rows(99,48)),
-  'git-example': folder(19,29,118,62)+box(91,45,32,29,sage)+label(94,65,'.git',12)+path('M31 60h32m-32 10h24',teal,3),
+  'git-example': folder(19,29,118,62)+box(31,43,45,32,cream,3)+path('M39 53h28m-28 8h22',teal,3)+box(91,45,32,29,sage)+label(94,65,'.git',12),
   'git-why': page(9,27,path('M18 53h23',teal,3))+arrow(56,55,17)+box(81,34,28,38,sage)+check(88,55)+arrow(114,55,13)+dot(140,55,10,gold),
   'git-diff': page(15,15,path('M24 42h23',gold,4))+page(98,15,path('M107 42h23',teal,4),'#e0ebd8')+arrow(65,48,23)+path('M36 89h90',teal,3)+dot(36,89,6,gold)+dot(126,89,6,sage),
   'git-prompt': path('M35 62h90',teal,3)+dot(35,62,10,gold)+dot(125,62,10,sage)+box(18,20,34,20,gold)+box(108,20,34,20,sage)+path('M35 42v9m90-9v9',teal,3)+path('M53 86h54m-7-5 7 5-7 5',teal,3),

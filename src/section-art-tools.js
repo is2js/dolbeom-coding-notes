@@ -73,15 +73,15 @@ function locationScene() {
 
 function guiCliScene() {
   const p='section-terminal-gui-cli';
-  return scene(p,'같은 memo.txt를 두 화면에서 확인',
+  return scene(p,'같은 note.txt를 두 화면에서 확인',
     panel(43,115,282,297,'PowerShell · CLI',
-      text(64,198,'New-Item / ni',{mono:true,size:23}) + text(64,236,'memo.txt',{mono:true,size:25,fill:C.teal,weight:700})
+      text(64,198,'New-Item / ni',{mono:true,size:23}) + text(64,236,'note.txt',{mono:true,size:25,fill:C.teal,weight:700})
       + path('M64 256h239',C.line,1.6) + text(64,298,'Get-Content / cat',{mono:true,size:20,fill:C.teal,weight:650})
-      + text(64,337,'memo.txt',{mono:true,size:25}) + text(64,382,'내용 읽기',{size:22}) + cursor(p,237,316))
+      + text(64,337,'note.txt',{mono:true,size:25}) + text(64,382,'내용 읽기',{size:22}) + cursor(p,237,316))
     + document(348,201,64,92) + arrow(p,'M332 244h8') + flow(p,'M332 244h8')
     + arrow(p,'M420 244h8') + flow(p,'M420 244h8',.8) + text(380,332,'같은 파일',{size:19,anchor:'middle',fill:C.teal,weight:700})
     + panel(438,115,278,297,'메모장 · GUI',
-      text(460,191,'memo.txt',{mono:true,size:22,fill:C.teal}) + path('M460 207h233',C.line,1.6)
+      text(460,191,'note.txt',{mono:true,size:22,fill:C.teal}) + path('M460 207h233',C.line,1.6)
       + text(460,252,'Hello, Codex!',{mono:true,size:25}) + cursor(p,654,230)
       + pill(461,291,225,'Ctrl+S · 저장',C.sage) + text(461,382,'탐색기에서 파일 확인',{size:20}))
     + arrow(p,'M569 427v35H185v-35') + flow(p,'M569 427v35H185v-35',1.4),
@@ -123,9 +123,9 @@ function shortcutsScene() {
 
 function diffScene() {
   const p='section-git-example';
-  return scene(p,'새 폴더 안에 Git 기록 공간 만들기',
+  return scene(p,'같은 연습 폴더에 Git 기록 공간 만들기',
     panel(67,118,622,313,'git-practice/ · 연습 폴더',
-      folder(106,207,182,119) + text(197,368,'파일을 작성할 공간',{size:22,anchor:'middle',weight:700})
+      document(160,198,74,99,C.white) + pill(136,304,122,'note.txt',C.white,true) + text(197,377,'앞에서 만든 파일',{size:22,anchor:'middle',weight:700})
       + path('M324 179v218',C.line,1.6)
       + folder(413,207,182,119) + pill(446,245,117,'.git',C.sage,true)
       + text(506,368,'기록과 설정 보관',{size:22,anchor:'middle',weight:700})
@@ -261,10 +261,10 @@ function pipeScene() {
   const p='section-terminal-bonus';
   return scene(p,'파이프는 왼쪽 결과를 오른쪽으로 전달',
     panel(57,108,644,102,'PowerShell · 명령 읽기',text(80,184,'Get-ChildItem -File | Select-Object Name',{mono:true,size:22,fill:C.teal,weight:650}))
-    + panel(58,255,250,190,'파일 목록 · ls',text(79,339,'memo.txt',{size:23,mono:true}) + text(79,379,'README.md',{size:23,mono:true}) + text(79,419,'파일의 여러 속성',{size:21,fill:C.muted}))
+    + panel(58,255,250,190,'파일 목록 · ls',text(79,339,'note.txt',{size:23,mono:true}) + text(79,379,'README.md',{size:23,mono:true}) + text(79,419,'파일의 여러 속성',{size:21,fill:C.muted}))
     + arrow(p,'M324 348h104') + flow(p,'M324 348h104') + text(376,316,'|',{size:43,anchor:'middle',mono:true,weight:750})
     + panel(445,255,250,190,'이름 선택 · select',text(467,337,'Name',{size:22,mono:true,fill:C.teal,weight:700})
-      + text(467,377,'memo.txt',{size:23,mono:true}) + text(467,417,'README.md',{size:23,mono:true}),{titleSize:22}),
+      + text(467,377,'note.txt',{size:23,mono:true}) + text(467,417,'README.md',{size:23,mono:true}),{titleSize:22}),
     'ls · select는 PowerShell의 기본 별칭');
 }
 
@@ -285,7 +285,7 @@ export const toolSectionScenes = {
   },
   'terminal-gui-cli': {
     title:'GUI와 CLI 연결: 같은 메모 파일 만들고 확인하기',
-    description:'앞에서 만든 연습 폴더의 memo.txt를 PowerShell에서 만들고 메모장에서 내용을 입력해 저장한 뒤, 탐색기와 Windows에서 쓰는 PowerShell의 Get-Content 또는 그 기본 별칭 cat으로 같은 파일을 확인합니다.',
+    description:'앞에서 만든 연습 폴더의 note.txt를 PowerShell에서 만들고 메모장에서 내용을 입력해 저장한 뒤, 탐색기와 Windows에서 쓰는 PowerShell의 Get-Content 또는 그 기본 별칭 cat으로 같은 파일을 확인합니다.',
     svg:guiCliScene(),
   },
   'terminal-host-shell': {
@@ -299,8 +299,8 @@ export const toolSectionScenes = {
     svg:shortcutsScene(),
   },
   'git-example': {
-    title:'Git 시작하기: 새 저장소와 .git 살펴보기',
-    description:'새 git-practice 폴더 안의 작업 공간과 Git 기록과 설정을 보관하는 숨김 .git 폴더를 구분합니다. git init -b main으로 저장소를 만들고 PowerShell의 ls -Force로 .git를 확인하며 내부 파일은 직접 고치지 않습니다.',
+    title:'Git 시작하기: 연습 폴더와 .git 살펴보기',
+    description:'터미널에서 만든 git-practice 폴더의 note.txt를 계속 사용하며 Git 기록과 설정을 보관하는 숨김 .git 폴더를 구분합니다. git init -b main으로 저장소를 만들고 PowerShell의 ls -Force로 .git를 확인하며 내부 파일은 직접 고치지 않습니다.',
     svg:diffScene(),
   },
   'git-why': {

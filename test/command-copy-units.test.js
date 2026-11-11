@@ -120,8 +120,8 @@ test('the current lesson examples expose commands rather than UI instructions', 
   const terminal = course.lessons.find(lesson => lesson.id === 'terminal');
   const folderStep = terminal.steps.find(step => step.id === 'terminal-02');
   const copies = commandUnits(folderStep.code, folderStep.language).map(unit => unit.text);
-  assert.ok(copies.includes('mkdir dolbeom-demo'));
-  assert.ok(copies.includes('Test-Path .\\dolbeom-demo'));
+  assert.ok(copies.includes('mkdir git-practice'));
+  assert.ok(copies.includes('Test-Path .\\git-practice'));
   assert.ok(copies.includes('explorer.exe .'));
   assert.equal(copies.some(text => text.trimStart().startsWith('#')), false);
   const guiStep = terminal.steps.find(step => step.id === 'terminal-03');

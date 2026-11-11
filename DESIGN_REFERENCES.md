@@ -22,6 +22,11 @@
 | Microsoft Learn | [웹 개발 입문 모듈의 소개 화면](https://learn.microsoft.com/en-us/training/modules/get-started-with-web-development/1-introduction) | 현재 단위와 전체 단위 수, 펼쳐 보는 모듈 메뉴, 다음 단위 안내, 이미지 확대 링크 | 현재 순서와 제목을 함께 표시합니다. 모바일에서는 현재 주제를 먼저 보여주고 전체 주제 목록을 펼치며, 세부 그림을 크게 볼 수 있게 합니다. |
 | Brilliant | [공개 소개 화면](https://brilliant.org/) | 개념별 그림과 설명의 묶음, 선택 상태가 분명한 주제 전환 | 일곱 주제의 그림과 글자 영역을 분리하고 실제 설명 장면에 캡션을 붙입니다. 강의 사례·예제와 SVG는 자체 제작합니다. |
 
+## 강의 개념 그림 참고
+
+- **Git 협업 과정 그림**, 확인일 2026년 11월 11일: [그림판으로 보는 Git 협업 기록](https://blog.chojaeseong.com/git/%ED%98%91%EC%97%85/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0/%EC%9A%B0%ED%85%8C%EC%BD%94/2022/02/17/git_%EA%B7%B8%EB%A6%BC%ED%8C%90%EC%9C%BC%EB%A1%9C_%EB%B3%B4%EB%8A%94_%ED%98%91%EC%97%85%EB%AF%B8%EC%85%98%28%EC%99%84%29.html). 원격 저장소와 각 작업자의 로컬 저장소를 영역으로 나누고 작업과 이동 방향을 단계별로 보여 주는 방식을 참고했습니다. GitHub 강의의 원격 연결·전송 그림에 적용하며, 그림은 현재 강의의 크림·세이지 SVG로 다시 만듭니다.
+- 원문은 fork와 여러 원격을 다루지만 입문 실습에서는 내 로컬과 GitHub의 `origin` 관계부터 표현합니다. `fetch`는 원격 정보와 기록을 가져오며 현재 작업 파일에 자동으로 병합하지 않는다는 점은 [Git 공식 원격 저장소 안내](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)로 확인해 설명합니다.
+
 ## 구현 기준
 
 - 홈·강의·발표가 하나의 주제 썸네일 매핑을 공유하며 제목이나 순서를 바꿔도 같은 ID의 그림을 사용합니다.

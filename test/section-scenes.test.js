@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,32);
+  assert.equal(Object.keys(sectionScenes).length,33);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,32);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,33);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
@@ -27,17 +27,28 @@ test('beginner Git scenes separate the repository, staging, difference and tempo
   assert.match(sectionScenes['git-prompt'].svg,/>main<\/text>/);
   assert.match(sectionScenes['git-prompt'].svg,/git switch main/);
   assert.match(sectionScenes['git-prompt'].description,/main은 최신 버전 2.*HEAD가 이전 버전 1/);
+  const branch = sectionScenes['git-branch'];
+  assert.match(branch.svg, /practice-branch/);
+  assert.match(branch.svg, /branch-note\.txt 커밋/);
+  assert.match(branch.svg, /git merge --no-ff/);
+  assert.match(branch.svg, /병합 커밋/);
+  assert.match(branch.description, /main은 병합 커밋을, practice-branch는 원래 브랜치 커밋/);
+  assert.match(branch.description, /fast-forward로 병합 커밋 없이/);
 });
 
 test('GitHub scenes follow the same note from local push to a new clone',()=>{
   const push = sectionScenes['github-clone'];
   const clone = sectionScenes['github-roles'];
-  assert.match(push.description, /내 컴퓨터.*push.*GitHub 원격/);
+  assert.match(push.description, /origin은 GitHub 원격 주소를 가리키는 별칭/);
+  assert.match(push.description, /fetch.*작업 파일을 자동으로 바꾸지 않습니다/);
   assert.match(push.svg, /git-practice/);
-  assert.match(push.svg, /git push -u origin main/);
+  assert.match(push.svg, />push<\/text>/);
+  assert.match(push.svg, />fetch<\/text>/);
+  assert.match(push.svg, /origin = 원격 주소 별칭/);
   assert.ok(push.svg.indexOf('내 컴퓨터 · 로컬 저장소') < push.svg.indexOf('GitHub · 원격 저장소'));
   assert.match(clone.description, /GitHub 원격.*새 폴더.*clone/);
   assert.match(clone.svg, /git-practice-clone/);
+  assert.match(clone.svg, /origin = 원격 주소 별칭/);
   assert.ok(clone.svg.indexOf('GitHub · 원격 저장소') < clone.svg.indexOf('내 컴퓨터 · 새 폴더'));
   assert.match(push.svg, /note\.txt/);
   assert.match(clone.svg, /note\.txt/);

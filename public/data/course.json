@@ -404,7 +404,7 @@
       "shortTitle": "Git",
       "subtitle": "파일 저장과 커밋을 구분하고, 메모의 두 버전과 현재 위치를 직접 확인합니다.",
       "icon": "git",
-      "durationMinutes": 35,
+      "durationMinutes": 45,
       "case": {
         "kind": "real",
         "title": "Git 기록에서 바뀐 파일과 내용을 찾아보기",
@@ -415,7 +415,8 @@
         "새 연습 폴더에서 Git 저장소를 만들고 숨김 폴더 .git을 확인합니다.",
         "작업 파일·스테이징·커밋을 구분해 메모의 두 버전을 기록합니다.",
         "status·diff·log로 현재 상태와 기록 사이의 차이를 확인합니다.",
-        "HEAD와 main의 역할을 이해하고 이전 기록을 본 뒤 main으로 돌아옵니다."
+        "HEAD와 main의 역할을 이해하고 이전 기록을 본 뒤 main으로 돌아옵니다.",
+        "새 브랜치에서 별도 파일을 기록하고 main에 합칩니다."
       ],
       "sections": [
         {
@@ -459,11 +460,23 @@
           "title": "기록 살펴보기: 이전 버전에 다녀와 main으로 복귀",
           "minutes": 9,
           "optional": false,
-          "body": "### main과 HEAD는 어디를 가리킬까요?\n\n두 커밋을 만든 뒤 `git log --oneline`에서 가장 최근 커밋 옆의 `HEAD -> main`을 찾아봅니다. **main**은 이 실습의 브랜치 이름이고 최신 커밋을 가리킵니다. **HEAD**는 지금 확인하고 있는 위치를 가리킵니다. 평소에는 HEAD가 main을 통해 현재 커밋을 보고 있다고 이해하면 됩니다.\n\n```powershell\ngit log --oneline\n```\n\n커밋에는 앞선 기록으로 이어지는 관계도 있습니다. `HEAD~1`은 현재 커밋의 첫 번째 부모, 이 단순한 두 커밋 실습에서는 바로 이전 기록입니다. 두 기록의 파일 차이를 읽어 봅니다.\n\n```powershell\ngit diff HEAD~1 HEAD -- note.txt\n```\n\n### 예전 파일을 직접 보기 전에 확인\n\n메모장을 저장하고 닫습니다. 현재 브랜치가 main이고, 변경이 없는 깨끗한 상태이며 두 커밋이 있는지 확인합니다.\n\n```powershell\ngit status\ngit log --oneline\n```\n\n변경이 남아 있거나 커밋이 하나뿐이면 여기서 멈춥니다. 상태를 읽고 다음 명령을 따로 실행합니다.\n\n```powershell\ngit switch --detach HEAD~1\n```\n\n지금은 브랜치 대신 이전 커밋을 직접 보고 있어 `detached HEAD`라는 안내가 나옵니다. 오류가 아니라 현재 위치에 대한 설명입니다. **main은 여전히 버전 2 커밋을 가리킵니다.** 이전으로 이동했다고 최신 기록이 삭제되거나 main이 뒤로 돌아가는 것은 아닙니다.\n\n```powershell\ngit status\ncat .\\note.txt\n```\n\n`version 1`이 보이는지 확인합니다. Windows PowerShell의 `cat`은 `Get-Content`의 기본 별칭으로 `Get-Content .\\note.txt`와 같은 역할입니다. macOS/Linux에도 별도의 `cat` 명령이 있고 cmd에서는 `type note.txt`를 사용합니다. 같은 이름이어도 셸의 명령과 옵션은 다를 수 있습니다.\n\n### main으로 돌아오기\n\n이번에는 이전 상태에서 파일을 고치거나 커밋하지 않고 읽기만 합니다. 돌아갈 곳을 이름으로 지정합니다.\n\n```powershell\ngit switch main\ngit status\ncat .\\note.txt\n```\n\n현재 브랜치가 main이고 `version 2`가 보이는지 확인합니다. 커밋 두 개도 그대로 남아 있습니다. 예전 상태에서 실수로 파일을 고쳤다면 전환을 반복하지 말고, 보존할 변경과 현재 상태를 먼저 확인합니다.\n\n### Codex에게 같은 작업을 부탁한다면\n\n수강생이 방금 익힌 순서를 요청에 넣으면 AI가 무엇을 했는지 읽기 쉬워집니다.\n\n```text\n현재 폴더와 Git 상태를 먼저 확인해 줘.\nnote.txt만 version 3으로 바꾸고 변경 diff를 보여 줘.\n다른 파일과 기존 변경은 보존해 줘.\nnote.txt를 스테이징하고 커밋할 내용을 확인한 뒤 로컬 커밋해 줘.\n커밋 ID와 남은 변경을 알려 줘.\n```\n\nAI의 답변 뒤에도 `git status`, `git log --oneline`과 기록 사이의 차이를 확인합니다. 이미 커밋했다면 일반 `git diff`가 비어 있을 수 있다는 점을 기억합니다. 다음 GitHub 강의에서는 지금 만든 메모 저장소를 GitHub에 올리고 다른 폴더에 복제합니다.",
+          "body": "### main과 HEAD는 어디를 가리킬까요?\n\n두 커밋을 만든 뒤 `git log --oneline`에서 가장 최근 커밋 옆의 `HEAD -> main`을 찾아봅니다. **main**은 이 실습의 브랜치 이름이고 최신 커밋을 가리킵니다. **HEAD**는 지금 확인하고 있는 위치를 가리킵니다. 평소에는 HEAD가 main을 통해 현재 커밋을 보고 있다고 이해하면 됩니다.\n\n```powershell\ngit log --oneline\n```\n\n커밋에는 앞선 기록으로 이어지는 관계도 있습니다. `HEAD~1`은 현재 커밋의 첫 번째 부모, 이 단순한 두 커밋 실습에서는 바로 이전 기록입니다. 두 기록의 파일 차이를 읽어 봅니다.\n\n```powershell\ngit diff HEAD~1 HEAD -- note.txt\n```\n\n### 예전 파일을 직접 보기 전에 확인\n\n메모장을 저장하고 닫습니다. 현재 브랜치가 main이고, 변경이 없는 깨끗한 상태이며 두 커밋이 있는지 확인합니다.\n\n```powershell\ngit status\ngit log --oneline\n```\n\n변경이 남아 있거나 커밋이 하나뿐이면 여기서 멈춥니다. 상태를 읽고 다음 명령을 따로 실행합니다.\n\n```powershell\ngit switch --detach HEAD~1\n```\n\n지금은 브랜치 대신 이전 커밋을 직접 보고 있어 `detached HEAD`라는 안내가 나옵니다. 오류가 아니라 현재 위치에 대한 설명입니다. **main은 여전히 버전 2 커밋을 가리킵니다.** 이전으로 이동했다고 최신 기록이 삭제되거나 main이 뒤로 돌아가는 것은 아닙니다.\n\n```powershell\ngit status\ncat .\\note.txt\n```\n\n`version 1`이 보이는지 확인합니다. Windows PowerShell의 `cat`은 `Get-Content`의 기본 별칭으로 `Get-Content .\\note.txt`와 같은 역할입니다. macOS/Linux에도 별도의 `cat` 명령이 있고 cmd에서는 `type note.txt`를 사용합니다. 같은 이름이어도 셸의 명령과 옵션은 다를 수 있습니다.\n\n### main으로 돌아오기\n\n이번에는 이전 상태에서 파일을 고치거나 커밋하지 않고 읽기만 합니다. 돌아갈 곳을 이름으로 지정합니다.\n\n```powershell\ngit switch main\ngit status\ncat .\\note.txt\n```\n\n현재 브랜치가 main이고 `version 2`가 보이는지 확인합니다. 커밋 두 개도 그대로 남아 있습니다. 예전 상태에서 실수로 파일을 고쳤다면 전환을 반복하지 말고, 보존할 변경과 현재 상태를 먼저 확인합니다.\n\n### Codex에게 같은 작업을 부탁한다면\n\n수강생이 방금 익힌 순서를 요청에 넣으면 AI가 무엇을 했는지 읽기 쉬워집니다. 아래는 설명용 예시입니다. 이어지는 실습을 위해 지금은 실행하지 않고 version 2를 유지합니다.\n\n```text\n현재 폴더와 Git 상태를 먼저 확인해 줘.\nnote.txt만 version 3으로 바꾸고 변경 diff를 보여 줘.\n다른 파일과 기존 변경은 보존해 줘.\nnote.txt를 스테이징하고 커밋할 내용을 확인한 뒤 로컬 커밋해 줘.\n커밋 ID와 남은 변경을 알려 줘.\n```\n\nAI의 답변 뒤에도 `git status`, `git log --oneline`과 기록 사이의 차이를 확인합니다. 이미 커밋했다면 일반 `git diff`가 비어 있을 수 있다는 점을 기억합니다. 이제 main에서 새 브랜치를 만들어 별도 작업을 기록하고 다시 합쳐 보겠습니다.",
           "presentationPoints": [
             "main은 최신 기록을, HEAD는 현재 확인하는 위치를 가리킵니다.",
             "깨끗한 상태에서 이전 커밋을 읽고 git switch main으로 돌아옵니다.",
             "main의 최신 커밋은 남아 있고 파일은 version 1 → version 2로 바뀝니다."
+          ]
+        },
+        {
+          "id": "git-branch",
+          "title": "브랜치에서 수정하고 main에 합치기",
+          "minutes": 10,
+          "optional": false,
+          "body": "### 브랜치란 무엇일까요?\n\n브랜치는 **작업을 나누는 갈래**입니다. 지금까지 만든 `main`에서 `practice-branch`라는 갈래를 만들고 새 파일에 작업합니다. 완료하면 `main`으로 돌아와 그 기록을 **merge(병합)**해 합칩니다. `note.txt`의 `version 2`는 그대로 둡니다.\n\n### 1. 실습 위치와 이름을 확인합니다\n\n앞에서 만든 **새 연습용 `git-practice` 폴더**에서만 진행합니다. 다른 프로젝트나 소중한 파일이 있는 폴더에서 따라 하지 않습니다. 메모장을 저장하고 닫은 뒤 확인합니다.\n\n```powershell\npwd\ngit status\ngit log --oneline\nTest-Path .\\branch-note.txt\ngit branch --list practice-branch\n```\n\n`pwd`는 PowerShell `Get-Location`의 기본 별칭입니다. `main`이고 `working tree clean`이며 `version 1`·`version 2` 기록이 있는지 확인합니다. `Test-Path` 결과가 **False**이고 마지막 명령이 아무것도 표시하지 않아야 새 이름을 쓸 수 있습니다. True이거나 같은 브랜치가 있거나 상태가 예상과 다르면 **멈추고 기존 파일과 기록을 보존**합니다. `Test-Path`에는 PowerShell 기본 별칭이 없습니다. cmd에서는 `if exist branch-note.txt echo 존재함`으로 확인합니다. macOS/Linux 셸에서는 `test -e branch-note.txt` 실행 후 `echo $?`로 결과를 확인할 수 있습니다. 0은 존재, 1은 존재하지 않음을 뜻합니다.\n\n### 2. 새 작업 갈래를 만듭니다\n\n```powershell\ngit switch -c practice-branch\ngit branch\n```\n\n`-c`는 브랜치를 만들고 그쪽으로 이동합니다. 목록의 `* practice-branch`는 현재 위치를 뜻합니다.\n\n### 3. 새 파일을 만들고 기록합니다\n\n```powershell\nnotepad branch-note.txt\n```\n\n새 파일 만들기를 확인하고 아래 한 줄을 입력합니다. **Ctrl+S로 저장하고 메모장을 닫습니다.**\n\n```text\nbranch work\n```\n\n```powershell\ngit status\n```\n\n`branch-note.txt`가 새 파일로 표시되는지 확인한 다음, 그 파일만 스테이징합니다.\n\n```powershell\ngit add branch-note.txt\ngit status\n```\n\n`Changes to be committed`에 이 파일이 보이면 커밋합니다.\n\n```powershell\ngit commit -m \"Add branch note\"\ngit status\n```\n\n커밋이 성공하고 변경이 없는 깨끗한 상태인지 확인합니다. 문제나 예상하지 못한 파일이 보이면 멈춰 확인합니다.\n\n### 4. main으로 돌아와 병합합니다\n\n```powershell\ngit switch main\ngit status\nTest-Path .\\branch-note.txt\ncat .\\note.txt\n```\n\n`main`의 상태가 깨끗하고, 새 파일은 아직 없으므로 `False`, 기존 메모는 `version 2`가 보여야 합니다. 다르면 멈춥니다. `cat`은 PowerShell의 `Get-Content` 기본 별칭입니다. cmd에서는 `type note.txt`, macOS/Linux에서는 `cat note.txt`를 사용합니다.\n\n이 실습에서는 합쳐진 지점을 그래프로 보기 위해 병합 커밋을 명시적으로 남깁니다.\n\n```powershell\ngit merge --no-ff -m \"Merge practice branch\" practice-branch\n```\n\n`--no-ff`는 직선으로 앞으로 이동할 수 있는 경우에도 병합 지점을 기록합니다. `-m`은 편집기 없이 병합 메시지를 지정합니다. 보통 `git merge practice-branch`처럼 실행하면 상황에 따라 빠른 이동(fast-forward)으로 합쳐져 별도 병합 커밋이 생기지 않을 수 있습니다. 충돌이나 다른 출력이 나타나면 임의로 덮어쓰지 말고 멈춰 확인합니다.\n\n### 5. 합쳐진 기록과 두 파일을 확인합니다\n\n```powershell\ngit log --oneline --graph --decorate\ngit status\nls\ncat .\\branch-note.txt\ncat .\\note.txt\n```\n\n그래프에서 갈라졌다가 다시 합쳐지는 선과 `Merge practice branch`, `Add branch note`를 찾아봅니다. `branch work`와 기존 `version 2`가 모두 보이면 성공입니다. `ls`는 PowerShell `Get-ChildItem`, `cat`은 `Get-Content`의 기본 별칭입니다. cmd에서는 `dir`과 `type`, macOS/Linux에서는 `ls`와 `cat`을 씁니다.\n\n다음 GitHub 강의에서는 이 병합된 `main`을 원격에 올린 뒤, 다른 폴더에서 두 파일과 기록을 다시 받습니다.",
+          "presentationPoints": [
+            "깨끗한 연습 저장소에서 파일과 브랜치 이름이 비어 있는지 확인합니다.",
+            "practice-branch에서 새 파일을 커밋하고 main으로 돌아옵니다.",
+            "--no-ff로 병합 지점을 남기고 그래프와 두 파일을 확인합니다."
           ]
         }
       ],
@@ -487,6 +500,10 @@
         {
           "title": "변경이 남아 있는데 과거로 이동하거나 돌아갈 곳을 잊기",
           "body": "상태가 깨끗한지 확인하고 이전 기록에서는 읽기만 합니다. git switch main으로 돌아와 main과 version 2를 확인합니다."
+        },
+        {
+          "title": "실습 전 기존 파일이나 브랜치를 덮어쓰기",
+          "body": "새 연습 저장소에서 현재 위치와 깨끗한 main, 파일과 브랜치 이름을 확인합니다. 이미 존재하거나 예상과 다르면 멈추고 기존 작업을 보존합니다."
         }
       ],
       "checklist": [
@@ -494,7 +511,8 @@
         "파일 저장·스테이징·커밋을 거쳐 두 기록을 만들 수 있습니다.",
         "일반 diff와 --staged가 비교하는 대상을 구분할 수 있습니다.",
         "커밋 ID, 메시지, main과 HEAD를 그림과 기록에서 찾을 수 있습니다.",
-        "이전 커밋에서 내용을 확인하고 main으로 돌아올 수 있습니다."
+        "이전 커밋에서 내용을 확인하고 main으로 돌아올 수 있습니다.",
+        "새 브랜치에서 파일을 커밋하고 main으로 돌아와 병합 기록을 확인할 수 있습니다."
       ],
       "steps": [
         {
@@ -784,6 +802,134 @@
             ".git/",
             "note.txt"
           ]
+        },
+        {
+          "id": "git-branch-check",
+          "title": "실습 상태와 새 이름 확인",
+          "description": "새 연습 저장소의 깨끗한 main과 두 기존 커밋을 확인합니다. 파일이 있거나 브랜치 이름이 이미 보이면 멈춥니다.",
+          "scene": "terminal",
+          "code": "pwd\ngit status\ngit log --oneline\nTest-Path .\\branch-note.txt\ngit branch --list practice-branch",
+          "language": "powershell",
+          "output": "main, clean, version 1·2, False와 빈 브랜치 목록을 확인합니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-switch",
+          "title": "새 작업 갈래 만들기",
+          "description": "이름이 비어 있음을 확인한 후 브랜치를 만들고 이동합니다.",
+          "scene": "terminal",
+          "code": "git switch -c practice-branch\ngit branch",
+          "language": "powershell",
+          "output": "* practice-branch를 확인합니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-edit",
+          "title": "새 파일에 메모 쓰기",
+          "description": "새 파일 만들기를 확인하고 branch work 한 줄을 쓴 뒤 Ctrl+S로 저장하고 닫습니다.",
+          "scene": "terminal",
+          "code": "notepad branch-note.txt\ngit status",
+          "language": "powershell",
+          "output": "branch-note.txt가 새 파일로 표시됩니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-stage",
+          "title": "새 파일만 준비하기",
+          "description": "파일을 확인한 뒤 커밋할 대상으로 선택합니다.",
+          "scene": "terminal",
+          "code": "git add branch-note.txt\ngit status",
+          "language": "powershell",
+          "output": "Changes to be committed에서 branch-note.txt를 확인합니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-commit",
+          "title": "브랜치에서 기록하기",
+          "description": "선택한 파일만 커밋한 뒤 상태가 깨끗한지 확인합니다.",
+          "scene": "terminal",
+          "code": "git commit -m \"Add branch note\"\ngit status",
+          "language": "powershell",
+          "output": "커밋 성공과 깨끗한 상태를 확인합니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-return",
+          "title": "main으로 돌아와 상태 확인",
+          "description": "깨끗한 상태에서 돌아옵니다. 새 파일이 없고 기존 메모가 version 2인지 확인합니다.",
+          "scene": "terminal",
+          "code": "git switch main\ngit status\nTest-Path .\\branch-note.txt\ncat .\\note.txt",
+          "language": "powershell",
+          "output": "main, clean, False, version 2. 예상과 다르면 멈춥니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-merge",
+          "title": "작업을 main에 합치기",
+          "description": "깨끗한 main에서만 실행합니다. --no-ff는 병합 지점을 남기고 -m은 메시지를 지정합니다.",
+          "scene": "terminal",
+          "code": "git merge --no-ff -m \"Merge practice branch\" practice-branch",
+          "language": "powershell",
+          "output": "병합 커밋이 기록됩니다. 충돌이나 다른 결과가 나오면 멈춥니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
+        },
+        {
+          "id": "git-branch-review",
+          "title": "분기와 병합 기록 확인",
+          "description": "갈라졌다 합쳐지는 선과 두 파일을 확인합니다. ls와 cat은 PowerShell 기본 별칭입니다.",
+          "scene": "terminal",
+          "code": "git log --oneline --graph --decorate\ngit status\nls\ncat .\\branch-note.txt\ncat .\\note.txt",
+          "language": "powershell",
+          "output": "Merge practice branch, branch work, version 2를 확인합니다.",
+          "focus": "git",
+          "fileName": "브랜치 실습",
+          "files": [
+            "git-practice/",
+            "note.txt",
+            "branch-note.txt"
+          ]
         }
       ],
       "glossary": [
@@ -817,7 +963,7 @@
         },
         {
           "term": "브랜치",
-          "definition": "작업 흐름의 커밋을 가리키는 이름입니다. 이 실습에서는 main을 사용합니다."
+          "definition": "작업 흐름을 나누는 이름입니다. 이 실습에서는 main에서 practice-branch를 만들고 별도 작업을 기록합니다."
         },
         {
           "term": "HEAD",
@@ -826,6 +972,10 @@
         {
           "term": "GitHub",
           "definition": "Git 저장소를 원격에 보관하고 협업할 수 있는 서비스입니다. 다음 주제에서 다룹니다."
+        },
+        {
+          "term": "merge",
+          "definition": "다른 브랜치의 기록을 현재 브랜치에 합치는 작업입니다."
         }
       ],
       "references": [
@@ -850,17 +1000,17 @@
           "url": "https://git-scm.com/docs/git-switch"
         }
       ],
-      "closing": "메모 파일의 두 상태를 커밋하고 이전 기록을 살펴본 뒤 main으로 돌아왔습니다. 다음 GitHub 강의에서는 바로 이 git-practice 저장소를 원격에 올리고 다른 폴더에 복제합니다.",
+      "closing": "메모의 두 버전을 기록하고 이전 기록을 확인했습니다. 별도 브랜치에서 만든 파일을 main에 합친 뒤, 다음 GitHub 강의에서 이 저장소를 원격에 올리고 다른 폴더에 복제합니다.",
       "presentation": {
         "caseSummary": "실제 개발 기록에서 커밋·변경 파일·Diff를 살펴봅니다. 이어서 Git을 처음 사용하는 상황으로 돌아가 메모 파일 하나의 두 기록을 직접 만듭니다.",
         "demo": {
           "program": "Windows Terminal · PowerShell · 메모장",
-          "file": "새 git-practice 폴더 · .git · note.txt",
-          "command": "Git 버전·도움말 확인 → 새 폴더 → git init -b main → ls -Force로 .git 관찰\n메모장 version 1 저장·종료 → status → add → 상태 확인 → 첫 commit\n메모장 version 2 저장·종료 → status → diff → add → diff --staged\n두 번째 commit → log에서 HEAD와 main 확인\n상태가 깨끗함 확인 → 이전 커밋 방문 → version 1 읽기\ngit switch main → main과 version 2 확인",
-          "expectedResult": "작업 파일·스테이징·커밋과 비교 기준을 설명하며 두 기록을 만듭니다. 이전 커밋을 보는 동안 main은 최신 기록을 유지하고, main으로 복귀하면 version 2가 보입니다.",
-          "durationMinutes": 14
+          "file": "새 git-practice 폴더의 note.txt와 branch-note.txt",
+          "command": "Git 버전·도움말 확인 → 새 폴더 → git init -b main → ls -Force로 .git 관찰\n메모장 version 1 저장·종료 → status → add → 상태 확인 → 첫 commit\n메모장 version 2 저장·종료 → status → diff → add → diff --staged\n두 번째 commit → log에서 HEAD와 main 확인\n상태가 깨끗함 확인 → 이전 커밋 방문 → version 1 읽기\ngit switch main → main과 version 2 확인\n새 브랜치와 파일 이름 확인 → practice-branch 생성 → branch-note.txt 저장·커밋\nmain 복귀 → git merge --no-ff -m \"Merge practice branch\" practice-branch → 그래프·파일 확인",
+          "expectedResult": "메모 두 버전의 차이와 이전 기록을 확인합니다. 별도 브랜치의 새 파일을 main에 합친 뒤 분기와 병합 그래프, 두 파일을 확인합니다.",
+          "durationMinutes": 20
         },
-        "returnSummary": "저장·스테이징·커밋과 Diff의 비교 기준을 구분했습니다. main으로 돌아온 메모 저장소를 다음 강의에서 GitHub에 올립니다."
+        "returnSummary": "메모의 두 버전을 기록하고 이전 기록을 확인했습니다. 별도 브랜치를 main에 합친 저장소를 다음 GitHub 강의에 사용합니다."
       }
     },
     {
@@ -880,7 +1030,7 @@
       "objectives": [
         "앞에서 만든 로컬 저장소와 GitHub의 빈 원격 저장소를 구분합니다.",
         "내 GitHub 저장소 주소를 연결하고 main의 커밋을 push합니다.",
-        "다른 폴더에서 clone한 메모와 두 커밋을 확인합니다.",
+        "다른 폴더에서 clone한 두 파일과 병합된 기록을 확인합니다.",
         "저장소에 올리는 일과 사이트를 공개하는 일을 구분합니다."
       ],
       "sections": [
@@ -889,9 +1039,9 @@
           "title": "내 메모 저장소를 GitHub에 올리기",
           "minutes": 10,
           "optional": false,
-          "body": "### 앞서 만든 저장소에서 시작합니다\n\n앞선 Git 실습에서 만든 `git-practice` 폴더와 `note.txt`를 이어서 사용합니다. 현재 브랜치는 `main`, 메모 내용은 `version 2`, 기록에는 `version 1`과 `version 2`가 있는 상황입니다. 이전 커밋에 머물러 있다면 먼저 앞 강의에서 배운 `git switch main`으로 돌아오고 내용을 확인합니다. 실제로 다른 이름을 정했다면 그 폴더를 사용합니다.\n\n다른 위치에 있다면, 앞 실습에서 홈 아래 기본 이름으로 만들었을 경우 아래 명령으로 원래 폴더로 이동합니다. 이전에 다른 이름이나 위치를 사용했다면 자신의 실제 경로를 넣습니다. 이동에 실패하면 멈춥니다. `cd`는 PowerShell의 `Set-Location` 기본 별칭입니다.\n\n```powershell\ncd ~/git-practice\npwd\n```\n\nWindows Terminal의 PowerShell이 **원래 git-practice 폴더**를 가리키는지 살펴봅니다. `pwd`는 `Get-Location`, `cat`은 `Get-Content`의 PowerShell 기본 별칭입니다. 확인 명령은 파일을 수정하지 않습니다.\n\n```powershell\npwd\ngit status\ngit log --oneline\ncat .\\note.txt\ngit remote -v\n```\n\n`main`, 두 커밋과 `version 2`를 확인합니다. `git status`에 변경이 남아 있으면 기존 작업을 보존하고 저장·커밋 여부를 확인합니다. 이번 실습에서는 **깨끗한 상태**에서만 진행합니다. 저장만 하고 커밋하지 않은 내용은 push에 포함되지 않습니다. `git remote -v`에 아무것도 나오지 않으면 아직 연결된 원격이 없습니다. 이미 `origin`이 보이면 기존 주소와 작업을 보존하고 이번 `remote add`를 실행하지 말고 먼저 확인합니다. Git에서 `origin`은 원격 저장소에 붙이는 이름일 뿐 주소 자체는 아닙니다.\n\n### GitHub에 빈 저장소를 만듭니다\n\n1. GitHub에 로그인하고 **New repository**를 엽니다.\n2. 이름을 `git-practice`로 정하고 공개 여부는 자신의 목적에 맞게 선택합니다. Git에서 만든 커밋 작성자 이름과 이메일은 GitHub 로그인 계정과는 별개이며, 원격에 보낼 기록에도 남아 있으므로 올리기 전에 확인합니다.\n3. **README, .gitignore, license를 추가하지 않은 빈 저장소**로 만듭니다. Git 실습에서 이미 만든 기록을 그대로 올리기 위한 선택입니다. 이미 내용이나 커밋이 있는 저장소라면 섣불리 덮어쓰거나 강제 push하지 말고 새 빈 저장소를 준비합니다.\n4. 만들어진 저장소 화면의 **HTTPS 주소**를 복사합니다. 주소에 보이는 계정과 저장소 이름이 내 저장소인지 확인합니다.\n\nREADME는 원격에 올린 다음 Markdown 강의에서 새로 작성해 보겠습니다. 저장소 생성 화면과 버튼 이름은 GitHub 변경에 따라 조금 다를 수 있습니다. [기존 로컬 프로젝트를 GitHub에 올리는 공식 안내](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)\n\n### 내 GitHub 주소를 연결하고 보냅니다\n\n아래 주소는 **형식 예시**입니다. 그대로 실행하지 말고 GitHub에서 복사한 내 주소로 바꿉니다. `origin`이 없는 것을 확인한 뒤 원래 `git-practice` 폴더에서 실행합니다.\n\n```powershell\ngit remote add origin https://github.com/YOUR-USERNAME/git-practice.git\n```\n\n연결이 맞는지 따로 확인하고, 주소가 잘못됐거나 `origin already exists`가 나오면 멈춥니다.\n\n```powershell\ngit remote -v\n```\n\n`origin`의 fetch·push 주소가 내 빈 저장소를 가리키는지 확인한 뒤 `main`의 로컬 커밋을 보냅니다.\n\n```powershell\ngit push -u origin main\n```\n\n`push`는 로컬 커밋을 원격에 보내는 동작입니다. `-u`는 이번 main과 원격 브랜치의 연결을 기억하게 하는 편의 옵션입니다. 모든 push에 반드시 필요하다는 뜻은 아닙니다. 성공 메시지를 본 뒤 GitHub 저장소 페이지를 새로고침해 `note.txt`, `version 2` 내용과 커밋 기록을 확인합니다. 저장만 하고 아직 커밋하지 않은 변경은 push에 포함되지 않습니다.\n\nHTTPS 인증이 필요하면 설치된 Git 자격 증명 관리자가 브라우저 로그인을 요청할 수 있습니다. 환경에 따라 다른 인증 절차가 나타날 수 있으며, Git HTTPS 작업에 GitHub 계정 **비밀번호를 직접 입력하는 방식은 지원되지 않습니다**. 토큰이나 비밀번호는 강의 화면·채팅·URL에 노출하지 않습니다. 오류가 나면 상태와 주소를 읽고 멈춥니다. [GitHub 인증 안내](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git)\n\nGit 명령은 Git 프로그램의 명령입니다. Windows cmd에서는 `cd`로 현재 위치를 확인하고 `type note.txt`로 내용을 읽으며, macOS/Linux 기본 셸에서는 `pwd`와 `cat note.txt`를 씁니다. 각 셸의 명령이며 PowerShell 별칭과는 구분합니다.",
+          "body": "### 앞서 만든 저장소에서 시작합니다\n\n앞선 Git 실습에서 만든 `git-practice` 폴더와 `note.txt`를 이어서 사용합니다. 현재 브랜치는 `main`, 메모 내용은 `version 2`이며 앞에서 만든 `branch-note.txt`와 브랜치 작업·병합 커밋이 함께 있는 상황입니다. 이전 커밋에 머물러 있다면 먼저 앞 강의에서 배운 `git switch main`으로 돌아오고 내용을 확인합니다. 실제로 다른 이름을 정했다면 그 폴더를 사용합니다.\n\n다른 위치에 있다면, 앞 실습에서 홈 아래 기본 이름으로 만들었을 경우 아래 명령으로 원래 폴더로 이동합니다. 이전에 다른 이름이나 위치를 사용했다면 자신의 실제 경로를 넣습니다. 이동에 실패하면 멈춥니다. `cd`는 PowerShell의 `Set-Location` 기본 별칭입니다.\n\n```powershell\ncd ~/git-practice\npwd\n```\n\nWindows Terminal의 PowerShell이 **원래 git-practice 폴더**를 가리키는지 살펴봅니다. `pwd`는 `Get-Location`, `cat`은 `Get-Content`의 PowerShell 기본 별칭입니다. 확인 명령은 파일을 수정하지 않습니다. `git remote -v`의 `-v`는 verbose(자세히)의 첫 글자이며 `--verbose`의 짧은 형태입니다. 원격 저장소의 이름과 주소를 함께 표시합니다. `git remote`는 보통 원격 이름만 보여 줍니다.\n\n```powershell\npwd\ngit status\ngit log --oneline --graph --decorate\ncat .\\note.txt\ncat .\\branch-note.txt\ngit remote -v\n```\n\n`main`, 기존 version 1·2와 브랜치 작업·병합 기록, `note.txt`의 `version 2`와 `branch-note.txt`의 `branch work`를 확인합니다. `git status`에 변경이 남아 있으면 기존 작업을 보존하고 저장·커밋 여부를 확인합니다. 이번 실습에서는 **깨끗한 상태**에서만 진행합니다. 저장만 하고 커밋하지 않은 내용은 push에 포함되지 않습니다. `git remote -v`에 아무것도 나오지 않으면 아직 연결된 원격이 없습니다. 이미 `origin`이 보이면 기존 주소와 작업을 보존하고 이번 `remote add`를 실행하지 말고 먼저 확인합니다. Git에서 `origin`은 연결한 원격 저장소에 붙이는 이름입니다.\n\n### GitHub에 빈 저장소를 만듭니다\n\n1. GitHub에 로그인하고 **New repository**를 엽니다.\n2. 이름을 `git-practice`로 정하고 공개 여부는 자신의 목적에 맞게 선택합니다. Git에서 만든 커밋 작성자 이름과 이메일은 GitHub 로그인 계정과는 별개이며, 원격에 보낼 기록에도 남아 있으므로 올리기 전에 확인합니다.\n3. **README, .gitignore, license를 추가하지 않은 빈 저장소**로 만듭니다. Git 실습에서 이미 만든 기록을 그대로 올리기 위한 선택입니다. 이미 내용이나 커밋이 있는 저장소라면 섣불리 덮어쓰거나 강제 push하지 말고 새 빈 저장소를 준비합니다.\n4. 만들어진 저장소 화면의 **HTTPS 주소**를 복사합니다. 주소에 보이는 계정과 저장소 이름이 내 저장소인지 확인합니다.\n\nREADME는 원격에 올린 다음 Markdown 강의에서 새로 작성해 보겠습니다. 저장소 생성 화면과 버튼 이름은 GitHub 변경에 따라 조금 다를 수 있습니다. [기존 로컬 프로젝트를 GitHub에 올리는 공식 안내](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)\n\n### 내 GitHub 주소를 연결하고 보냅니다\n\n아래 주소는 **형식 예시**입니다. 그대로 실행하지 말고 GitHub에서 복사한 내 주소로 바꿉니다. `origin`이 없는 것을 확인한 뒤 원래 `git-practice` 폴더에서 실행합니다. 여기서 `origin`은 원격 저장소 주소에 붙이는 별명입니다. 흔히 쓰는 이름이지만 다른 이름도 사용할 수 있으며, 주소 자체나 내 폴더 이름은 아닙니다.\n\n```powershell\ngit remote add origin https://github.com/YOUR-USERNAME/git-practice.git\n```\n\n연결이 맞는지 따로 확인하고, 주소가 잘못됐거나 `origin already exists`가 나오면 멈춥니다.\n\n```powershell\ngit remote -v\n```\n\n`origin` 옆의 **fetch**는 원격의 기록 정보를 가져올 때, **push**는 내 커밋을 보낼 때 사용하는 주소를 뜻합니다. 보통 두 주소는 같지만 설정에 따라 다를 수도 있습니다. 주소 표시는 연결 설정을 보여 줄 뿐 실제 통신이나 권한까지 확인한 결과는 아닙니다. `fetch`로 가져온다고 현재 작업 파일에 변경이 자동으로 합쳐지지는 않습니다.\n\n두 주소가 내 빈 저장소를 가리키는지 확인한 뒤 `main`의 로컬 커밋을 보냅니다.\n\n```powershell\ngit push -u origin main\n```\n\n`push`는 로컬 커밋을 원격에 보내는 동작입니다. `-u`는 이번 main과 원격 브랜치의 연결을 기억하게 하는 편의 옵션입니다. 모든 push에 반드시 필요하다는 뜻은 아닙니다. 성공 메시지를 본 뒤 GitHub 저장소 페이지를 새로고침해 `note.txt`의 `version 2`, `branch-note.txt`와 커밋 기록을 확인합니다. 저장만 하고 아직 커밋하지 않은 변경은 push에 포함되지 않습니다.\n\nHTTPS 인증이 필요하면 설치된 Git 자격 증명 관리자가 브라우저 로그인을 요청할 수 있습니다. 환경에 따라 다른 인증 절차가 나타날 수 있으며, Git HTTPS 작업에 GitHub 계정 **비밀번호를 직접 입력하는 방식은 지원되지 않습니다**. 토큰이나 비밀번호는 강의 화면·채팅·URL에 노출하지 않습니다. 오류가 나면 상태와 주소를 읽고 멈춥니다. [GitHub 인증 안내](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git)\n\nGit 명령은 Git 프로그램의 명령입니다. Windows cmd에서는 `cd`로 현재 위치를 확인하고 `type note.txt`로 내용을 읽으며, macOS/Linux 기본 셸에서는 `pwd`와 `cat note.txt`를 씁니다. 각 셸의 명령이며 PowerShell 별칭과는 구분합니다.",
           "presentationPoints": [
-            "Git 실습의 main·두 커밋·note.txt와 기존 origin 유무를 먼저 확인합니다.",
+            "Git 실습의 main·두 파일·병합 기록과 기존 origin 유무를 먼저 확인합니다.",
             "README 없는 빈 GitHub 저장소를 만들고 복사한 HTTPS 주소를 origin으로 연결합니다.",
             "git push -u origin main 뒤 GitHub에서 파일과 커밋을 확인합니다."
           ]
@@ -901,11 +1051,11 @@
           "title": "다른 폴더에서 내 저장소를 다시 clone하기",
           "minutes": 10,
           "optional": false,
-          "body": "### 다른 작업 위치를 만듭니다\n\nGitHub에서 보인 파일을 다른 폴더에 복제해 보겠습니다. 먼저 홈으로 이동하고 연습용 부모 폴더가 없는지 확인합니다. Windows PowerShell에서 `cd`는 `Set-Location`, `pwd`는 `Get-Location`의 기본 별칭입니다. `Test-Path`에는 기본 별칭이 없습니다.\n\n```powershell\ncd ~\npwd\nTest-Path .\\github-clone-practice\n```\n\n`False`일 때만 새 폴더를 만듭니다. `True`라면 기존 폴더를 덮어쓰지 말고 새 이름을 골라 이후 경로도 함께 바꿉니다. `mkdir`은 PowerShell의 기본 폴더 생성 명령이며 `New-Item -ItemType Directory`로도 만들 수 있습니다. 둘 중 하나만 실행합니다.\n\n```powershell\nmkdir github-clone-practice\n```\n\n성공했다면 이 폴더로 이동하고 현재 위치를 확인합니다.\n\n```powershell\ncd .\\github-clone-practice\npwd\n```\n\ncmd는 위치 확인에 `cd`, 존재 확인에 `if exist`, macOS/Linux는 `pwd`, `test -e github-clone-practice`를 사용할 수 있습니다. PowerShell `Test-Path`와 출력 형식은 다릅니다.\n\n### 복제할 폴더 이름과 GitHub 주소 확인\n\n이 부모 폴더 안에 clone 결과 폴더가 이미 있는지 다시 확인합니다. `False`일 때만 진행합니다. `True`이면 다른 새 폴더 이름을 사용하고 다음 명령과 이동 경로도 함께 바꿉니다.\n\n```powershell\nTest-Path .\\git-practice-clone\n```\n\n원격 저장소 화면의 **Code → HTTPS**에서 주소를 복사합니다. 아래 `YOUR-USERNAME`은 예시이므로 **실제 주소로 교체**합니다. 마지막 `git-practice-clone`은 새로 생길 폴더 이름입니다.\n\n```powershell\ngit clone https://github.com/YOUR-USERNAME/git-practice.git git-practice-clone\n```\n\n비공개 저장소를 복제하거나 권한이 필요한 환경에서는 로그인 또는 자격 증명 확인이 나타날 수 있습니다. 실패하면 이동 명령을 실행하지 말고 주소·네트워크·접근 권한을 확인합니다. [저장소 복제 공식 안내](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)\n\n### 복제본의 메모와 기록을 확인합니다\n\nclone이 성공했을 때만 새 폴더로 들어갑니다. `ls`는 PowerShell의 `Get-ChildItem`, `cat`은 `Get-Content` 기본 별칭입니다.\n\n```powershell\ncd .\\git-practice-clone\npwd\nls\ncat .\\note.txt\ngit log --oneline\n```\n\n예상 결과는 `note.txt`의 `version 2`와 두 커밋 `version 2`, `version 1`입니다. 실제 커밋 ID는 각자 다릅니다. 이 폴더는 원래 `git-practice`와 위치가 다른 복제본입니다. clone은 파일과 기록을 가져오는 일이며 웹사이트를 실행하거나 배포하지 않습니다.\n\nPowerShell의 풀어 쓴 명령은 `Set-Location .\\git-practice-clone`, `Get-Location`, `Get-ChildItem`, `Get-Content .\\note.txt`입니다. cmd에서는 `cd`, `dir`, `type note.txt`, macOS/Linux 셸에서는 `cd`, `pwd`, `ls`, `cat note.txt`를 사용합니다. Git 명령은 Git 프로그램의 명령입니다.\n\n### GitHub에서 할 수 있는 다음 일\n\n지금 만든 저장소는 원격 보관 공간입니다. GitHub 프로필은 나와 프로젝트를 소개하며, GitHub Pages는 정적 웹 파일을 공개하는 별도 기능입니다. 단순히 push하거나 clone한 것만으로 사이트가 게시되지는 않습니다. 이어지는 Markdown 강의에서는 이 복제본에 **아직 없는 README.md를 새로 작성**하고, 별도로 준비된 README 예시와 비교합니다. 작성한 파일도 저장, 커밋, push 단계를 각각 거쳐야 GitHub에 반영됩니다.",
+          "body": "### 다른 작업 위치를 만듭니다\n\nGitHub에서 보인 파일을 다른 폴더에 복제해 보겠습니다. 먼저 홈으로 이동하고 연습용 부모 폴더가 없는지 확인합니다. Windows PowerShell에서 `cd`는 `Set-Location`, `pwd`는 `Get-Location`의 기본 별칭입니다. `Test-Path`에는 기본 별칭이 없습니다.\n\n```powershell\ncd ~\npwd\nTest-Path .\\github-clone-practice\n```\n\n`False`일 때만 새 폴더를 만듭니다. `True`라면 기존 폴더를 덮어쓰지 말고 새 이름을 골라 이후 경로도 함께 바꿉니다. `mkdir`은 PowerShell의 기본 폴더 생성 명령이며 `New-Item -ItemType Directory`로도 만들 수 있습니다. 둘 중 하나만 실행합니다.\n\n```powershell\nmkdir github-clone-practice\n```\n\n성공했다면 이 폴더로 이동하고 현재 위치를 확인합니다.\n\n```powershell\ncd .\\github-clone-practice\npwd\n```\n\ncmd는 위치 확인에 `cd`, 존재 확인에 `if exist`, macOS/Linux는 `pwd`, `test -e github-clone-practice`를 사용할 수 있습니다. PowerShell `Test-Path`와 출력 형식은 다릅니다.\n\n### 복제할 폴더 이름과 GitHub 주소 확인\n\n이 부모 폴더 안에 clone 결과 폴더가 이미 있는지 다시 확인합니다. `False`일 때만 진행합니다. `True`이면 다른 새 폴더 이름을 사용하고 다음 명령과 이동 경로도 함께 바꿉니다.\n\n```powershell\nTest-Path .\\git-practice-clone\n```\n\n원격 저장소 화면의 **Code → HTTPS**에서 주소를 복사합니다. 아래 `YOUR-USERNAME`은 예시이므로 **실제 주소로 교체**합니다. 마지막 `git-practice-clone`은 새로 생길 폴더 이름입니다.\n\n```powershell\ngit clone https://github.com/YOUR-USERNAME/git-practice.git git-practice-clone\n```\n\n비공개 저장소를 복제하거나 권한이 필요한 환경에서는 로그인 또는 자격 증명 확인이 나타날 수 있습니다. 실패하면 이동 명령을 실행하지 말고 주소·네트워크·접근 권한을 확인합니다. [저장소 복제 공식 안내](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)\n\n### 복제본의 메모와 기록을 확인합니다\n\nclone이 성공했을 때만 새 폴더로 들어갑니다. `ls`는 PowerShell의 `Get-ChildItem`, `cat`은 `Get-Content` 기본 별칭입니다.\n\n```powershell\ncd .\\git-practice-clone\npwd\nls\ncat .\\note.txt\ncat .\\branch-note.txt\ngit log --oneline --graph --decorate\n```\n\n예상 결과는 `note.txt`의 `version 2`, `branch-note.txt`의 `branch work`, 기존 version 1·2와 브랜치 작업·병합 기록입니다. 실제 커밋 ID는 각자 다릅니다. 이 폴더는 원래 `git-practice`와 위치가 다른 복제본입니다. clone은 파일과 기록을 가져오는 일이며 웹사이트를 실행하거나 배포하지 않습니다.\n\nPowerShell의 풀어 쓴 명령은 `Set-Location .\\git-practice-clone`, `Get-Location`, `Get-ChildItem`, `Get-Content .\\note.txt`입니다. cmd에서는 `cd`, `dir`, `type note.txt`, macOS/Linux 셸에서는 `cd`, `pwd`, `ls`, `cat note.txt`를 사용합니다. Git 명령은 Git 프로그램의 명령입니다.\n\n### GitHub에서 할 수 있는 다음 일\n\n지금 만든 저장소는 원격 보관 공간입니다. GitHub 프로필은 나와 프로젝트를 소개하며, GitHub Pages는 정적 웹 파일을 공개하는 별도 기능입니다. 단순히 push하거나 clone한 것만으로 사이트가 게시되지는 않습니다. 이어지는 Markdown 강의에서는 이 복제본에 **아직 없는 README.md를 새로 작성**하고, 별도로 준비된 README 예시와 비교합니다. 작성한 파일도 저장, 커밋, push 단계를 각각 거쳐야 GitHub에 반영됩니다.",
           "presentationPoints": [
             "홈 아래 새 연습 폴더를 만들고 복제 대상 이름이 없는지 확인합니다.",
             "Code → HTTPS에서 복사한 내 주소를 사용해 git clone을 실행합니다.",
-            "복제본의 note.txt version 2와 두 커밋을 확인한 뒤 README 작성으로 이어갑니다."
+            "복제본의 두 파일과 브랜치 작업·병합 기록을 확인한 뒤 README 작성으로 이어갑니다."
           ]
         },
         {
@@ -939,9 +1089,9 @@
         }
       ],
       "checklist": [
-        "기존 git-practice의 main·두 커밋·원격 연결 상태를 확인할 수 있습니다.",
+        "기존 git-practice의 main·병합 기록·원격 연결 상태를 확인할 수 있습니다.",
         "내 빈 GitHub 저장소의 HTTPS 주소를 origin에 연결하고 push 결과를 확인할 수 있습니다.",
-        "새 부모 폴더에서 clone하고 note.txt의 version 2와 두 커밋을 확인할 수 있습니다.",
+        "다른 폴더에서 clone하고 note.txt version 2, branch-note.txt와 병합된 기록을 확인할 수 있습니다.",
         "push·clone과 GitHub Pages 공개가 서로 다름을 설명할 수 있습니다.",
         "복제본에는 README가 없으며 다음 강의에서 새로 작성한다는 것을 말할 수 있습니다."
       ],
@@ -949,16 +1099,17 @@
         {
           "id": "git-09",
           "title": "원래 Git 저장소 확인",
-          "description": "앞 Git 실습의 폴더, 깨끗한 main 상태, 두 커밋과 원격 연결을 확인합니다. 다른 위치라면 실제 git-practice 폴더로 먼저 이동합니다.",
+          "description": "앞 Git 실습 폴더, 깨끗한 main, 두 파일과 병합 기록, 원격 연결을 확인합니다. 다른 위치라면 실제 git-practice 폴더로 먼저 이동합니다.",
           "scene": "terminal",
-          "code": "pwd\ngit status\ngit log --oneline\ncat .\\note.txt\ngit remote -v",
+          "code": "pwd\ngit status\ngit log --oneline --graph --decorate\ncat .\\note.txt\ncat .\\branch-note.txt\ngit remote -v",
           "language": "powershell",
-          "output": "깨끗한 main, version 2, 두 커밋과 origin 부재를 확인합니다. 변경이나 origin이 있으면 멈추고 살펴봅니다.",
+          "output": "깨끗한 main, version 2, branch work와 병합 기록, origin 부재를 확인합니다. 변경이나 origin이 있으면 멈춥니다.",
           "focus": "github",
           "fileName": "기존 git-practice",
           "files": [
             "git-practice/",
-            "note.txt"
+            "note.txt",
+            "branch-note.txt"
           ]
         },
         {
@@ -994,7 +1145,7 @@
         {
           "id": "github-origin-check",
           "title": "연결한 주소 확인",
-          "description": "fetch와 push의 주소가 내 GitHub 저장소를 가리키는지 확인합니다.",
+          "description": "`-v`는 자세히 표시하는 옵션입니다. fetch(가져오기)와 push(보내기)에 사용할 주소가 내 GitHub 저장소를 가리키는지 확인합니다.",
           "scene": "terminal",
           "code": "git remote -v",
           "language": "powershell",
@@ -1018,22 +1169,24 @@
           "fileName": "원격 전송",
           "files": [
             "git-practice/",
-            "note.txt"
+            "note.txt",
+            "branch-note.txt"
           ]
         },
         {
           "id": "git-10",
           "title": "GitHub에서 파일과 기록 확인",
-          "description": "원격 저장소 화면의 note.txt와 커밋을 확인합니다.",
+          "description": "원격 저장소 화면의 두 파일과 병합 기록을 확인합니다.",
           "scene": "browser",
-          "code": "GitHub 저장소 새로고침\nnote.txt → version 2 확인\n커밋 목록 → version 1·2 확인",
+          "code": "GitHub 저장소 새로고침\nnote.txt → version 2 확인\nbranch-note.txt → branch work 확인\n커밋 목록 → version 1·2와 브랜치 작업·병합 확인",
           "language": "text",
           "output": "재현 화면입니다. 실제 결과는 자신의 GitHub 저장소에서 확인합니다.",
           "focus": "github",
           "fileName": "GitHub 파일과 기록",
           "files": [
             "git-practice/",
-            "note.txt"
+            "note.txt",
+            "branch-note.txt"
           ]
         },
         {
@@ -1131,14 +1284,15 @@
           "title": "메모와 커밋 읽기",
           "description": "cat은 PowerShell Get-Content의 기본 별칭입니다.",
           "scene": "terminal",
-          "code": "cat .\\note.txt\ngit log --oneline",
+          "code": "cat .\\note.txt\ncat .\\branch-note.txt\ngit log --oneline --graph --decorate",
           "language": "powershell",
-          "output": "예상: version 2, 두 커밋 version 2·version 1. ID는 환경마다 다릅니다.",
+          "output": "예상: version 2, branch work, version 1·2와 브랜치 작업·병합 기록. ID는 환경마다 다릅니다.",
           "focus": "github",
           "fileName": "복제 결과",
           "files": [
             "git-practice/",
-            "note.txt"
+            "note.txt",
+            "branch-note.txt"
           ]
         }
       ],
@@ -1191,9 +1345,9 @@
         "caseSummary": "강사가 GitHub 저장소를 실제로 clone하고 새 폴더의 파일을 확인하는 장면을 보여줄 예정입니다. 이어서 앞 강의의 메모 저장소를 직접 push하고 다른 폴더로 clone합니다.",
         "demo": {
           "program": "Windows Terminal · PowerShell · 웹 브라우저",
-          "file": "앞 강의 git-practice/note.txt · 새 github-clone-practice/git-practice-clone",
-          "command": "git-practice의 main·두 커밋·origin 확인\nGitHub에서 README 없는 빈 저장소 생성 → HTTPS 주소 복사\ngit remote add origin 내주소 → git remote -v\ngit push -u origin main → GitHub에서 메모·기록 확인\n홈에 새 github-clone-practice 생성 → 이동·대상 폴더 확인\ngit clone 내주소 git-practice-clone → 새 폴더 진입\ncat .\\note.txt → git log --oneline",
-          "expectedResult": "GitHub와 다른 폴더의 복제본에서 note.txt version 2와 두 커밋을 확인합니다. 다음 강의에서 복제본에 README를 새로 만듭니다.",
+          "file": "원래 git-practice의 두 파일과 github-clone-practice/git-practice-clone",
+          "command": "git-practice의 main·두 파일·병합 기록·origin 확인\nGitHub에서 README 없는 빈 저장소 생성 → HTTPS 주소 복사\ngit remote add origin 내주소 → git remote -v\ngit push -u origin main → GitHub에서 메모·기록 확인\n홈에 새 github-clone-practice 생성 → 이동·대상 폴더 확인\ngit clone 내주소 git-practice-clone → 새 폴더 진입\ncat .\\note.txt와 cat .\\branch-note.txt → git log --oneline --graph --decorate",
+          "expectedResult": "GitHub와 다른 폴더의 복제본에서 note.txt version 2, branch-note.txt와 브랜치 병합 기록을 확인합니다. 다음 강의에서 README를 작성합니다.",
           "durationMinutes": 10
         },
         "returnSummary": "Git에서 기록한 파일을 원격으로 push하고 다른 폴더에 clone했습니다. 다음 Markdown 강의에서는 README가 아직 없는 복제본에 안내 문서를 새로 작성합니다."
@@ -1208,10 +1362,10 @@
       "icon": "code",
       "durationMinutes": 20,
       "case": {
-        "kind": "example",
-        "title": "Codex에게 보낼 긴 요청을 어떻게 읽기 쉽게 만들까요?",
-        "body": "수업용 가상 사례 · 실제 사용자 대화가 아닙니다.\n\n가상의 dolbeom-notes 개발자는 “검색도 추가하고 기존 내용은 보존하고 빈 입력도 처리해 달라”는 요청을 한 문단에 적었습니다. 제목과 목록으로 목표·맥락·제약·완료 확인을 나눈 뒤, 같은 문법으로 README와 학습 노트도 정리해 보기로 합니다.",
-        "question": "Markdown은 어디에 도움이 되며, 같은 원문을 다른 앱에서 볼 때 무엇을 다시 확인해야 할까요?"
+        "kind": "real",
+        "title": "실제 Markdown 요청에서 작업과 커밋까지",
+      "body": "### 실제 요청에서 제목과 목록 살펴보기\n\n아래는 2026년 11월 7일 제가 Codex 데스크톱 앱에서 게임 프로젝트 작업을 요청한 실제 대화입니다. 긴 요청 가운데 Markdown의 제목과 번호 목록이 보이는 부분만 **원래 순서대로 발췌**했습니다. 중간의 '…'은 생략 표시입니다.\n\n```markdown\n# 새남해4: Blender 스킬 기반 A·C·H 판타지 마을 재제작\n\n## 1. 목표와 제작 기준\n\n이번에는 귀환관 장식뿐 아니라 **세 마을의 건물 총 30동과 앞마당·핵심 조경**을 개선한다.\n\n…\n\n6. … 이번 변경만 선별 커밋한다.\n```\n\n### 결과에서 무엇을 확인했나요?\n\n같은 작업의 답변에서 Codex는 세 마을의 건물 30동을 재제작하고, 이동·서비스·지붕 가림을 확인했다고 요약했습니다. **정식 성능 검사는 기존 몬스터 수 불일치로 통과하지 못했다**는 한계도 함께 밝혔습니다. 변경은 커밋 ID `4f047ea4ce`로 남겼습니다. 요청은 11월 7일, 커밋은 11월 8일에 기록됐습니다.\n\n이 예시에서는 `#`와 `##`로 큰 주제와 소주제를 나누고, 번호 목록으로 할 일을 나누고 커밋 요청을 표시했습니다. Markdown은 사람이 긴 요청을 읽고 빠진 조건을 찾는 데 도움을 줍니다. **같은 내용을 일반 문장으로 전달해도 되며**, Markdown을 썼다는 이유만으로 작업이나 커밋이 자동 완료되는 것은 아닙니다. 답변과 실제 기록을 확인해야 합니다.\n\n### 이 강의에서 원문과 미리보기 함께 보기\n\n[마크다운 시작 사례 편집기 열기](#/editor/markdown/case)를 누르면 왼쪽의 Markdown 원문과 오른쪽의 즉시 미리보기를 나란히 볼 수 있습니다. `#` 제목과 목록이 실제 화면에서 어떻게 표시되는지 비교해 보세요.\n\n편집기는 실제 강의 내용을 수정하는 곳입니다. 로컬 개발 서버에서는 유효한 변경이 프로젝트 파일에도 자동 저장되고, GitHub Pages에서는 현재 브라우저에만 저장됩니다. 이 링크를 열기만 해서는 내용이 바뀌지 않습니다.",
+        "question": "긴 요청에서 목표와 완료 조건을 어떻게 나누고, 작업 결과와 커밋을 어떻게 확인할까요?"
       },
       "objectives": [
         "Markdown으로 Codex 요청의 목표·맥락·제약·완료 확인을 구분하고, 필수 형식은 아님을 설명한다.",
@@ -1439,7 +1593,7 @@
       ],
       "closing": "Markdown으로 목표·맥락·제약·완료 확인을 읽기 쉽게 나누었습니다. README.md는 널리 쓰이는 안내 관례이고, 프로필 README는 별도 조건을 갖습니다. 공통 핵심 문법을 익힌 뒤 앱별 확장과 옮긴 결과를 확인합니다. 다음 IDE에서는 방금 본 README를 원문과 미리보기로 나란히 보며 편집합니다. 같은 작업대에서 Codex의 변경을 확인하고, 이어 HTML 화면도 확인해 봅니다.",
       "presentation": {
-        "caseSummary": "준비된 가상 사례에서 Codex에게 보낼 긴 검색 요청을 네 구역으로 나눕니다. 같은 기초 문법을 README와 학습 노트에 적용하되, GitHub 프로필의 조건과 Notion·Obsidian의 차이를 확인합니다.",
+      "caseSummary": "실제 Markdown 요청의 제목과 번호 목록, 결과와 커밋 기록을 확인합니다. [강의 편집기 열기](#/editor/markdown/case)에서 왼쪽 원문과 오른쪽 즉시 미리보기를 비교합니다. 편집 내용은 자동 저장됩니다.",
         "demo": {
           "program": "VS Code · 웹 브라우저 (강사 사전 준비)",
           "file": "docs/search-request.md · README.md · GitHub 프로필 README",

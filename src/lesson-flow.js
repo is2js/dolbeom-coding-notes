@@ -14,6 +14,7 @@ const relatedStepIds = {
     'git-why': ['git-03', 'git-04', 'git-first-commit'],
     'git-diff': ['git-05', 'git-05-diff', 'git-staged-diff', 'git-06'],
     'git-prompt': ['git-history-diff', 'git-07', 'git-07-switch', 'git-08', 'codex-09'],
+    'git-branch': ['git-branch-check', 'git-branch-switch', 'git-branch-edit', 'git-branch-stage', 'git-branch-commit', 'git-branch-return', 'git-branch-merge', 'git-branch-review'],
   },
   github: {
     'github-clone': ['git-09', 'github-01', 'github-02', 'github-origin-check', 'github-03', 'git-10'],

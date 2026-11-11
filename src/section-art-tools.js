@@ -191,21 +191,53 @@ function promptScene() {
     'main의 기록을 지우지 않고 이전 커밋에 다녀오기');
 }
 
+function branchMergeScene() {
+  const p='section-git-branch';
+  return scene(p,'브랜치에서 수정하고 main에 합치기',
+    rect(51,108,658,328,C.cream,12)
+    + rect(45,102,658,328,C.light,12)
+    + text(105,135,'① 브랜치 만들기',{size:20,fill:C.muted,weight:700})
+    + text(290,135,'② 파일을 추가해 커밋',{size:20,fill:C.muted,weight:700})
+    + pill(563,133,110,'main',C.sage,true)
+    + arrow(p,'M618 178v24')
+    // A merge commit has two parents: the old main commit and the branch commit.
+    + arrow(p,'M145 225H606')
+    + arrow(p,'M139 240Q210 320 346 320')
+    + arrow(p,'M394 320Q533 320 614 241')
+    + flow(p,'M139 240Q210 320 346 320')
+    + flow(p,'M394 320Q533 320 614 241',1.1)
+    + circle(125,225,20,C.amber)
+    + circle(370,320,20,C.sage)
+    + circle(630,225,20,C.teal)
+    + text(125,192,'기존 커밋',{size:21,anchor:'middle',weight:700})
+    + text(630,300,'병합 커밋',{size:21,anchor:'middle',weight:700})
+    + text(370,290,'branch-note.txt 커밋',{size:19,anchor:'middle',mono:true,weight:700})
+    + pill(264,389,212,'practice-branch',C.sage,true)
+    + arrow(p,'M370 389v-46')
+    + rect(247,443,266,40,C.white,8)
+    + text(380,471,'git merge --no-ff',{size:22,anchor:'middle',mono:true,fill:C.teal,weight:700}),
+    '이번 실습은 --no-ff로 병합 커밋을 남겨 흐름을 확인합니다');
+}
+
 function cloneScene() {
   const p='section-github-clone';
-  return scene(p,'내 메모 기록을 GitHub에 올리기',
-    panel(45,115,275,291,'내 컴퓨터 · 로컬 저장소',
-      folder(82,180,199,120) + pill(103,218,156,'note.txt',C.white,true)
-      + text(182,339,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
-      + text(182,374,'버전 1 · 버전 2 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
-    + arrow(p,'M335 242h88') + flow(p,'M335 242h88')
-    + text(379,218,'push',{size:23,mono:true,anchor:'middle',fill:C.teal,weight:700})
-    + panel(438,115,275,291,'GitHub · 원격 저장소',
-      remoteRepository(500,183)
-      + text(575,339,'origin',{size:21,anchor:'middle',mono:true,weight:700})
-      + text(575,374,'커밋 기록을 보관',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
-    + pill(233,443,294,'git push -u origin main',C.sage,true),
-    '로컬에서 기록한 커밋을 원격으로 전송');
+  return scene(p,'내 저장소와 GitHub를 연결하기',
+    panel(35,115,290,300,'내 컴퓨터 · 로컬 저장소',
+      folder(84,174,190,98) + pill(100,207,157,'note.txt',C.white,true)
+      + text(180,304,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
+      + rect(57,324,246,55,C.sage,7)
+      + text(180,347,'origin = 원격 주소 별칭',{size:18,anchor:'middle',weight:700})
+      + text(180,369,'내 로컬 Git에 저장',{size:17,anchor:'middle',fill:C.muted}),{titleSize:20})
+    + arrow(p,'M338 235h80') + flow(p,'M338 235h80')
+    + text(378,217,'push',{size:22,mono:true,anchor:'middle',fill:C.teal,weight:700})
+    + arrow(p,'M418 305h-80') + flow(p,'M418 305h-80',1.3)
+    + text(378,290,'fetch',{size:22,mono:true,anchor:'middle',fill:C.teal,weight:700})
+    + panel(435,115,290,300,'GitHub · 원격 저장소',
+      remoteRepository(505,183)
+      + text(580,339,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
+      + text(580,374,'커밋 기록을 보관',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
+    + text(380,464,'fetch 후에도 작업 파일은 그대로',{size:21,anchor:'middle',fill:C.teal,weight:700}),
+    'push는 보내기 · fetch는 가져오기');
 }
 
 function remoteRolesScene() {
@@ -213,14 +245,14 @@ function remoteRolesScene() {
   return scene(p,'GitHub에서 다른 폴더로 복제하기',
     panel(45,115,275,291,'GitHub · 원격 저장소',
       remoteRepository(107,183)
-      + text(182,339,'origin',{size:21,anchor:'middle',mono:true,weight:700})
+      + text(182,339,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
       + text(182,374,'버전 1 · 버전 2 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
     + arrow(p,'M335 242h88') + flow(p,'M335 242h88')
     + text(379,218,'clone',{size:23,mono:true,anchor:'middle',fill:C.teal,weight:700})
     + panel(438,115,275,291,'내 컴퓨터 · 새 폴더',
       folder(475,180,199,120) + pill(496,218,156,'note.txt',C.white,true)
       + text(575,337,'git-practice-clone',{size:19,anchor:'middle',mono:true,weight:700})
-      + text(575,374,'파일과 커밋 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
+      + text(575,374,'origin = 원격 주소 별칭',{size:19,anchor:'middle',fill:C.muted}),{titleSize:20})
     + pill(255,443,250,'git clone 주소',C.sage,true),
     '다른 폴더에 복제해 파일과 기록 확인');
 }
@@ -238,7 +270,7 @@ function pipeScene() {
 
 function errorReportScene() {
   const p='section-git-bonus';
-  const rows=[['현재 폴더','dolbeom-notes'],['현재 브랜치','feat/course-search'],['실행 명령','git push'],['오류 전문','오류 원문 전체 첨부'],['보존할 작업','index.html의 내 수정']];
+  const rows=[['현재 폴더','git-practice'],['현재 브랜치','main'],['실행 명령','git push'],['오류 전문','오류 원문 전체 첨부'],['보존할 작업','note.txt의 내 수정']];
   const body=rows.map(([label,value],i)=>{const y=184+i*52;return text(137,y,`${i+1}. ${label}`,{size:22,weight:700,fill:C.teal})
     + text(330,y,value,{size:21,mono:i<3}) + (i<4?path(`M134 ${y+17}h488`,C.line,1.4):'');}).join('');
   return scene(p,'다섯 줄의 상태로 도움 요청하기',panel(110,110,536,338,'동기화 오류 보고 · 가상 예시',body)
@@ -286,14 +318,19 @@ export const toolSectionScenes = {
     description:'main은 최신 버전 2 커밋을 가리킨 채 HEAD가 이전 버전 1 커밋을 직접 확인하는 상태입니다. 이전 기록을 읽은 뒤 git switch main으로 HEAD를 원래 브랜치로 돌려 최신 파일을 확인하며 두 커밋은 그대로 유지됩니다.',
     svg:promptScene(),
   },
+  'git-branch': {
+    title:'브랜치에서 수정하고 main에 합치기',
+    description:'기존 커밋에서 practice-branch를 만들고 branch-note.txt를 추가해 커밋합니다. main에서 --no-ff로 병합하면 기존 main 커밋과 브랜치 커밋을 부모로 가진 병합 커밋이 생기며, main은 병합 커밋을, practice-branch는 원래 브랜치 커밋을 가리킵니다. 일반 병합은 상황에 따라 fast-forward로 병합 커밋 없이 진행될 수 있습니다.',
+    svg:branchMergeScene(),
+  },
   'github-clone': {
     title:'내 메모 저장소를 GitHub에 올리기',
-    description:'내 컴퓨터의 git-practice 저장소에 있는 note.txt와 버전 1·2의 커밋 기록을 push하여 GitHub 원격 저장소 origin으로 전송합니다.',
+    description:'내 컴퓨터 Git 설정의 origin은 GitHub 원격 주소를 가리키는 별칭입니다. push는 로컬 커밋을 GitHub로 보내고, fetch는 원격 기록을 로컬 Git으로 가져오되 작업 파일을 자동으로 바꾸지 않습니다.',
     svg:cloneScene(),
   },
   'github-roles': {
     title:'다른 폴더에서 내 저장소를 다시 clone하기',
-    description:'GitHub 원격 저장소를 다른 새 폴더 git-practice-clone으로 clone하고 note.txt와 두 커밋 기록을 확인합니다.',
+    description:'GitHub 원격 저장소를 다른 새 폴더 git-practice-clone으로 clone해 note.txt와 커밋 기록을 복제합니다. 새 로컬 저장소의 origin은 복제한 원격 주소의 별칭입니다.',
     svg:remoteRolesScene(),
   },
   'terminal-bonus': {

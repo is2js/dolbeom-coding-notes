@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 26 core sections appear once in case, authored section order, recap flows', () => {
+test('all 27 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,7 +25,7 @@ test('all 26 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 26);
+  assert.equal(total, 27);
 });
 
 test('every core section has related examples and the registry covers the existing step IDs', () => {

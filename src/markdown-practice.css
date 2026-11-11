@@ -5,6 +5,23 @@
 .markdown-practice-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .markdown-practice-actions button { min-height: 38px; padding: 7px 11px; border: 1px solid #a8bca8; border-radius: 7px; background: #fffdf5; color: #233b3c; font-size: 12px; font-weight: 700; }
 .markdown-practice-actions button:disabled { opacity: .5; }
+.markdown-practice-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.markdown-practice-toolbar button, .markdown-practice-toolbar select, .markdown-practice-panel-actions button, .markdown-practice-file { min-height:36px; padding:6px 9px; border:1px solid #a8bca8; border-radius:6px; background:#fffdf5; color:#233b3c; font-family:inherit; font-size:12px; font-weight:600; line-height:1.3; }
+.markdown-practice-toolbar select { max-width:100%; font-size:12px; }
+.markdown-practice-hint { margin:8px 0 0; color:#435a56; font-size:12px; line-height:1.6; }
+.markdown-practice-hint code { font-size:inherit; }
+.markdown-practice-insert { margin-top:10px; padding:10px; border:1px solid #c4d1bd; border-radius:8px; background:#e9f0e3; }
+.markdown-practice-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.markdown-practice-fields label { display:flex; min-width:0; flex-direction:column; gap:4px; font-size:12px; color:#344942; }
+.markdown-practice-fields input { width:100%; min-height:36px; padding:7px 8px; border:1px solid #a8bca8; border-radius:6px; background:#fffdf7; color:#263449; box-sizing:border-box; font-size:13px; }
+.markdown-practice-panel-actions { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:8px; }
+.markdown-practice-file { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12px; }
+.markdown-practice-file input { max-width:100%; width:210px; font-size:12px; }
+.markdown-practice-output .markdown-body .task-list-item, .markdown-practice-output .markdown-body li:has(> input[type="checkbox"]) { list-style:none; }
+.markdown-practice-output .markdown-body input[type="checkbox"] { margin-right:6px; vertical-align:middle; accent-color:#3d7866; }
+.markdown-practice-output .markdown-body img { max-width:100%; height:auto; }
+.markdown-practice-output .markdown-body :is(td,th)[align="center"] { text-align:center; }
+.markdown-practice-output .markdown-body :is(td,th)[align="right"] { text-align:right; }
 .markdown-practice-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-top: 13px; }
 .markdown-practice-input, .markdown-practice-output { min-width: 0; }
 .markdown-practice-input label, .markdown-practice-output h4 { display: block; margin: 0 0 6px; color: #344942; font-size: 12px; font-weight: 700; }
@@ -12,6 +29,7 @@
 .markdown-practice-input textarea { display: block; resize: vertical; font: 13px/1.65 Consolas, 'Malgun Gothic', monospace; }
 .markdown-practice-output .markdown-body { overflow-wrap: anywhere; font-size: 13px; line-height: 1.7; }
 .markdown-practice-output .markdown-body h1, .markdown-practice-output .markdown-body h2, .markdown-practice-output .markdown-body h3 { font-size: 1.1em; line-height: 1.4; }
+.markdown-practice-output .markdown-body :is(h4,h5,h6) { margin: 1em 0 .5em; font-weight: 700; line-height: 1.4; }
 .markdown-practice-output .markdown-body pre { max-width: 100%; overflow-x: auto; }
 .markdown-practice-status { margin: 0; font-size: 12px; line-height: 1.5; }
 .markdown-practice-status:not(:empty) { margin-top: 8px; }
@@ -30,4 +48,5 @@
   .presentation-markdown-practice[open] .markdown-practice-output .markdown-body { height: clamp(160px, 28vh, 230px); }
 }
 @container (max-width: 500px) { .markdown-practice-grid { grid-template-columns: minmax(0,1fr); } .markdown-practice-input textarea, .markdown-practice-output .markdown-body { height: 210px; } }
-@media (max-width: 720px) { .markdown-practice-actions button { min-height: 44px; } .markdown-practice-input textarea { font-size: 16px; } }
+@container (max-width: 360px) { .markdown-practice-fields { grid-template-columns:minmax(0,1fr); } }
+@media (max-width: 720px) { .markdown-practice-actions button, .markdown-practice-toolbar button, .markdown-practice-toolbar select, .markdown-practice-panel-actions button, .markdown-practice-file { min-height: 44px; } .markdown-practice-input textarea, .markdown-practice-fields input { font-size: 16px; } }

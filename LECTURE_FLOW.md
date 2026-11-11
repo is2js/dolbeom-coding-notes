@@ -33,7 +33,7 @@ PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도
 | 02 | Git | 실제 기록·Diff 사례 → 저장과 기록·새 저장소 → 첫 커밋 → 두 번째 버전·비교 → 이전 기록 방문·복귀 → 브랜치 작업·병합 | 45분 |
 | 03 | GitHub | 강사의 clone 시연 → Git 메모 저장소 push → 다른 폴더에 clone → 파일·기록 확인 | 20분 |
 | 04 | 마크다운 | Codex 계획문 문법 연습 → README와 프로필 → Typora 이미지·GitHub → Notion·Obsidian 비교 | 39분 |
-| 05 | IDE | Codex 변경 확인 → VS Code 설치·기본 설정·README 미리보기 → PyCharm 간단 설치 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 55분 |
+| 05 | IDE | Codex 변경 확인 → VS Code 설치·한국어팩·내장 기능과 선택 확장 설정·README 미리보기 → PyCharm 간단 설치 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 55분 |
 | 06 | 프론트엔드·백엔드 | 만든 카드와 프론트엔드의 관계 → 로컬·서버와 요청·응답 → 서버가 HTML을 만드는 방식 | 20분 |
 | 07 | 템플릿 엔진 | 같은 카드에 Jinja2 데이터 → Tailwind CSS로 꾸미기 → Alpine.js로 동작 연결·기본 코드와 비교 | 40분 |
 | 합계 | 7개 주제 · 본편 29개 절 | 강의 목표·사례·설명·시연·정리 포함 | 249분 |
@@ -48,7 +48,7 @@ Git의 다섯 본편 절은 총 45분입니다. 앞에서 만든 메모와 연�
 
 개념을 구성할 때 [Git 기초 강의 기록](<https://blog.chojaeseong.com/git/%EC%9A%B0%ED%85%8C%EC%BD%94/2022/02/17/%EC%A4%80)-upstream%EA%B3%BC-git%EA%B0%9D%EC%B2%B4-%EA%B0%95%EC%9D%98(%EC%99%84).html>)의 도움말·저장소·스냅샷·참조 설명을 참고했습니다. 본편은 초보자의 파일 기록 실습에 집중하며 원격 추적 설정과 Git 객체 내부 명령은 다루지 않습니다.
 
-IDE에서는 VS Code Windows User Setup·PATH·새 터미널과 복제본 폴더 열기를 확인합니다. 표시 언어·글자 크기·줄바꿈·서식은 선택 사항과 기본 기능을 구분하며 설정합니다. PyCharm은 간단한 설치와 무료 핵심·Pro 체험, Python 인터프리터와 키맵의 역할을 구분합니다. HTML·CSS·JavaScript 실습은 수업용 강의 카드 예제입니다. 작은 설명·자체 도해·코드·한 가지 수정과 확인 순서로 읽고, 최신 VS Code의 내장 HTML 미리보기 또는 외부 브라우저에서 결과를 확인합니다. Live Server는 구버전 등의 선택적 방법입니다. CSS 카드 여백은 비교 후 24px로 돌려 뒤의 템플릿 예제와 맞춥니다. 이어지는 프론트엔드 단원에서는 이 카드가 사용자에게 보이고 상호작용하는 프론트엔드의 한 예라는 점을 설명합니다. 템플릿 단원은 같은 카드의 역할을 다시 활용해 서버 데이터, Tailwind CSS, Alpine.js를 연결합니다.
+IDE에서는 VS Code Windows User Setup·PATH·새 터미널과 복제본 폴더 열기를 확인합니다. 표시 언어·글자 크기·줄바꿈·서식은 선택 사항과 기본 기능을 구분하며 설정합니다. 본문에서 Microsoft 한국어팩의 식별자·설치·언어 적용을 따라가고, Live Server와 Prettier는 정확한 확장 ID와 실행·종료·기본 포매터·저장 시 서식 설정을 선택적으로 시연합니다. 내장 Markdown·HTML·CSS·JavaScript 기능으로 첫 실습을 진행할 수 있으며, 확장 모두를 8분 안에 의무 설치하지 않습니다. PyCharm은 간단한 설치와 무료 핵심·Pro 체험, Python 인터프리터와 키맵의 역할을 구분합니다. HTML·CSS·JavaScript 실습은 수업용 강의 카드 예제입니다. 작은 설명·자체 도해·코드·한 가지 수정과 확인 순서로 읽고, 최신 VS Code의 내장 HTML 미리보기 또는 외부 브라우저에서 결과를 확인합니다. Live Server는 구버전 등의 선택적 방법입니다. CSS 카드 여백은 비교 후 24px로 돌려 뒤의 템플릿 예제와 맞춥니다. 이어지는 프론트엔드 단원에서는 이 카드가 사용자에게 보이고 상호작용하는 프론트엔드의 한 예라는 점을 설명합니다. 템플릿 단원은 같은 카드의 역할을 다시 활용해 서버 데이터, Tailwind CSS, Alpine.js를 연결합니다.
 
 시연 준비용 자료는 [공통 강의 카드 안내](public/examples/course-card/README.md), [단계별 정적 예제](public/examples/course-card/index.html), [브라우저 완성 화면](http://127.0.0.1:5188/examples/course-card/03-javascript/index.html)입니다. VS Code에서 HTML → CSS → JavaScript의 단계별 결과를 비교합니다. 처음부터 만드는 수업에서는 기존 파일을 덮어쓰지 않도록 별도의 연습 폴더에서 시작합니다. 서버 템플릿 예제는 README의 별도 준비 조건을 확인합니다. GitHub Pages는 정적 파일을 제공하고 FastAPI 서버를 실행하지 않습니다.
 

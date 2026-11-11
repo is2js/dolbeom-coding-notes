@@ -54,7 +54,7 @@ test('terminal, README, Python keymap and template pages select examples for the
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-shortcuts')), ['terminal-06', 'terminal-07']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-tools-markdown')), ['tools-08', 'tools-10']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-markdown-typora-images')), ['typora-01', 'typora-02']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode-setup')), ['ide-vscode-setup', 'ide-vscode-code']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode-setup')), ['ide-vscode-setup', 'ide-vscode-code', 'ide-vscode-extensions']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode')), ['tools-01', 'tools-02', 'tools-03']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), ['ide-pycharm-setup', 'tools-06', 'ide-keymap', 'tools-07']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-html')), ['html-practice']);

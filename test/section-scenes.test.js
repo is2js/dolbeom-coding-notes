@@ -3,16 +3,30 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,33);
+  assert.equal(Object.keys(sectionScenes).length,34);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,33);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,34);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
+});
+
+test('Markdown scenes connect plan syntax to rendered content and separate local image storage from GitHub push',()=>{
+  const plan = sectionScenes['markdown-map'];
+  const image = sectionScenes['markdown-typora-images'];
+  assert.match(plan.description, /제목, 목록, 강조와 링크/);
+  assert.match(plan.svg, /Markdown 원문/);
+  assert.match(plan.svg, /읽는 화면/);
+  assert.match(image.description, /클립보드.*assets.*README.*Git.*GitHub/);
+  assert.match(image.svg, /Typora · 내 프로젝트/);
+  assert.match(image.svg, /README\.md/);
+  assert.match(image.svg, /assets\//);
+  assert.match(image.svg, /commit · push/);
+  assert.match(image.svg, /로컬에 저장하고 Git으로 함께 올립니다/);
 });
 
 test('beginner Git scenes separate the repository, staging, difference and temporary visit',()=>{

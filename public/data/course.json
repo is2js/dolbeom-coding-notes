@@ -1358,9 +1358,9 @@
       "number": 4,
       "title": "마크다운: Codex 요청에서 README와 학습 노트까지",
       "shortTitle": "마크다운",
-      "subtitle": "요청의 구조·프로젝트 안내·앱마다 다른 Markdown 확장",
+      "subtitle": "Codex 계획문으로 문법 연습·README·Typora 이미지 관리",
       "icon": "code",
-      "durationMinutes": 20,
+      "durationMinutes": 39,
       "case": {
         "kind": "real",
         "title": "간단한 요청에서 Plan 모드의 구체적인 계획까지",
@@ -1368,22 +1368,22 @@
         "question": "간단한 요청에 비해 계획에는 어떤 항목이 더 구체적으로 나타났나요? 구현하기 전에 무엇을 확인하고 싶나요?"
       },
       "objectives": [
-        "Markdown으로 Codex 요청의 목표·맥락·제약·완료 확인을 구분하고, 필수 형식은 아님을 설명한다.",
+        "Codex가 제시한 계획의 제목·목록·강조·링크·코드를 직접 바꾸고 원문과 결과를 비교한다.",
         "README.md의 관례적 역할과 GitHub 프로필 README가 표시되는 조건을 구분한다.",
-        "제목·목록·강조·링크·코드 블록을 읽고 원문과 표시 결과를 비교한다.",
+        "Typora의 이미지 저장 위치와 상대경로를 확인하고 Markdown과 이미지 파일을 함께 GitHub에 올린다.",
         "Notion과 Obsidian의 공통 문법과 각 앱의 확장·입력 방식 차이를 확인한다."
       ],
       "sections": [
         {
           "id": "markdown-map",
-          "title": "Codex 요청을 목표·맥락·제약·확인으로 구조화하기",
-          "minutes": 6,
+          "title": "Codex 계획문으로 마크다운 문법 연습하기",
+          "minutes": 10,
           "optional": false,
-          "body": "### 형식보다 요청의 내용이 먼저입니다\n\nCodex에게 자연어로 부탁해도 작업할 수 있습니다. Markdown은 필수 프롬프트 형식이나 정답 주문이 아닙니다. 다만 요청이 길어질 때 제목과 목록으로 내용을 나누면, 사람도 빠진 조건을 찾기 쉬워집니다. 다음은 지금까지 사용한 메모 프로젝트와는 별도로 준비한 강의 카드 검색 요청 예시입니다. 요청 원문을 읽고 무엇을 만들지, 어디에서 작업할지, 무엇을 보존할지, 어떤 결과를 확인할지 네 묶음으로 정리합니다.\n\n예를 들어 “검색을 잘 만들어 줘”에는 완료를 판단할 단서가 부족합니다. 목표는 “강의 제목으로 목록을 좁힌다”, 맥락은 “준비된 강의 목록 예제”, 제약은 “기존 ID와 순서를 보존한다”, 확인은 “빈 입력·Git·없는 검색어를 비교한다”로 적습니다. 정확한 파일을 모르면 추측한 경로를 강요하기보다 관련 구조를 먼저 찾아 달라고 요청할 수 있습니다.\n\n```markdown\n# 목표\n강의 카드에서 제목으로 검색할 수 있게 해 주세요.\n## 맥락\n제공한 dolbeom-notes 예제의 강의 목록을 먼저 읽어 주세요.\n## 제약\n기존 강의 ID와 순서를 보존해 주세요.\n## 완료 확인\n빈 검색은 전체, Git은 관련 카드, 없는 검색어는 안내를 보여 주세요.\n```\n\n제목의 #은 큰 구역, ##은 그 안의 구역을 나타냅니다. 목록은 여러 조건을 한 항목씩 분리합니다. 코드 블록은 명령이나 원문을 주변 설명과 구분할 때 씁니다. 명령과 오류 로그를 붙일 때는 어떤 것을 실행했고 어떤 결과가 나왔는지 설명을 함께 적습니다.\n\n**같이 확인:** 준비된 요청에서 빠진 보존 조건 하나를 찾아 보충합니다. 마지막에는 장식의 개수보다 요청한 동작과 확인할 결과가 서로 맞는지 읽어 봅니다. 이 내용은 별도 예시이므로 지금의 메모 프로젝트에 존재하는 기능으로 가정하지 않습니다. 실제로 전달할 때는 대상 프로젝트의 경로와 상태에 맞게 고쳐 씁니다.",
+          "body": "### 방금 본 계획문에서 시작합니다\n\n시작 사례의 Codex 계획은 제목과 목록으로 내용을 나누었습니다. 이번에는 그 계획의 일부를 학습용으로 짧게 바꾸어, 기호 하나가 화면에서 어떻게 보이는지 직접 연습합니다. 실제 계획이나 강의 원본을 덮어쓰지 않도록 **연습용 복사본**에서 진행합니다.\n\n아래 연습 원문을 복사해 [Dillinger 웹 편집기](https://dillinger.io/)에 붙여 넣고, 원문을 고치면서 옆의 미리보기를 비교해 봅니다. 공개된 강의용 문구만 사용하고 개인 정보나 실제 프로젝트 전문은 외부 편집기에 넣지 않습니다. 별도로 [마크다운 한국어 연습 사이트](https://www.markdowntutorial.com/kr/) 또는 [CommonMark 대화형 튜토리얼](https://commonmark.org/help/tutorial/)(영어)에 들어가면 각 사이트가 제시하는 단계별 문제를 풀 수 있습니다. [GitHub의 한국어 마크다운 가이드](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)는 문법을 찾아보는 참고 자료입니다. 사이트 UI와 제공 언어는 바뀔 수 있습니다.\n\n````markdown\n# 강의 목표와 공통 실습\n\n## 강의 시작\n- **수강 후 할 수 있는 일**을 소개합니다.\n- 계획을 확인하고 필요한 부분을 바꿉니다.\n\n## 확인할 자료\n[GitHub 마크다운 안내](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)\n같은 프로젝트의 `README.md`를 확인합니다.\n\n```text\n완료 확인: 수정한 내용이 화면에 보입니다.\n```\n````\n\n1. `#` 뒤에 공백을 넣고 큰 제목을 작성한 다음, `##`으로 그 안의 소제목을 만듭니다.\n2. `-` 뒤에 공백을 두고 목록을 만들고, 중요한 말의 앞뒤에 `**`를 붙여 강조해 봅니다.\n3. `[보이는 이름](주소)`의 이름을 바꾸고 링크가 열리는지 확인합니다. 한 쌍의 백틱은 `README.md`처럼 짧은 코드를 구분합니다.\n4. 세 개의 백틱을 위아래에 두어 여러 줄 코드 블록을 만들고, 예시 문구를 바꿔 원문과 결과를 비교합니다. 코드 블록은 표시만 할 뿐 명령을 실행하지 않습니다.\n\n**직접 확인:** 제목·목록·강조·링크·코드 블록을 한 번씩 바꾸고 결과가 어떻게 달라졌는지 말합니다. 마크다운은 요청을 읽기 쉽게 정리하는 방법이며, Codex에 요청할 때 반드시 써야 하는 형식은 아닙니다.\n\n**이 강의 편집기에서 보기:** [시작 사례 편집기](#/editor/markdown/case)는 왼쪽 원문과 오른쪽 즉시 미리보기를 보여 줍니다. 이 편집기는 **실제 강의 내용을 바꾸는 곳**이므로 원문을 읽고 비교하는 용도로만 살펴봅니다. 로컬 편집기에서 내용을 고치면 유효한 변경은 프로젝트 파일에도 자동 저장됩니다. 별도 문법 실습은 위의 웹 편집기와 대화형 튜토리얼을 사용합니다.",
           "presentationPoints": [
-            "Markdown은 요청을 읽기 쉽게 나누는 선택적 도구입니다.",
-            "목표·맥락·제약·완료 확인을 한 항목씩 적습니다.",
-            "명령·로그·인용은 설명과 구분하고 실제 결과로 확인합니다."
+            "Codex 계획문의 제목과 목록을 출발점으로 삼습니다.",
+            "제목·목록·강조·링크·코드를 직접 바꾸어 확인합니다.",
+            "웹 연습 사이트와 한국어 가이드로 이어서 연습합니다."
           ]
         },
         {
@@ -1391,11 +1391,23 @@
           "title": "README.md 관례와 GitHub 프로필 README의 조건",
           "minutes": 7,
           "optional": false,
-          "body": "### 다음 사람이 시작할 수 있는 안내를 만듭니다\n\nREADME는 프로젝트의 목적과 시작 방법 등을 소개할 때 널리 쓰는 문서입니다. .md는 Markdown 파일에 흔히 붙이는 확장자입니다. Git이나 일반 프로젝트가 README.md 파일을 반드시 요구하는 것은 아닙니다. 새로 합류한 사람과 미래의 나를 위해 실제 내용과 맞는 안내를 두면 유용합니다.\n\n별도로 준비된 강의 카드 프로젝트의 README에서는 “무엇을 하는 예제인가”, “준비된 환경에서 무엇을 확인하는가”, “관련 메모는 어디에 있는가”를 찾습니다. 실행 명령을 적을 때는 실제 package.json의 scripts와 맞는지 대조합니다. 문서에 명령이 있다는 사실과 그 명령이 성공했다는 사실을 구분하고, 비밀 토큰이나 개인 경로를 복사해 넣지 않습니다. 코드 블록에 언어 이름을 붙이는 것은 표시를 돕는 것이며 프로그램을 설치하는 기능이 아닙니다.\n\nGitHub는 저장소의 .github, 루트, docs 위치에 있는 README를 찾아 보여 줍니다. 여러 위치에 있으면 이 순서로 선택합니다. 수업 예제는 찾기 쉬운 루트 README.md 하나를 사용합니다. 프로젝트 안내와 개인 프로필 README는 목적과 조건이 다릅니다.\n\n프로필 README는 **사용자 이름과 같은 이름의 저장소**, **공개 저장소**, **루트의 README.md**, **내용이 들어 있는 파일**이라는 조건이 모두 맞아야 표시됩니다. 관리형 사용자 계정에는 이 기능이 제공되지 않습니다. 사용자 이름이 dolbeom-study라면 같은 이름의 저장소를 사용하는 방식입니다. 강사는 준비한 프로필과 저장소 설정에서 네 조건을 직접 확인합니다.\n\n**같이 확인:** 준비한 프로젝트 README와 강사의 프로필 소개 원문을 비교합니다. 전자에서 실행 안내를, 후자에서 자기소개를 찾아 표시하고 네 조건을 체크합니다. 제목과 링크가 보여도 링크 대상과 프로젝트의 실제 상태까지 맞는지 한 번 더 확인합니다.\n\n### 복제본에 README를 만들어 이어가기\n\n방금 clone한 **git-practice-clone** 폴더에서 `pwd`로 현재 경로를 확인합니다. 예상한 복제본이 아니면 실제 위치를 찾아 이동한 뒤 확인합니다. `pwd`는 Windows PowerShell의 `Get-Location` 기본 별칭입니다. macOS/Linux 셸에서도 `pwd`, Windows cmd에서는 인수 없는 `cd`로 위치를 확인합니다.\n\n```powershell\npwd\nls\nTest-Path .\\README.md\n```\n\n`ls`는 PowerShell `Get-ChildItem`의 기본 별칭이며 cmd에서는 `dir`, macOS/Linux 셸에서는 `ls`를 사용합니다. `Test-Path`에는 기본 별칭이 없습니다. cmd는 `if exist README.md echo 존재함`, macOS/Linux 셸은 `test -e README.md` 다음 `echo $?`로 확인할 수 있습니다(0은 있음, 1은 없음). 같은 이름의 파일이 이미 있거나 위치가 다르면 덮어쓰지 않고 멈춥니다. `False`일 때만 메모장으로 새 파일을 엽니다.\n\n```powershell\nnotepad README.md\n```\n\n새 파일 만들기를 확인하고 아래 내용을 입력해 **Ctrl+S로 저장**한 뒤 메모장을 닫습니다. 아직 VS Code를 설치하지 않았어도 메모장으로 작성할 수 있습니다.\n\n```markdown\n# Git 연습 메모\n\n터미널과 Git을 연습한 메모 프로젝트입니다.\n\n## 확인 방법\n- note.txt에서 version 2를 확인합니다.\n- branch-note.txt에서 브랜치 작업을 확인합니다.\n```\n\n저장된 원문을 확인합니다. `cat`은 Windows PowerShell의 `Get-Content` 기본 별칭입니다. cmd에서는 `type README.md`, macOS/Linux 셸에서는 `cat README.md`를 사용합니다.\n\n```powershell\ncat .\\README.md\ngit status\n```\n\n`git status`에서 새 README가 추적되지 않은 파일로 표시될 수 있습니다. 저장만으로 원본 폴더나 GitHub가 바뀌지 않으며, 원격 반영은 나중에 별도 커밋과 push가 필요합니다. 이 수업에서는 우선 저장·확인까지만 합니다. 다음 IDE에서 **같은 복제본의 README**를 원문과 미리보기로 열고 `확인 방법`을 검색합니다.\n\n**비교 예시:** 별도로 준비한 강의 카드 예제의 README를 열고 프로젝트 목적과 확인 방법을 찾아봅니다. 준비된 [카드 README 예시](./examples/course-card/03-javascript/README.md)로도 비교할 수 있습니다. 예제 README는 GitHub 프로필 소개가 아니라 강의 카드 프로젝트 안내입니다.",
+          "body": "### 다음 사람이 시작할 수 있는 안내를 만듭니다\n\nREADME는 프로젝트의 목적과 시작 방법 등을 소개할 때 널리 쓰는 문서입니다. .md는 Markdown 파일에 흔히 붙이는 확장자입니다. Git이나 일반 프로젝트가 README.md 파일을 반드시 요구하는 것은 아닙니다. 새로 합류한 사람과 미래의 나를 위해 실제 내용과 맞는 안내를 두면 유용합니다.\n\n별도로 준비된 강의 카드 프로젝트의 README에서는 “무엇을 하는 예제인가”, “준비된 환경에서 무엇을 확인하는가”, “관련 메모는 어디에 있는가”를 찾습니다. 실행 명령을 적을 때는 실제 package.json의 scripts와 맞는지 대조합니다. 문서에 명령이 있다는 사실과 그 명령이 성공했다는 사실을 구분하고, 비밀 토큰이나 개인 경로를 복사해 넣지 않습니다. 코드 블록에 언어 이름을 붙이는 것은 표시를 돕는 것이며 프로그램을 설치하는 기능이 아닙니다.\n\nGitHub는 저장소의 .github, 루트, docs 위치에 있는 README를 찾아 보여 줍니다. 여러 위치에 있으면 이 순서로 선택합니다. 수업 예제는 찾기 쉬운 루트 README.md 하나를 사용합니다. 프로젝트 안내와 개인 프로필 README는 목적과 조건이 다릅니다.\n\n프로필 README는 **사용자 이름과 같은 이름의 저장소**, **공개 저장소**, **루트의 README.md**, **내용이 들어 있는 파일**이라는 조건이 모두 맞아야 표시됩니다. 관리형 사용자 계정에는 이 기능이 제공되지 않습니다. 사용자 이름이 dolbeom-study라면 같은 이름의 저장소를 사용하는 방식입니다. 강사는 준비한 프로필과 저장소 설정에서 네 조건을 직접 확인합니다.\n\n**같이 확인:** 준비한 프로젝트 README와 강사의 프로필 소개 원문을 비교합니다. 전자에서 실행 안내를, 후자에서 자기소개를 찾아 표시하고 네 조건을 체크합니다. 제목과 링크가 보여도 링크 대상과 프로젝트의 실제 상태까지 맞는지 한 번 더 확인합니다.\n\n### 복제본에 README를 만들어 이어가기\n\n방금 clone한 **git-practice-clone** 폴더에서 `pwd`로 현재 경로를 확인합니다. 예상한 복제본이 아니면 실제 위치를 찾아 이동한 뒤 확인합니다. `pwd`는 Windows PowerShell의 `Get-Location` 기본 별칭입니다. macOS/Linux 셸에서도 `pwd`, Windows cmd에서는 인수 없는 `cd`로 위치를 확인합니다.\n\n```powershell\npwd\nls\nTest-Path .\\README.md\n```\n\n`ls`는 PowerShell `Get-ChildItem`의 기본 별칭이며 cmd에서는 `dir`, macOS/Linux 셸에서는 `ls`를 사용합니다. `Test-Path`에는 기본 별칭이 없습니다. cmd는 `if exist README.md echo 존재함`, macOS/Linux 셸은 `test -e README.md` 다음 `echo $?`로 확인할 수 있습니다(0은 있음, 1은 없음). 같은 이름의 파일이 이미 있거나 위치가 다르면 덮어쓰지 않고 멈춥니다. `False`일 때만 메모장으로 새 파일을 엽니다.\n\n```powershell\nnotepad README.md\n```\n\n새 파일 만들기를 확인하고 아래 내용을 입력해 **Ctrl+S로 저장**한 뒤 메모장을 닫습니다. 아직 VS Code를 설치하지 않았어도 메모장으로 작성할 수 있습니다.\n\n```markdown\n# Git 연습 메모\n\n터미널과 Git을 연습한 메모 프로젝트입니다.\n\n## 확인 방법\n- note.txt에서 version 2를 확인합니다.\n- branch-note.txt에서 브랜치 작업을 확인합니다.\n```\n\n저장된 원문을 확인합니다. `cat`은 Windows PowerShell의 `Get-Content` 기본 별칭입니다. cmd에서는 `type README.md`, macOS/Linux 셸에서는 `cat README.md`를 사용합니다.\n\n```powershell\ncat .\\README.md\ngit status\n```\n\n`git status`에서 새 README가 추적되지 않은 파일로 표시될 수 있습니다. 저장만으로 원본 폴더나 GitHub가 바뀌지 않으며, 원격 반영은 나중에 별도 커밋과 push가 필요합니다. 이 절에서는 우선 저장·확인까지만 하고 다음 Typora 절에서 그림을 추가해 GitHub에 반영합니다. 이후 IDE에서 **같은 복제본의 README**를 원문과 미리보기로 열고 `확인 방법`을 검색합니다.\n\n**비교 예시:** 별도로 준비한 강의 카드 예제의 README를 열고 프로젝트 목적과 확인 방법을 찾아봅니다. 준비된 [카드 README 예시](./examples/course-card/03-javascript/README.md)로도 비교할 수 있습니다. 예제 README는 GitHub 프로필 소개가 아니라 강의 카드 프로젝트 안내입니다.",
           "presentationPoints": [
             "README.md는 프로젝트 안내에 널리 쓰이는 관례이며 필수 파일은 아닙니다.",
             "프로필 README는 이름 일치·공개·루트 README.md·내용이 필요합니다.",
             "프로젝트 안내와 개인 프로필 소개의 목적을 구분합니다."
+          ]
+        },
+        {
+          "id": "markdown-typora-images",
+          "title": "Typora로 이미지 붙여넣기와 GitHub에 올리기",
+          "minutes": 15,
+          "optional": false,
+          "body": "### 그림은 글자 안에 들어가는 것이 아니라 파일을 가리킵니다\n\n앞에서 만든 `git-practice-clone`의 **README.md**를 이어 사용합니다. Markdown의 `![이미지 설명](assets/파일이름.png)`에서 괄호 안은 그림 파일의 위치입니다. 같은 폴더의 `assets` 안에 실제 파일이 있어야 하며, 아래 파일명은 설명용 예시입니다. 내 컴퓨터에서 생성된 **실제 파일명**은 다를 수 있습니다.\n\nTypora는 Markdown 편집기입니다. [공식 사이트](https://typora.io/)에서 Windows용을 따로 준비합니다. 공식 안내상 안정판은 **15일 체험 후 일회성 유료 라이선스**가 필요하며 조건은 바뀔 수 있습니다. 설치 없이도 이미지와 상대경로의 관계는 아래 설명으로 이해할 수 있습니다. [체험·구매 안내](https://support.typora.io/purchase/)\n\n### 1. 복제본의 문서와 이미지 저장 위치를 확인합니다\n\nTypora에서 **파일 → 열기**로 앞에서 만든 `git-practice-clone/README.md`를 엽니다. 원본 `git-practice`가 아니라 복제본인지 경로를 확인하고 기존 내용을 보존합니다. 문서가 저장되어 있어야 상대경로의 기준 폴더가 정해집니다.\n\nTypora **파일 → 환경설정 → 이미지(Image)**에서 이미지 삽입 시 **`./assets` 경로로 이미지 복사**를 고르고, **가능하다면 상대적 위치 사용**을 켭니다. 버전에 따라 ‘주어진 폴더로 이미지 복사 허용’과 ‘로컬 이미지에 위 규칙을 적용’을 추가로 켜야 할 수 있습니다. 메뉴 이름과 위치는 버전과 언어에 따라 다릅니다. 이미지 파일을 끌어다 놓을 때 기본 동작은 원본 경로를 참조할 수 있으므로 자동 복사를 기본값이라고 가정하지 않습니다. [Typora 이미지 설정 공식 안내](https://support.typora.io/Images/)\n\n### 2. 스크린샷이나 복사한 그림을 붙여넣습니다\n\n개인정보가 없는 연습 화면을 **Win+Shift+S**로 캡처하거나 그림 데이터를 복사해, README의 원하는 위치에 **Ctrl+V**로 붙여넣습니다. Typora가 저장 위치를 묻는다면 복제본 안의 `assets` 폴더를 선택합니다. 이미지가 화면에 나타나면 **Ctrl+S**로 README를 저장합니다.\n\n탐색기에서 복제본의 `assets` 폴더에 실제 이미지 파일이 만들어졌는지 확인합니다. Typora의 소스 코드 보기에서 생성된 `![설명](assets/실제파일명.png)`을 확인하고, 필요하면 `설명`을 그림의 내용으로 바꿉니다. 경로와 확장자는 Typora가 만든 실제 값을 사용합니다. 웹에서 복사한 것이 이미지 데이터가 아닌 URL이면 결과가 다를 수 있으므로 위치를 반드시 확인합니다. 그림이 보이지 않으면 문서 저장 위치·파일 존재·상대경로를 다시 살펴봅니다.\n\n### 3. 문서와 그림을 GitHub에 함께 올립니다\n\nPowerShell에서 **복제본 폴더**인지 `pwd`로 확인하고 변경 내역과 연결된 원격을 살펴봅니다. `pwd`는 Windows PowerShell `Get-Location`의 기본 별칭입니다. cmd에서는 `cd`, macOS 기본 셸에서는 `pwd`를 사용합니다. `git` 명령은 Git 프로그램의 명령입니다.\n\n```powershell\npwd\ngit status --short --untracked-files=all\ngit branch --show-current\ngit remote -v\ngit config --get user.name\ngit config --get user.email\n```\n\n`main`에 있고 `origin`이 **내 연습 저장소**를 가리키며, README와 방금 만든 `assets` 이미지가 보이는지 확인합니다. 원격 주소가 맞으면 다음 명령으로 원격 상태를 가져와 확인합니다. `fetch`는 원격의 정보를 가져오며 내 작업 파일을 변경하거나 업로드하지 않습니다. 인증이나 네트워크 오류가 나오면 멈춥니다.\n\n```powershell\ngit fetch origin\ngit status -sb\ngit log --oneline origin/main..main\n```\n\n`origin/main`은 **마지막으로 가져온 원격 추적 참조**이며 실시간으로 바뀌지 않습니다. 방금 `fetch`가 성공했을 때 이를 기준으로 로컬에만 있는 커밋을 확인할 수 있습니다. 원격이 앞서 있거나 예상하지 못한 기록이 있다면 병합·덮어쓰기를 서두르지 말고 멈춥니다. 복제본은 별개의 저장소이므로 이전 폴더에만 지정한 작성자 정보는 복제본에 자동으로 적용되지 않습니다. 위에서 이름이나 이메일이 비어 있다면 아래 값 **내 이름**과 **내 이메일**을 사용할 값으로 바꾸어 이 저장소에만 설정합니다. 아래 예시 글자를 그대로 쓰지 않습니다.\n\n```powershell\ngit config --local user.name \"내 이름\"\ngit config --local user.email \"내 이메일\"\n```\n\n공개 저장소에 올릴 경우 커밋 작성자 이메일과 이미지가 공개될 수 있으므로 내용을 먼저 확인합니다. `git log --oneline origin/main..main`에 보이는 커밋은 마지막으로 가져온 `origin/main`에 아직 없는 로컬 커밋입니다. 예상하지 못한 커밋이나 파일, 다른 원격 또는 잘못된 경로가 보이면 멈춥니다.\n\n아래 명령은 `assets`에 **방금 확인한 실습 이미지 외에 추가할 파일이 없을 때만** 실행합니다. 다른 파일이 있다면 폴더 전체 대신 실제 파일 경로만 선택합니다. `git diff --cached --name-only`에서 README와 원하는 이미지 경로만 선택됐는지 확인한 뒤 다음 단계로 갑니다.\n\n```powershell\ngit add -- README.md assets/\ngit diff --cached --name-only\ngit status\n```\n\n선택한 내용이 맞고 기존에 스테이징된 다른 변경이 없다면 커밋합니다. `git push origin main`은 현재 연습 저장소의 `main` 기록을 `origin`의 `main`으로 보냅니다. 원격 주소와 브랜치를 앞에서 확인한 경우에만 실행합니다.\n\n```powershell\ngit commit -m \"Add README image\"\ngit push origin main\n```\n\nGitHub 저장소의 `main`에서 README와 이미지 파일을 확인하고 문서에 그림이 표시되는지 확인합니다. 인증 요청이나 충돌이 나타나면 결과를 읽고 멈춥니다. **Typora에 붙여넣기만 해서는 GitHub에 올라가지 않습니다.** Typora의 별도 이미지 호스팅 업로드 기능은 이 실습의 Git 커밋·push와 다른 방식입니다. 복제본의 변경은 원본 폴더에도 자동으로 반영되지 않습니다.\n\n**다음 강의로:** VS Code에서 같은 복제본의 README를 열어 원문과 미리보기, 이미지 경로를 다시 확인합니다.",
+          "presentationPoints": [
+            "클립보드 이미지를 문서 옆 assets에 저장하고 상대경로를 확인합니다.",
+            "README와 실제 이미지 파일을 선택해 커밋·push합니다.",
+            "Typora의 외부 업로드와 GitHub push를 구분합니다."
           ]
         },
         {
@@ -1434,28 +1446,31 @@
         {
           "title": "Notion·Obsidian·GitHub의 Markdown이 완전히 같다고 가정하기",
           "body": "공통 핵심 외에는 입력 변환, 위키 링크, 블록, 확장이 다를 수 있습니다. 옮긴 뒤 표시와 링크를 확인합니다."
+        },
+        {
+          "title": "Typora에서 그림이 보이면 GitHub에도 올라갔다고 생각하기",
+          "body": "문서는 이미지 파일을 참조합니다. 복제본의 실제 파일과 경로를 확인하고 필요한 파일을 선택해 커밋·push한 뒤 GitHub에서 확인합니다."
         }
       ],
       "checklist": [
-        "Codex 요청에서 목표·맥락·제약·완료 확인을 각각 찾을 수 있다.",
+        "Codex 계획 예시에서 제목·목록·강조·링크·코드 블록을 직접 바꿀 수 있다.",
         "README.md의 관례적 역할과 프로필 README의 네 조건을 설명할 수 있다.",
-        "제목·목록·강조·링크·코드 블록의 원문과 미리보기를 연결할 수 있다.",
+        "붙여넣은 이미지의 실제 파일과 상대경로를 확인하고 문서와 함께 GitHub에 올릴 수 있다.",
         "Notion과 Obsidian에서 같은 결과를 보장할 수 없는 확장 예를 들 수 있다."
       ],
       "steps": [
         {
           "id": "codex-01",
-          "title": "긴 요청을 네 구역으로 나누기",
-          "description": "준비된 가상 요청을 읽고 목표·맥락·제약·완료 확인을 찾습니다. 이 화면의 원문은 학습용 요청 초안 예시입니다.",
+          "title": "Codex 계획문으로 마크다운 문법 연습",
+          "description": "시작 사례의 계획을 짧게 재구성한 연습 원문에서 제목·목록·강조·링크를 바꾸고 결과를 비교합니다.",
           "scene": "code",
-          "code": "# 목표\n강의 카드에서 제목으로 검색할 수 있게 해 주세요.\n## 맥락\n제공한 dolbeom-notes 예제의 강의 목록을 먼저 읽어 주세요.\n## 제약\n기존 강의 ID와 순서를 보존해 주세요.\n## 완료 확인\n빈 검색은 전체, Git은 관련 카드, 없는 검색어는 안내를 보여 주세요.",
+          "code": "# 강의 목표와 공통 실습\n## 강의 시작\n- **수강 후 할 수 있는 일**을 소개합니다.\n- 계획을 확인하고 필요한 부분을 바꿉니다.\n[GitHub 마크다운 안내](https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)\n같은 프로젝트의 `README.md`를 확인합니다.",
           "language": "markdown",
-          "output": "목표: 제목 검색\n맥락: 준비된 강의 목록 예제\n제약: ID·순서 보존\n확인: 빈 입력 / Git / 없는 검색어",
+          "output": "큰 제목 → 소제목 → 목록과 강조 → 링크 → 짧은 코드\n한국어 대화형 마크다운 연습 사이트에서 직접 풀어 봅니다.",
           "focus": "files",
-          "fileName": "docs/search-request.md",
+          "fileName": "계획 원문 · 학습용 재구성",
           "files": [
-            "docs/search-request.md",
-            "public/data/course.json"
+            "계획 원문 · 학습용 재구성"
           ]
         },
         {
@@ -1472,6 +1487,36 @@
             "README.md",
             "note.txt",
             "branch-note.txt"
+          ]
+        },
+        {
+          "id": "typora-01",
+          "title": "Typora에서 이미지와 상대경로 확인",
+          "description": "실제 사용 시 복제본 README를 먼저 저장하고 Typora 이미지 복사 위치를 assets로 정한 뒤 캡처를 붙여넣습니다. 아래 경로는 형식 예시입니다.",
+          "scene": "code",
+          "code": "![연습 화면](assets/실제파일명.png)",
+          "language": "markdown",
+          "output": "README.md는 이미지 파일의 상대경로를 가리킵니다. 탐색기에서 실제 assets 파일을 확인합니다.",
+          "focus": "files",
+          "fileName": "git-practice-clone · README.md",
+          "files": [
+            "README.md",
+            "assets/실제파일명.png"
+          ]
+        },
+        {
+          "id": "typora-02",
+          "title": "README와 확인한 이미지 파일을 GitHub에 올리기",
+          "description": "복제본·main·origin·작성자와 마지막으로 가져온 원격보다 앞선 커밋 및 실제 변경 파일을 먼저 확인합니다. 작성자가 없다면 본문의 안내에 따라 이 저장소에 사용할 값을 설정합니다. assets에 이 실습 이미지 외 파일이 없고 스테이징된 다른 변경이 없을 때만 아래 예시를 순서대로 실행합니다.",
+          "scene": "terminal",
+          "code": "pwd\ngit status --short --untracked-files=all\ngit branch --show-current\ngit remote -v\ngit config --get user.name\ngit config --get user.email\n# origin이 내 연습 저장소일 때만:\ngit fetch origin\ngit status -sb\ngit log --oneline origin/main..main\n# 경로와 대상이 맞고 assets에 실습 이미지 외 파일이 없을 때만:\ngit add -- README.md assets/\ngit diff --cached --name-only\ngit status\n# README와 실습 이미지만 선택됐을 때:\ngit commit -m \"Add README image\"\ngit push origin main",
+          "language": "powershell",
+          "output": "선택된 README와 이미지 파일만 커밋·push한 뒤 GitHub에서 그림을 확인합니다.",
+          "focus": "git",
+          "fileName": "git-practice-clone · PowerShell",
+          "files": [
+            "README.md",
+            "assets/실제파일명.png"
           ]
         },
         {
@@ -1555,6 +1600,10 @@
         {
           "term": "위키 링크",
           "definition": "Obsidian에서 [[노트 이름]]처럼 다른 노트와 연결할 수 있는 표기입니다. 표준 Markdown 링크와 구분합니다."
+        },
+        {
+          "term": "이미지 상대경로",
+          "definition": "Markdown 파일이 있는 위치를 기준으로 그림 파일을 찾는 경로입니다. 문서와 이미지의 상대 위치를 유지해야 합니다."
         }
       ],
       "references": [
@@ -1589,19 +1638,43 @@
         {
           "title": "Obsidian Help · Obsidian Flavored Markdown",
           "url": "https://obsidian.md/help/obsidian-flavored-markdown"
+        },
+        {
+          "title": "Markdown Tutorial · 한국어 문제 풀이",
+          "url": "https://www.markdowntutorial.com/kr/"
+        },
+        {
+          "title": "CommonMark · 대화형 Markdown 튜토리얼",
+          "url": "https://commonmark.org/help/tutorial/"
+        },
+        {
+          "title": "GitHub Docs · 기본 서식 구문 (한국어)",
+          "url": "https://docs.github.com/ko/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
+        },
+        {
+          "title": "Typora · 이미지 삽입과 상대경로",
+          "url": "https://support.typora.io/Images/"
+        },
+        {
+          "title": "Typora · 구매와 체험 안내",
+          "url": "https://support.typora.io/purchase/"
+        },
+        {
+          "title": "Dillinger · 웹에서 원문과 미리보기",
+          "url": "https://dillinger.io/"
         }
       ],
-      "closing": "Markdown으로 목표·맥락·제약·완료 확인을 읽기 쉽게 나누었습니다. README.md는 널리 쓰이는 안내 관례이고, 프로필 README는 별도 조건을 갖습니다. 공통 핵심 문법을 익힌 뒤 앱별 확장과 옮긴 결과를 확인합니다. 다음 IDE에서는 방금 본 README를 원문과 미리보기로 나란히 보며 편집합니다. 같은 작업대에서 Codex의 변경을 확인하고, 이어 HTML 화면도 확인해 봅니다.",
+      "closing": "Codex 계획문으로 제목·목록·강조·링크·코드를 직접 바꾸어 보았습니다. 복제본 README와 Typora의 이미지 파일·상대경로를 확인하고 필요한 파일을 선택해 GitHub에 올렸습니다. 다음 IDE에서는 같은 복제본의 README를 열어 원문과 미리보기를 비교합니다.",
       "presentation": {
         "caseSummary": "이 강의노트를 위한 실제 요청과 Plan 모드에서 제시된 계획의 발췌를 비교합니다. 구현 전에 목표·순서·확인 방법을 검토합니다. [강의 편집기 열기](#/editor/markdown/case)에서 왼쪽 원문과 오른쪽 즉시 미리보기를 비교합니다. 편집 내용은 자동 저장됩니다.",
         "demo": {
-          "program": "VS Code · 웹 브라우저 (강사 사전 준비)",
-          "file": "git-practice-clone의 README.md · 별도 준비한 강의 카드 요청 예시 · GitHub 프로필 README",
-          "command": "별도 강의 카드 요청 예시에서 목표·맥락·제약·완료 확인 짚기\n복제본 git-practice-clone에서 pwd·ls·README 부재 확인\n메모장으로 README 작성·저장 → cat과 git status 확인\n준비한 GitHub 프로필과 README 표시 조건 확인",
-          "expectedResult": "복제본에 README를 저장해 원문을 확인합니다. 별도 강의 카드 요청과 프로필 README는 비교 자료임을 구분합니다.",
-          "durationMinutes": 2
+          "program": "웹 브라우저 · Typora · Windows PowerShell",
+          "file": "git-practice-clone의 README.md 및 assets 이미지",
+          "command": "Codex 계획문으로 문법 연습 → 한국어 튜토리얼에서 문제 풀기\n복제본 README 작성 → Typora 이미지 복사·상대경로 설정\n연습 화면 캡처·붙여넣기 → README와 실제 이미지 경로 확인\nPowerShell에서 복제본·origin·main·작성자·변경 파일 확인\n필요한 파일만 add → 확인 → commit → push → GitHub 그림 확인",
+          "expectedResult": "제목·목록·강조·링크를 직접 바꾸고, 저장한 README와 이미지가 GitHub에서 함께 표시됩니다.",
+          "durationMinutes": 10
         },
-        "returnSummary": "Markdown은 선택적 문서 구조입니다. 요청은 목표·맥락·제약·확인으로, README는 시작 안내로 정리합니다. Notion·Obsidian·GitHub의 확장과 입력 동작은 각각 확인합니다. 다음 IDE에서 같은 README의 원문과 미리보기를 나란히 편집합니다. 복제본에 새 README를 만들고 저장했습니다. 원본 폴더와 GitHub는 자동으로 바뀌지 않습니다."
+        "returnSummary": "계획문을 읽고 제목·목록·링크를 연습했습니다. Typora 이미지는 로컬 파일과 상대경로를 확인한 뒤 필요한 파일을 커밋·push해 공유합니다. 다음 IDE에서 같은 복제본의 README를 미리 봅니다."
       }
     },
     {

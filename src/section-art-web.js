@@ -73,18 +73,41 @@ function frame(prefix, heading, body, caption) {
 
 function structuredPrompt() {
   const p = 'sa-markdown-map';
-  return frame(p, '요청을 네 구획으로 정리하기', `
-    ${sheet(67, 94, 371, 334)}${text(92, 137, '# 작업 요청', 25)}
-    ${[['목표', '무엇을 만들까', c.pale], ['맥락', '어디에서 작업할까', c.cream], ['제약', '무엇을 보존할까', c.softOrange], ['확인', '결과를 어떻게 볼까', c.pale]].map(([title, detail, fill], i) => {
-      const y = 155 + i * 62;
-      return rect(89, y, 321, 50, fill, 6, c.muted, 1.8) + text(104, y + 32, title, 23) + text(177, y + 32, detail, 20, c.muted);
-    }).join('')}
-    ${panel(497, 168, 191, 177, 'Codex', c.ink)}
-    ${path('M524 242l15 13-15 13m32 0h64', 'none', c.pale, 4)}
-    ${emphasis(p, path('M627 237v38', 'none', c.orange, 4))}
-    ${arrow(p, 450, 250, 486, 250)}
-    ${pill(493, 379, 199, '조건을 먼저 확인', c.pale, 20)}
-  `, '목표 · 맥락 · 제약 · 확인을 나누어 전달합니다');
+  return frame(p, 'Codex 계획문으로 문법 연습', `
+    ${panel(46, 105, 292, 282, 'Markdown 원문')}
+    ${code(67, 185, '## 계획', c.ink, 24)}
+    ${code(67, 233, '- 문서 작성', c.teal, 22)}
+    ${code(67, 280, '**중요**', c.orange, 22)}
+    ${code(67, 326, '[가이드](주소)', c.muted, 19)}
+    ${arrow(p, 350, 245, 395, 245)}
+    ${panel(405, 105, 308, 282, '읽는 화면')}
+    ${text(430, 190, '계획', 28)}${path('M430 205h242', 'none', c.sand, 2)}
+    ${circle(438, 242, 4, c.teal, c.teal)}${text(453, 250, '문서 작성', 23, c.muted)}
+    ${text(430, 297, '중요', 25, c.ink)}${text(430, 344, '가이드', 22, c.teal)}
+    ${path('M430 351h76', 'none', c.teal, 2)}${emphasis(p, rect(422, 217, 256, 47, 'none', 5, c.teal, 3))}
+    ${pill(182, 414, 396, '제목 · 목록 · 강조 · 링크', c.pale, 21)}
+  `, '계획문의 문법이 화면에 어떻게 보이는지 비교합니다');
+}
+
+function typoraImageFlow() {
+  const p = 'sa-markdown-typora-images';
+  return frame(p, '이미지와 문서를 함께 공유하기', `
+    ${panel(36, 146, 168, 178, '클립보드')}
+    ${rect(58, 207, 124, 91, c.pale, 5)}${circle(151, 230, 9, c.softOrange, c.orange, 2)}
+    ${path('M68 281l28-30 21 18 17-18 38 30Z', c.sage, c.teal, 2.5)}
+    ${arrow(p, 211, 228, 239, 228)}${pill(47, 344, 150, 'Ctrl + V', c.pale, 20)}
+    ${panel(249, 105, 266, 281, 'Typora · 내 프로젝트')}
+    ${rect(268, 164, 225, 82, c.white, 5, c.muted, 1.8)}
+    ${code(282, 191, 'README.md', c.ink, 21)}${code(282, 218, '![이미지](assets/...)', c.teal, 18)}
+    ${path('M270 286v-17h79l10 11h133v66H270Z', c.softOrange, c.ink, 2.5)}
+    ${text(285, 312, 'assets/', 22, c.ink, 'start', 650, true)}${text(285, 339, '이미지 파일', 20, c.muted)}
+    ${arrow(p, 523, 228, 556, 228, {orange:true,delay:1})}
+    ${panel(565, 146, 155, 178, 'GitHub')}
+    ${sheet(587, 210, 55, 73, c.paper)}${text(595, 255, 'MD', 19, c.teal, 'start', 700, true)}
+    ${rect(653, 210, 43, 73, c.pale, 4)}${path('M660 266l10-13 7 8 7-10 7 15', 'none', c.teal, 2)}
+    ${pill(555, 344, 178, 'commit · push', c.softOrange, 18)}
+    ${emphasis(p, rect(267, 266, 228, 83, 'none', 6, c.teal, 3))}
+  `, '이미지는 로컬에 저장하고 Git으로 함께 올립니다');
 }
 
 function readmeAndProfile() {
@@ -350,7 +373,8 @@ function completeClassNames() {
 }
 
 export const webSectionScenes = {
-  'markdown-map': {title:'Codex 요청을 목표·맥락·제약·확인으로 구조화하기',description:'입체 문서를 목표·맥락·제약·확인의 네 구획으로 나누어 요청의 빠진 조건을 확인합니다.',svg:structuredPrompt()},
+  'markdown-map': {title:'Codex 계획문으로 마크다운 문법 연습하기',description:'Codex 계획문의 제목, 목록, 강조와 링크 원문을 읽는 화면과 나란히 비교해 마크다운 문법을 연습합니다.',svg:structuredPrompt()},
+  'markdown-typora-images': {title:'Typora로 이미지 붙여넣기와 GitHub에 올리기',description:'클립보드 이미지를 Typora에서 붙여넣어 프로젝트의 assets 폴더에 저장하고 README에서 참조한 뒤, 문서와 이미지를 Git으로 GitHub에 함께 올리는 과정을 구분합니다.',svg:typoraImageFlow()},
   'tools-markdown': {title:'README.md 관례와 GitHub 프로필 README의 조건',description:'실행 안내가 있는 프로젝트 README와 프로필 소개 문서를 나란히 두고 네 가지 프로필 표시 조건을 구분합니다.',svg:readmeAndProfile()},
   'markdown-code': {title:'공통 핵심 문법을 배우고 Notion·Obsidian의 차이 확인하기',description:'하나의 Markdown 문서에서 Notion의 블록 편집과 Obsidian의 노트 연결로 갈라지는 구조로 공통 문법과 앱별 확장을 설명합니다.',svg:markdownBranches()},
   'tools-map': {title:'Codex 변경을 PyCharm에서 확인하는 세 가지 질문',description:'변경 전후 문서의 제목 차이와 그대로인 ID를 비교하고 경로·차이·실행의 세 확인 지점을 짚습니다.',svg:reviewDiff()},

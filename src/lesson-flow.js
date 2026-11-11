@@ -23,6 +23,7 @@ const relatedStepIds = {
   markdown: {
     'markdown-map': ['codex-01'],
     'tools-markdown': ['tools-08', 'tools-10'],
+    'markdown-typora-images': ['typora-01', 'typora-02'],
     'markdown-code': ['tools-09', 'codex-03', 'codex-08'],
   },
   ide: {

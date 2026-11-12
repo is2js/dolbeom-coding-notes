@@ -25,22 +25,22 @@
 
 PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도 같은 이름을 자주 사용하지만, Windows cmd에서는 `cd`·`dir`·`type` 등 셸별 명령을 확인합니다. `ni`는 PowerShell 전용이며 `Test-Path`에는 기본 별칭이 없습니다. macOS의 `test -e`, cmd의 `if exist`는 비슷한 존재 확인이지만 별개의 셸 문법입니다. macOS의 `touch`는 파일이 이미 있을 때 수정 시간을 바꿀 수 있으므로 먼저 이름을 확인합니다.
 
-## 약 249분 진행 순서
+## 약 235분 진행 순서
 
 | 순서 | 주제 | 본편 구성 | 시간 |
 | --- | --- | --- | ---: |
 | 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 강의 목표 → ZIP·서버 실제 사례 → 위치·탐색기 전환 → 연습 폴더·메모 → 셸·탭·분할 단축키 | 30분 |
 | 02 | Git | 실제 기록·Diff 사례 → 저장과 기록·새 저장소 → 첫 커밋 → 두 번째 버전·비교 → 이전 기록 방문·복귀 → 브랜치 작업·병합 | 45분 |
 | 03 | GitHub | 강사의 clone 시연 → Git 메모 저장소 push → 다른 폴더에 clone → 파일·기록 확인 | 20분 |
-| 04 | 마크다운 | Codex 계획문 문법 연습 → README와 프로필 → Typora 이미지·GitHub → Notion·Obsidian 비교 | 39분 |
+| 04 | 마크다운 | Codex 계획문 문법 연습 → README 작성·확인 → 커밋·push → GitHub 확인 | 25분 |
 | 05 | IDE | Codex 변경 확인 → VS Code 설치·한국어팩·내장 기능과 선택 확장 설정·README 미리보기 → PyCharm 간단 설치 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 55분 |
 | 06 | 프론트엔드·백엔드 | 만든 카드와 프론트엔드의 관계 → 로컬·서버와 요청·응답 → 서버가 HTML을 만드는 방식 | 20분 |
 | 07 | 템플릿 엔진 | 같은 카드에 Jinja2 데이터 → Tailwind CSS로 꾸미기 → Alpine.js로 동작 연결·기본 코드와 비교 | 40분 |
-| 합계 | 7개 주제 · 본편 29개 절 | 강의 목표·사례·설명·시연·정리 포함 | 249분 |
+| 합계 | 7개 주제 · 본편 27개 절 | 강의 목표·사례·설명·시연·정리 포함 | 235분 |
 
-실전 전환 시간은 각 주제의 본편 시간에 포함됩니다. 보충 노트 30분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
+실전 전환 시간은 각 주제의 본편 시간에 포함됩니다. 보충 노트 25분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
 
-터미널과 Git은 실제 작업 화면으로 시작합니다. Git에서는 터미널에서 만든 같은 git-practice/note.txt를 다시 열어 version 1로 수정하고 버전 1·2를 커밋합니다. 초기화 전 .git과 상위 저장소가 없는지 확인합니다. 파일을 저장하고 닫은 뒤 상태가 깨끗한지 확인하고, 이전 커밋에서 내용을 읽으며 `git log --oneline`과 `git log --oneline main`의 출력 차이를 확인한 뒤 `git switch main`으로 돌아옵니다. main은 최신 기록을 유지하며 HEAD의 확인 위치만 바뀐다는 점을 그림과 함께 설명합니다. GitHub에서는 같은 `git-practice` 저장소를 본인이 만든 빈 원격에 push하고 다른 새 폴더에서 clone합니다. Markdown에서는 Codex 계획문에서 제목·목록·링크·코드 문법을 연습하고 git-practice-clone 복제본에 없는 README를 작성합니다. Typora를 준비한 경우 README의 이미지 복사 위치를 assets로 설정하고 연습 화면을 붙여 넣어 실제 파일과 상대경로를 확인합니다. 복제본의 main·origin·작성자·변경 파일을 확인한 뒤 README와 원하는 이미지를 선택해 커밋·push하고 GitHub에서 확인합니다. 이후 IDE에서 같은 복제본의 README를 열며, 복제본 수정은 원본이나 GitHub에 자동 반영되지 않습니다. 강사가 직접 저장소를 만들고 인증합니다.
+터미널과 Git은 실제 작업 화면으로 시작합니다. Git에서는 터미널에서 만든 같은 git-practice/note.txt를 다시 열어 version 1로 수정하고 버전 1·2를 커밋합니다. 초기화 전 .git과 상위 저장소가 없는지 확인합니다. 파일을 저장하고 닫은 뒤 상태가 깨끗한지 확인하고, 이전 커밋에서 내용을 읽으며 `git log --oneline`과 `git log --oneline main`의 출력 차이를 확인한 뒤 `git switch main`으로 돌아옵니다. main은 최신 기록을 유지하며 HEAD의 확인 위치만 바뀐다는 점을 그림과 함께 설명합니다. GitHub에서는 같은 `git-practice` 저장소를 본인이 만든 빈 원격에 push하고 다른 새 폴더에서 clone합니다. Markdown에서는 Codex 계획문에서 제목·목록·링크·코드 문법을 연습하고 git-practice-clone 복제본에 없는 README를 작성합니다. 복제본의 main·origin과 변경 파일을 확인한 뒤 README만 선택해 커밋·push하고 GitHub에서 확인합니다. 이후 IDE에서 같은 복제본의 README를 열며, 복제본 수정은 원본이나 GitHub에 자동 반영되지 않습니다. 강사가 직접 저장소를 만들고 인증합니다.
 
 GitHub 실습에서는 저장소 이름과 공개 여부를 스스로 선택하고, README·.gitignore·license가 없는 빈 저장소의 HTTPS 주소를 복사합니다. 기존 `origin` 유무와 로컬 기록을 먼저 확인하며, 주소가 맞을 때만 push합니다. 다른 부모 폴더와 clone 대상 이름이 존재하지 않는지 확인하고 복제한 뒤 `note.txt`의 version 2, `branch-note.txt`와 병합 기록을 읽습니다. 명령 예시의 `YOUR-USERNAME`은 실제 주소로 바꿔야 합니다. 인증 정보는 화면이나 URL에 노출하지 않습니다.
 
@@ -60,7 +60,7 @@ IDE에서는 VS Code Windows User Setup·PATH·새 터미널과 복제본 폴더
 | PowerShell 7을 설치해야 시작할 수 있다 | Windows 기본 5.1로도 기본 실습이 가능하다. 7은 선택 설치하며 powershell.exe(5.1)와 pwsh(7)는 공존한다. | [Microsoft: PowerShell 설치와 공존](https://learn.microsoft.com/en-us/powershell/scripting/install/install-powershell-on-windows) |
 | Git을 쓰면 PR까지 할 수 있다 | Git은 변경을 기록한다. GitHub는 원격 저장소와 협업 기능을 제공하며, PR은 변경을 검토·병합하도록 제안하는 GitHub 기능이다. | [Git: 버전 관리](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control), [GitHub: PR](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) |
 | clone하면 다른 곳에서 바로 실행된다 | clone은 저장소를 가져오는 작업이다. 실행 환경·의존성·설정·DB 준비는 프로젝트에 따라 별도다. | [GitHub: 저장소 복제](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) |
-| README.md라는 약속 | 저장소 안내 문서로 널리 쓰는 관례다. README는 필수 파일이 아니며 프로필 README에는 별도 조건이 있다. | [GitHub: README](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes), [프로필 README](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme) |
+| README.md라는 약속 | 저장소 안내 문서로 널리 쓰는 관례다. 저장한 README를 커밋·push해야 GitHub에 반영된다. | [GitHub: README](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes) |
 | 마크다운은 모든 앱에서 공통이다 | 제목·목록·코드 등 공통 문법이 많지만 GitHub·Notion·Obsidian의 확장 기능과 가져오기·입력 방식은 다르다. | [GitHub 문법](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables), [Notion Markdown](https://www.notion.com/help/writing-and-editing-basics), [Obsidian 문법](https://help.obsidian.md/syntax) |
 | VS Code와 PyCharm | VS Code는 무료 코드 편집기이며 확장으로 여러 개발 기능을 갖춘다. PyCharm은 Python 중심 IDE이며 무료 핵심 기능과 구독 기능의 범위를 구분한다. | [VS Code FAQ](https://code.visualstudio.com/docs/supporting/faq), [PyCharm 기능 비교](https://www.jetbrains.com/pycharm/features/) |
 | 프론트엔드와 백엔드는 둘 다 서버가 필요하다 | 브라우저에서 실행하는 화면 코드와 서버에서 실행하는 프로그램을 구분한다. 정적 화면은 파일 호스팅으로 제공할 수 있고, 두 개의 별도 서버를 둘 필요는 없다. | [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [FastAPI 배포 개념](https://fastapi.tiangolo.com/deployment/concepts/) |

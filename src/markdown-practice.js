@@ -135,9 +135,46 @@ export function markdownPractice(body, { render = renderPracticeMarkdown, copy =
     source: original,
     message: '', selectionStart: original.length, selectionEnd: original.length,
     insertPanel: '', linkLabel: '', linkUrl: 'https://', imageLabel: '', imageUrl: 'https://', tableRows: 2, tableColumns: 2,
-    imageSources: [], indentWidth: '4', tabInsertsSpaces: true,
+    imageSources: [], indentWidth: '4', tabInsertsSpaces: true, expanded: false,
     get preview() { return render(this.source, { allowedImageSources: this.imageSources }); },
     rememberSelection() { const input = this.$refs?.source; if (input) { this.selectionStart = input.selectionStart; this.selectionEnd = input.selectionEnd; } },
+    toggleExpanded() {
+      if (this.expanded) { this.closeExpanded(); return; }
+      const dialog = this.$refs?.practiceDialog;
+      try {
+        if (!dialog?.showModal) throw new Error('dialog unavailable');
+        dialog.showModal();
+        this.expanded = true;
+        this.focusSelection(this.selectionStart, this.selectionEnd);
+      } catch {
+        this.message = '이 브라우저에서는 연습 크게 보기를 열지 못했습니다.';
+      }
+    },
+    closeExpanded() {
+      if (!this.expanded) return;
+      this.expanded = false;
+      if (this.$refs?.practiceDialog?.open) this.$refs.practiceDialog.close();
+      const focus = () => this.$refs?.expandButton?.focus({ preventScroll: true });
+      if (this.$nextTick) this.$nextTick(focus); else focus();
+    },
+    handleExpandedKey(event) {
+      if (!this.expanded || event.isComposing) return;
+      if (event.key === 'Escape') {
+        event.preventDefault(); event.stopPropagation();
+        this.closeExpanded();
+        return;
+      }
+      // Native dialogs keep the background inert, but Chromium can send focus
+      // to the browser chrome after the last control. Keep keyboard navigation
+      // inside this editor unless its own Tab indentation consumed the event.
+      if (event.key !== 'Tab' || event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey) return;
+      const controls = [...(this.$refs?.practiceDialog?.querySelectorAll('button:not([disabled]), select:not([disabled]), textarea:not([disabled]), input:not([disabled]), a[href]') || [])]
+        .filter(element => element.getClientRects().length > 0);
+      if (!controls.length) return;
+      const current = globalThis.document?.activeElement;
+      if (!event.shiftKey && current === controls.at(-1)) { event.preventDefault(); controls[0].focus(); }
+      else if (event.shiftKey && current === controls[0]) { event.preventDefault(); controls.at(-1).focus(); }
+    },
     handleIndentKey(event) {
       if (event.isComposing) return;
       if (event.ctrlKey && !event.altKey && !event.metaKey && !event.shiftKey && event.key.toLowerCase() === 'm') {

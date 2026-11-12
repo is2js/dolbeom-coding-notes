@@ -2,6 +2,44 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { practiceSeed, markdownPractice, editMarkdown, indentMarkdown } from '../src/markdown-practice.js';
 
+test('enlarging the same editor preserves text, cursor and image URLs and Escape returns focus', () => {
+  const revoked = [], selected = [], focus = [];
+  const practice = markdownPractice('```markdown\n# 원문\n```', {
+    render: text => text, createImageUrl: () => 'blob:keep', revokeImageUrl: url => revoked.push(url),
+  });
+  const dialog = { open:false, showModal() { this.open = true; }, close() { this.open = false; } };
+  practice.$refs = {
+    practiceDialog: dialog,
+    source: { focus() { focus.push('source'); }, setSelectionRange(start, end) { selected.push([start, end]); } },
+    expandButton: { focus() { focus.push('button'); } },
+  };
+  practice.insertImageFile({type:'image/png', size:10, name:'example.png'});
+  practice.source += '\n작성 중';
+  practice.selectionStart = 1; practice.selectionEnd = 4;
+  const original = practice.source;
+  practice.toggleExpanded();
+  assert.equal(dialog.open, true);
+  assert.equal(practice.expanded, true);
+  assert.deepEqual(selected.at(-1), [1, 4]);
+  let prevented = false, stopped = false;
+  practice.handleExpandedKey({key:'Escape', preventDefault() { prevented=true; }, stopPropagation() { stopped=true; }});
+  assert.equal(prevented, true); assert.equal(stopped, true);
+  assert.equal(dialog.open, false); assert.equal(practice.expanded, false);
+  assert.equal(practice.source, original);
+  assert.deepEqual(practice.imageSources, ['blob:keep']);
+  assert.deepEqual(revoked, []);
+  assert.equal(focus.at(-1), 'button');
+});
+
+test('an unsupported modal leaves the practice editable', () => {
+  const practice = markdownPractice('```markdown\n# 연습\n```', {render: text => text});
+  practice.$refs = {practiceDialog:{}};
+  practice.toggleExpanded();
+  assert.equal(practice.expanded, false);
+  assert.equal(practice.source, '# 연습');
+  assert.match(practice.message, /열지 못했습니다/);
+});
+
 test('Tab inserts four spaces by default and two spaces when selected', () => {
   assert.deepEqual(indentMarkdown('abc', 1, 1), {source: 'a    bc', start: 5, end: 5});
   assert.deepEqual(indentMarkdown('abc', 1, 1, 2), {source: 'a  bc', start: 3, end: 3});

@@ -36,6 +36,18 @@ test('Markdown scenes connect plan syntax to rendered content and separate local
   assert.match(image.svg, /로컬에 저장하고 Git으로 함께 올립니다/);
 });
 
+test('README scene follows the clone through a local commit and push to GitHub',()=>{
+  const scene = sectionScenes['tools-markdown'];
+  assert.match(scene.description, /git-practice-clone.*README\.md.*add.*commit.*push.*GitHub/);
+  assert.match(scene.svg, /git-practice-clone/);
+  assert.match(scene.svg, /README\.md/);
+  assert.match(scene.svg, /Git 기록/);
+  assert.match(scene.svg, /commit/);
+  assert.match(scene.svg, /push/);
+  assert.match(scene.svg, /GitHub 저장소/);
+  assert.match(scene.svg, /화면 확인/);
+});
+
 test('beginner Git scenes separate the repository, staging, difference and temporary visit',()=>{
   assert.match(sectionScenes['git-example'].svg,/\.git/);
   assert.match(sectionScenes['git-example'].svg,/note\.txt/);

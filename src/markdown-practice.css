@@ -8,6 +8,9 @@
 .markdown-practice-toolbar { display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin-top:12px; }
 .markdown-practice-toolbar button, .markdown-practice-toolbar select, .markdown-practice-panel-actions button, .markdown-practice-file { min-height:36px; padding:6px 9px; border:1px solid #a8bca8; border-radius:6px; background:#fffdf5; color:#233b3c; font-family:inherit; font-size:12px; font-weight:600; line-height:1.3; }
 .markdown-practice-toolbar select { max-width:100%; font-size:12px; }
+/* Pretendard has no italic face. Permit a synthetic slant for the toolbar label
+   and rendered Markdown while keeping the site's global font policy intact. */
+.markdown-practice-toolbar em, .markdown-body em { font-style:italic; font-synthesis:style; }
 .markdown-practice-hint { margin:8px 0 0; color:#435a56; font-size:12px; line-height:1.6; }
 .markdown-practice-hint code { font-size:inherit; }
 .markdown-practice-indentation { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:9px; color:#435a56; font-size:12px; line-height:1.5; }

@@ -110,8 +110,31 @@ function typoraImageFlow() {
   `, '이미지는 로컬에 저장하고 Git으로 함께 올립니다');
 }
 
-function readmeToGithub() {
+function readmeSections() {
   const p = 'sa-tools-markdown';
+  return frame(p, 'README에 프로젝트를 소개합니다', `
+    ${panel(43, 105, 308, 283, 'README.md · 원문')}
+    ${sheet(65, 165, 260, 189, c.white)}
+    ${code(82, 198, '# Git 연습 메모', c.ink, 21)}
+    ${code(82, 234, '## 소개', c.teal, 19)}
+    ${code(82, 268, '## 준비', c.orange, 19)}
+    ${code(82, 302, '## 확인 방법', c.teal, 19)}
+    ${lines(82, 316, [182, 142], c.sand, 13, 4)}
+    ${arrow(p, 362, 250, 400, 250)}
+    ${panel(412, 105, 305, 283, '차례대로 채우기')}
+    ${rect(431, 170, 267, 54, c.pale, 7, c.teal, 2)}
+    ${text(448, 204, '01', 18, c.teal, 'start', 700, true)}${text(494, 204, '프로젝트 소개', 21)}
+    ${rect(431, 235, 267, 54, c.cream, 7, c.sand, 2)}
+    ${text(448, 269, '02', 18, c.orange, 'start', 700, true)}${text(494, 269, '준비할 것', 21)}
+    ${rect(431, 300, 267, 54, c.pale, 7, c.teal, 2)}
+    ${text(448, 334, '03', 18, c.teal, 'start', 700, true)}${text(494, 334, '확인 방법', 21)}
+    ${emphasis(p, rect(426, 165, 277, 64, 'none', 8, c.teal, 3))}
+    ${pill(190, 420, 380, '제목 · 목록 · 링크 · 표', c.pale, 21)}
+  `, '소개와 준비, 확인 방법을 한 문서에 담습니다');
+}
+
+function readmeToGithub() {
+  const p = 'sa-markdown-readme-push';
   return frame(p, 'README를 작성해 GitHub에서 보기', `
     ${panel(36, 111, 224, 282, '내 복제본')}
     ${path('M59 200v-17h63l10 12h105v117H59Z', c.softOrange, c.ink, 2.5)}
@@ -388,7 +411,8 @@ function completeClassNames() {
 export const webSectionScenes = {
   'markdown-map': {title:'Codex 계획문으로 마크다운 문법 연습하기',description:'Codex 계획문의 제목, 목록, 강조와 링크 원문을 읽는 화면과 나란히 비교해 마크다운 문법을 연습합니다.',svg:structuredPrompt()},
   'markdown-typora-images': {title:'Typora로 이미지 붙여넣기와 GitHub에 올리기',description:'클립보드 이미지를 Typora에서 붙여넣어 프로젝트의 assets 폴더에 저장하고 README에서 참조한 뒤, 문서와 이미지를 Git으로 GitHub에 함께 올리는 과정을 구분합니다.',svg:typoraImageFlow()},
-  'tools-markdown': {title:'README.md 작성하고 GitHub에 올리기',description:'git-practice-clone 복제본에서 README.md를 작성하고 Git으로 add와 commit한 뒤 push합니다. GitHub 저장소 화면에 제목과 목록이 보이는지 확인합니다.',svg:readmeToGithub()},
+  'tools-markdown': {title:'README.md 항목별로 작성하기',description:'git-practice-clone 복제본의 README.md에 프로젝트 소개, 준비할 것, 확인 방법을 제목과 목록 등 Markdown 문법으로 나누어 작성합니다.',svg:readmeSections()},
+  'markdown-readme-push': {title:'작성한 README를 GitHub에 push하고 확인하기',description:'git-practice-clone 복제본에서 README.md를 Git으로 add와 commit한 뒤 push합니다. GitHub 저장소 화면에 제목과 목록이 보이는지 확인합니다.',svg:readmeToGithub()},
   'markdown-code': {title:'공통 핵심 문법을 배우고 Notion·Obsidian의 차이 확인하기',description:'하나의 Markdown 문서에서 Notion의 블록 편집과 Obsidian의 노트 연결로 갈라지는 구조로 공통 문법과 앱별 확장을 설명합니다.',svg:markdownBranches()},
   'tools-map': {title:'Codex 변경을 PyCharm에서 확인하는 세 가지 질문',description:'변경 전후 문서의 제목 차이와 그대로인 ID를 비교하고 경로·차이·실행의 세 확인 지점을 짚습니다.',svg:reviewDiff()},
   'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'입체 키캡의 파일 이름 검색과 프로젝트 내용 검색을 서로 다른 결과에 연결하고 명령 팔레트의 기능 검색을 구분합니다.',svg:vscodeFinding()},

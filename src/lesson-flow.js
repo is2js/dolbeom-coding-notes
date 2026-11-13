@@ -24,6 +24,7 @@ const relatedStepIds = {
     'markdown-map': ['codex-01'],
     // Older browser drafts can still contain the removed sections and steps.
     'tools-markdown': ['tools-08', 'markdown-readme-push', 'tools-10'],
+    'markdown-readme-push': ['markdown-readme-push'],
     'markdown-typora-images': ['typora-01', 'typora-02'],
     'markdown-code': ['tools-09', 'codex-03', 'codex-08'],
   },
@@ -87,6 +88,12 @@ export function getRelatedSteps(lesson, page) {
   const ids = relatedStepIds[lesson.id]?.[section.id];
   if (!Array.isArray(ids)) return [];
   const related = new Set(ids);
+  // Old drafts bundled publishing with README writing. Only separate the demo
+  // when the newly introduced publishing section actually exists.
+  if (lesson.id === 'markdown' && section.id === 'tools-markdown'
+      && (lesson.sections || []).some(item => item.id === 'markdown-readme-push' && !item.optional)) {
+    related.delete('markdown-readme-push');
+  }
   // Respect the author's current demonstration order, and return its actual indices.
   return (lesson.steps || []).flatMap((step, index) => related.has(step.id) ? [{ step, index }] : []);
 }

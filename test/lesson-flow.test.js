@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 27 core sections appear once in case, authored section order, recap flows', () => {
+test('all 28 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,7 +25,7 @@ test('all 27 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 27);
+  assert.equal(total, 28);
 });
 
 test('every core section has related examples and the registry covers the existing step IDs', () => {
@@ -52,7 +52,8 @@ test('terminal, README, Python keymap and template pages select examples for the
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-gui-cli')), ['terminal-04', 'terminal-08', 'codex-02']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-host-shell')), ['terminal-05']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('terminal'), 'section-terminal-shortcuts')), ['terminal-06', 'terminal-07']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-tools-markdown')), ['tools-08', 'markdown-readme-push']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-tools-markdown')), ['tools-08']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('markdown'), 'section-markdown-readme-push')), ['markdown-readme-push']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode-setup')), ['ide-vscode-setup', 'ide-vscode-code', 'ide-vscode-extensions']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode')), ['tools-01', 'tools-02', 'tools-03']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), ['ide-pycharm-setup', 'tools-06', 'ide-keymap', 'tools-07']);
@@ -63,6 +64,15 @@ test('terminal, README, Python keymap and template pages select examples for the
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-web-jinja')), ['web-06', 'web-07', 'frontend-01']);
   assert.ok(!stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-css')).includes('frontend-08'));
   assert.ok(stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-alpine')).includes('frontend-08'));
+});
+
+test('an older Markdown draft still keeps its bundled README and push demonstration', () => {
+  const lesson = structuredClone(findLesson('markdown'));
+  const publish = lesson.sections.find(section => section.id === 'markdown-readme-push');
+  publish.optional = true;
+  assert.deepEqual(stepIds(getRelatedSteps(lesson, 'section-tools-markdown')), ['tools-08', 'markdown-readme-push']);
+  lesson.sections = lesson.sections.filter(section => section.id !== 'markdown-readme-push');
+  assert.deepEqual(stepIds(getRelatedSteps(lesson, 'section-tools-markdown')), ['tools-08', 'markdown-readme-push']);
 });
 
 test('case, recap, optional, unknown and cross-lesson sections have no inferred examples', () => {

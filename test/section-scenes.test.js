@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,35);
+  assert.equal(Object.keys(sectionScenes).length,36);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,35);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,36);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
@@ -36,8 +36,17 @@ test('Markdown scenes connect plan syntax to rendered content and separate local
   assert.match(image.svg, /로컬에 저장하고 Git으로 함께 올립니다/);
 });
 
-test('README scene follows the clone through a local commit and push to GitHub',()=>{
+test('README scene separates introduction, preparation and verification',()=>{
   const scene = sectionScenes['tools-markdown'];
+  assert.match(scene.description, /git-practice-clone.*README\.md.*소개.*준비.*확인/);
+  assert.match(scene.svg, /프로젝트 소개/);
+  assert.match(scene.svg, /준비할 것/);
+  assert.match(scene.svg, /확인 방법/);
+  assert.match(scene.svg, /제목 · 목록 · 링크 · 표/);
+});
+
+test('README publishing scene follows a local commit and push to GitHub',()=>{
+  const scene = sectionScenes['markdown-readme-push'];
   assert.match(scene.description, /git-practice-clone.*README\.md.*add.*commit.*push.*GitHub/);
   assert.match(scene.svg, /git-practice-clone/);
   assert.match(scene.svg, /README\.md/);

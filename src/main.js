@@ -425,9 +425,10 @@ Alpine.data('courseApp', () => ({
   browserPreview() {
     const address='<div class="address-bar">⌕ &nbsp; 로컬 미리보기 / dolbeom-notes</div>';
     const heading='<span class="eyebrow">MY FIRST PROJECT</span><h3>돌범의 강의노트</h3>';
-    const gitCard='<div><span>02</span><b>Git</b><small>35분 · 변경을 기록하기</small></div>';
-    const githubCard='<div><span>03</span><b>GitHub</b><small>20분 · 원격에서 함께 검토하기</small></div>';
-    const terminalCard='<div><span>01</span><b>윈도우 터미널</b><small>25분 · 현재 위치부터 확인하기</small></div>';
+    const minutes=id=>{ const lesson=this.course?.lessons.find(item=>item.id===id); return lesson ? lessonMinutes(lesson) : 0; };
+    const gitCard=`<div><span>02</span><b>Git</b><small>${minutes('git')}분 · 변경을 기록하기</small></div>`;
+    const githubCard=`<div><span>03</span><b>GitHub</b><small>${minutes('github')}분 · 원격에서 함께 검토하기</small></div>`;
+    const terminalCard=`<div><span>01</span><b>윈도우 터미널</b><small>${minutes('terminal')}분 · 현재 위치부터 확인하기</small></div>`;
     const id=this.step.id;
     if(this.lessonId==='github') {
       if(id==='github-01')return '<div class="address-bar">가상 GitHub / 새 저장소</div><div class="sample-page"><span class="eyebrow">NEW REPOSITORY · 재현 화면</span><h3>git-practice</h3><div class="sample-review">공개 여부 직접 선택<br>README · .gitignore · license 추가 안 함</div><p>빈 저장소 생성 후 HTTPS 주소를 복사합니다.</p><p class="sample-state">실제 GitHub에서 자신의 저장소를 직접 만듭니다.</p></div>';

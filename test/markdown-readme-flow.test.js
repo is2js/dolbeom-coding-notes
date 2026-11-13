@@ -45,4 +45,6 @@ test('a second clone is prepared before the push, then fetch is inspected before
   assert.ok(positions.every(position => position >= 0));
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.match(fetch.body, /현재 브랜치나 작업 파일을 자동으로 바꾸지 않습니다/);
+  assert.match(fetch.body, /평소에는 pull만 해도 됩니다/);
+  assert.match(fetch.body, /fetch.*먼저 살펴본 뒤.*pull.*반영/);
 });

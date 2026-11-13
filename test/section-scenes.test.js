@@ -3,13 +3,13 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,36);
+  assert.equal(Object.keys(sectionScenes).length,37);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,36);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,37);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
@@ -17,8 +17,9 @@ test('the authored section scenes have stable keys and matching artwork and acce
 
 test('VS Code setup artwork returns to the existing clone and README',()=>{
   const scene = sectionScenes['tools-vscode-setup'];
-  assert.match(scene.description, /공식.*User Setup.*git-practice-clone.*README\.md/);
+  assert.match(scene.description, /공식.*User Setup.*git-practice-receiver.*README\.md/);
   assert.match(scene.svg, /User Setup 설치/);
+  assert.match(scene.svg, /git-practice-receiver/);
   assert.match(scene.svg, /README\.md/);
 });
 
@@ -55,6 +56,17 @@ test('README publishing scene follows a local commit and push to GitHub',()=>{
   assert.match(scene.svg, /push/);
   assert.match(scene.svg, /GitHub 저장소/);
   assert.match(scene.svg, /화면 확인/);
+});
+
+test('README update scene distinguishes fetch and pull in an existing clone',()=>{
+  const scene = sectionScenes['markdown-readme-fetch'];
+  assert.match(scene.description, /fetch.*원격 추적 기록.*pull.*작업 파일/);
+  assert.match(scene.svg, /GitHub · 원격/);
+  assert.match(scene.svg, /origin\/main/);
+  assert.match(scene.svg, /파일은 그대로/);
+  assert.match(scene.svg, /① fetch/);
+  assert.match(scene.svg, /② pull 반영/);
+  assert.match(scene.svg, /기존 폴더는 fetch와 pull/);
 });
 
 test('beginner Git scenes separate the repository, staging, difference and temporary visit',()=>{
@@ -141,6 +153,7 @@ test('the GUI/CLI scene connects a saved note with the same PowerShell file',()=
 
 test('card-practice scenes match the taught heading, button, description and 24px comparison',()=>{
   const html = sectionScenes['tools-html'].svg;
+  assert.match(html, /VS Code · index.html/);
   assert.ok(html.indexOf('&lt;h1&gt;Git&lt;/h1&gt;') < html.indexOf('&lt;button&gt;설명 보기&lt;/button&gt;'));
   assert.ok(html.indexOf('&lt;button&gt;설명 보기&lt;/button&gt;') < html.indexOf('&lt;p&gt;변경을 확인하고'));
   assert.match(sectionScenes['tools-css'].svg, /padding: 24px;/);

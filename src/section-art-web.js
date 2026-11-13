@@ -161,6 +161,33 @@ function readmeToGithub() {
   `, '복제본에서 쓴 README를 GitHub에서 확인합니다');
 }
 
+function readmeFetchAndPull() {
+  const p = 'sa-markdown-readme-fetch';
+  return frame(p, '원격의 새 기록을 다른 복제본에서 확인', `
+    ${panel(36, 116, 200, 264, 'GitHub · 원격')}
+    ${sheet(79, 184, 105, 132, c.white)}
+    ${code(91, 217, 'README.md', c.teal, 16)}
+    ${lines(91, 239, [75, 61, 70], c.sage, 15, 5)}
+    ${pill(54, 333, 166, '새 커밋', c.pale, 20)}
+    ${arrow(p, 243, 246, 278, 246)}
+    ${panel(288, 116, 184, 264, '원격 추적 기록')}
+    ${rect(307, 181, 146, 132, c.white, 7, c.muted, 2)}
+    ${text(380, 217, 'origin/main', 20, c.teal, 'middle', 700, true)}
+    ${text(380, 256, '새 기록 확인', 20, c.ink, 'middle')}
+    ${text(380, 287, '파일은 그대로', 18, c.muted, 'middle')}
+    ${pill(306, 333, 148, '① fetch', c.pale, 20)}
+    ${arrow(p, 479, 246, 514, 246, {orange:true,delay:1.2})}
+    ${panel(524, 116, 200, 264, '다른 복제 폴더')}
+    ${path('M548 204v-17h54l10 12h87v112H548Z', c.softOrange, c.ink, 2.5)}
+    ${sheet(570, 176, 105, 127, c.paper)}
+    ${code(580, 211, 'README.md', c.teal, 16)}
+    ${lines(581, 232, [73, 59, 68], c.sage, 14, 5)}
+    ${emphasis(p, check(659, 291))}
+    ${pill(542, 333, 164, '② pull 반영', c.softOrange, 19)}
+    ${pill(154, 414, 452, 'fetch로 확인 → pull로 작업 폴더에 반영', c.pale, 19)}
+  `, 'clone은 처음 한 번 · 기존 폴더는 fetch와 pull');
+}
+
 function markdownBranches() {
   const p = 'sa-markdown-code';
   return frame(p, '같은 문법, 다른 편집 경험', `
@@ -237,7 +264,7 @@ function integratedWorkbench() {
 function htmlCardPractice() {
   const p='sa-tools-html';
   return frame(p,'HTML · 구조와 화면을 연결하기',`
-    ${panel(49,97,338,314,'index.html · body',c.ink)}
+    ${panel(49,97,338,314,'VS Code · index.html',c.ink)}
     ${code(68,176,'<article>',c.pale,21)}${code(83,220,'<h1>Git</h1>',c.paper,22)}
     ${code(83,263,'<button>설명 보기</button>',c.paper,18)}
     ${code(83,303,'<p>변경을 확인하고',c.paper,19)}${code(83,332,'기록합니다.</p>',c.paper,19)}
@@ -413,12 +440,13 @@ export const webSectionScenes = {
   'markdown-typora-images': {title:'Typora로 이미지 붙여넣기와 GitHub에 올리기',description:'클립보드 이미지를 Typora에서 붙여넣어 프로젝트의 assets 폴더에 저장하고 README에서 참조한 뒤, 문서와 이미지를 Git으로 GitHub에 함께 올리는 과정을 구분합니다.',svg:typoraImageFlow()},
   'tools-markdown': {title:'README.md 항목별로 작성하기',description:'git-practice-clone 복제본의 README.md에 프로젝트 소개, 준비할 것, 확인 방법을 제목과 목록 등 Markdown 문법으로 나누어 작성합니다.',svg:readmeSections()},
   'markdown-readme-push': {title:'작성한 README를 GitHub에 push하고 확인하기',description:'git-practice-clone 복제본에서 README.md를 Git으로 add와 commit한 뒤 push합니다. GitHub 저장소 화면에 제목과 목록이 보이는지 확인합니다.',svg:readmeToGithub()},
+  'markdown-readme-fetch': {title:'다른 clone 폴더에서 원격 변경 가져오기',description:'GitHub 원격 저장소의 새 README 커밋을 fetch로 원격 추적 기록에 가져와 확인하고, 이미 복제한 다른 폴더에서 pull로 작업 파일에 반영합니다. clone은 새 폴더를 처음 만드는 명령입니다.',svg:readmeFetchAndPull()},
   'markdown-code': {title:'공통 핵심 문법을 배우고 Notion·Obsidian의 차이 확인하기',description:'하나의 Markdown 문서에서 Notion의 블록 편집과 Obsidian의 노트 연결로 갈라지는 구조로 공통 문법과 앱별 확장을 설명합니다.',svg:markdownBranches()},
   'tools-map': {title:'Codex 변경을 PyCharm에서 확인하는 세 가지 질문',description:'변경 전후 문서의 제목 차이와 그대로인 ID를 비교하고 경로·차이·실행의 세 확인 지점을 짚습니다.',svg:reviewDiff()},
   'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'입체 키캡의 파일 이름 검색과 프로젝트 내용 검색을 서로 다른 결과에 연결하고 명령 팔레트의 기능 검색을 구분합니다.',svg:vscodeFinding()},
   'tools-pycharm': {title:'Python용 PyCharm과 VS Code 키맵의 역할',description:'PyCharm에서 실행할 Python과 작업 폴더를 고르는 설정, 익숙한 단축키를 연결하는 키맵을 두 갈래로 분리합니다.',svg:pycharmEnvironment()},
   'codex-context': {title:'통합 터미널·Git·GitHub·Markdown을 한 흐름으로 보기',description:'하나의 프로젝트 작업대를 중심으로 README·PowerShell·Git 변경 비교·GitHub를 연결해 같은 작업의 맥락을 확인합니다.',svg:integratedWorkbench()},
-  'tools-html': {title:'HTML: 강의 카드의 내용과 구조 만들기',description:'index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',svg:htmlCardPractice()},
+  'tools-html': {title:'HTML: 강의 카드의 내용과 구조 만들기',description:'VS Code에서 작성하는 index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',svg:htmlCardPractice()},
   'tools-css': {title:'CSS: 같은 카드에 색과 여백 더하기',description:'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',svg:cssCardPractice()},
   'tools-javascript': {title:'JavaScript: 버튼으로 설명 표시하기',description:'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',svg:javascriptCardPractice()},
   'web-map': {title:'백엔드는 어디서 실행될까: 로컬과 원격 서버',description:'내 PC의 브라우저와 서버 프로세스가 있는 로컬 섬, 다른 컴퓨터의 서버가 있는 원격 섬을 요청·응답으로 연결합니다.',svg:localAndRemote()},

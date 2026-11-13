@@ -33,6 +33,7 @@ const scenes = {
   'markdown-typora-images': window(7,24,44,48,box(15,43,27,21,sage,3)+dot(37,48,2,gold))+arrow(55,52,13)+folder(73,26,37,32)+box(79,38,26,14,cream,3)+arrow(112,52,8)+window(124,27,29,43,path('M132 53h13m-13 7h10',teal,2)),
   'tools-markdown': page(17,16,label(25,47,'#',20)+path('M25 55h24m-24 8h18',teal,2))+arrow(68,54,16)+box(91,23,53,19,sage,3)+box(91,47,53,19,cream,3)+box(91,71,53,19,sage,3)+path('M100 32h34m-34 24h34m-34 24h34',teal,2),
   'markdown-readme-push': folder(10,34,55,48)+page(17,18,label(25,48,'#',21)+path('M25 57h24m-24 8h18',teal,2))+arrow(68,54,22)+server(106,24)+check(127,82),
+  'markdown-readme-fetch': server(12,26)+path('M61 54h20m-6-5 6 5-6 5',teal,3)+box(86,31,22,42,sage,3)+path('M91 41h12m-12 8h12m-12 8h12',teal,2)+arrow(111,54,12)+folder(127,31,25,38)+check(130,83),
   'markdown-code': page(18,19,label(25,52,'MD',17))+path('M71 51h18m0-20v40m0-40h12m-12 20h12m-12 20h12',teal,3)+[0,1,2].map(i=>box(105,21+i*23,34,17,i===1?sage:cream,3)).join(''),
   'codex-bonus': page(21,16,rows(30,40))+path('M95 28a26 26 0 1 1-7 47m7-59v12h12',teal,4),
   'tools-map': window(13,24,124,62,path('M50 38v48')+path('M62 50h52','#a65d4e',4)+path('M62 63h52',teal,4)+path('M24 49h15m-15 10h15')),

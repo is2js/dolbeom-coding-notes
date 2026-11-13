@@ -25,6 +25,7 @@ const relatedStepIds = {
     // Older browser drafts can still contain the removed sections and steps.
     'tools-markdown': ['tools-08', 'markdown-readme-push', 'tools-10'],
     'markdown-readme-push': ['markdown-readme-push'],
+    'markdown-readme-fetch': ['markdown-readme-fetch'],
     'markdown-typora-images': ['typora-01', 'typora-02'],
     'markdown-code': ['tools-09', 'codex-03', 'codex-08'],
   },

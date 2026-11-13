@@ -24,7 +24,7 @@ test('README fragments combine into the same complete, project-specific example'
 
 test('README publication follows writing and ends with commit, push, and browser confirmation', () => {
   const ids = markdown.sections.map(section => section.id);
-  assert.deepEqual(ids, ['markdown-map', 'tools-markdown', 'markdown-readme-push']);
+  assert.deepEqual(ids, ['markdown-map', 'tools-markdown', 'markdown-readme-push', 'markdown-readme-fetch']);
   const section = markdown.sections.find(item => item.id === 'markdown-readme-push');
   const codes = courseMarked.lexer(section.body).filter(token => token.type === 'code').map(token => token.text).join('\n');
   const positions = ['git status --short', 'git add README.md', 'git diff --cached', 'git commit -m', 'git push -u origin main'].map(value => codes.indexOf(value));
@@ -32,4 +32,17 @@ test('README publication follows writing and ends with commit, push, and browser
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.match(section.body, /GitHub.*새로고침/s);
   assert.match(section.body, /같은 복제본|git-practice-clone/);
+});
+
+test('a second clone is prepared before the push, then fetch is inspected before pull', () => {
+  const push = markdown.sections.find(item => item.id === 'markdown-readme-push');
+  const fetch = markdown.sections.find(item => item.id === 'markdown-readme-fetch');
+  assert.ok(push.body.indexOf('git clone https://') < push.body.indexOf('git push -u origin main'));
+  assert.match(push.body, /git-practice-receiver/);
+  const code = courseMarked.lexer(fetch.body).filter(token => token.type === 'code').map(token => token.text).join('\n');
+  const commands = ['git status --short', 'git branch --show-current', 'git remote -v', 'git fetch origin', 'git status -sb', 'git log --oneline HEAD..origin/main', 'git diff --stat HEAD origin/main', 'git pull --ff-only origin main', 'cat .\\README.md'];
+  const positions = commands.map(value => code.indexOf(value));
+  assert.ok(positions.every(position => position >= 0));
+  assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
+  assert.match(fetch.body, /현재 브랜치나 작업 파일을 자동으로 바꾸지 않습니다/);
 });

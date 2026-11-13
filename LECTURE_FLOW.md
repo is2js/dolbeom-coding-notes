@@ -25,22 +25,22 @@
 
 PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도 같은 이름을 자주 사용하지만, Windows cmd에서는 `cd`·`dir`·`type` 등 셸별 명령을 확인합니다. `ni`는 PowerShell 전용이며 `Test-Path`에는 기본 별칭이 없습니다. macOS의 `test -e`, cmd의 `if exist`는 비슷한 존재 확인이지만 별개의 셸 문법입니다. macOS의 `touch`는 파일이 이미 있을 때 수정 시간을 바꿀 수 있으므로 먼저 이름을 확인합니다.
 
-## 약 250분 진행 순서
+## 약 260분 진행 순서
 
 | 순서 | 주제 | 본편 구성 | 시간 |
 | --- | --- | --- | ---: |
 | 01 | 윈도우 터미널과 UI 스왑에 익숙해지기 | 강의 목표 → ZIP·서버 실제 사례 → 위치·탐색기 전환 → 연습 폴더·메모 → 셸·탭·분할 단축키 | 30분 |
 | 02 | Git | 실제 기록·Diff 사례 → 저장과 기록·새 저장소 → 첫 커밋 → 두 번째 버전·비교 → 이전 기록 방문·복귀 → 브랜치 작업·병합 | 45분 |
 | 03 | GitHub | 강사의 clone 시연 → Git 메모 저장소 push → 다른 폴더에 clone → 파일·기록 확인 | 20분 |
-| 04 | 마크다운 | Codex 계획문 문법 연습 → README 항목별 예시·완성본 작성 → 커밋·push → GitHub 확인 | 40분 |
-| 05 | IDE | Codex 변경 확인 → VS Code 설치·한국어팩·내장 기능과 선택 확장 설정·README 미리보기 → PyCharm 간단 설치 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 55분 |
+| 04 | 마크다운 | Codex 계획문 문법 연습 → README 항목별 예시·완성본 작성 → 커밋·push → GitHub 확인 → 다른 복제본에서 fetch·pull | 50분 |
+| 05 | IDE | IDE에서 Codex 변경 확인 → VS Code 설치·한국어팩·내장 기능과 선택 확장 설정·README 미리보기 → PyCharm 키맵 화면 소개 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 55분 |
 | 06 | 프론트엔드·백엔드 | 만든 카드와 프론트엔드의 관계 → 로컬·서버와 요청·응답 → 서버가 HTML을 만드는 방식 | 20분 |
 | 07 | 템플릿 엔진 | 같은 카드에 Jinja2 데이터 → Tailwind CSS로 꾸미기 → Alpine.js로 동작 연결·기본 코드와 비교 | 40분 |
-| 합계 | 7개 주제 · 본편 28개 절 | 강의 목표·사례·설명·시연·정리 포함 | 250분 |
+| 합계 | 7개 주제 · 본편 27개 절 | 강의 목표·사례·설명·시연·정리 포함 | 260분 |
 
 실전 전환 시간은 각 주제의 본편 시간에 포함됩니다. 보충 노트 25분은 필요할 때 골라 사용하는 별도 자료입니다. 현재 앱의 본편 시간 합계가 최종 기준입니다.
 
-터미널과 Git은 실제 작업 화면으로 시작합니다. Git에서는 터미널에서 만든 같은 git-practice/note.txt를 다시 열어 version 1로 수정하고 버전 1·2를 커밋합니다. 초기화 전 .git과 상위 저장소가 없는지 확인합니다. 파일을 저장하고 닫은 뒤 상태가 깨끗한지 확인하고, 이전 커밋에서 내용을 읽으며 `git log --oneline`과 `git log --oneline main`의 출력 차이를 확인한 뒤 `git switch main`으로 돌아옵니다. main은 최신 기록을 유지하며 HEAD의 확인 위치만 바뀐다는 점을 그림과 함께 설명합니다. GitHub에서는 같은 `git-practice` 저장소를 본인이 만든 빈 원격에 push하고 다른 새 폴더에서 clone합니다. Markdown에서는 Codex 계획문에서 제목·목록·링크·코드 문법을 연습하고 git-practice-clone 복제본에 없는 README를 작성합니다. 복제본의 main·origin과 변경 파일을 확인한 뒤 README만 선택해 커밋·push하고 GitHub에서 확인합니다. 이후 IDE에서 같은 복제본의 README를 열며, 복제본 수정은 원본이나 GitHub에 자동 반영되지 않습니다. 강사가 직접 저장소를 만들고 인증합니다.
+터미널과 Git은 실제 작업 화면으로 시작합니다. Git에서는 터미널에서 만든 같은 git-practice/note.txt를 다시 열어 version 1로 수정하고 버전 1·2를 커밋합니다. 초기화 전 .git과 상위 저장소가 없는지 확인합니다. 파일을 저장하고 닫은 뒤 상태가 깨끗한지 확인하고, 이전 커밋에서 내용을 읽으며 `git log --oneline`과 `git log --oneline main`의 출력 차이를 확인한 뒤 `git switch main`으로 돌아옵니다. main은 최신 기록을 유지하며 HEAD의 확인 위치만 바뀐다는 점을 그림과 함께 설명합니다. GitHub에서는 같은 `git-practice` 저장소를 본인이 만든 빈 원격에 push하고 다른 새 폴더에서 clone합니다. Markdown에서는 Codex 계획문에서 제목·목록·링크·코드 문법을 연습하고 git-practice-clone 복제본에 없는 README를 작성합니다. README를 push하기 전에 별도 수신 복제본을 준비합니다. 작성 복제본의 main·origin과 변경 파일을 확인한 뒤 README만 커밋·push하고 GitHub에서 확인합니다. 수신 복제본에서 fetch로 원격 변경을 살펴본 다음 pull로 파일에 반영하고, 이후 IDE에서 수신 복제본의 README를 엽니다. 복제본 수정은 다른 복제본이나 GitHub에 자동 반영되지 않습니다. 강사가 직접 저장소를 만들고 인증합니다.
 
 GitHub 실습에서는 저장소 이름과 공개 여부를 스스로 선택하고, README·.gitignore·license가 없는 빈 저장소의 HTTPS 주소를 복사합니다. 기존 `origin` 유무와 로컬 기록을 먼저 확인하며, 주소가 맞을 때만 push합니다. 다른 부모 폴더와 clone 대상 이름이 존재하지 않는지 확인하고 복제한 뒤 `note.txt`의 version 2, `branch-note.txt`와 병합 기록을 읽습니다. 명령 예시의 `YOUR-USERNAME`은 실제 주소로 바꿔야 합니다. 인증 정보는 화면이나 URL에 노출하지 않습니다.
 
@@ -48,7 +48,7 @@ Git의 다섯 본편 절은 총 45분입니다. 앞에서 만든 메모와 연�
 
 개념을 구성할 때 [Git 기초 강의 기록](<https://blog.chojaeseong.com/git/%EC%9A%B0%ED%85%8C%EC%BD%94/2022/02/17/%EC%A4%80)-upstream%EA%B3%BC-git%EA%B0%9D%EC%B2%B4-%EA%B0%95%EC%9D%98(%EC%99%84).html>)의 도움말·저장소·스냅샷·참조 설명을 참고했습니다. 본편은 초보자의 파일 기록 실습에 집중하며 원격 추적 설정과 Git 객체 내부 명령은 다루지 않습니다.
 
-IDE에서는 VS Code Windows User Setup·PATH·새 터미널과 복제본 폴더 열기를 확인합니다. 표시 언어·글자 크기·줄바꿈·서식은 선택 사항과 기본 기능을 구분하며 설정합니다. 본문에서 Microsoft 한국어팩의 식별자·설치·언어 적용을 따라가고, Live Server와 Prettier는 정확한 확장 ID와 실행·종료·기본 포매터·저장 시 서식 설정을 선택적으로 시연합니다. 내장 Markdown·HTML·CSS·JavaScript 기능으로 첫 실습을 진행할 수 있으며, 확장 모두를 8분 안에 의무 설치하지 않습니다. PyCharm은 간단한 설치와 무료 핵심·Pro 체험, Python 인터프리터와 키맵의 역할을 구분합니다. HTML·CSS·JavaScript 실습은 수업용 강의 카드 예제입니다. 작은 설명·자체 도해·코드·한 가지 수정과 확인 순서로 읽고, 최신 VS Code의 내장 HTML 미리보기 또는 외부 브라우저에서 결과를 확인합니다. Live Server는 구버전 등의 선택적 방법입니다. CSS 카드 여백은 비교 후 24px로 돌려 뒤의 템플릿 예제와 맞춥니다. 이어지는 프론트엔드 단원에서는 이 카드가 사용자에게 보이고 상호작용하는 프론트엔드의 한 예라는 점을 설명합니다. 템플릿 단원은 같은 카드의 역할을 다시 활용해 서버 데이터, Tailwind CSS, Alpine.js를 연결합니다.
+IDE에서는 VS Code Windows User Setup·PATH·새 터미널과 복제본 폴더 열기를 확인합니다. 표시 언어·글자 크기·줄바꿈·서식은 선택 사항과 기본 기능을 구분하며 설정합니다. 본문에서 Microsoft 한국어팩의 식별자·설치·언어 적용을 따라가고, Live Server와 Prettier는 정확한 확장 ID와 실행·종료·기본 포매터·저장 시 서식 설정을 선택적으로 시연합니다. 내장 Markdown·HTML·CSS·JavaScript 기능으로 첫 실습을 진행할 수 있으며, 확장 모두를 8분 안에 의무 설치하지 않습니다. PyCharm은 Python 중심 IDE로 간략히 비교하며 강사의 VSCode Keymap 적용 화면만 보여줍니다. 해당 플러그인은 VS Code 기본 단축키를 가깝게 제공하지만 사용자 지정 키를 자동 추출하거나 동기화하지는 않습니다. HTML·CSS·JavaScript 실습은 수업용 강의 카드 예제입니다. 작은 설명·자체 도해·코드·한 가지 수정과 확인 순서로 읽고, 최신 VS Code의 내장 HTML 미리보기 또는 외부 브라우저에서 결과를 확인합니다. Live Server는 구버전 등의 선택적 방법입니다. CSS 카드 여백은 비교 후 24px로 돌려 뒤의 템플릿 예제와 맞춥니다. 이어지는 프론트엔드 단원에서는 이 카드가 사용자에게 보이고 상호작용하는 프론트엔드의 한 예라는 점을 설명합니다. 템플릿 단원은 같은 카드의 역할을 다시 활용해 서버 데이터, Tailwind CSS, Alpine.js를 연결합니다.
 
 시연 준비용 자료는 [공통 강의 카드 안내](public/examples/course-card/README.md), [단계별 정적 예제](public/examples/course-card/index.html), [브라우저 완성 화면](http://127.0.0.1:5188/examples/course-card/03-javascript/index.html)입니다. VS Code에서 HTML → CSS → JavaScript의 단계별 결과를 비교합니다. 처음부터 만드는 수업에서는 기존 파일을 덮어쓰지 않도록 별도의 연습 폴더에서 시작합니다. 서버 템플릿 예제는 README의 별도 준비 조건을 확인합니다. GitHub Pages는 정적 파일을 제공하고 FastAPI 서버를 실행하지 않습니다.
 

@@ -35,6 +35,7 @@ const relatedStepIds = {
     'tools-vscode': ['tools-01', 'tools-02', 'tools-03'],
     'tools-pycharm': ['ide-pycharm-setup', 'tools-06', 'ide-keymap', 'tools-07'],
     'codex-context': ['tools-05'],
+    'tools-shortcuts-practice': ['ide-shortcut-practice'],
     'tools-html': ['html-practice'],
     'tools-css': ['css-practice'],
     'tools-javascript': ['javascript-practice'],

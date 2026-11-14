@@ -3,16 +3,26 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,37);
+  assert.equal(Object.keys(sectionScenes).length,38);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,37);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,38);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
+});
+
+test('shortcut practice links keyboard actions to visible editor results',()=>{
+  const scene = sectionScenes['tools-shortcuts-practice'];
+  assert.match(scene.description, /VS Code.*PyCharm/);
+  assert.match(scene.svg, /단축키를 눌러 보기/);
+  assert.match(scene.svg, /편집기에서 결과 확인/);
+  assert.match(scene.svg, /찾기 · 이동/);
+  assert.match(scene.svg, /편집 · 저장/);
+  assert.match(scene.svg, /화면 · 터미널/);
 });
 
 test('VS Code setup artwork returns to the existing clone and README',()=>{

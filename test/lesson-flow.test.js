@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 27 core sections appear once in case, authored section order, recap flows', () => {
+test('all 28 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,7 +25,20 @@ test('all 27 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 27);
+  assert.equal(total, 28);
+});
+
+test('IDE practice follows essential shortcuts and precedes the integrated workflow', () => {
+  const lesson = findLesson('ide');
+  const ids = buildLessonFlow(lesson).map(page => page.id);
+  const index = ids.indexOf('section-tools-vscode');
+  assert.deepEqual(ids.slice(index, index + 4), [
+    'section-tools-vscode', 'section-tools-shortcuts-practice',
+    'section-codex-context', 'section-tools-html',
+  ]);
+  const steps = lesson.steps.map(step => step.id);
+  assert.ok(steps.indexOf('tools-03') < steps.indexOf('ide-shortcut-practice'));
+  assert.ok(steps.indexOf('ide-shortcut-practice') < steps.indexOf('tools-05'));
 });
 
 test('every core section has related examples and the registry covers the existing step IDs', () => {
@@ -57,6 +70,7 @@ test('terminal, README, VS Code and template pages select examples for their own
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode-setup')), ['ide-vscode-setup', 'ide-vscode-code', 'ide-vscode-extensions']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode')), ['tools-01', 'tools-02', 'tools-03']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), []);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-shortcuts-practice')), ['ide-shortcut-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-html')), ['html-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-css')), ['css-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-javascript')), ['javascript-practice']);

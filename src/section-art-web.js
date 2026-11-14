@@ -232,6 +232,28 @@ function vscodeFinding() {
   `, '파일 · 내용 · 명령을 구별하면 찾기가 빨라집니다');
 }
 
+function sharedShortcutPractice() {
+  const p = 'sa-tools-shortcuts-practice';
+  return frame(p, '손으로 익히는 편집기 단축키', `
+    ${panel(46, 105, 310, 281, '단축키를 눌러 보기')}
+    ${rect(69, 183, 264, 136, c.cream, 12, c.ink, 2.7)}
+    ${[0,1,2].map(row => [0,1,2,3,4,5].map(col =>
+      rect(83 + col * 39, 197 + row * 31, 31, 24, row === 1 && col === 1 ? c.pale : c.paper, 4, c.muted, 1.6)).join('')).join('')}
+    ${rect(125, 294, 151, 13, c.paper, 3, c.muted, 1.4)}
+    ${emphasis(p, rect(119, 223, 37, 30, 'none', 5, c.teal, 3))}
+    ${pill(88, 340, 226, '키 누르기', c.pale, 21)}
+    ${arrow(p, 364, 247, 403, 247)}
+    ${panel(414, 105, 300, 281, '편집기에서 결과 확인')}
+    ${rect(433, 168, 261, 54, c.pale, 7, c.teal, 1.8)}
+    ${text(450, 202, '찾기 · 이동', 22, c.ink)}${check(656, 202)}
+    ${rect(433, 235, 261, 54, c.paper, 7, c.muted, 1.8)}
+    ${text(450, 269, '편집 · 저장', 22, c.ink)}${check(656, 269)}
+    ${rect(433, 302, 261, 54, c.softOrange, 7, c.orange, 1.8)}
+    ${text(450, 336, '화면 · 터미널', 22, c.ink)}${check(656, 336)}
+    ${pill(110, 417, 540, 'VS Code 실습 · PyCharm 키맵 비교', c.pale, 20)}
+  `, '키를 누른 뒤 화면에서 바뀐 결과를 확인합니다');
+}
+
 function pycharmEnvironment() {
   const p = 'sa-tools-pycharm';
   return frame(p, '실행 환경과 단축키 설정 구별하기', `
@@ -444,6 +466,7 @@ export const webSectionScenes = {
   'markdown-code': {title:'공통 핵심 문법을 배우고 Notion·Obsidian의 차이 확인하기',description:'하나의 Markdown 문서에서 Notion의 블록 편집과 Obsidian의 노트 연결로 갈라지는 구조로 공통 문법과 앱별 확장을 설명합니다.',svg:markdownBranches()},
   'tools-map': {title:'Codex 변경을 PyCharm에서 확인하는 세 가지 질문',description:'변경 전후 문서의 제목 차이와 그대로인 ID를 비교하고 경로·차이·실행의 세 확인 지점을 짚습니다.',svg:reviewDiff()},
   'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'입체 키캡의 파일 이름 검색과 프로젝트 내용 검색을 서로 다른 결과에 연결하고 명령 팔레트의 기능 검색을 구분합니다.',svg:vscodeFinding()},
+  'tools-shortcuts-practice': {title:'편집기 단축키를 직접 연습하기',description:'키보드의 조작이 편집기의 찾기와 이동, 편집과 저장, 화면과 터미널의 변화로 이어지는 과정을 확인합니다. VS Code에서 실습하고 PyCharm 키맵과 비교합니다.',svg:sharedShortcutPractice()},
   'tools-pycharm': {title:'Python용 PyCharm과 VS Code 키맵의 역할',description:'PyCharm에서 실행할 Python과 작업 폴더를 고르는 설정, 익숙한 단축키를 연결하는 키맵을 두 갈래로 분리합니다.',svg:pycharmEnvironment()},
   'codex-context': {title:'통합 터미널·Git·GitHub·Markdown을 한 흐름으로 보기',description:'하나의 프로젝트 작업대를 중심으로 README·PowerShell·Git 변경 비교·GitHub를 연결해 같은 작업의 맥락을 확인합니다.',svg:integratedWorkbench()},
   'tools-html': {title:'HTML: 강의 카드의 내용과 구조 만들기',description:'VS Code에서 작성하는 index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',svg:htmlCardPractice()},

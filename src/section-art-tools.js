@@ -249,12 +249,12 @@ function remoteRolesScene() {
       + text(182,374,'버전 1 · 버전 2 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
     + arrow(p,'M335 242h88') + flow(p,'M335 242h88')
     + text(379,218,'clone',{size:23,mono:true,anchor:'middle',fill:C.teal,weight:700})
-    + panel(438,115,275,291,'내 컴퓨터 · 새 폴더',
+    + panel(438,115,275,291,'내 컴퓨터 · 사용자 홈',
       folder(475,180,199,120) + pill(496,218,156,'note.txt',C.white,true)
-      + text(575,337,'git-practice-clone',{size:19,anchor:'middle',mono:true,weight:700})
+      + text(575,337,'~/git-practice-clone',{size:17,anchor:'middle',mono:true,weight:700})
       + text(575,374,'origin = 원격 주소 별칭',{size:19,anchor:'middle',fill:C.muted}),{titleSize:20})
     + pill(255,443,250,'git clone 주소',C.sage,true),
-    '다른 폴더에 복제해 파일과 기록 확인');
+    '사용자 홈의 새 폴더에 복제합니다');
 }
 
 function pipeScene() {
@@ -284,7 +284,7 @@ function vscodeSetupScene() {
     + arrow(p,'M500 271h16') + flow(p,'M500 271h16',1)
     + panel(524,124,211,294,'폴더 열기',
       folder(549,190,157,101) + pill(548,229,160,'README.md',C.white,true)
-      + text(629,340,'git-practice-receiver',{size:16,anchor:'middle',mono:true})
+      + text(629,340,'git-practice-clone',{size:16,anchor:'middle',mono:true})
       + text(629,379,'같은 README',{size:22,anchor:'middle',fill:C.teal,weight:700}),{titleSize:22}),
     '설치 후 앞에서 만든 복제본의 문서를 다시 엽니다');
 }
@@ -301,7 +301,7 @@ function errorReportScene() {
 export const toolSectionScenes = {
   'tools-vscode-setup': {
     title:'VS Code 설치와 기본 설정',
-    description:'공식 Windows 다운로드에서 User Setup 설치 파일을 받고 옵션을 확인해 설치한 뒤, 앞에서 업데이트한 git-practice-receiver 폴더를 열어 같은 README.md를 확인합니다.',
+    description:'공식 Windows 다운로드에서 User Setup 설치 파일을 받고 옵션을 확인해 설치한 뒤, 앞에서 업데이트한 git-practice-clone 폴더를 열어 같은 README.md를 확인합니다.',
     svg:vscodeSetupScene(),
   },
   'terminal-example': {
@@ -356,7 +356,7 @@ export const toolSectionScenes = {
   },
   'github-roles': {
     title:'다른 폴더에서 내 저장소를 다시 clone하기',
-    description:'GitHub 원격 저장소를 다른 새 폴더 git-practice-clone으로 clone해 note.txt와 커밋 기록을 복제합니다. 새 로컬 저장소의 origin은 복제한 원격 주소의 별칭입니다.',
+    description:'GitHub 원격 저장소를 사용자 홈 바로 아래 새 폴더 git-practice-clone으로 clone해 note.txt와 커밋 기록을 복제합니다. 원래 git-practice 폴더와 나란히 놓이며 origin은 원격 주소의 별칭입니다.',
     svg:remoteRolesScene(),
   },
   'terminal-bonus': {

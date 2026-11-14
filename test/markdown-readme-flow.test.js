@@ -31,20 +31,36 @@ test('README publication follows writing and ends with commit, push, and browser
   assert.ok(positions.every(position => position >= 0));
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.match(section.body, /GitHub.*새로고침/s);
-  assert.match(section.body, /같은 복제본|git-practice-clone/);
+  assert.match(section.body, /원래 `git-practice` 폴더/);
 });
 
-test('a second clone is prepared before the push, then fetch is inspected before pull', () => {
+test('the existing clone receives the README after the original repository pushes it', () => {
   const push = markdown.sections.find(item => item.id === 'markdown-readme-push');
   const fetch = markdown.sections.find(item => item.id === 'markdown-readme-fetch');
-  assert.ok(push.body.indexOf('git clone https://') < push.body.indexOf('git push -u origin main'));
-  assert.match(push.body, /git-practice-receiver/);
+  const write = markdown.sections.find(item => item.id === 'tools-markdown');
+  assert.match(write.body, /cd ~\/git-practice/);
+  assert.match(push.body, /원래 `git-practice` 폴더/);
+  assert.doesNotMatch(push.body, /git clone https:\/\//);
+  assert.doesNotMatch(JSON.stringify(markdown), /git-practice-receiver/);
   const code = courseMarked.lexer(fetch.body).filter(token => token.type === 'code').map(token => token.text).join('\n');
-  const commands = ['git status --short', 'git branch --show-current', 'git remote -v', 'git fetch origin', 'git status -sb', 'git log --oneline HEAD..origin/main', 'git diff --stat HEAD origin/main', 'git pull --ff-only origin main', 'cat .\\README.md'];
+  const commands = ['cd ~/git-practice-clone', 'Test-Path .\\README.md', 'git status --short', 'git branch --show-current', 'git remote -v', 'git fetch origin', 'git status -sb', 'git log --oneline HEAD..origin/main', 'git diff --stat HEAD origin/main', 'git pull --ff-only origin main', 'cat .\\README.md'];
+  assert.doesNotMatch(code, /github-clone-practice/);
   const positions = commands.map(value => code.indexOf(value));
   assert.ok(positions.every(position => position >= 0));
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.match(fetch.body, /현재 브랜치나 작업 파일을 자동으로 바꾸지 않습니다/);
   assert.match(fetch.body, /평소에는 pull만 해도 됩니다/);
   assert.match(fetch.body, /fetch.*먼저 살펴본 뒤.*pull.*반영/);
+});
+
+
+test('GitHub clones directly into a new folder under the home directory', () => {
+  const github = course.lessons.find(lesson => lesson.id === 'github');
+  const section = github.sections.find(item => item.id === 'github-roles');
+  const code = courseMarked.lexer(section.body).filter(token => token.type === 'code').map(token => token.text).join('\n');
+  const positions = ['cd ~', 'Test-Path .\\git-practice-clone', 'git clone https://github.com/YOUR-USERNAME/git-practice.git git-practice-clone', 'cd .\\git-practice-clone'].map(value => code.indexOf(value));
+  assert.ok(positions.every(position => position >= 0));
+  assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
+  assert.doesNotMatch(code, /github-clone-practice|mkdir/);
+  assert.match(section.body, /이미 이전 강의대로.*실제 경로/s);
 });

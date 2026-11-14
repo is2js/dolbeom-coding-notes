@@ -136,13 +136,13 @@ function readmeSections() {
 function readmeToGithub() {
   const p = 'sa-markdown-readme-push';
   return frame(p, 'README를 작성해 GitHub에서 보기', `
-    ${panel(36, 111, 224, 282, '내 복제본')}
+    ${panel(36, 111, 224, 282, '원래 작업 폴더')}
     ${path('M59 200v-17h63l10 12h105v117H59Z', c.softOrange, c.ink, 2.5)}
     ${sheet(79, 166, 142, 132, c.paper)}
     ${code(91, 199, 'README.md', c.teal, 19)}
     ${text(91, 229, '# 연습 메모', 19, c.ink)}
     ${lines(92, 246, [107, 83, 98], c.sand, 14, 5)}
-    ${pill(54, 333, 188, 'git-practice-clone', c.pale, 16)}
+    ${pill(54, 333, 188, 'git-practice', c.pale, 18)}
     ${arrow(p, 267, 249, 292, 249)}
     ${panel(302, 135, 158, 230, 'Git 기록')}
     ${rect(318, 201, 126, 55, c.paper, 6, c.muted, 2)}
@@ -158,7 +158,7 @@ function readmeToGithub() {
     ${lines(539, 272, [137, 116, 130], c.sage, 15, 5)}
     ${emphasis(p, check(670, 325))}
     ${pill(154, 421, 452, '작성 → 커밋 → push → 화면 확인', c.pale, 20)}
-  `, '복제본에서 쓴 README를 GitHub에서 확인합니다');
+  `, '원래 작업 폴더에서 쓴 README를 GitHub에서 확인합니다');
 }
 
 function readmeFetchAndPull() {
@@ -177,7 +177,7 @@ function readmeFetchAndPull() {
     ${text(380, 287, '파일은 그대로', 18, c.muted, 'middle')}
     ${pill(306, 333, 148, '① fetch', c.pale, 20)}
     ${arrow(p, 479, 246, 514, 246, {orange:true,delay:1.2})}
-    ${panel(524, 116, 200, 264, '다른 복제 폴더')}
+    ${panel(524, 116, 200, 264, '기존 복제 폴더')}
     ${path('M548 204v-17h54l10 12h87v112H548Z', c.softOrange, c.ink, 2.5)}
     ${sheet(570, 176, 105, 127, c.paper)}
     ${code(580, 211, 'README.md', c.teal, 16)}
@@ -185,7 +185,7 @@ function readmeFetchAndPull() {
     ${emphasis(p, check(659, 291))}
     ${pill(542, 333, 164, '② pull 반영', c.softOrange, 19)}
     ${pill(154, 414, 452, 'fetch로 확인 → pull로 작업 폴더에 반영', c.pale, 19)}
-  `, 'clone은 처음 한 번 · 기존 폴더는 fetch와 pull');
+  `, '홈의 기존 git-practice-clone에 반영합니다');
 }
 
 function markdownBranches() {
@@ -438,9 +438,9 @@ function completeClassNames() {
 export const webSectionScenes = {
   'markdown-map': {title:'Codex 계획문으로 마크다운 문법 연습하기',description:'Codex 계획문의 제목, 목록, 강조와 링크 원문을 읽는 화면과 나란히 비교해 마크다운 문법을 연습합니다.',svg:structuredPrompt()},
   'markdown-typora-images': {title:'Typora로 이미지 붙여넣기와 GitHub에 올리기',description:'클립보드 이미지를 Typora에서 붙여넣어 프로젝트의 assets 폴더에 저장하고 README에서 참조한 뒤, 문서와 이미지를 Git으로 GitHub에 함께 올리는 과정을 구분합니다.',svg:typoraImageFlow()},
-  'tools-markdown': {title:'README.md 항목별로 작성하기',description:'git-practice-clone 복제본의 README.md에 프로젝트 소개, 준비할 것, 확인 방법을 제목과 목록 등 Markdown 문법으로 나누어 작성합니다.',svg:readmeSections()},
-  'markdown-readme-push': {title:'작성한 README를 GitHub에 push하고 확인하기',description:'git-practice-clone 복제본에서 README.md를 Git으로 add와 commit한 뒤 push합니다. GitHub 저장소 화면에 제목과 목록이 보이는지 확인합니다.',svg:readmeToGithub()},
-  'markdown-readme-fetch': {title:'다른 clone 폴더에서 원격 변경 가져오기',description:'GitHub 원격 저장소의 새 README 커밋을 fetch로 원격 추적 기록에 가져와 확인하고, 이미 복제한 다른 폴더에서 pull로 작업 파일에 반영합니다. clone은 새 폴더를 처음 만드는 명령입니다.',svg:readmeFetchAndPull()},
+  'tools-markdown': {title:'README.md 항목별로 작성하기',description:'원래 git-practice 작업 폴더의 README.md에 프로젝트 소개, 준비할 것, 확인 방법을 제목과 목록 등 Markdown 문법으로 나누어 작성합니다.',svg:readmeSections()},
+  'markdown-readme-push': {title:'작성한 README를 GitHub에 push하고 확인하기',description:'원래 git-practice 작업 폴더에서 README.md를 Git으로 add와 commit한 뒤 push합니다. GitHub 저장소 화면에 제목과 목록이 보이는지 확인합니다.',svg:readmeToGithub()},
+  'markdown-readme-fetch': {title:'다른 clone 폴더에서 원격 변경 가져오기',description:'GitHub 원격 저장소의 새 README 커밋을 fetch로 원격 추적 기록에 가져와 확인하고, 이미 복제해 둔 git-practice-clone 폴더에서 pull로 작업 파일에 반영합니다. clone은 새 폴더를 처음 만드는 명령입니다.',svg:readmeFetchAndPull()},
   'markdown-code': {title:'공통 핵심 문법을 배우고 Notion·Obsidian의 차이 확인하기',description:'하나의 Markdown 문서에서 Notion의 블록 편집과 Obsidian의 노트 연결로 갈라지는 구조로 공통 문법과 앱별 확장을 설명합니다.',svg:markdownBranches()},
   'tools-map': {title:'Codex 변경을 PyCharm에서 확인하는 세 가지 질문',description:'변경 전후 문서의 제목 차이와 그대로인 ID를 비교하고 경로·차이·실행의 세 확인 지점을 짚습니다.',svg:reviewDiff()},
   'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'입체 키캡의 파일 이름 검색과 프로젝트 내용 검색을 서로 다른 결과에 연결하고 명령 팔레트의 기능 검색을 구분합니다.',svg:vscodeFinding()},

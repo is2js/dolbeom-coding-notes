@@ -17,9 +17,9 @@ test('the authored section scenes have stable keys and matching artwork and acce
 
 test('VS Code setup artwork returns to the existing clone and README',()=>{
   const scene = sectionScenes['tools-vscode-setup'];
-  assert.match(scene.description, /공식.*User Setup.*git-practice-receiver.*README\.md/);
+  assert.match(scene.description, /공식.*User Setup.*git-practice-clone.*README\.md/);
   assert.match(scene.svg, /User Setup 설치/);
-  assert.match(scene.svg, /git-practice-receiver/);
+  assert.match(scene.svg, /git-practice-clone/);
   assert.match(scene.svg, /README\.md/);
 });
 
@@ -39,7 +39,7 @@ test('Markdown scenes connect plan syntax to rendered content and separate local
 
 test('README scene separates introduction, preparation and verification',()=>{
   const scene = sectionScenes['tools-markdown'];
-  assert.match(scene.description, /git-practice-clone.*README\.md.*소개.*준비.*확인/);
+  assert.match(scene.description, /git-practice 작업 폴더.*README\.md.*소개.*준비.*확인/);
   assert.match(scene.svg, /프로젝트 소개/);
   assert.match(scene.svg, /준비할 것/);
   assert.match(scene.svg, /확인 방법/);
@@ -48,8 +48,10 @@ test('README scene separates introduction, preparation and verification',()=>{
 
 test('README publishing scene follows a local commit and push to GitHub',()=>{
   const scene = sectionScenes['markdown-readme-push'];
-  assert.match(scene.description, /git-practice-clone.*README\.md.*add.*commit.*push.*GitHub/);
-  assert.match(scene.svg, /git-practice-clone/);
+  assert.match(scene.description, /git-practice 작업 폴더.*README\.md.*add.*commit.*push.*GitHub/);
+  assert.match(scene.svg, /원래 작업 폴더/);
+  assert.match(scene.svg, /git-practice/);
+  assert.doesNotMatch(scene.svg, /git-practice-clone/);
   assert.match(scene.svg, /README\.md/);
   assert.match(scene.svg, /Git 기록/);
   assert.match(scene.svg, /commit/);
@@ -66,7 +68,7 @@ test('README update scene distinguishes fetch and pull in an existing clone',()=
   assert.match(scene.svg, /파일은 그대로/);
   assert.match(scene.svg, /① fetch/);
   assert.match(scene.svg, /② pull 반영/);
-  assert.match(scene.svg, /기존 폴더는 fetch와 pull/);
+  assert.match(scene.svg, /홈의 기존 git-practice-clone에 반영/);
 });
 
 test('beginner Git scenes separate the repository, staging, difference and temporary visit',()=>{
@@ -102,10 +104,10 @@ test('GitHub scenes follow the same note from local push to a new clone',()=>{
   assert.match(push.svg, />fetch<\/text>/);
   assert.match(push.svg, /origin = 원격 주소 별칭/);
   assert.ok(push.svg.indexOf('내 컴퓨터 · 로컬 저장소') < push.svg.indexOf('GitHub · 원격 저장소'));
-  assert.match(clone.description, /GitHub 원격.*새 폴더.*clone/);
-  assert.match(clone.svg, /git-practice-clone/);
+  assert.match(clone.description, /GitHub 원격.*사용자 홈 바로 아래 새 폴더.*clone/);
+  assert.match(clone.svg, /~\/git-practice-clone/);
   assert.match(clone.svg, /origin = 원격 주소 별칭/);
-  assert.ok(clone.svg.indexOf('GitHub · 원격 저장소') < clone.svg.indexOf('내 컴퓨터 · 새 폴더'));
+  assert.ok(clone.svg.indexOf('GitHub · 원격 저장소') < clone.svg.indexOf('내 컴퓨터 · 사용자 홈'));
   assert.match(push.svg, /note\.txt/);
   assert.match(clone.svg, /note\.txt/);
 });

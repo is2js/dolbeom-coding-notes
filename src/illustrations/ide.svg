@@ -19,19 +19,18 @@
     <text x="161" y="136" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#5d746c" stroke="none">EDITOR / PROJECT</text>
     <rect x="107" y="163" width="129" height="229" rx="5" fill="#eddfc4" stroke="#b9c5ad" stroke-width="1.5" />
     <text x="121" y="194" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="18" font-weight="750" text-anchor="start" fill="#5d746c" stroke="none">PROJECT</text>
-    <text x="122" y="231" font-family="Consolas,monospace" font-size="15" font-weight="600" text-anchor="start" fill="#26334b" stroke="none">README.md</text>
-    <text x="122" y="269" font-family="Consolas,monospace" font-size="15" font-weight="750" text-anchor="start" fill="#367d7b" stroke="none">index.html</text>
-    <text x="122" y="307" font-family="Consolas,monospace" font-size="15" font-weight="600" text-anchor="start" fill="#26334b" stroke="none">style.css</text>
-    <text x="122" y="345" font-family="Consolas,monospace" font-size="15" font-weight="600" text-anchor="start" fill="#26334b" stroke="none">script.js</text>
+    <text x="122" y="231" font-family="Consolas,monospace" font-size="15" font-weight="600" text-anchor="start" fill="#367d7b" stroke="none">README.md</text>
+    <text x="122" y="269" font-family="Consolas,monospace" font-size="15" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">note.txt</text>
+    <text x="122" y="307" font-family="Consolas,monospace" font-size="12.5" font-weight="600" text-anchor="start" fill="#26334b" stroke="none">branch-note.txt</text>
     <rect x="250" y="164" width="375" height="154" rx="5" fill="#253c4b" stroke="#26334b" stroke-width="2" />
-    <text x="270" y="202" font-family="Consolas,monospace" font-size="25" font-weight="650" text-anchor="start" fill="#e5efd7" stroke="none">&lt;h1&gt;Git&lt;/h1&gt;</text>
-    <text x="270" y="242" font-family="Consolas,monospace" font-size="23" font-weight="650" text-anchor="start" fill="#eac17a" stroke="none">padding: 24px;</text>
-    <text x="270" y="281" font-family="Consolas,monospace" font-size="23" font-weight="650" text-anchor="start" fill="#a6d9c8" stroke="none">open = !open</text>
+    <text x="270" y="202" font-family="Consolas,Malgun Gothic,monospace" font-size="23" font-weight="650" text-anchor="start" fill="#e5efd7" stroke="none"># Git 연습 메모</text>
+    <text x="270" y="242" font-family="Consolas,Malgun Gothic,monospace" font-size="23" font-weight="650" text-anchor="start" fill="#eac17a" stroke="none">## 파일 안내</text>
+    <text x="270" y="281" font-family="Consolas,monospace" font-size="21" font-weight="650" text-anchor="start" fill="#a6d9c8" stroke="none">[note.txt](./note.txt)</text>
     <rect x="250" y="333" width="179" height="59" rx="5" fill="#f0ddcf" stroke="#b9c5ad" stroke-width="1.5" />
     <rect x="442" y="333" width="183" height="59" rx="5" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.5" />
-    <text x="268" y="370" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700" text-anchor="start" fill="#9c644d" stroke="none">− 이전</text>
-    <text x="460" y="370" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700" text-anchor="start" fill="#367d7b" stroke="none">+ 변경</text>
-    <rect class="art-motion ide-cursor" x="459" y="259" width="10" height="24" fill="#e4b75f" />
+    <text x="268" y="370" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700" text-anchor="start" fill="#9c644d" stroke="none">− 이전 제목</text>
+    <text x="460" y="370" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700" text-anchor="start" fill="#367d7b" stroke="none">+ 바뀐 제목</text>
+    <rect class="art-motion ide-cursor" x="555" y="259" width="10" height="24" fill="#e4b75f" />
     <path d="M300 429h136l28 27H269Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M249 459L487 459" fill="none" stroke="#bcaa85" stroke-width="6" stroke-linecap="round" />
   </g>

@@ -33,7 +33,7 @@ PowerShell 기본 별칭 `pwd`·`ls`·`cd`·`cat`은 macOS의 Bash·zsh에서도
 | 02 | Git | 실제 기록·Diff 사례 → 저장과 기록·새 저장소 → 첫 커밋 → 두 번째 버전·비교 → 이전 기록 방문·복귀 → 브랜치 작업·병합 | 45분 |
 | 03 | GitHub | 강사의 clone 시연 → Git 메모 저장소 push → 다른 폴더에 clone → 파일·기록 확인 | 20분 |
 | 04 | 마크다운 | Codex 계획문 문법 연습 → README 항목별 예시·완성본 작성 → 커밋·push → GitHub 확인 → 다른 복제본에서 fetch·pull | 50분 |
-| 05 | IDE | IDE에서 Codex 변경 확인 → VS Code 설치·한국어팩·내장 기능과 선택 확장 설정·README 미리보기 → PyCharm 키맵 화면 소개 → 공통 단축키 연습 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 65분 |
+| 05 | IDE | VS Code에서 README 수정·Git 변경 비교 사례 → VS Code 설치·한국어팩·내장 기능과 선택 확장 설정·README 미리보기 → PyCharm 키맵 화면 소개 → 공통 단축키 연습 → 자체 도해로 같은 강의 카드의 HTML·CSS·JavaScript 적용 | 65분 |
 | 06 | 프론트엔드·백엔드 | 만든 카드와 프론트엔드의 관계 → 로컬·서버와 요청·응답 → 서버가 HTML을 만드는 방식 | 20분 |
 | 07 | 템플릿 엔진 | 같은 카드에 Jinja2 데이터 → Tailwind CSS로 꾸미기 → Alpine.js로 동작 연결·기본 코드와 비교 | 40분 |
 | 합계 | 7개 주제 · 본편 28개 절 | 강의 목표·사례·설명·시연·정리 포함 | 270분 |

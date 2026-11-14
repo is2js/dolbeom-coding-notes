@@ -34,7 +34,10 @@ test('IDE practice follows essential shortcuts and precedes the integrated workf
   const index = ids.indexOf('section-tools-vscode');
   assert.deepEqual(ids.slice(index, index + 4), [
     'section-tools-vscode', 'section-tools-shortcuts-practice',
-    'section-codex-context', 'section-tools-html',
+    'section-codex-context', 'recap',
+  ]);
+  assert.deepEqual(buildLessonFlow(findLesson('web-coding')).slice(1, 4).map(page => page.id), [
+    'section-tools-html', 'section-tools-css', 'section-tools-javascript',
   ]);
   const steps = lesson.steps.map(step => step.id);
   assert.ok(steps.indexOf('tools-03') < steps.indexOf('ide-shortcut-practice'));
@@ -71,13 +74,24 @@ test('terminal, README, VS Code and template pages select examples for their own
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-vscode')), ['tools-01', 'tools-02', 'tools-03']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-pycharm')), []);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-shortcuts-practice')), ['ide-shortcut-practice']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-html')), ['html-practice']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-css')), ['css-practice']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('ide'), 'section-tools-javascript')), ['javascript-practice']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-html')), ['html-practice']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-css')), ['css-practice']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-javascript')), ['javascript-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-html')), ['web-ssr-handler', 'web-ssr-template', 'web-08', 'web-11']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-web-jinja')), ['web-06', 'web-07', 'frontend-01']);
   assert.ok(!stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-css')).includes('frontend-08'));
   assert.ok(stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-alpine')).includes('frontend-08'));
+});
+
+test('old IDE web lesson links follow the moved section without changing old drafts', () => {
+  for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
+    assert.deepEqual(parseLessonRoute(`#/lesson/ide/section-${id}`, source), { lessonId: 'web-coding', pageId: `section-${id}` });
+  }
+  const legacy = course();
+  const ide = findLesson('ide', legacy);
+  const moved = findLesson('web-coding', legacy).sections.find(section => section.id === 'tools-html');
+  ide.sections.push(structuredClone(moved));
+  assert.deepEqual(parseLessonRoute('#/lesson/ide/section-tools-html', legacy), { lessonId: 'ide', pageId: 'section-tools-html' });
 });
 
 test('an older Markdown draft still keeps its bundled README and push demonstration', () => {

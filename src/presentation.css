@@ -20,7 +20,7 @@
 .presentation-header-actions button:hover { color: var(--teal); }
 .presentation-header-actions svg { width: 17px; height: 17px; }
 .presentation-topics { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 10px 0; }
-.presentation-topics ol { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 8px; list-style: none; margin: 0; padding: 0; }
+.presentation-topics ol { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); gap: 8px; list-style: none; margin: 0; padding: 0; }
 .presentation-topics button { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 49px; border: 1px solid transparent; border-radius: 6px; padding: 8px 10px; text-align: left; color: #8a8b7e; }
 .presentation-topics button > span { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; flex-shrink: 0; border: 1px solid #c9c8b6; border-radius: 50%; font: 10px var(--mono); }
 .presentation-topics strong { font-size: clamp(11px,1vw,15px); font-weight: 600; word-break: keep-all; }

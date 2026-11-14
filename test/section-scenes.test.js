@@ -25,6 +25,12 @@ test('shortcut practice links keyboard actions to visible editor results',()=>{
   assert.match(scene.svg, /화면 · 터미널/);
 });
 
+test('integrated IDE scene separates local editing from the last pushed GitHub version',()=>{
+  const scene = sectionScenes['codex-context'];
+  assert.match(scene.description, /README.*미리보기.*터미널.*Git.*GitHub/);
+  for (const phrase of ['README 수정 · 저장', 'Markdown 미리보기', '통합 터미널', 'Git 변경 비교', 'GitHub 원격', '저장만으론 그대로']) assert.ok(scene.svg.includes(phrase));
+});
+
 test('VS Code setup artwork returns to the existing clone and README',()=>{
   const scene = sectionScenes['tools-vscode-setup'];
   assert.match(scene.description, /공식.*User Setup.*git-practice-clone.*README\.md/);

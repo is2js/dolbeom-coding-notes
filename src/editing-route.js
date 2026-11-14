@@ -1,3 +1,5 @@
+import { resolveMovedSection } from './moved-sections.js';
+
 // Editor addresses refer to stable content IDs, so titles and order may change.
 export function editorAddress(lessonId, itemId = 'case') {
   return `#/editor/${lessonId}/${itemId}`;
@@ -13,7 +15,8 @@ export function parseEditorRoute(hash, course, fallbackLessonId) {
   if (typeof hash !== 'string' || !/^#\/editor(?:\/|$)/.test(hash)) return null;
   const parts = hash.match(/^#\/editor(?:\/([a-z0-9_-]+)(?:\/([a-z0-9_-]+))?)?$/);
   const lessons = course?.lessons || [];
-  const lesson = lessons.find(item => item.id === parts?.[1])
+  const destination = resolveMovedSection(course, parts?.[1], parts?.[2]);
+  const lesson = lessons.find(item => item.id === destination)
     || lessons.find(item => item.id === fallbackLessonId) || lessons[0];
   if (!lesson) return null;
   const requested = parts?.[2];

@@ -186,7 +186,7 @@ Alpine.data('courseApp', () => ({
       if (!response.ok) throw new Error(`강의 데이터 응답: ${response.status}`);
       this.baseCourse = validateCourse(await response.json());
       this.course = clone(this.baseCourse);
-      const {stored,recovery,legacyDraft} = readCourseDrafts(localStorage,{local:import.meta.env.DEV});
+      const {stored,recovery,legacyDraft,migratedFromSeven,upgradedDefaults} = readCourseDrafts(localStorage,{local:import.meta.env.DEV,baseCourse:this.baseCourse});
       this.legacyDraft=legacyDraft;
       if (stored) { try { this.course = validateCourse(stored); this.hasDraft = true; } catch { this.notify('저장된 편집본 형식이 달라 기본 콘텐츠로 열었습니다.'); } }
       const saved = safeRead(localStorage, PROGRESS_KEY, []);
@@ -198,7 +198,10 @@ Alpine.data('courseApp', () => ({
         onChange:()=>{if(this.editor?.isDirty || this.editor?.hasUnsaved)localSync?.markEdited();},
       });
       this.editor.open();
-      const draft = recovery?.dirty ? recovery.course : !recovery && stored && !sameCourse(stored,this.baseCourse) ? stored : null;
+      // A migrated saved draft may be the only copy of edits made before the
+      // curriculum changed. Reconcile it with the local file instead of silently
+      // treating an older clean recovery as permission to overwrite it.
+      const draft = recovery?.dirty ? recovery.course : (!recovery || ((migratedFromSeven || upgradedDefaults) && import.meta.env.DEV)) && stored && !sameCourse(stored,this.baseCourse) ? stored : null;
       if (import.meta.env.DEV) {
         localSync = createLocalCourseSync({
           onState:state=>{ this.syncState=state; },
@@ -381,7 +384,13 @@ Alpine.data('courseApp', () => ({
     this.reconcilePresentation();
   },
   async resetCourse() {
-    if(localSync){await localSync.useFileVersion();return;}
+    const previouslyDismissed = safeRead(localStorage, COURSE_STORAGE.previousDismissed, false);
+    if (!safeWrite(localStorage, COURSE_STORAGE.previousDismissed, true)) throw new Error('이전 초안 상태를 저장할 수 없어 초기화를 중단했습니다.');
+    if(localSync){
+      try { await localSync.useFileVersion(); }
+      catch (error) { safeWrite(localStorage, COURSE_STORAGE.previousDismissed, previouslyDismissed); throw error; }
+      return;
+    }
     const selectedStepId=this.step?.id;
     localStorage.removeItem(DRAFT_KEY);localStorage.removeItem(RECOVERY_KEY);this.course=clone(this.baseCourse);this.hasDraft=false;this.stepIndex=0;
     if(this.route === 'learn')this.reconcileLearningFlow(selectedStepId);
@@ -447,7 +456,7 @@ Alpine.data('courseApp', () => ({
       if(id==='frontend-08')return address+'<div class="sample-page">'+heading+'<div class="sample-cards sample-single">'+gitCard+'</div><div class="sample-toggle-button">설명 보기 · 펼침 상태 ▴</div><div class="sample-expanded">변경을 읽고 기록합니다.</div><p class="sample-state">클릭 후: open = true · aria-expanded = true · 설명 표시</p></div>';
       if(id==='frontend-10')return address+'<div class="sample-page"><span class="eyebrow">CARD STATE CHECK · 재현 화면</span><h3>강의 목록</h3><div class="sample-cards">'+terminalCard+gitCard+'</div><div class="sample-expanded">Git만 펼침 · 변경을 읽고 기록합니다.</div><p class="sample-state">카드 상태 독립 · Enter/Space · 다시 접기 확인<br>새로고침 → 두 카드 모두 초기 접힘</p></div>';
     }
-    if(this.lessonId==='codex' || id.startsWith('codex-'))return address+'<div class="sample-page">'+heading+'<div class="sample-search">⌕ &nbsp; git <span>공백·대소문자 검증</span></div><div class="sample-cards">'+gitCard+githubCard+'</div><p class="sample-state">전체 7강 중 2개 · Git · git · 공백 포함 검색어 → 같은 결과 확인</p></div>';
+    if(this.lessonId==='codex' || id.startsWith('codex-'))return address+'<div class="sample-page">'+heading+'<div class="sample-search">⌕ &nbsp; git <span>공백·대소문자 검증</span></div><div class="sample-cards">'+gitCard+githubCard+'</div><p class="sample-state">전체 강의 중 2개 · Git · git · 공백 포함 검색어 → 같은 결과 확인</p></div>';
     return address+'<div class="sample-page">'+heading+'<p>AI와 만든 작은 강의 카드 목록입니다.</p><div class="sample-cards">'+terminalCard+gitCard+'</div><p class="sample-state">'+(id==='frontend-04'?'grid-cols-1 → md:grid-cols-2 · 부모의 배치 규칙':'화면·주소·데이터를 함께 확인합니다.')+'</p></div>';
   },
   nextInfoTab(delta,event) {const index=this.infoTabs.findIndex(t=>t.id===this.infoTab);this.infoTab=this.infoTabs[(index+delta+this.infoTabs.length)%this.infoTabs.length].id;this.$nextTick(()=>document.getElementById('info-tab-'+this.infoTab)?.focus());},

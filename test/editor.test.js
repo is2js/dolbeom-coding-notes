@@ -87,7 +87,7 @@ test('edits are isolated until debounced validation applies the complete course'
   t.mock.timers.tick(1);
   await Promise.resolve();
   assert.equal(calls.applied.length, 1);
-  assert.equal(current().lessons.length, 7);
+  assert.equal(current().lessons.length, COURSE_IDS.length);
   assert.equal(current().lessons[0].title, editor.activeLesson.title);
   assert.equal(current().lessons[0].case.kind, 'real');
   assert.equal(editor.status, 'saved');
@@ -482,8 +482,8 @@ test('lesson ordering renumbers array positions while preserving all topic and c
   const original = editor.activeLesson;
   const ids = editor.working.lessons.map(lesson => lesson.id).sort();
   editor.moveLesson(1, -1);
-  assert.deepEqual(editor.working.lessons.map(lesson => lesson.id), ['git', 'terminal', 'github', 'markdown', 'ide', 'web', 'templates']);
-  assert.deepEqual(editor.working.lessons.map(lesson => lesson.number), [1, 2, 3, 4, 5, 6, 7]);
+  assert.deepEqual(editor.working.lessons.map(lesson => lesson.id), ['git', 'terminal', 'github', 'markdown', 'ide', 'web-coding', 'web', 'templates']);
+  assert.deepEqual(editor.working.lessons.map(lesson => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8]);
   assert.deepEqual(editor.working.lessons.map(lesson => lesson.id).sort(), ids);
   assert.equal(editor.activeLesson, original);
   assert.equal(editor.lessonId, 'git');
@@ -491,7 +491,7 @@ test('lesson ordering renumbers array positions while preserving all topic and c
   assert.equal(editor.stepId, 'git-step-two');
   const snapshot = copy(editor.working);
   editor.moveLesson(0, -1);
-  editor.moveLesson(6, 1);
+  editor.moveLesson(COURSE_IDS.length - 1, 1);
   assert.deepEqual(editor.working, snapshot);
   assert.equal(await editor.save(), true);
   assert.deepEqual(current(), snapshot);

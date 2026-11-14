@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { sectionThumbnail } from '../src/section-thumbnails.js';
+import { topicThumbnail } from '../src/topic-thumbnails.js';
 import { sectionScenes } from '../src/section-scenes.js';
 import { topicNavigationMethods, topicNavigationState } from '../src/topic-navigation.js';
 
@@ -15,6 +16,13 @@ test('each authored section has its own small illustration and unknown sections 
   const fallback=sectionThumbnail('custom-lesson','git');
   assert.match(fallback,/data-topic-thumbnail="git"/);
   assert.equal(sectionThumbnail('section-tools-html','ide'),sectionThumbnail('tools-html','ide'));
+});
+
+test('new web coding subject uses a distinct locally rendered thumbnail', () => {
+  const svg = topicThumbnail('web-coding');
+  assert.match(svg, /data-topic-thumbnail="web-coding"/);
+  assert.notEqual(svg, topicThumbnail('web'));
+  assert.doesNotMatch(svg, /\bid=|<script|<foreignObject|<image|(?:href|src)=["'](?:https?:|data:)/);
 });
 
 test('the same step buttons follow stable IDs in lecture and presentation without editing content', () => {

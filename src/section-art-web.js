@@ -271,16 +271,23 @@ function pycharmEnvironment() {
 
 function integratedWorkbench() {
   const p = 'sa-codex-context';
-  return frame(p, '한 프로젝트를 여러 도구로 확인', `
-    ${panel(258,184,245,140,'같은 프로젝트',c.pale)}${path('M285 257h66l14 15h108v31H285Z',c.cream)}
-    ${panel(58,97,191,112,'README.md')}${lines(77,163,[148,118],c.sand,17)}
-    ${panel(518,97,183,112,'Git diff')}${rect(536,159,146,12,c.softRed,3,c.red,1)}${rect(536,182,146,12,c.pale,3,c.teal,1)}
-    ${panel(58,330,228,110,'PowerShell',c.ink)}${code(78,403,'> 현재 경로',c.pale,22)}
-    ${panel(495,330,206,110,'GitHub')}${path('M523 405l36-17 35 17 35-17 36 17','none',c.teal,3)}
-    ${[[523,405],[559,388],[594,405],[629,388],[665,405]].map(([x,y])=>circle(x,y,5,c.pale)).join('')}
-    ${arrow(p,249,166,277,184)}${arrow(p,518,166,491,184,{delay:.7})}
-    ${arrow(p,287,330,319,315,{delay:1.4})}${arrow(p,496,330,465,315,{delay:2.1})}
-  `, '문서 · 경로 · 변경 · 원격의 맥락을 연결합니다');
+  return frame(p, 'README 한 줄로 도구 연결하기', `
+    ${panel(42,100,287,129,'README 수정 · 저장')}
+    ${code(62,177,'# Git 연습 메모',c.teal,21)}
+    ${text(62,207,'소개 문장 한 줄 수정',20,c.muted)}
+    ${arrow(p,340,165,405,165)}
+    ${panel(414,100,303,129,'Markdown 미리보기')}
+    ${text(436,178,'Git 연습 메모',24,c.ink)}${path('M436 189h235','none',c.sand,2)}
+    ${text(436,213,'바뀐 문장을 읽어 봅니다',19,c.muted)}
+    ${panel(42,274,209,127,'통합 터미널',c.ink)}
+    ${code(59,350,'git status',c.pale,19)}${code(59,380,'git diff',c.paper,19)}
+    ${panel(279,274,201,127,'Git 변경 비교')}
+    ${text(298,350,'− 이전 문장',20,c.red)}${text(298,381,'+ 수정 문장',20,c.teal)}
+    ${panel(509,274,208,127,'GitHub 원격')}
+    ${text(525,350,'마지막 push 내용',18,c.muted)}${text(525,382,'저장만으론 그대로',17,c.muted)}
+    ${emphasis(p,rect(289,319,181,74,'none',6,c.teal,2.5))}
+    ${pill(215,424,330,'저장 · 커밋 · push는 별도',c.pale,19)}
+  `, '문서·미리보기·변경·원격을 차례로 살펴봅니다');
 }
 
 function htmlCardPractice() {
@@ -468,7 +475,7 @@ export const webSectionScenes = {
   'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'입체 키캡의 파일 이름 검색과 프로젝트 내용 검색을 서로 다른 결과에 연결하고 명령 팔레트의 기능 검색을 구분합니다.',svg:vscodeFinding()},
   'tools-shortcuts-practice': {title:'편집기 단축키를 직접 연습하기',description:'키보드의 조작이 편집기의 찾기와 이동, 편집과 저장, 화면과 터미널의 변화로 이어지는 과정을 확인합니다. VS Code에서 실습하고 PyCharm 키맵과 비교합니다.',svg:sharedShortcutPractice()},
   'tools-pycharm': {title:'Python용 PyCharm과 VS Code 키맵의 역할',description:'PyCharm에서 실행할 Python과 작업 폴더를 고르는 설정, 익숙한 단축키를 연결하는 키맵을 두 갈래로 분리합니다.',svg:pycharmEnvironment()},
-  'codex-context': {title:'통합 터미널·Git·GitHub·Markdown을 한 흐름으로 보기',description:'하나의 프로젝트 작업대를 중심으로 README·PowerShell·Git 변경 비교·GitHub를 연결해 같은 작업의 맥락을 확인합니다.',svg:integratedWorkbench()},
+  'codex-context': {title:'README 한 줄 수정으로 VS Code·Git·GitHub 연결하기',description:'같은 README를 수정하고 Markdown 미리보기와 통합 터미널, Git 변경 비교를 확인한 뒤 마지막으로 push된 GitHub 원격 문서와 비교합니다.',svg:integratedWorkbench()},
   'tools-html': {title:'HTML: 강의 카드의 내용과 구조 만들기',description:'VS Code에서 작성하는 index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',svg:htmlCardPractice()},
   'tools-css': {title:'CSS: 같은 카드에 색과 여백 더하기',description:'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',svg:cssCardPractice()},
   'tools-javascript': {title:'JavaScript: 버튼으로 설명 표시하기',description:'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',svg:javascriptCardPractice()},

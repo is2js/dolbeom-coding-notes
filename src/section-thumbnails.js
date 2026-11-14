@@ -41,7 +41,7 @@ const scenes = {
   'tools-vscode': window(15,20,123,72,box(29,43,92,24,'#e0ebd8')+path('M38 53h44')+`<circle cx="103" cy="54" r="6" fill="none"/>`+path('M108 59l7 7')),
   'tools-shortcuts-practice': box(10,30,75,43,cream,6)+[0,1,2].map(r=>[0,1,2,3,4].map(c=>box(17+c*13,36+r*10,9,7,r===1&&c===1?sage:'#fffdf6',2)).join('')).join('')+arrow(89,51,13)+window(108,24,40,56,path('M116 48h22m-22 9h18m-18 9h22',teal,2)),
   'tools-pycharm': window(13,20,91,67,path('M25 45l9 7-9 7m23-14-9 14',teal,3))+box(86,60,58,27,gold)+label(95,79,'Ctrl',14),
-  'codex-context': window(16,16,123,78,path('M54 30v64m0-24h85')+folder(24,41,22,17)+path('M66 45h47m-47 10h32')+label(65,86,'&gt;_',16)),
+  'codex-context': page(9,23,label(16,51,'#',18)+path('M18 59h20',teal,3))+arrow(57,51,12)+window(76,24,72,59,box(84,44,27,11,'#efd3c9',2)+box(114,44,25,11,sage,2)+path('M85 66h54',teal,3)),
   'tools-html': window(16,21,123,68,label(28,58,'&lt;h1&gt;',19)+box(94,44,31,27,sage)),
   'tools-css': window(16,21,123,68,box(34,43,88,32,sage)+box(46,52,64,14,cream,3))+path('M27 43v32m-3-32h6m-6 32h6',teal,2),
   'tools-javascript': window(16,21,123,68,box(29,43,46,26,gold)+path('M83 55h13m-5-5 5 5-5 5',teal,3)+box(101,45,24,22,sage))+dot(44,57,4,teal),

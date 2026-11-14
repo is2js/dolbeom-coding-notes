@@ -1,4 +1,4 @@
-export const COURSE_IDS = ['terminal', 'git', 'github', 'markdown', 'ide', 'web', 'templates'];
+export const COURSE_IDS = ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web', 'templates'];
 export const SCENES = ['terminal', 'vscode', 'pycharm', 'browser', 'code', 'git', 'architecture'];
 export const SECTION_ILLUSTRATIONS = ['web-architecture', 'server-rendering'];
 const isObject = value => value && typeof value === 'object' && !Array.isArray(value);
@@ -28,7 +28,7 @@ export function validateCourse(course) {
   str(course.title, '강의 제목'); str(course.subtitle, '부제'); str(course.author, '작성자');
   assert(Array.isArray(course.lessons) && course.lessons.length === COURSE_IDS.length, `${COURSE_IDS.length}개의 강의가 모두 포함되어야 합니다.`);
   unique(course.lessons, '강의');
-  assert(COURSE_IDS.every(id => course.lessons.some(l => l.id === id)), '강의 ID가 기본 7개 주제와 다릅니다.');
+  assert(COURSE_IDS.every(id => course.lessons.some(l => l.id === id)), `강의 ID가 기본 ${COURSE_IDS.length}개 주제와 다릅니다.`);
   for (const [index, lesson] of course.lessons.entries()) {
     assert(lesson.number === index + 1, '강의 번호가 현재 주제 순서와 다릅니다. 순서대로 번호를 정리해 주세요.');
     str(lesson.title, '강의 제목'); str(lesson.shortTitle, '짧은 제목'); str(lesson.subtitle, '강의 부제');

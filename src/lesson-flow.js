@@ -1,4 +1,5 @@
 import { resolveLessonAlias } from './course-storage.js';
+import { resolveMovedSection } from './moved-sections.js';
 
 // Relationships are authored by stable IDs. Titles and array positions are editable.
 // An unrecognized section deliberately has no suggested demonstration.
@@ -40,6 +41,11 @@ const relatedStepIds = {
     'tools-css': ['css-practice'],
     'tools-javascript': ['javascript-practice'],
   },
+  'web-coding': {
+    'tools-html': ['html-practice'],
+    'tools-css': ['css-practice'],
+    'tools-javascript': ['javascript-practice'],
+  },
   web: {
     'web-map': ['web-01', 'web-server-process'],
     'web-http': ['web-02', 'web-05', 'web-09', 'web-10', 'web-04'],
@@ -73,11 +79,15 @@ export function parseLessonRoute(hash, course, fallbackLessonId) {
   // Invalid extra segments reset the page, while a valid topic can still be kept.
   const route = hash.match(/^#\/lesson(?:\/([a-z0-9_-]+)(?:\/([a-z0-9_-]+))?)?$/);
   const requestedId = route?.[1] || hash.match(/^#\/lesson\/([a-z0-9_-]+)(?:\/|$)/)?.[1];
-  const requestedLesson = lessons.find(lesson => lesson.id === resolveLessonAlias(requestedId));
+  let requestedLesson = lessons.find(lesson => lesson.id === resolveLessonAlias(requestedId));
+  const requestedPage = requestedLesson ? route?.[2] : undefined;
+  if (requestedLesson && requestedPage?.startsWith('section-')) {
+    const target = resolveMovedSection(course, requestedLesson.id, requestedPage.slice(8));
+    requestedLesson = lessons.find(lesson => lesson.id === target) || requestedLesson;
+  }
   const lesson = requestedLesson
     || lessons.find(item => item.id === resolveLessonAlias(fallbackLessonId)) || lessons[0];
   if (!lesson) return null;
-  const requestedPage = requestedLesson ? route?.[2] : undefined;
   const pageId = buildLessonFlow(lesson).some(page => page.id === requestedPage) ? requestedPage : 'case';
   return { lessonId: lesson.id, pageId };
 }

@@ -1,3 +1,5 @@
+import { resolveMovedSection } from './moved-sections.js';
+
 export const SESSION_KEY = 'dolbeom.presentation.v1';
 
 const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -54,7 +56,9 @@ export function getPresentation(lesson) {
 function normalizeLocation(course, lessonId, pageId) {
   const lessons = Array.isArray(course?.lessons) ? course.lessons : [];
   if (!lessons.length) return null;
-  const lesson = lessons.find(item => item.id === lessonId) || lessons[0];
+  const sectionId = typeof pageId === 'string' && pageId.startsWith('section-') ? pageId.slice(8) : '';
+  const destination = resolveMovedSection(course, lessonId, sectionId);
+  const lesson = lessons.find(item => item.id === destination) || lessons[0];
   const pages = buildPresentationPages(lesson);
   return {
     lessonId: lesson.id,

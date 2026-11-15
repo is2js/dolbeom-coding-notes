@@ -356,23 +356,18 @@ function localAndRemote() {
 
 function webResponsibilities() {
   const p='sa-web-http';
-  return frame(p,'npm 명령이 개발 서버를 켭니다',`
-    ${panel(46,111,227,282,'터미널',c.ink)}
-    ${code(64,190,'npm install',c.pale,20)}
-    ${code(64,241,'npm run dev',c.paper,20)}
-    ${text(64,309,'안내된 명령',20,c.paper)}
-    ${arrow(p,282,244,315,244)}
-    ${panel(326,111,188,282,'package.json',c.pale)}
-    ${code(343,207,'"dev":',c.ink,20)}
-    ${code(343,245,'"vite"',c.teal,22)}
-    ${text(343,311,'프로젝트 설정',19,c.muted)}
-    ${arrow(p,524,244,551,244,{delay:1})}
-    ${panel(562,140,157,224,'개발 서버',c.cream)}
-    ${text(582,227,'Vite',27,c.ink)}
-    ${text(582,265,'화면 파일',20,c.muted)}
-    ${emphasis(p,check(676,322))}
-    ${pill(134,422,491,'스크립트 이름은 프로젝트마다 다릅니다',c.pale,20)}
-  `,'명령의 뜻은 package.json에서 확인합니다');
+  return frame(p,'화면 확인: Live Server와 Vite',`
+    ${panel(46,116,309,263,'Live Server',c.pale)}
+    ${text(67,202,'VS Code 확장',25,c.ink)}
+    ${text(67,251,'정적 파일 제공',22,c.muted)}
+    ${text(67,297,'저장 후 화면 갱신',21,c.muted)}
+    ${emphasis(p,check(318,335))}
+    ${panel(405,116,309,263,'Vite · 개발 도구',c.cream)}
+    ${code(427,204,'npm run dev',c.teal,22)}
+    ${text(427,251,'모듈 · 패키지 처리',21,c.muted)}
+    ${text(427,297,'프로젝트별 설정',21,c.muted)}
+    ${pill(155,415,450,'이번 카드 실습: Live Server',c.pale,21)}
+  `,'프로젝트에 필요한 도구를 확인해 사용합니다');
 }
 
 function serverToBrowser() {
@@ -381,7 +376,7 @@ function serverToBrowser() {
     ${panel(48,118,252,262,'내 브라우저',c.pale)}
     ${rect(70,185,209,152,c.paper,8)}${text(89,228,'Git',30)}
     ${rect(89,249,137,41,c.cream,6,c.teal,2)}${text(158,277,'설명 보기',20,c.ink,'middle')}
-    ${server(501,162,135,170)}${text(568,129,'개발 서버',24,c.ink,'middle')}
+    ${server(501,162,135,170)}${text(568,129,'Live Server',24,c.ink,'middle')}
     ${arrow(p,312,185,483,185)}${text(395,163,'파일 요청',21,c.teal,'middle')}
     ${arrow(p,483,269,312,269,{orange:true,delay:1})}
     ${text(397,305,'HTML · CSS · JS',19,c.orange,'middle')}
@@ -410,17 +405,18 @@ function htmlJsonCard() {
 function pythonDictionaryApi() {
   const p='sa-backend-python';
   return frame(p,'Python 딕셔너리와 JSON 응답',`
-    ${panel(45,105,282,289,'FastAPI · Python',c.pale)}
+    ${panel(45,105,282,289,'FastAPI · :8000',c.pale)}
     ${code(66,186,'{ "title": "Git" }',c.ink,21)}
     ${pill(65,228,239,'Python 딕셔너리',c.cream,20)}
     ${code(66,320,'/api/dict',c.teal,21)}
     ${arrow(p,338,250,389,250)}
-    ${panel(402,105,314,289,'브라우저 · fetch')}
+    ${panel(402,105,314,289,'브라우저 · :8000')}
     ${text(424,190,'JSON 응답을 읽기',23,c.ink)}
     ${rect(424,218,269,134,c.pale,7,c.teal,2)}
     ${text(446,258,'Git',28)}
     ${lines(446,280,[202,147,185],c.sage,16,5)}
     ${emphasis(p,check(658,319))}
+    ${pill(156,417,449,'화면과 API 모두 FastAPI 주소',c.pale,21)}
   `,'서버의 Python 데이터가 JSON 응답으로 전달됩니다');
 }
 
@@ -448,12 +444,12 @@ function sqliteApi() {
 function templateEngines() {
   const p='sa-web-jinja';
   return frame(p,'서버 템플릿에 데이터 넣기',`
-    ${panel(48,111,239,287,'서버 · 데이터',c.pale)}
+    ${panel(48,111,239,287,'FastAPI · DB',c.pale)}
     ${code(67,183,'title: Git',c.teal,23)}
     ${pill(66,226,202,'딕셔너리 / DB',c.cream,20)}
     ${text(66,321,'카드 목록',22,c.muted)}
     ${arrow(p,294,249,326,249)}
-    ${panel(336,111,177,287,'Jinja2')}
+    ${panel(336,111,177,287,'Jinja2 · 서버')}
     ${code(352,183,'{{ lesson.',c.teal,18)}
     ${code(352,207,'title }}',c.teal,18)}
     ${text(352,255,'반복 · 결합',20,c.ink)}
@@ -463,6 +459,7 @@ function templateEngines() {
     ${rect(578,184,122,144,c.paper,7,c.teal,2)}
     ${text(592,229,'Git',26)}${lines(592,249,[91,72],c.sage,17,5)}
     ${emphasis(p,check(678,310))}
+    ${pill(167,420,426,'FastAPI 주소에서 HTML 제공',c.pale,20)}
   `,'Jinja2가 만든 HTML을 브라우저가 화면에 표시합니다');
 }
 
@@ -553,12 +550,12 @@ export const webSectionScenes = {
   'tools-css': {title:'CSS: 같은 카드에 색과 여백 더하기',description:'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',svg:cssCardPractice()},
   'tools-javascript': {title:'JavaScript: 버튼으로 설명 표시하기',description:'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',svg:javascriptCardPractice()},
   'web-map': {title:'프론트엔드란? 브라우저에서 보이고 움직이는 화면',description:'HTML의 내용, CSS의 모양과 JavaScript의 동작이 브라우저의 강의 카드 화면에 나타나는 과정을 보여 줍니다.',svg:localAndRemote()},
-  'web-http': {title:'AI가 안내한 npm install과 npm run dev 읽기',description:'터미널에서 npm 명령을 실행하고 package.json의 dev 스크립트가 Vite 개발 서버를 시작하는 예시를 구분합니다. 스크립트 설정은 프로젝트마다 다릅니다.',svg:webResponsibilities()},
-  'web-html': {title:'브라우저와 서버: 화면 요청과 백엔드의 역할',description:'내 브라우저가 개발 서버에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 브라우저에서 표시하고 실행합니다.',svg:serverToBrowser()},
+  'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'이번 정적 카드 실습의 VS Code Live Server와 프로젝트에 따라 쓰는 Vite 개발 도구를 비교합니다. npm run dev의 실제 동작은 각 프로젝트 설정에 따라 다릅니다.',svg:webResponsibilities()},
+  'web-html': {title:'브라우저와 서버: 화면 요청과 백엔드의 역할',description:'내 브라우저가 Live Server에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 브라우저에서 표시하고 실행합니다.',svg:serverToBrowser()},
   'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
-  'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'FastAPI의 Python 딕셔너리 목록을 JSON 응답으로 보내고 브라우저의 fetch가 이를 읽어 같은 카드에 표시합니다.',svg:pythonDictionaryApi()},
+  'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'같은 FastAPI 주소에서 정적 화면과 API를 제공하고 Python 딕셔너리 목록을 JSON으로 보내 브라우저가 fetch로 읽습니다.',svg:pythonDictionaryApi()},
   'backend-sqlite': {title:'SQLite 데이터베이스의 카드 가져오기',description:'FastAPI가 SQLite 데이터베이스의 행을 조회해 JSON으로 응답하고 브라우저가 카드에 표시합니다.',svg:sqliteApi()},
-  'web-jinja': {title:'Jinja2 템플릿에 DB 데이터 넣기',description:'FastAPI의 데이터와 Jinja2 템플릿을 서버에서 결합해 HTML을 만들고 브라우저가 화면으로 표시합니다.',svg:templateEngines()},
+  'web-jinja': {title:'Jinja2 템플릿에 DB 데이터 넣기',description:'FastAPI가 DB 데이터와 Jinja2 템플릿을 서버에서 결합해 같은 서버 주소로 HTML을 제공하고 브라우저가 화면으로 표시합니다.',svg:templateEngines()},
   'frontend-css': {title:'같은 강의 카드에 Tailwind CSS 적용하기',description:'CSS 속성과 Tailwind 유틸리티 클래스가 같은 카드의 안쪽 여백과 둥근 모서리를 표현하는 방법을 비교합니다.',svg:cardLayers()},
   'frontend-alpine': {title:'같은 버튼 동작을 Alpine.js로 바꾸기',description:'클릭 이벤트가 open 상태를 바꾸고 x-show가 설명 표시를 연결하는 흐름을 x-data·@click·x-show의 삼각 상태 그래프로 나타냅니다.',svg:alpineStateGraph()},
   'codex-bonus': {title:'보충: 다음 작업에 재사용할 요청 카드',description:'재사용 요청 카드의 문제·맥락·보존 조건·검증 구획을 실제 프로젝트 정보로 바꾸어 다음 요청으로 옮깁니다.',svg:reusablePrompt()},

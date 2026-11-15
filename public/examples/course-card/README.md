@@ -13,7 +13,7 @@
 7. `template-preview.html`: GitHub Pages에서도 볼 수 있는 정적 비교 화면입니다. 직접 작성한 CSS·JavaScript와 Tailwind·Alpine 카드를 나란히 눌러 보고 코드도 펼쳐 볼 수 있습니다. Git 제목은 HTML에 미리 들어 있으므로 서버 템플릿을 실제로 실행한 결과는 아닙니다. `p-6`은 Tailwind 기본 테마와 브라우저의 기본 16px 글자 크기에서 24px입니다.
 8. `server/`: FastAPI가 전달한 데이터를 Jinja2가 HTML로 만들고 Tailwind와 Alpine이 브라우저에서 적용되는 독립 실행 예제입니다.
 
-`01-html`부터 `03-javascript`까지는 브라우저에서 HTML 파일을 직접 열 수 있습니다. VS Code에서 수정한 뒤 저장하고 브라우저를 새로고침합니다. 선택적으로 사전 설치한 Live Server 확장에서 HTML 파일을 우클릭해 **Open with Live Server**를 선택할 수 있습니다. Live Server는 별도 확장이고 FastAPI 백엔드를 실행하지 않습니다.
+`01-html`부터 `03-javascript`까지는 브라우저에서 HTML 파일을 직접 열 수 있습니다. 수업에서는 VS Code의 Live Server 확장에서 HTML 파일을 우클릭해 **Open with Live Server**를 선택하고 저장한 변화를 확인합니다. 확장이 없으면 파일을 직접 열고 저장 후 새로고침해도 됩니다. Live Server는 별도 확장이고 FastAPI 백엔드를 실행하지 않습니다.
 
 ## 작업 흐름
 

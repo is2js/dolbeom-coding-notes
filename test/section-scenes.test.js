@@ -29,6 +29,20 @@ test('data lessons distinguish JSON in HTML, FastAPI dictionary, SQLite and serv
   assert.match(jinja.svg,/HTML 생성/);
 });
 
+test('frontend and backend illustrations distinguish the server used in each step',()=>{
+  const compare = sectionScenes['web-http'];
+  assert.match(compare.svg, /Live Server/);
+  assert.match(compare.svg, /Vite/);
+  assert.match(compare.svg, /이번 카드 실습: Live Server/);
+  assert.match(compare.description, /프로젝트 설정/);
+  assert.match(sectionScenes['web-html'].svg, /Live Server/);
+  const api = sectionScenes['backend-python'];
+  assert.match(api.svg, /FastAPI · :8000/);
+  assert.match(api.svg, /브라우저 · :8000/);
+  assert.match(api.svg, /화면과 API 모두 FastAPI 주소/);
+  assert.match(sectionScenes['web-jinja'].svg, /FastAPI 주소에서 HTML 제공/);
+});
+
 test('shortcut practice links keyboard actions to visible editor results',()=>{
   const scene = sectionScenes['tools-shortcuts-practice'];
   assert.match(scene.description, /VS Code.*PyCharm/);

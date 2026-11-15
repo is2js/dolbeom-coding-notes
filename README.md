@@ -175,7 +175,7 @@ JSON을 가져오거나 파일 버전을 불러오는 동안에는 입력을 잠
 | 8 | 프론트엔드와 개발 서버 | 30분 |
 | 9 | HTML JSON·FastAPI·SQLite·Jinja | 55분 |
 
-실제 Codex 사례와 수업용 예시를 구분합니다. 같은 카드에서 HTML·CSS·JavaScript를 익힌 뒤 Tailwind·Alpine으로 비교합니다. 프론트엔드에서는 npm 개발 서버를 설명하고, 데이터·백엔드에서는 HTML JSON → Python 딕셔너리 API → SQLite API → Jinja 템플릿 순서로 진행합니다.
+실제 Codex 사례와 수업용 예시를 구분합니다. 같은 카드에서 HTML·CSS·JavaScript를 익힌 뒤 Tailwind·Alpine으로 비교합니다. 카드는 VS Code Live Server로 실습하며, 프론트엔드에서는 Vite와 npm 명령을 사례로 설명하고, 데이터·백엔드에서는 HTML JSON → Python 딕셔너리 API → SQLite API → Jinja 템플릿 순서로 진행합니다.
 
 절별 예상 시간에는 사례 소개·설명·시연·정리가 포함됩니다. 첫 강의에는 목표 화면 설명도 포함됩니다. 보충 절은 별도로 집계합니다. 편집기에서 각 시간을 바꾸면 본편 합계가 다시 계산됩니다. 예상 분량은 강사가 촬영·편집할 때 참고하는 값이며 영상·음성 파일은 포함하지 않습니다.
 

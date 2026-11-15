@@ -1,6 +1,7 @@
 import { safeRead } from './course.js';
 import { previousIdeDefault } from './previous-ide-default.js';
 import { previousEightDefault, previousEightCourseMetadata } from './previous-eight-default.js';
+import { previousNineDefault } from './previous-nine-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -147,6 +148,27 @@ function mergeLesson(current, previous, latest) {
   return result;
 }
 
+// Keep nine-topic browser edits and ordering while adopting updated explanations
+// only where a field still matches the previous published default.
+export function upgradeNineDefaults(value, baseCourse) {
+  if (!Array.isArray(value?.lessons) || value.lessons.length !== 9 || !Array.isArray(baseCourse?.lessons)) return value;
+  let updated = null;
+  for (const id of ['web-coding', 'web', 'templates']) {
+    const index = value.lessons.findIndex(item => item?.id === id);
+    const current = value.lessons[index];
+    const latest = baseCourse.lessons.find(item => item?.id === id);
+    const previous = previousNineDefault[id];
+    if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
+        || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;
+    const merged = mergeLesson(current, previous, latest);
+    if (!equal(current, merged)) {
+      updated ||= clone(value);
+      updated.lessons[index] = merged;
+    }
+  }
+  return updated || value;
+}
+
 export function migrateEightCourse(value, baseCourse) {
   const lessons = value?.lessons;
   const toolDefault = baseCourse?.lessons?.find(lesson => lesson?.id === 'web-tools');
@@ -196,7 +218,7 @@ export function migrateEightCourse(value, baseCourse) {
 }
 
 export function migrateCourse(value, baseCourse) {
-  return migrateEightCourse(migrateSevenCourse(value, baseCourse), baseCourse);
+  return upgradeNineDefaults(migrateEightCourse(migrateSevenCourse(value, baseCourse), baseCourse), baseCourse);
 }
 const LEGACY_IDS = ['terminal', 'tools', 'web', 'frontend', 'git', 'codex'];
 function isLegacyDraft(value) {
@@ -221,8 +243,8 @@ export function readCourseDrafts(storage, { local = false, baseCourse = null } =
   const previousRecoveryEntry = eightRecovery || oldRecovery;
   const migratedSaved = previousSavedCourse && migrateCourse(previousSavedCourse, baseCourse);
   const migratedRecoveryCourse = previousRecoveryEntry?.course && migrateCourse(previousRecoveryEntry.course, baseCourse);
-  const upgradedSaved = currentSaved && upgradeCourseDefaults(currentSaved, baseCourse);
-  const upgradedRecoveryCourse = currentRecovery?.course && upgradeCourseDefaults(currentRecovery.course, baseCourse);
+  const upgradedSaved = currentSaved && upgradeNineDefaults(upgradeCourseDefaults(currentSaved, baseCourse), baseCourse);
+  const upgradedRecoveryCourse = currentRecovery?.course && upgradeNineDefaults(upgradeCourseDefaults(currentRecovery.course, baseCourse), baseCourse);
   const migratedFromSeven = !!((oldSaved && migratedSaved !== oldSaved) || (oldRecovery?.course && migratedRecoveryCourse !== oldRecovery.course));
   const migratedFromEight = !!((eightSaved && migratedSaved !== eightSaved) || (eightRecovery?.course && migratedRecoveryCourse !== eightRecovery.course));
   return {

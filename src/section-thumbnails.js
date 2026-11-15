@@ -47,7 +47,7 @@ const scenes = {
   'tools-javascript': window(16,21,123,68,box(29,43,46,26,gold)+path('M83 55h13m-5-5 5 5-5 5',teal,3)+box(101,45,24,22,sage))+dot(44,57,4,teal),
   'tools-bonus': window(15,20,123,70,box(27,44,47,29,sage)+label(34,64,'env',15)+path('M91 44l20 13-20 13Z',teal,3)),
   'web-map': page(11,24,label(19,56,'&lt;/&gt;',13))+arrow(62,53,17)+window(90,25,56,60,box(101,45,34,22,sage,3)+path('M101 73h30',teal,3)),
-  'web-http': window(9,27,48,55,label(18,61,'&gt;_',15))+arrow(61,54,12)+page(78,25,label(84,57,'{}',15))+arrow(126,54,10)+dot(143,54,7,gold),
+  'web-http': window(10,24,60,61,box(18,44,42,27,sage,3)+path('M25 54h27m-27 8h19',teal,2))+window(91,24,59,61,label(99,59,'&gt;_',14),cream)+path('M76 40v30',teal,2)+check(47,76),
   'web-html': window(12,31,62,49,box(24,52,34,18,sage,3))+server(109,25)+arrow(78,42,23)+path('M101 66H78m6-5-6 5 6 5',teal,3),
   'backend-html-json': page(10,25,label(19,59,'{}',20))+arrow(62,54,19)+window(92,26,52,57,box(102,46,32,21,sage,3)+path('M102 74h26',teal,3)),
   'backend-python': server(13,23)+box(62,33,31,38,cream,3)+label(67,58,'{}',15)+arrow(97,54,12)+window(117,28,31,51,box(124,48,17,17,sage,3)),

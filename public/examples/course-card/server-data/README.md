@@ -13,6 +13,8 @@ Tailwind CSS는 모양, Alpine.js는 브라우저에서 카드 표시와 버튼 
 
 `static/01-local-json.html`을 브라우저로 엽니다. 같은 폴더의 `course.css`와 `alpine.js`가 함께 있어야 합니다. VS Code에서 HTML 안 `lesson-data`의 Git 제목을 바꾸어 저장하고 브라우저를 새로고침합니다. 데이터가 HTML 안에 들어 있고, `JSON.parse`가 문자열을 브라우저에서 다룰 수 있는 배열로 바꿉니다. 이 단계에 Python이나 Node 서버는 필요하지 않습니다.
 
+VS Code의 Live Server 확장이 있다면 해당 파일을 우클릭해 **Open with Live Server**를 선택해도 됩니다. 단순 정적 페이지를 제공하고 저장 후 브라우저를 새로고침하는 도구입니다.
+
 ## 2. FastAPI 준비와 Python 데이터
 
 `server-data` 폴더를 통째로 별도의 연습 위치에 복사하고 VS Code에서 폴더를 엽니다. Python 3.10 이상이 없다면 [Python Windows 설치 안내](https://docs.python.org/3/using/windows.html)를 확인해 설치합니다. 패키지 설치 시 인터넷이 필요합니다.
@@ -37,6 +39,8 @@ py -3 -m venv .venv
 `py`가 없다면 설치한 Python 실행 이름과 버전을 확인합니다. `main:app`은 `main.py`에 만든 `app`이며 `127.0.0.1`은 내 컴퓨터를 가리킵니다. 서버 종료는 실행 중인 터미널에서 `Ctrl+C`입니다. 포트 8000을 이미 사용 중이면 서버와 브라우저 주소에서 같은 다른 포트를 선택합니다.
 
 브라우저에서 [Python 데이터 카드](http://127.0.0.1:8000/static/02-dict-api.html)를 열고, 별도 탭에서 [Python 데이터 JSON 응답](http://127.0.0.1:8000/api/dict)을 살펴봅니다. `sample_data.py`에는 Python 리스트 안에 카드별 딕셔너리가 있습니다. FastAPI가 Python 데이터를 JSON 응답으로 만들고, HTML이 `fetch('/api/dict')`로 받아 카드를 채웁니다. Python 파일을 수정했다면 이 예제의 서버를 중지·재시작한 뒤 새로고침합니다.
+
+**이 단계부터는 FastAPI 주소를 사용합니다.** 예를 들어 Live Server가 `:5500`에서 화면을 열면 `fetch('/api/dict')`도 `:5500`으로 요청하므로 `:8000`의 FastAPI에 닿지 않습니다. 이 예제는 FastAPI가 `/static`의 HTML·CSS·JavaScript와 `/api` 데이터를 함께 제공하므로 Live Server가 별도로 필요하지 않습니다. 혼동을 줄이려면 Live Server를 종료해도 되지만, 다른 포트로 실행 중이라면 반드시 종료할 필요는 없습니다. 두 서버를 나눠 연결하는 프로젝트는 별도 설정이 필요할 수 있습니다.
 
 ## 3. SQLite 준비와 카드 표시
 

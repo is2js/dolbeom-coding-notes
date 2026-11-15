@@ -25,6 +25,14 @@ test('new web coding subject uses a distinct locally rendered thumbnail', () => 
   assert.doesNotMatch(svg, /\bid=|<script|<foreignObject|<image|(?:href|src)=["'](?:https?:|data:)/);
 });
 
+test('Tailwind and Alpine have their own topic thumbnail', () => {
+  const svg=topicThumbnail('web-tools');
+  assert.match(svg,/data-topic-thumbnail="web-tools"/);
+  assert.notEqual(svg,topicThumbnail('web-coding'));
+  assert.notEqual(svg,topicThumbnail('web'));
+  assert.doesNotMatch(svg,/\bid=|<script|<foreignObject|<image|(?:href|src)=["'](?:https?:|data:)/);
+});
+
 test('the same step buttons follow stable IDs in lecture and presentation without editing content', () => {
   const calls=[];
   const section={id:'custom-section',title:'강사가 바꾼 제목'};

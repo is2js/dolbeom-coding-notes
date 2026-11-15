@@ -482,8 +482,8 @@ test('lesson ordering renumbers array positions while preserving all topic and c
   const original = editor.activeLesson;
   const ids = editor.working.lessons.map(lesson => lesson.id).sort();
   editor.moveLesson(1, -1);
-  assert.deepEqual(editor.working.lessons.map(lesson => lesson.id), ['git', 'terminal', 'github', 'markdown', 'ide', 'web-coding', 'web', 'templates']);
-  assert.deepEqual(editor.working.lessons.map(lesson => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8]);
+  assert.deepEqual(editor.working.lessons.map(lesson => lesson.id), ['git', 'terminal', 'github', 'markdown', 'ide', 'web-coding', 'web-tools', 'web', 'templates']);
+  assert.deepEqual(editor.working.lessons.map(lesson => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
   assert.deepEqual(editor.working.lessons.map(lesson => lesson.id).sort(), ids);
   assert.equal(editor.activeLesson, original);
   assert.equal(editor.lessonId, 'git');

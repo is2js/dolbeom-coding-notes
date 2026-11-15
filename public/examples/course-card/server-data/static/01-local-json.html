@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>나의 강의 카드</title>
+  <link rel="stylesheet" href="./course.css">
+  <script defer src="./alpine.js"></script>
+  <style>[x-cloak] { display: none !important; }</style>
+</head>
+<body class="bg-stone-100 text-slate-800">
+  <script type="application/json" id="lesson-data">
+  [
+    {"title": "윈도우 터미널", "minutes": 30, "description": "폴더를 확인하고 탐색기와 오갑니다."},
+    {"title": "Git", "minutes": 25, "description": "변경을 확인하고 기록합니다."}
+  ]
+  </script>
+  <main class="mx-auto max-w-3xl p-6"
+        x-data="{ lessons: JSON.parse(document.getElementById('lesson-data').textContent) }">
+    <h1 class="mb-4 text-2xl font-bold">나의 강의 카드</h1>
+    <p>데이터 출처: HTML 안의 JSON</p>
+    <ul class="grid gap-4 md:grid-cols-2">
+      <template x-for="(lesson, index) in lessons" :key="index">
+        <li>
+          <article class="rounded-xl bg-white p-6" x-data="{ open: false }">
+            <h2 class="text-xl font-bold" x-text="lesson.title"></h2>
+            <p><span x-text="lesson.minutes"></span>분</p>
+            <button type="button" class="mt-4 rounded bg-slate-800 px-3 py-2 text-white"
+                    @click="open = !open" :aria-expanded="open">설명 보기</button>
+            <p class="mt-3" x-show="open" x-cloak x-text="lesson.description"></p>
+          </article>
+        </li>
+      </template>
+    </ul>
+  </main>
+</body>
+</html>

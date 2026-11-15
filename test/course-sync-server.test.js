@@ -82,7 +82,7 @@ test('development plugin exposes only the exact endpoint with byte revision and 
   const state = await a.get();
   assert.equal(state.status, 200);
   assert.deepEqual(state.json.course, JSON.parse(fixtureBytes));
-  assert.deepEqual(state.json.course.lessons.map(lesson => lesson.id), ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web', 'templates']);
+  assert.deepEqual(state.json.course.lessons.map(lesson => lesson.id), ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web-tools', 'web', 'templates']);
   assert.equal(state.json.revision, digest(fixtureBytes));
   assert.match(state.json.token, /^[a-f0-9]{64}$/);
   assert.equal(state.headers['cache-control'], 'no-store');
@@ -194,7 +194,7 @@ test('invalid payloads and revision format never write or create snapshots', asy
   await assert.rejects(readdir(f.backups), { code: 'ENOENT' });
 });
 
-test('eight-topic courses can save reordered lessons while preserving stable lesson and content IDs', async t => {
+test('nine-topic courses can save reordered lessons while preserving stable lesson and content IDs', async t => {
   const f = await fixture(t);
   const state = (await f.get()).json;
   const edited = copy(state.course);
@@ -203,8 +203,8 @@ test('eight-topic courses can save reordered lessons while preserving stable les
   const result = await f.put(state, edited);
   assert.equal(result.status, 200);
   const saved = JSON.parse(await readFile(f.source));
-  assert.deepEqual(saved.lessons.map(lesson => lesson.id), ['templates', 'web', 'web-coding', 'ide', 'markdown', 'github', 'git', 'terminal']);
-  assert.deepEqual(saved.lessons.map(lesson => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8]);
+  assert.deepEqual(saved.lessons.map(lesson => lesson.id), ['templates', 'web', 'web-tools', 'web-coding', 'ide', 'markdown', 'github', 'git', 'terminal']);
+  assert.deepEqual(saved.lessons.map(lesson => lesson.number), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
   for (const lesson of saved.lessons) {
     const original = state.course.lessons.find(item => item.id === lesson.id);
     assert.deepEqual(lesson.sections, original.sections);

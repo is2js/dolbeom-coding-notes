@@ -186,7 +186,7 @@ Alpine.data('courseApp', () => ({
       if (!response.ok) throw new Error(`강의 데이터 응답: ${response.status}`);
       this.baseCourse = validateCourse(await response.json());
       this.course = clone(this.baseCourse);
-      const {stored,recovery,legacyDraft,migratedFromSeven,upgradedDefaults} = readCourseDrafts(localStorage,{local:import.meta.env.DEV,baseCourse:this.baseCourse});
+      const {stored,recovery,legacyDraft,migratedFromSeven,migratedFromEight,upgradedDefaults} = readCourseDrafts(localStorage,{local:import.meta.env.DEV,baseCourse:this.baseCourse});
       this.legacyDraft=legacyDraft;
       if (stored) { try { this.course = validateCourse(stored); this.hasDraft = true; } catch { this.notify('저장된 편집본 형식이 달라 기본 콘텐츠로 열었습니다.'); } }
       const saved = safeRead(localStorage, PROGRESS_KEY, []);
@@ -201,7 +201,7 @@ Alpine.data('courseApp', () => ({
       // A migrated saved draft may be the only copy of edits made before the
       // curriculum changed. Reconcile it with the local file instead of silently
       // treating an older clean recovery as permission to overwrite it.
-      const draft = recovery?.dirty ? recovery.course : (!recovery || ((migratedFromSeven || upgradedDefaults) && import.meta.env.DEV)) && stored && !sameCourse(stored,this.baseCourse) ? stored : null;
+      const draft = recovery?.dirty ? recovery.course : (!recovery || ((migratedFromSeven || migratedFromEight || upgradedDefaults) && import.meta.env.DEV)) && stored && !sameCourse(stored,this.baseCourse) ? stored : null;
       if (import.meta.env.DEV) {
         localSync = createLocalCourseSync({
           onState:state=>{ this.syncState=state; },

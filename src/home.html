@@ -52,7 +52,7 @@
   </section>
 
   <section class="intro-path" aria-labelledby="intro-path-title">
-    <div class="intro-section-title"><div><span class="intro-kicker">YOUR LEARNING PATH</span><h2 id="intro-path-title">여덟 주제를 하나의 흐름으로</h2></div><p>사례로 시작해 개념을 익히고,<br>직접 확인하며 이어갑니다.</p></div>
+    <div class="intro-section-title"><div><span class="intro-kicker">YOUR LEARNING PATH</span><h2 id="intro-path-title">아홉 주제를 하나의 흐름으로</h2></div><p>사례로 시작해 개념을 익히고,<br>직접 확인하며 이어갑니다.</p></div>
     <!-- Shared, text-free thumbnails follow stable lesson IDs after reordering. -->
     <div class="intro-topic-cards"><template x-for="(item, index) in course.lessons" :key="item.id"><button type="button" class="intro-topic-card" @click="showLesson(item.id)" :aria-label="String(index + 1) + '강 ' + item.shortTitle + ' · ' + coreMinutes(item) + '분 시작하기'"><span class="lesson-card-number"><span x-text="String(index + 1).padStart(2, '0')"></span><span aria-hidden="true">↗</span></span><span class="topic-thumbnail" aria-hidden="true" x-html="topicThumbnail(item.id)"></span><strong x-text="item.shortTitle"></strong><small x-text="coreMinutes(item) + '분'"></small></button></template></div>
   </section>

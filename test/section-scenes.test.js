@@ -3,16 +3,30 @@ import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,38);
+  assert.equal(Object.keys(sectionScenes).length,41);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,38);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,41);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
+});
+
+test('data lessons distinguish JSON in HTML, FastAPI dictionary, SQLite and server template',()=>{
+  const html=sectionScenes['backend-html-json'];
+  const python=sectionScenes['backend-python'];
+  const sqlite=sectionScenes['backend-sqlite'];
+  const jinja=sectionScenes['web-jinja'];
+  assert.match(html.svg,/JSON\.parse/);
+  assert.match(python.svg,/\/api\/dict/);
+  assert.match(python.description,/Python.*JSON.*브라우저/);
+  assert.match(sqlite.svg,/SQLite/);
+  assert.match(sqlite.svg,/\/api\/sqlite/);
+  assert.match(jinja.svg,/Jinja2/);
+  assert.match(jinja.svg,/HTML 생성/);
 });
 
 test('shortcut practice links keyboard actions to visible editor results',()=>{

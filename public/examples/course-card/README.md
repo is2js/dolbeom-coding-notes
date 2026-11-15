@@ -7,8 +7,11 @@
 1. `01-html/index.html`: 제목·버튼·설명만 있는 HTML. 버튼은 아직 동작하지 않습니다.
 2. `02-css/index.html`: `style.css`를 연결해 24px 여백과 카드 모양을 추가합니다.
 3. `03-javascript/index.html`: `script.js`를 연결해 버튼으로 설명을 펼치고 접습니다.
-4. `template-preview.html`: GitHub Pages에서도 볼 수 있는 정적 비교 화면입니다. 직접 작성한 CSS·JavaScript와 Tailwind·Alpine 카드를 나란히 눌러 보고 코드도 펼쳐 볼 수 있습니다. Git 제목은 HTML에 미리 들어 있으므로 서버 템플릿을 실제로 실행한 결과는 아닙니다. `p-6`은 Tailwind 기본 테마와 브라우저의 기본 16px 글자 크기에서 24px입니다.
-5. `server/`: FastAPI가 전달한 데이터를 Jinja2가 HTML로 만들고 Tailwind와 Alpine이 브라우저에서 적용되는 독립 실행 예제입니다.
+4. `04-tailwind/index.html`·`05-alpine/index.html`: 준비된 로컬 Tailwind CSS·Alpine으로 같은 카드를 비교합니다.
+5. `04-vite-dev/`: 프론트엔드 개발 서버를 이해하는 별도 Vite 예제입니다. 폴더의 README를 따라 별도 복사본에서 실행합니다.
+6. `server-data/static/01-local-json.html`: HTML 안의 JSON을 브라우저에서 읽는 정적 예제입니다. 이어 `server-data/README.md`를 따라 FastAPI의 Python 딕셔너리·SQLite API와 Jinja 템플릿을 확인합니다.
+7. `template-preview.html`: GitHub Pages에서도 볼 수 있는 정적 비교 화면입니다. 직접 작성한 CSS·JavaScript와 Tailwind·Alpine 카드를 나란히 눌러 보고 코드도 펼쳐 볼 수 있습니다. Git 제목은 HTML에 미리 들어 있으므로 서버 템플릿을 실제로 실행한 결과는 아닙니다. `p-6`은 Tailwind 기본 테마와 브라우저의 기본 16px 글자 크기에서 24px입니다.
+8. `server/`: FastAPI가 전달한 데이터를 Jinja2가 HTML로 만들고 Tailwind와 Alpine이 브라우저에서 적용되는 독립 실행 예제입니다.
 
 `01-html`부터 `03-javascript`까지는 브라우저에서 HTML 파일을 직접 열 수 있습니다. VS Code에서 수정한 뒤 저장하고 브라우저를 새로고침합니다. 선택적으로 사전 설치한 Live Server 확장에서 HTML 파일을 우클릭해 **Open with Live Server**를 선택할 수 있습니다. Live Server는 별도 확장이고 FastAPI 백엔드를 실행하지 않습니다.
 
@@ -17,7 +20,7 @@
 - 터미널에서는 별도 연습 폴더의 위치와 파일 목록을 확인합니다. Windows PowerShell에서 `Get-Location` 또는 기본 별칭 `pwd`, `Get-ChildItem` 또는 기본 별칭 `ls`, `Set-Location` 또는 기본 별칭 `cd`를 사용할 수 있습니다. macOS 기본 셸의 `pwd`, `ls`, `cd`는 별도 명령이고 Windows cmd에서는 위치 확인 `cd`, 목록 `dir`, 이동 `cd`를 사용합니다. 이름이 같더라도 옵션과 출력은 다를 수 있습니다.
 - Git은 이 카드와 별개의 **새 빈 연습 폴더**에서 저장소와 .git을 확인하고 메모 파일의 저장·스테이징·커밋을 익힙니다. 버전 1·2의 차이를 비교하고 이전 기록을 본 뒤 main으로 돌아옵니다. 기존 폴더나 사용자 파일은 덮어쓰지 않습니다.
 - GitHub에서의 원격 저장과 clone은 앞 강의에서 만든 `git-practice/note.txt` 저장소로 연습합니다. 이 강의 카드 폴더는 별도 예제이며, 내려받았다고 자동으로 Git 기록이나 원격 연결이 생기지는 않습니다.
-- Markdown에서는 이 README를 읽고, VS Code의 Windows 기본 키 `Ctrl+K` 다음 `V`로 원문과 미리보기를 나란히 확인합니다.
+- Markdown에서는 앞서 만든 `git-practice`의 README를 작성하고, VS Code에서 원문과 미리보기를 확인합니다. 이 파일은 강의 카드 예제의 실행 안내입니다.
 
 ## FastAPI·Jinja2 예제 실행 (선택 실습)
 

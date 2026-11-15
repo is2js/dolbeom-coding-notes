@@ -46,13 +46,20 @@ const relatedStepIds = {
     'tools-css': ['css-practice'],
     'tools-javascript': ['javascript-practice'],
   },
+  'web-tools': {
+    'frontend-css': ['web-03', 'frontend-02', 'frontend-03', 'frontend-04', 'frontend-05'],
+    'frontend-alpine': ['frontend-06', 'frontend-07', 'frontend-08', 'frontend-09', 'codex-04', 'frontend-10', 'codex-10'],
+  },
   web: {
     'web-map': ['web-01', 'web-server-process'],
     'web-http': ['web-02', 'web-05', 'web-09', 'web-10', 'web-04'],
     'web-html': ['web-ssr-handler', 'web-ssr-template', 'web-08', 'web-11'],
   },
   templates: {
-    'web-jinja': ['web-06', 'web-07', 'frontend-01'],
+    'backend-html-json': ['backend-html-json'],
+    'backend-python': ['backend-start'],
+    'backend-sqlite': ['backend-db-init'],
+    'web-jinja': ['web-06', 'web-07', 'frontend-01', 'backend-template'],
     'frontend-css': ['web-03', 'frontend-02', 'frontend-03', 'frontend-04', 'frontend-05', 'frontend-06'],
     'frontend-alpine': ['frontend-07', 'frontend-08', 'frontend-09', 'codex-04', 'frontend-10', 'codex-10'],
   },

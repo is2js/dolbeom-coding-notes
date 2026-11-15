@@ -1,4 +1,4 @@
-export const COURSE_IDS = ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web', 'templates'];
+export const COURSE_IDS = ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web-tools', 'web', 'templates'];
 export const SCENES = ['terminal', 'vscode', 'pycharm', 'browser', 'code', 'git', 'architecture'];
 export const SECTION_ILLUSTRATIONS = ['web-architecture', 'server-rendering'];
 const isObject = value => value && typeof value === 'object' && !Array.isArray(value);

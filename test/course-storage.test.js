@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { COURSE_STORAGE, readCourseDrafts, resolveLessonAlias, migrateSevenCourse, upgradeCourseDefaults } from '../src/course-storage.js';
+import { COURSE_STORAGE, readCourseDrafts, resolveLessonAlias, migrateSevenCourse, migrateCourse, upgradeCourseDefaults } from '../src/course-storage.js';
 import { validateCourse } from '../src/course.js';
 import { previousIdeDefault } from '../src/previous-ide-default.js';
+import { previousEightDefault } from '../src/previous-eight-default.js';
 
 const oldCourse = { schemaVersion: 1, lessons: ['terminal','tools','web','frontend','git','codex'].map(id => ({ id, title: '' })) };
 function storage(entries) {
@@ -126,6 +127,8 @@ test('new-generation and explicitly dismissed drafts do not resurrect old seven-
 test('a realistic old course migrates into the current schema without losing edited HTML', () => {
   const base = JSON.parse(fs.readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
   const previous = structuredClone(base);
+  previous.lessons = previous.lessons.filter(l => l.id !== 'web-tools');
+  for (const id of ['web', 'templates']) previous.lessons[previous.lessons.findIndex(l => l.id === id)] = structuredClone(previousEightDefault[id]);
   const webIndex = previous.lessons.findIndex(l => l.id === 'web-coding');
   const [coding] = previous.lessons.splice(webIndex, 1);
   const ide = previous.lessons.find(l => l.id === 'ide');
@@ -133,7 +136,7 @@ test('a realistic old course migrates into the current schema without losing edi
   ide.steps.push(...coding.steps);
   ide.sections.find(s => s.id === 'tools-html').body += '\n\n나의 수정';
   previous.lessons.forEach((l, i) => { l.number = i + 1; });
-  const migrated = migrateSevenCourse(previous, base);
+  const migrated = migrateCourse(previous, base);
   assert.doesNotThrow(() => validateCourse(migrated));
   assert.match(migrated.lessons.find(l => l.id === 'web-coding').sections.find(s => s.id === 'tools-html').body, /나의 수정/);
 });
@@ -189,11 +192,13 @@ test('custom integration, step, metadata and explicitly edited duration remain u
 test('old seven-topic snapshots get the latest untouched integration after migration', () => {
   const base = JSON.parse(fs.readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
   const draft = olderEightDraft(base);
+  draft.lessons = draft.lessons.filter(l => l.id !== 'web-tools');
+  for (const id of ['web', 'templates']) draft.lessons[draft.lessons.findIndex(l => l.id === id)] = structuredClone(previousEightDefault[id]);
   const coding = draft.lessons.splice(draft.lessons.findIndex(l => l.id === 'web-coding'), 1)[0];
   const ide = draft.lessons.find(l => l.id === 'ide');
   ide.sections.push(...coding.sections); ide.steps.push(...coding.steps); ide.durationMinutes = 65;
   draft.lessons.forEach((l, i) => { l.number = i + 1; });
-  const result = migrateSevenCourse(draft, base);
+  const result = migrateCourse(draft, base);
   assert.equal(result.lessons.find(l => l.id === 'ide').sections.find(s => s.id === 'codex-context').minutes, 7);
   assert.equal(result.lessons.find(l => l.id === 'ide').durationMinutes, 38);
   assert.doesNotThrow(() => validateCourse(result));

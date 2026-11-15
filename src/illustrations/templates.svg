@@ -12,15 +12,15 @@
     <rect x="99" y="144" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
     <rect x="91" y="134" width="224" height="79" rx="10" fill="#dce9cf" stroke="#26334b" stroke-width="3" />
     <text x="109" y="165" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">DATA</text>
-    <text x="110" y="191" font-family="Consolas,monospace" font-size="22" font-weight="650" text-anchor="start" fill="#367d7b" stroke="none">title: "Git"</text>
+    <text x="110" y="191" font-family="Consolas,monospace" font-size="22" font-weight="650" text-anchor="start" fill="#367d7b" stroke="none">dict / SQLite</text>
     <rect x="99" y="251" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
     <rect x="91" y="241" width="224" height="79" rx="10" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
     <text x="109" y="272" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">TEMPLATE</text>
-    <text x="110" y="299" font-family="Consolas,monospace" font-size="24" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">{{ title }}</text>
+    <text x="110" y="299" font-family="Consolas,monospace" font-size="19" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">{{ lesson.title }}</text>
     <rect x="99" y="358" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
     <rect x="91" y="348" width="224" height="79" rx="10" fill="#eddfc4" stroke="#26334b" stroke-width="3" />
-    <text x="109" y="379" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">STYLE + STATE</text>
-    <text x="110" y="407" font-family="Consolas,monospace" font-size="20" font-weight="650" text-anchor="start" fill="#5d746c" stroke="none">class / x-data</text>
+    <text x="109" y="379" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">SERVER</text>
+    <text x="110" y="407" font-family="Consolas,monospace" font-size="20" font-weight="650" text-anchor="start" fill="#5d746c" stroke="none">FastAPI / Jinja2</text>
     <path d="M345 177h26v210h-26" fill="none" stroke="#b9c5ad" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M372 281L428 281" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" />
     <path d="M419 274l9 7-9 7" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />

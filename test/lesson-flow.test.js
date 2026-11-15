@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 28 core sections appear once in case, authored section order, recap flows', () => {
+test('all 31 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,7 +25,7 @@ test('all 28 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 28);
+  assert.equal(total, 31);
 });
 
 test('IDE practice follows essential shortcuts and precedes the integrated workflow', () => {
@@ -77,10 +77,13 @@ test('terminal, README, VS Code and template pages select examples for their own
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-html')), ['html-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-css')), ['css-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-javascript')), ['javascript-practice']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-html')), ['web-ssr-handler', 'web-ssr-template', 'web-08', 'web-11']);
-  assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-web-jinja')), ['web-06', 'web-07', 'frontend-01']);
-  assert.ok(!stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-css')).includes('frontend-08'));
-  assert.ok(stepIds(getRelatedSteps(findLesson('templates'), 'section-frontend-alpine')).includes('frontend-08'));
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-html')), ['web-ssr-handler']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-web-jinja')), ['backend-template']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-tools'), 'section-frontend-css')), ['frontend-02', 'frontend-03']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-tools'), 'section-frontend-alpine')), ['frontend-06', 'frontend-08']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-backend-html-json')), ['backend-html-json']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-backend-python')), ['backend-start']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-backend-sqlite')), ['backend-db-init']);
 });
 
 test('old IDE web lesson links follow the moved section without changing old drafts', () => {

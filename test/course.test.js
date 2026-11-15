@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { COURSE_IDS, validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite } from '../src/course.js';
 
 const load = () => JSON.parse(readFileSync(new URL('../public/data/course.json',import.meta.url),'utf8'));
-const canonicalIds = ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web', 'templates'];
+const canonicalIds = ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web-tools', 'web', 'templates'];
 
 test('절의 개념 그림은 선택 사항이며 알려진 그림 ID만 가져올 수 있다',()=>{
   const c=load();const section=c.lessons[0].sections[0];
@@ -16,11 +16,11 @@ test('절의 개념 그림은 선택 사항이며 알려진 그림 ID만 가져�
   }
   delete section.illustrationId;assert.doesNotThrow(()=>validateCourse(c));
 });
-test('기본 강의는 사용자 지정 순서의 8개 주제이며 본편과 보충 분량이 분리된다',()=>{
+test('기본 강의는 사용자 지정 순서의 9개 주제이며 본편과 보충 분량이 분리된다',()=>{
   const c=validateCourse(load());
   assert.deepEqual(COURSE_IDS,canonicalIds);
   assert.deepEqual(new Set(c.lessons.map(l=>l.id)),new Set(canonicalIds));
-  assert.deepEqual(c.lessons.map(l=>l.number),[1,2,3,4,5,6,7,8]);
+  assert.deepEqual(c.lessons.map(l=>l.number),[1,2,3,4,5,6,7,8,9]);
   assert.ok(courseMinutes(c)>0);
   assert.ok(courseMinutes(c,true)>0);
   assert.equal(c.lessons.reduce((sum,l)=>sum+lessonMinutes(l),0),courseMinutes(c));
@@ -30,7 +30,7 @@ test('기본 강의는 사용자 지정 순서의 8개 주제이며 본편과 �
     assert.ok(l.sections.some(s=>!s.optional),`${l.id}: 본편 설명 필요`);
   });
 });
-test('강의 순서를 바꿔도 8개 주제 ID는 유지하며 현재 순서로 번호를 매길 수 있다',()=>{
+test('강의 순서를 바꿔도 9개 주제 ID는 유지하며 현재 순서로 번호를 매길 수 있다',()=>{
   const c=load();
   const originalMinutes=courseMinutes(c);
   const originalOrder=c.lessons.map(l=>l.id);
@@ -46,7 +46,7 @@ test('강의 순서를 바꿔도 8개 주제 ID는 유지하며 현재 순서로
     assert.deepEqual(l.steps.map(s=>s.id),content.get(l.id).steps);
   }
 });
-test('기존 6강 파일과 빠지거나 중복되거나 바뀐 주제 ID는 8강 원본으로 받아들이지 않는다',()=>{
+test('기존 6강 파일과 빠지거나 중복되거나 바뀐 주제 ID는 9강 원본으로 받아들이지 않는다',()=>{
   for(const edit of [
     c=>{c.lessons=c.lessons.slice(0,6);},
     c=>{c.lessons[1].id=c.lessons[0].id;},

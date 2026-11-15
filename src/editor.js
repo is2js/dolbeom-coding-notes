@@ -1,5 +1,5 @@
 import { validateCourse } from './course.js';
-import { migrateSevenCourse } from './course-storage.js';
+import { migrateCourse } from './course-storage.js';
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const uid = (prefix) => `${prefix}-${globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`}`;
@@ -358,7 +358,7 @@ export function createEditor({ getCourse, onApply, onReset, toast, renderMarkdow
         let parsed;
         try { parsed = JSON.parse(await file.text()); }
         catch { throw new Error('JSON 문법을 읽을 수 없습니다. 내보낸 강의 JSON 파일인지 확인해 주세요.'); }
-        const next = validateCourse(migrateSevenCourse(parsed, getCourse()));
+        const next = validateCourse(migrateCourse(parsed, getCourse()));
         // Do not replace the editor's current draft until validation and persistence succeed.
         await onApply(clone(next), { source: 'import' });
         if (importGeneration !== generation) return;

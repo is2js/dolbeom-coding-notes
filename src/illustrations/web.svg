@@ -8,9 +8,8 @@
   <ellipse cx="380" cy="466" rx="280" ry="26" fill="#26334b" opacity=".08" />
   <g stroke-linejoin="round">
     <g stroke="#26334b" stroke-width="2.4">
-      <path d="M387 120v36c0 17 72 17 72 0v-36" fill="#eddfc4" />
-      <ellipse cx="423" cy="120" rx="36" ry="12" fill="#fff9ec" />
-      <path d="M387 138c0 17 72 17 72 0" fill="none" />
+      <rect x="358" y="110" width="103" height="55" rx="7" fill="#fff9ec" />
+      <text x="409" y="144" font-family="Consolas,monospace" font-size="15" text-anchor="middle" fill="#367d7b" stroke="none">package.json</text>
       <path d="M459 151h64v24" fill="none" stroke="#5d746c" stroke-dasharray="5 5" />
     </g>
     <rect x="90" y="51" width="203" height="34" rx="7" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.7" />
@@ -51,12 +50,12 @@
     <path d="M471 328L359 328" fill="none" stroke="#c67f5c" stroke-width="3.6" stroke-linecap="round" />
     <path d="m368 321-9 7 9 7" fill="none" stroke="#c67f5c" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
     <text x="414" y="242" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#367d7b" stroke="none">요청</text>
-    <text x="414" y="361" font-family="Consolas,monospace" font-size="17" font-weight="700" text-anchor="middle" fill="#c67f5c" stroke="none">HTML / JSON</text>
-    <text x="553" y="462" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="middle" fill="#26334b" stroke="none">SERVER</text>
+    <text x="414" y="361" font-family="Consolas,monospace" font-size="15" font-weight="700" text-anchor="middle" fill="#c67f5c" stroke="none">HTML / CSS / JS</text>
+    <text x="553" y="462" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="middle" fill="#26334b" stroke="none">개발 서버</text>
     <g class="art-motion web-response">
       <circle cx="470" cy="328" r="5" fill="#e4b75f" stroke="#fff9ec" stroke-width="2" />
     </g>
     <rect x="473" y="100" width="174" height="34" rx="7" fill="#fff9ec" stroke="#b9c5ad" stroke-width="1.7" />
-    <text x="560" y="123" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">DB는 필요할 때</text>
+    <text x="560" y="123" font-family="Consolas,monospace" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">npm run dev</text>
   </g>
 </svg>

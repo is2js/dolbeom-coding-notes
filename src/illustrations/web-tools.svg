@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-web-tools" aria-hidden="true" focusable="false">
+  <defs><marker id="web-tools-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M2 2L10 6L2 10" fill="none" stroke="#367d7b" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+  <style>.topic-art-web-tools .web-tools-pulse{animation:web-tools-pulse 5.4s ease-in-out infinite}@keyframes web-tools-pulse{0%,15%,100%{opacity:.35}40%,70%{opacity:1}}@media(prefers-reduced-motion:reduce){.topic-art-web-tools .art-motion{animation:none!important}}</style>
+  <ellipse cx="380" cy="459" rx="305" ry="25" fill="#26334b" opacity=".08"/>
+  <g stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="61" y="52" width="211" height="36" rx="8" fill="#dce9cf" stroke="#b9c5ad" stroke-width="2"/>
+    <text x="166" y="76" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="18" font-weight="750" text-anchor="middle" fill="#5d746c" stroke="none">STYLE · INTERACTION</text>
+    <path d="M62 142h239l12 10v271H74l-12-10Z" fill="#b9c7ac"/><rect x="62" y="132" width="239" height="281" rx="10" fill="#fff9ec"/>
+    <path d="M62 175h239" fill="none" stroke="#b9c5ad" stroke-width="2"/>
+    <text x="80" y="160" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">HTML에 더하는 도구</text>
+    <rect x="78" y="198" width="207" height="72" rx="7" fill="#e5eee0" stroke="#a5bda7" stroke-width="2"/>
+    <text x="93" y="225" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">Tailwind CSS</text>
+    <text x="93" y="251" font-family="Consolas,monospace" font-size="18" fill="#367d7b" stroke="none">p-6 · rounded</text>
+    <rect x="78" y="291" width="207" height="83" rx="7" fill="#f6e7c8" stroke="#d7c6a5" stroke-width="2"/>
+    <text x="93" y="321" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">Alpine.js</text>
+    <text x="93" y="348" font-family="Consolas,monospace" font-size="18" fill="#a77638" stroke="none">x-data · @click</text>
+    <path d="M319 269h52" fill="none" stroke="#367d7b" stroke-width="3.4" marker-end="url(#web-tools-arrow)"/>
+    <path d="M683 141l13 9v274l-13 9Z" fill="#bcaa85"/><path d="M386 423l13 10h297l-13-10Z" fill="#eddfc4"/>
+    <rect x="386" y="131" width="297" height="292" rx="10" fill="#fff9ec"/><path d="M386 173h297" fill="none" stroke="#b9c5ad" stroke-width="2"/>
+    <text x="407" y="160" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">같은 강의 카드</text>
+    <rect x="414" y="195" width="240" height="199" rx="10" fill="#dce9cf" stroke="#91ac91" stroke-width="2"/>
+    <text x="437" y="240" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="29" font-weight="700" fill="#26334b" stroke="none">Git</text>
+    <rect x="437" y="256" width="133" height="43" rx="7" fill="#fff9ec" stroke="#367d7b" stroke-width="2"/>
+    <text x="503" y="284" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="19" text-anchor="middle" fill="#26334b" stroke="none">설명 보기</text>
+    <path d="M438 326h180m-180 19h143m-143 19h164" stroke="#87a18b" stroke-width="5" fill="none"/>
+    <path class="art-motion web-tools-pulse" d="M592 279l-5 23 9-6 4 11 7-3-4-11 11-1Z" fill="#e4b75f" stroke-width="2"/>
+  </g>
+  <text x="380" y="507" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="650" text-anchor="middle" fill="#5d746c">모양과 브라우저 동작을 간결하게 표현합니다</text>
+</svg>

@@ -340,57 +340,130 @@ function javascriptCardPractice() {
 
 function localAndRemote() {
   const p='sa-web-map';
-  return frame(p,'서버가 실행되는 컴퓨터 찾기',`
-    ${panel(54,108,295,308,'로컬 · 내 PC',c.pale)}${panel(418,108,288,308,'원격 · 다른 컴퓨터',c.cream)}
-    ${panel(75,180,175,115,'브라우저')}${rect(94,237,137,36,c.pale,4,c.muted,1.7)}
-    ${server(269,232,48,110)}${text(280,381,'서버',22,c.muted,'middle')}
-    ${server(498,186,125,178)}
-    ${arrow(p,257,211,482,211)}${arrow(p,482,252,356,252,{orange:true,delay:1.3})}
-    ${text(382,188,'요청',22,c.teal,'middle')}${text(381,282,'응답',22,c.orange,'middle')}
-    ${text(201,445,'localhost',23,c.muted,'middle')}${text(563,445,'접속 가능한 주소',23,c.muted,'middle')}
-  `,'같은 프로그램도 실행 위치에 따라 주소가 달라집니다');
+  return frame(p,'브라우저가 만드는 화면',`
+    ${panel(45,107,287,301,'화면을 구성하는 파일',c.pale)}
+    ${pill(65,166,247,'HTML · 내용',c.paper,21)}
+    ${pill(65,231,247,'CSS · 모양',c.cream,21)}
+    ${pill(65,296,247,'JavaScript · 동작',c.paper,21)}
+    ${arrow(p,344,254,392,254)}
+    ${panel(405,107,309,301,'브라우저 · 화면')}
+    ${rect(432,174,254,203,c.pale,8,c.teal,2)}
+    ${text(453,219,'Git 강의 카드',25)}${rect(452,241,148,44,c.paper,6,c.teal,2)}
+    ${text(526,270,'설명 보기',20,c.ink,'middle')}${lines(453,307,[205,157,182],c.sage,18,5)}
+    ${emphasis(p,rect(447,236,158,54,'none',7,c.orange,3))}
+  `,'사용자가 보고 누르는 화면이 프론트엔드입니다');
 }
 
 function webResponsibilities() {
   const p='sa-web-http';
-  return frame(p,'화면과 요청 처리의 역할',`
-    ${panel(52,104,279,220,'브라우저')}${text(75,182,'프론트엔드',29)}${text(75,226,'React · Svelte',23,c.muted)}
-    ${pill(74,265,234,'화면 · 상호작용',c.pale,22)}
-    ${server(501,141,145,174)}${text(573,111,'백엔드',29,c.ink,'middle')}
-    ${text(573,356,'FastAPI · Spring',23,c.muted,'middle')}
-    ${arrow(p,345,180,481,180)}${arrow(p,481,233,345,233,{orange:true,delay:1})}
-    ${text(412,157,'요청',21,c.teal,'middle')}${text(412,269,'HTML / JSON',19,c.muted,'middle')}
-    ${pill(74,374,282,'정적 파일도 프론트엔드',c.cream,21)}
-    ${rect(497,394,182,52,c.cream,10)}${text(588,428,'DB · 선택',23,c.muted,'middle')}
-    ${arrow(p,588,364,588,383,{dashed:true,delay:1.7})}
-  `,'역할의 구분이며 서버 두 대가 항상 필요한 것은 아닙니다');
+  return frame(p,'npm 명령이 개발 서버를 켭니다',`
+    ${panel(46,111,227,282,'터미널',c.ink)}
+    ${code(64,190,'npm install',c.pale,20)}
+    ${code(64,241,'npm run dev',c.paper,20)}
+    ${text(64,309,'안내된 명령',20,c.paper)}
+    ${arrow(p,282,244,315,244)}
+    ${panel(326,111,188,282,'package.json',c.pale)}
+    ${code(343,207,'"dev":',c.ink,20)}
+    ${code(343,245,'"vite"',c.teal,22)}
+    ${text(343,311,'프로젝트 설정',19,c.muted)}
+    ${arrow(p,524,244,551,244,{delay:1})}
+    ${panel(562,140,157,224,'개발 서버',c.cream)}
+    ${text(582,227,'Vite',27,c.ink)}
+    ${text(582,265,'화면 파일',20,c.muted)}
+    ${emphasis(p,check(676,322))}
+    ${pill(134,422,491,'스크립트 이름은 프로젝트마다 다릅니다',c.pale,20)}
+  `,'명령의 뜻은 package.json에서 확인합니다');
 }
 
 function serverToBrowser() {
   const p='sa-web-html';
-  return frame(p,'서버의 HTML이 브라우저 화면으로',`
-    ${panel(53,104,239,300,'서버 · Jinja2',c.pale)}${rect(73,173,198,77,c.paper,7)}
-    ${text(172,206,'템플릿',23,c.ink,'middle')}${code(94,235,'{{ title }}',c.teal,22)}
-    ${text(172,285,'+',31,c.muted,'middle')}${rect(73,306,198,66,c.cream,7)}${text(172,346,'데이터: Git',24,c.ink,'middle')}
-    ${sheet(332,188,117,172)}${text(391,232,'HTML',25,c.ink,'middle')}${code(348,271,'<h2>',c.teal,22)}${text(390,322,'Git',28,c.ink,'middle')}
-    ${panel(495,145,209,233,'브라우저')}${rect(515,210,168,143,c.paper,8)}
-    ${text(538,256,'Git',33)}${text(538,296,'35분',23,c.muted)}
-    ${arrow(p,301,248,323,248)}${arrow(p,457,248,485,248,{delay:1.1})}
-    ${pill(62,425,224,'HTML 생성',c.pale,22)}${pill(494,425,210,'해석 · 화면 표시',c.cream,21)}
-  `,'템플릿 처리와 화면 그리기는 다른 단계입니다');
+  return frame(p,'브라우저와 개발 서버가 주고받는 것',`
+    ${panel(48,118,252,262,'내 브라우저',c.pale)}
+    ${rect(70,185,209,152,c.paper,8)}${text(89,228,'Git',30)}
+    ${rect(89,249,137,41,c.cream,6,c.teal,2)}${text(158,277,'설명 보기',20,c.ink,'middle')}
+    ${server(501,162,135,170)}${text(568,129,'개발 서버',24,c.ink,'middle')}
+    ${arrow(p,312,185,483,185)}${text(395,163,'파일 요청',21,c.teal,'middle')}
+    ${arrow(p,483,269,312,269,{orange:true,delay:1})}
+    ${text(397,305,'HTML · CSS · JS',19,c.orange,'middle')}
+    ${pill(70,411,218,'화면 표시 · 동작',c.pale,20)}
+    ${pill(457,411,222,'파일 제공',c.cream,21)}
+  `,'localhost는 현재 컴퓨터 자신을 가리킵니다');
+}
+
+function htmlJsonCard() {
+  const p='sa-backend-html-json';
+  return frame(p,'HTML 안의 JSON으로 카드 채우기',`
+    ${panel(45,110,298,286,'HTML · JSON 데이터',c.pale)}
+    ${code(66,190,'{ "title": "Git" }',c.ink,22)}
+    ${code(66,247,'JSON.parse(...)',c.teal,22)}
+    ${text(66,320,'브라우저 안에서 읽기',20,c.muted)}
+    ${arrow(p,354,253,397,253)}
+    ${panel(409,110,307,286,'브라우저 · 카드')}
+    ${rect(431,175,262,184,c.pale,7,c.teal,2)}
+    ${text(455,219,'Git',30)}${rect(454,241,146,44,c.paper,6,c.teal,2)}
+    ${text(527,270,'설명 보기',20,c.ink,'middle')}
+    ${lines(454,315,[204,161],c.sage,17,5)}
+    ${emphasis(p,rect(449,184,205,53,'none',7,c.orange,3))}
+  `,'데이터를 HTML 안에 두고 브라우저에서 읽습니다');
+}
+
+function pythonDictionaryApi() {
+  const p='sa-backend-python';
+  return frame(p,'Python 딕셔너리와 JSON 응답',`
+    ${panel(45,105,282,289,'FastAPI · Python',c.pale)}
+    ${code(66,186,'{ "title": "Git" }',c.ink,21)}
+    ${pill(65,228,239,'Python 딕셔너리',c.cream,20)}
+    ${code(66,320,'/api/dict',c.teal,21)}
+    ${arrow(p,338,250,389,250)}
+    ${panel(402,105,314,289,'브라우저 · fetch')}
+    ${text(424,190,'JSON 응답을 읽기',23,c.ink)}
+    ${rect(424,218,269,134,c.pale,7,c.teal,2)}
+    ${text(446,258,'Git',28)}
+    ${lines(446,280,[202,147,185],c.sage,16,5)}
+    ${emphasis(p,check(658,319))}
+  `,'서버의 Python 데이터가 JSON 응답으로 전달됩니다');
+}
+
+function sqliteApi() {
+  const p='sa-backend-sqlite';
+  return frame(p,'SQLite에서 카드 데이터를 가져오기',`
+    ${panel(35,119,193,254,'SQLite 파일',c.cream)}
+    ${rect(56,181,150,125,c.pale,6,c.teal,2)}
+    ${text(130,219,'Git',24,c.ink,'middle')}
+    ${lines(78,239,[106,81],c.sage,17,5)}
+    ${text(130,340,'저장된 행',20,c.muted,'middle')}
+    ${arrow(p,236,245,267,245)}
+    ${panel(278,119,197,254,'FastAPI',c.pale)}
+    ${text(294,198,'조회 → JSON',22)}
+    ${code(294,253,'/api/sqlite',c.teal,19)}
+    ${text(294,313,'서버에서 처리',20,c.muted)}
+    ${arrow(p,484,245,513,245,{delay:1})}
+    ${panel(525,119,200,254,'브라우저')}
+    ${rect(545,187,158,136,c.pale,7,c.teal,2)}
+    ${text(565,228,'Git',28)}${lines(565,254,[113,91],c.sage,17,5)}
+    ${emphasis(p,check(678,299))}
+  `,'DB의 행을 조회해 같은 카드 화면에 보여 줍니다');
 }
 
 function templateEngines() {
   const p='sa-web-jinja';
-  return frame(p,'템플릿에 같은 데이터를 넣어 보기',`
-    ${pill(246,94,268,'데이터 · title: Git',c.softOrange,24)}
-    ${arrow(p,299,141,219,182)}${arrow(p,463,141,545,182,{delay:.8})}
-    ${panel(59,192,294,196,'Jinja2',c.pale)}${code(94,279,'{{ title }}',c.ink,27)}${code(94,339,'default(값)',c.muted,24)}
-    ${panel(408,192,294,196,'Django Template',c.cream)}${code(443,279,'{{ title }}',c.ink,27)}${code(443,339,'default:값',c.muted,24)}
-    ${arrow(p,204,398,204,422,{delay:1.5})}${arrow(p,555,398,555,422,{delay:2})}
-    ${pill(94,429,224,'HTML · Git',c.paper,24)}${pill(443,429,224,'HTML · Git',c.paper,24)}
-    ${emphasis(p,check(321,259))}
-  `,'이번 실습은 FastAPI와 Jinja2를 조합합니다');
+  return frame(p,'서버 템플릿에 데이터 넣기',`
+    ${panel(48,111,239,287,'서버 · 데이터',c.pale)}
+    ${code(67,183,'title: Git',c.teal,23)}
+    ${pill(66,226,202,'딕셔너리 / DB',c.cream,20)}
+    ${text(66,321,'카드 목록',22,c.muted)}
+    ${arrow(p,294,249,326,249)}
+    ${panel(336,111,177,287,'Jinja2')}
+    ${code(352,183,'{{ lesson.',c.teal,18)}
+    ${code(352,207,'title }}',c.teal,18)}
+    ${text(352,255,'반복 · 결합',20,c.ink)}
+    ${text(352,320,'HTML 생성',19,c.muted)}
+    ${arrow(p,522,249,551,249,{delay:1})}
+    ${panel(562,111,153,287,'브라우저',c.pale)}
+    ${rect(578,184,122,144,c.paper,7,c.teal,2)}
+    ${text(592,229,'Git',26)}${lines(592,249,[91,72],c.sage,17,5)}
+    ${emphasis(p,check(678,310))}
+  `,'Jinja2가 만든 HTML을 브라우저가 화면에 표시합니다');
 }
 
 function cardLayers() {
@@ -417,7 +490,7 @@ function alpineStateGraph() {
     ${text(172,246,'클릭 이벤트',22,c.muted,'middle')}${text(591,246,'현재 상태',22,c.muted,'middle')}
     ${emphasis(p,rect(438,345,247,58,'none',7,c.teal,4),1.7)}
     ${path('M93 382l-7 28 13-5 8 14 8-4-8-14 13-5Z',c.orange,c.ink,2.2)}
-  `,'서버 템플릿 위에 브라우저의 작은 동작을 더합니다');
+  `,'HTML의 상태와 클릭을 브라우저에서 연결합니다');
 }
 
 function reusablePrompt() {
@@ -479,12 +552,15 @@ export const webSectionScenes = {
   'tools-html': {title:'HTML: 강의 카드의 내용과 구조 만들기',description:'VS Code에서 작성하는 index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',svg:htmlCardPractice()},
   'tools-css': {title:'CSS: 같은 카드에 색과 여백 더하기',description:'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',svg:cssCardPractice()},
   'tools-javascript': {title:'JavaScript: 버튼으로 설명 표시하기',description:'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',svg:javascriptCardPractice()},
-  'web-map': {title:'백엔드는 어디서 실행될까: 로컬과 원격 서버',description:'내 PC의 브라우저와 서버 프로세스가 있는 로컬 섬, 다른 컴퓨터의 서버가 있는 원격 섬을 요청·응답으로 연결합니다.',svg:localAndRemote()},
-  'web-http': {title:'프론트엔드와 백엔드: 요청·응답으로 나누는 책임',description:'React·Svelte UI와 FastAPI·Spring 서버 처리 사이의 요청 및 HTML·JSON 응답을 표시하고 선택적 DB와 정적 파일 대안을 나눕니다.',svg:webResponsibilities()},
-  'web-html': {title:'서버 템플릿의 HTML 응답을 브라우저가 화면으로',description:'서버 안의 템플릿과 데이터가 HTML 문서를 만들고 브라우저가 이를 해석해 Git 카드 화면으로 그리는 단계를 구분합니다.',svg:serverToBrowser()},
-  'web-jinja': {title:'Jinja2와 Django Template: 왜 이번에는 Jinja2일까',description:'같은 title 데이터를 Jinja2와 DTL의 두 템플릿 판에 넣어 HTML을 만드는 과정과 서로 다른 필터 표기를 비교합니다.',svg:templateEngines()},
-  'frontend-css': {title:'기존 CSS와 Tailwind를 같은 카드에서 비교하기',description:'CSS 속성과 Tailwind 유틸리티 클래스가 같은 카드의 안쪽 여백과 둥근 모서리를 표현하는 방법을 비교합니다.',svg:cardLayers()},
-  'frontend-alpine': {title:'Alpine으로 브라우저 반응을 더하고 템플릿과 조합하기',description:'클릭 이벤트가 open 상태를 바꾸고 x-show가 설명 표시를 연결하는 흐름을 x-data·@click·x-show의 삼각 상태 그래프로 나타냅니다.',svg:alpineStateGraph()},
+  'web-map': {title:'프론트엔드란? 브라우저에서 보이고 움직이는 화면',description:'HTML의 내용, CSS의 모양과 JavaScript의 동작이 브라우저의 강의 카드 화면에 나타나는 과정을 보여 줍니다.',svg:localAndRemote()},
+  'web-http': {title:'AI가 안내한 npm install과 npm run dev 읽기',description:'터미널에서 npm 명령을 실행하고 package.json의 dev 스크립트가 Vite 개발 서버를 시작하는 예시를 구분합니다. 스크립트 설정은 프로젝트마다 다릅니다.',svg:webResponsibilities()},
+  'web-html': {title:'브라우저와 서버: 화면 요청과 백엔드의 역할',description:'내 브라우저가 개발 서버에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 브라우저에서 표시하고 실행합니다.',svg:serverToBrowser()},
+  'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
+  'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'FastAPI의 Python 딕셔너리 목록을 JSON 응답으로 보내고 브라우저의 fetch가 이를 읽어 같은 카드에 표시합니다.',svg:pythonDictionaryApi()},
+  'backend-sqlite': {title:'SQLite 데이터베이스의 카드 가져오기',description:'FastAPI가 SQLite 데이터베이스의 행을 조회해 JSON으로 응답하고 브라우저가 카드에 표시합니다.',svg:sqliteApi()},
+  'web-jinja': {title:'Jinja2 템플릿에 DB 데이터 넣기',description:'FastAPI의 데이터와 Jinja2 템플릿을 서버에서 결합해 HTML을 만들고 브라우저가 화면으로 표시합니다.',svg:templateEngines()},
+  'frontend-css': {title:'같은 강의 카드에 Tailwind CSS 적용하기',description:'CSS 속성과 Tailwind 유틸리티 클래스가 같은 카드의 안쪽 여백과 둥근 모서리를 표현하는 방법을 비교합니다.',svg:cardLayers()},
+  'frontend-alpine': {title:'같은 버튼 동작을 Alpine.js로 바꾸기',description:'클릭 이벤트가 open 상태를 바꾸고 x-show가 설명 표시를 연결하는 흐름을 x-data·@click·x-show의 삼각 상태 그래프로 나타냅니다.',svg:alpineStateGraph()},
   'codex-bonus': {title:'보충: 다음 작업에 재사용할 요청 카드',description:'재사용 요청 카드의 문제·맥락·보존 조건·검증 구획을 실제 프로젝트 정보로 바꾸어 다음 요청으로 옮깁니다.',svg:reusablePrompt()},
   'tools-bonus': {title:'보충 노트: 가상환경과 실행 버튼을 같은 기준으로 맞추기',description:'IDE 실행 설정과 PowerShell에서 스크립트 경로, Python 실행 파일, 작업 폴더를 같은 기준으로 대조합니다.',svg:environmentParity()},
   'web-bonus': {title:'보충 노트: 주소의 경로와 해시, 빌드 결과 구분',description:'주소의 경로는 서버 요청으로 전달되며 해시 뒤 fragment는 브라우저에서 읽습니다. 원본에서 빌드 결과로 이어지는 방향도 구분합니다.',svg:addressAndBuild()},

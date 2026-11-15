@@ -2,6 +2,7 @@ import { safeRead } from './course.js';
 import { previousIdeDefault } from './previous-ide-default.js';
 import { previousEightDefault, previousEightCourseMetadata } from './previous-eight-default.js';
 import { previousNineDefault } from './previous-nine-default.js';
+import { previousLiveWebDefault } from './previous-live-web-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -160,7 +161,11 @@ export function upgradeNineDefaults(value, baseCourse) {
     const previous = previousNineDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;
-    const merged = mergeLesson(current, previous, latest);
+    // Both released nine-topic versions are possible browser draft baselines.
+    // Apply each independently so an untouched field from either release can
+    // move forward without replacing fields the author changed.
+    const baselines = id === 'web' ? [previous, previousLiveWebDefault] : [previous];
+    const merged = baselines.reduce((lesson, baseline) => mergeLesson(lesson, baseline, latest), current);
     if (!equal(current, merged)) {
       updated ||= clone(value);
       updated.lessons[index] = merged;

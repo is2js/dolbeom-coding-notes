@@ -34,7 +34,9 @@ test('frontend and backend illustrations distinguish the server used in each ste
   assert.match(compare.svg, /Live Server/);
   assert.match(compare.svg, /Vite/);
   assert.match(compare.svg, /이번 카드 실습: Live Server/);
-  assert.match(compare.description, /프로젝트 설정/);
+  assert.equal((compare.svg.match(/Git 강의 카드/g) || []).length, 2);
+  assert.match(compare.svg, /터미널에서 직접 실행/);
+  assert.match(compare.description, /별도 선택지/);
   assert.match(sectionScenes['web-html'].svg, /Live Server/);
   const api = sectionScenes['backend-python'];
   assert.match(api.svg, /FastAPI · :8000/);

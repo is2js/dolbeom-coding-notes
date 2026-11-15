@@ -356,18 +356,24 @@ function localAndRemote() {
 
 function webResponsibilities() {
   const p='sa-web-http';
-  return frame(p,'화면 확인: Live Server와 Vite',`
-    ${panel(46,116,309,263,'Live Server',c.pale)}
-    ${text(67,202,'VS Code 확장',25,c.ink)}
-    ${text(67,251,'정적 파일 제공',22,c.muted)}
-    ${text(67,297,'저장 후 화면 갱신',21,c.muted)}
-    ${emphasis(p,check(318,335))}
-    ${panel(405,116,309,263,'Vite · 개발 도구',c.cream)}
-    ${code(427,204,'npm run dev',c.teal,22)}
-    ${text(427,251,'모듈 · 패키지 처리',21,c.muted)}
-    ${text(427,297,'프로젝트별 설정',21,c.muted)}
+  // Both paths display the same card. Vite is a separate, manually started option.
+  const card = (x) => rect(x, 183, 263, 111, c.white, 7, c.muted, 1.8)
+    + rect(x + 14, 198, 235, 82, c.pale, 6, c.teal, 2)
+    + text(x + 28, 227, 'Git 강의 카드', 21)
+    + rect(x + 28, 239, 118, 27, c.paper, 5, c.teal, 1.7)
+    + text(x + 87, 258, '설명 보기', 16, c.teal, 'middle');
+  return frame(p,'같은 카드, 두 가지 실행 방법',`
+    ${panel(46,112,309,281,'Live Server · VS Code',c.pale)}
+    ${card(69)}
+    ${text(201,331,'VS Code에서 파일 열기',20,c.ink,'middle')}
+    ${text(201,361,'저장하면 화면 갱신',19,c.muted,'middle')}
+    ${panel(405,112,309,281,'Vite · 개발 도구',c.cream)}
+    ${card(428)}
+    ${text(560,331,'터미널에서 직접 실행',20,c.ink,'middle')}
+    ${text(560,361,'npm run dev',20,c.teal,'middle',650,true)}
     ${pill(155,415,450,'이번 카드 실습: Live Server',c.pale,21)}
-  `,'프로젝트에 필요한 도구를 확인해 사용합니다');
+    ${emphasis(p,check(329,162))}
+  `,'같은 화면을 확인하는 방법이 다릅니다');
 }
 
 function serverToBrowser() {
@@ -550,7 +556,7 @@ export const webSectionScenes = {
   'tools-css': {title:'CSS: 같은 카드에 색과 여백 더하기',description:'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',svg:cssCardPractice()},
   'tools-javascript': {title:'JavaScript: 버튼으로 설명 표시하기',description:'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',svg:javascriptCardPractice()},
   'web-map': {title:'프론트엔드란? 브라우저에서 보이고 움직이는 화면',description:'HTML의 내용, CSS의 모양과 JavaScript의 동작이 브라우저의 강의 카드 화면에 나타나는 과정을 보여 줍니다.',svg:localAndRemote()},
-  'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'이번 정적 카드 실습의 VS Code Live Server와 프로젝트에 따라 쓰는 Vite 개발 도구를 비교합니다. npm run dev의 실제 동작은 각 프로젝트 설정에 따라 다릅니다.',svg:webResponsibilities()},
+  'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'같은 강의 카드를 두 화면에 나란히 보여 줍니다. 실습에서는 VS Code Live Server를 사용하며, Vite는 프로젝트에 따라 터미널에서 직접 실행하는 별도 선택지입니다.',svg:webResponsibilities()},
   'web-html': {title:'브라우저와 서버: 화면 요청과 백엔드의 역할',description:'내 브라우저가 Live Server에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 브라우저에서 표시하고 실행합니다.',svg:serverToBrowser()},
   'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
   'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'같은 FastAPI 주소에서 정적 화면과 API를 제공하고 Python 딕셔너리 목록을 JSON으로 보내 브라우저가 fetch로 읽습니다.',svg:pythonDictionaryApi()},

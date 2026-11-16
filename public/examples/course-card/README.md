@@ -7,7 +7,7 @@
 1. `01-html/index.html`: 제목·버튼·설명만 있는 HTML. 버튼은 아직 동작하지 않습니다.
 2. `02-css/index.html`: `style.css`를 연결해 24px 여백과 카드 모양을 추가합니다.
 3. `03-javascript/index.html`: `script.js`를 연결해 버튼으로 설명을 펼치고 접습니다.
-4. `04-tailwind/index.html`·`05-alpine/index.html`: 준비된 로컬 Tailwind CSS·Alpine으로 같은 카드를 비교합니다.
+4. `04-tailwind/index.html`·`05-alpine/index.html`: CDN에서 Tailwind CSS·Alpine.js를 불러와 같은 카드를 비교합니다. 인터넷 연결이 필요합니다.
 5. `04-vite-dev/`: 프론트엔드 개발 서버를 이해하는 별도 Vite 예제입니다. 폴더의 README를 따라 별도 복사본에서 실행합니다.
 6. `server-data/static/01-local-json.html`: HTML 안의 JSON을 브라우저에서 읽는 정적 예제입니다. 이어 `server-data/README.md`를 따라 FastAPI의 Python 딕셔너리·SQLite API와 Jinja 템플릿을 확인합니다.
 7. `template-preview.html`: GitHub Pages에서도 볼 수 있는 정적 비교 화면입니다. 직접 작성한 CSS·JavaScript와 Tailwind·Alpine 카드를 나란히 눌러 보고 코드도 펼쳐 볼 수 있습니다. Git 제목은 HTML에 미리 들어 있으므로 서버 템플릿을 실제로 실행한 결과는 아닙니다. `p-6`은 Tailwind 기본 테마와 브라우저의 기본 16px 글자 크기에서 24px입니다.
@@ -42,4 +42,6 @@ python -m venv .venv
 
 ## 사용된 라이브러리
 
-`static/course.css`는 수업에 사용한 Tailwind CSS 3 유틸리티를 미리 생성한 파일입니다. `static/alpine.js`는 Alpine.js 브라우저 배포 파일입니다. 관련 라이선스는 같은 폴더의 LICENSE 파일을 확인합니다. 두 파일이 준비되어 있어 정적 카드 예제를 확인할 때 Node.js는 필요하지 않습니다.
+카드 실습은 HTML의 `<script>` 태그로 Tailwind CSS 3.4.17 Play CDN과 Alpine.js 3.14.9 CDN을 불러옵니다. Node.js 설치 없이 시작할 수 있지만, 처음 열 때와 새로고침할 때 CDN에 접근할 수 있어야 합니다. 연결이 실패하면 스타일이나 버튼 동작이 빠질 수 있습니다.
+
+CDN은 파일을 인터넷에서 전달하는 서비스입니다. Tailwind Play CDN은 개발·학습용입니다. 실제 배포 프로젝트에서는 공식 설치 안내에 따라 사용하는 클래스의 CSS를 빌드해 사이트 자산으로 제공하세요. Alpine은 필요에 따라 패키지로 설치해 프로젝트 빌드에 포함하거나 신뢰할 수 있는 CDN의 고정 버전을 사용할 수 있습니다. 기존 `static` 폴더의 파일은 이전 예제와 라이선스 참고용으로 남겨 두었으며 현재 카드 단계에서는 불러오지 않습니다.

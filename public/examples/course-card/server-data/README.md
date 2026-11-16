@@ -11,7 +11,7 @@ Tailwind CSS는 모양, Alpine.js는 브라우저에서 카드 표시와 버튼 
 
 ## 1. HTML 안의 JSON 확인
 
-`static/01-local-json.html`을 브라우저로 엽니다. 같은 폴더의 `course.css`와 `alpine.js`가 함께 있어야 합니다. VS Code에서 HTML 안 `lesson-data`의 Git 제목을 바꾸어 저장하고 브라우저를 새로고침합니다. 데이터가 HTML 안에 들어 있고, `JSON.parse`가 문자열을 브라우저에서 다룰 수 있는 배열로 바꿉니다. 이 단계에 Python이나 Node 서버는 필요하지 않습니다.
+`static/01-local-json.html`을 브라우저로 엽니다. Tailwind CSS와 Alpine.js는 CDN에서 불러오므로 인터넷 연결이 필요합니다. VS Code에서 HTML 안 `lesson-data`의 Git 제목을 바꾸어 저장하고 브라우저를 새로고침합니다. 데이터가 HTML 안에 들어 있고, `JSON.parse`가 문자열을 브라우저에서 다룰 수 있는 배열로 바꿉니다. 이 단계에 Python이나 Node 서버는 필요하지 않습니다.
 
 VS Code의 Live Server 확장이 있다면 해당 파일을 우클릭해 **Open with Live Server**를 선택해도 됩니다. 단순 정적 페이지를 제공하고 저장 후 브라우저를 새로고침하는 도구입니다.
 

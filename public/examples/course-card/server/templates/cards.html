@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>강의 카드 · Jinja2 + Tailwind + Alpine</title>
-  <link rel="stylesheet" href="{{ url_for('static', path='course.css') }}">
-  <script defer src="{{ url_for('static', path='alpine.js') }}"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="bg-slate-100 p-6 font-sans">
   <ul class="list-none p-0">

@@ -4,6 +4,7 @@ import { previousEightDefault, previousEightCourseMetadata } from './previous-ei
 import { previousNineDefault } from './previous-nine-default.js';
 import { previousLiveWebDefault } from './previous-live-web-default.js';
 import { previousIdeToolsDefault } from './previous-ide-tools-default.js';
+import { previousCdnDefault } from './previous-cdn-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -168,6 +169,41 @@ function addTailwindExplanation(lesson, latest) {
   target._tailwindExplanation202611 = true;
 }
 
+// Update only verbatim blocks from the published pre-CDN text. A customised
+// paragraph or example is never rewritten; all other authored text survives.
+function updateAuthoredTailwindCdn(lesson, latest) {
+  const target = lesson.sections.find(item => item.id === 'frontend-css');
+  const source = latest.sections.find(item => item.id === 'frontend-css');
+  const previous = previousCdnDefault['web-tools'].sections.find(item => item.id === 'frontend-css');
+  if (typeof target?.body !== 'string' || typeof source?.body !== 'string' || target._cdnExamples202611 === true) return;
+  const old = previous.body.split('\n\n'), next = source.body.split('\n\n');
+  const paragraph = (blocks, prefix) => blocks.find(block => block.startsWith(prefix));
+  const pairs = [
+    ['**Tailwind CSS**는', '**Tailwind CSS**는'],
+    ['HTML 태그 안에서 모양을 지정', 'HTML 태그 안에서 모양을 지정'],
+    ['### 2. 준비된 Tailwind CSS를 연결하기', '### 2. CDN으로 Tailwind 연결하기'],
+    ['복사한 폴더의 `04-tailwind/index.html`을 엽니다.', '**CDN**은'],
+    ['```html\n<link rel="stylesheet" href="../static/course.css">', '```html\n<script src="https://cdn.tailwindcss.com/3.4.17">'],
+    ['`script.js`는 이전 단계에서 만든 JavaScript를 그대로 사용합니다.', '첫 줄은 수업용 Tailwind 3 Play CDN'],
+    ['**직접 확인:** `p-6`을 미리 준비된 `p-8`', '**직접 확인:** `p-6`을 `p-8`'],
+    ['HTML을 읽으면서 색·간격을 한곳에서 조합하기 쉽지만', 'HTML을 읽으면서 색·간격을 한곳에서 조합하기 쉽지만'],
+  ];
+  const replacements = pairs.map(([before, after]) => [paragraph(old, before), paragraph(next, after)]);
+  if (replacements.some(([before, after]) => !before || !after)) return;
+  const oldIntro = paragraph(old, '이 예제는 수업용으로 **미리 생성한 Tailwind CSS 3 파일**');
+  const newIntro = paragraph(next, '이 예제는 HTML에서 Tailwind CSS 3의 **Play CDN**');
+  const oldPrefix = oldIntro?.split('[강의노트 저장소]')[0];
+  const newPrefix = newIntro?.split('[강의노트 저장소]')[0];
+  const blocks = target.body.split('\n\n').map(block => {
+    if (oldPrefix && newPrefix && block.startsWith(oldPrefix)) return newPrefix + block.slice(oldPrefix.length);
+    const replacement = replacements.find(([before]) => block === before);
+    return replacement ? replacement[1] : block;
+  });
+  target.body = blocks.join('\n\n');
+  // Once a learner saves this version, future intentional edits stay intact.
+  target._cdnExamples202611 = true;
+}
+
 // Keep nine-topic browser edits and ordering while adopting updated explanations
 // only where a field still matches the previous published default.
 export function upgradeNineDefaults(value, baseCourse) {
@@ -180,12 +216,25 @@ export function upgradeNineDefaults(value, baseCourse) {
     const previous = previousNineDefault[id] || previousIdeToolsDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;
-    // Both released nine-topic versions are possible browser draft baselines.
-    // Apply each independently so an untouched field from either release can
-    // move forward without replacing fields the author changed.
-    const baselines = id === 'web' ? [previous, previousLiveWebDefault] : [previous];
+    // Apply each published baseline independently so untouched fields from
+    // any release update without replacing the author's edited fields.
+    const baselines = [previous];
+    if (id === 'web') baselines.push(previousLiveWebDefault);
+    if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     const merged = baselines.reduce((lesson, baseline) => mergeLesson(lesson, baseline, latest), current);
-    if (id === 'web-tools') addTailwindExplanation(merged, latest);
+    if (id === 'web-tools') {
+      const priorCss = current.sections.find(item => item.id === 'frontend-css');
+      const mergedCss = merged.sections.find(item => item.id === 'frontend-css');
+      // The earlier migration records whether it already added the explanation.
+      // If that marked explanation is now missing, its removal was an edit even
+      // when the remaining body happens to equal a much older published default.
+      if (priorCss?._tailwindExplanation202611 === true && typeof priorCss.body === 'string'
+          && !priorCss.body.includes('### Tailwind CSS를 뭐라고 부를까요?') && mergedCss) {
+        mergedCss.body = priorCss.body;
+      }
+      addTailwindExplanation(merged, latest);
+      updateAuthoredTailwindCdn(merged, latest);
+    }
     if (!equal(current, merged)) {
       updated ||= clone(value);
       updated.lessons[index] = merged;

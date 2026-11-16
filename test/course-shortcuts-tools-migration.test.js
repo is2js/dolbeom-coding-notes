@@ -33,6 +33,7 @@ test('published IDE and web tools sections update in saved and recovery drafts',
       for (const section of changedSections(id)) {
         const actual = copy(lesson(course, id).sections.find(item => item.id === section.id));
         delete actual._tailwindExplanation202611;
+        delete actual._cdnExamples202611;
         assert.deepEqual(actual, section);
       }
     }

@@ -3,15 +3,32 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>강의 카드 · Tailwind와 Alpine 비교</title>
-  <link rel="stylesheet" href="static/course.css">
-  <script defer src="static/alpine.js"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
   <script defer src="03-javascript/script.js"></script>
   <style>
+    [x-cloak] { display: none !important; }
     .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px; max-width: 900px; }
+    body > h1 { font-size: 24px; font-weight: 800; color: #203153; margin: 0 0 8px; }
+    .compare-grid section > h2 { font-size: 17px; font-weight: 750; color: #203153; margin: 0 0 10px; }
     .plain-card { max-width: 320px; padding: 24px; border-radius: 12px; background: white; }
     .plain-card button { padding: 8px 12px; cursor: pointer; }
+    .plain-card h2, .tool-card h2 { font-size: 19px; font-weight: 750; }
+    .plain-card button, .tool-card button { margin-top: 10px; background: #e3eee5; border: 1px solid #96b3a0; border-radius: 7px; font-weight: 700; }
+    .plain-card button:focus-visible, .tool-card button:focus-visible, summary:focus-visible { outline: 3px solid #3e7e70; outline-offset: 2px; }
+    .plain-card p, .tool-card p { margin-top: 10px; }
     .compare-note { max-width: 800px; line-height: 1.6; }
-    pre { overflow-x: auto; white-space: pre; background: white; padding: 16px; border-radius: 8px; }
+    details { margin-top: 12px; }
+    summary { cursor: pointer; font-weight: 700; padding: 10px 0; }
+    .code-section { margin-top: 16px; min-width: 0; }
+    .code-title { color: #24375a; font-size: 14px; font-weight: 700; margin: 0 0 7px; }
+    .code-note { color: #334155; font-size: 14px; line-height: 1.6; margin: 0 0 7px; }
+    pre { overflow-x: auto; white-space: pre; background: #172238; color: #ecf1f8; padding: 16px; border-radius: 10px; line-height: 1.65; font-size: 13px; }
+    pre code { font-family: Consolas, 'Courier New', monospace; }
+    .syntax-tag, .syntax-keyword { color: #96c6ff; }
+    .syntax-attr, .syntax-property { color: #f5cd88; }
+    .syntax-string, .syntax-value { color: #b6e4b3; }
+    .syntax-comment { color: #acb9c9; }
   </style>
 </head>
 <body class="bg-slate-100 p-6 font-sans">
@@ -26,29 +43,74 @@
         <p id="detail" hidden>변경을 확인하고 기록합니다.</p>
       </article>
       <p><a href="03-javascript/index.html">원래 실습 파일 보기</a></p>
-      <details><summary>코드 살펴보기</summary><pre><code>.card { padding: 24px; }
-button.addEventListener('click', () =&gt; {
-  const isHidden = detail.hidden;
+      <details><summary>코드 살펴보기</summary>
+        <div class="code-section"><h3 class="code-title">HTML · 카드 구조</h3>
+          <pre><code><span class="syntax-tag">&lt;article</span> <span class="syntax-attr">class</span>=<span class="syntax-string">"card"</span><span class="syntax-tag">&gt;</span>
+  <span class="syntax-tag">&lt;h1&gt;</span>Git<span class="syntax-tag">&lt;/h1&gt;</span>
+  <span class="syntax-tag">&lt;button</span> <span class="syntax-attr">id</span>=<span class="syntax-string">"toggle"</span> <span class="syntax-attr">type</span>=<span class="syntax-string">"button"</span>
+    <span class="syntax-attr">aria-expanded</span>=<span class="syntax-string">"false"</span><span class="syntax-tag">&gt;</span>설명 보기<span class="syntax-tag">&lt;/button&gt;</span>
+  <span class="syntax-tag">&lt;p</span> <span class="syntax-attr">id</span>=<span class="syntax-string">"detail"</span> <span class="syntax-attr">hidden</span><span class="syntax-tag">&gt;</span>변경을 확인하고 기록합니다.<span class="syntax-tag">&lt;/p&gt;</span>
+<span class="syntax-tag">&lt;/article&gt;</span></code></pre>
+        </div>
+        <div class="code-section"><h3 class="code-title">CSS · style.css에서 카드 꾸미기</h3>
+          <pre><code><span class="syntax-tag">.card</span> {
+  <span class="syntax-property">max-width</span>: <span class="syntax-value">320px</span>;
+  <span class="syntax-property">padding</span>: <span class="syntax-value">24px</span>;
+  <span class="syntax-property">border-radius</span>: <span class="syntax-value">12px</span>;
+  <span class="syntax-property">background</span>: <span class="syntax-value">white</span>;
+}</code></pre>
+        </div>
+        <div class="code-section"><h3 class="code-title">JavaScript · script.js에서 버튼 연결</h3>
+          <pre><code><span class="syntax-keyword">const</span> button = document.querySelector(<span class="syntax-string">'#toggle'</span>);
+<span class="syntax-keyword">const</span> detail = document.querySelector(<span class="syntax-string">'#detail'</span>);
+
+button.addEventListener(<span class="syntax-string">'click'</span>, () =&gt; {
+  <span class="syntax-keyword">const</span> isHidden = detail.hidden;
   detail.hidden = !isHidden;
-  button.setAttribute('aria-expanded', String(isHidden));
-});</code></pre></details>
+  button.setAttribute(<span class="syntax-string">'aria-expanded'</span>, String(isHidden));
+});</code></pre>
+        </div>
+      </details>
     </section>
     <section aria-labelledby="tools-title">
       <h2 id="tools-title">Tailwind CSS · Alpine.js</h2>
-      <article class="max-w-80 rounded-xl bg-white p-6" x-data="{ open: false }">
+      <article class="tool-card max-w-80 rounded-xl bg-white p-6" x-data="{ open: false }">
         <h2>Git</h2>
         <button type="button" class="cursor-pointer px-3 py-2" @click="open = !open" :aria-expanded="open.toString()">설명 보기</button>
         <p x-show="open" x-cloak>변경을 확인하고 기록합니다.</p>
       </article>
       <p><code>p-6</code>은 안쪽 여백, <code>x-show</code>는 표시 조건입니다.</p>
-      <details><summary>코드 살펴보기</summary><pre><code>&lt;article class="p-6" x-data="{ open: false }"&gt;
-  &lt;button @click="open = !open"
-    :aria-expanded="open.toString()"&gt;설명 보기&lt;/button&gt;
-  &lt;p x-show="open" x-cloak&gt;설명&lt;/p&gt;
-&lt;/article&gt;</code></pre></details>
+      <details><summary>코드 살펴보기</summary>
+        <div class="code-section"><h3 class="code-title">HTML · CDN 연결과 카드</h3>
+          <p class="code-note"><code>05-alpine/index.html</code>에서 도구를 불러오고 클래스와 속성으로 카드의 모양과 동작을 적습니다.</p>
+          <pre><code><span class="syntax-comment">&lt;!-- head 안에 추가 --&gt;</span>
+<span class="syntax-tag">&lt;script</span> <span class="syntax-attr">src</span>=<span class="syntax-string">"https://cdn.tailwindcss.com/3.4.17"</span><span class="syntax-tag">&gt;&lt;/script&gt;</span>
+<span class="syntax-tag">&lt;script</span> <span class="syntax-attr">defer src</span>=<span class="syntax-string">"https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"</span><span class="syntax-tag">&gt;&lt;/script&gt;</span>
+<span class="syntax-tag">&lt;style&gt;</span>[x-cloak] { display: none !important; }<span class="syntax-tag">&lt;/style&gt;</span>
+
+<span class="syntax-comment">&lt;!-- body 안의 카드 --&gt;</span>
+<span class="syntax-tag">&lt;article</span> <span class="syntax-attr">class</span>=<span class="syntax-string">"max-w-80 rounded-xl bg-white p-6"</span>
+  <span class="syntax-attr">x-data</span>=<span class="syntax-string">"{ open: false }"</span><span class="syntax-tag">&gt;</span>
+  <span class="syntax-tag">&lt;h1&gt;</span>Git<span class="syntax-tag">&lt;/h1&gt;</span>
+  <span class="syntax-tag">&lt;button</span> <span class="syntax-attr">type</span>=<span class="syntax-string">"button"</span>
+    <span class="syntax-attr">class</span>=<span class="syntax-string">"cursor-pointer rounded border border-slate-500 bg-slate-100 px-3 py-2"</span>
+    <span class="syntax-attr">@click</span>=<span class="syntax-string">"open = !open"</span> <span class="syntax-attr">:aria-expanded</span>=<span class="syntax-string">"open.toString()"</span> <span class="syntax-attr">aria-controls</span>=<span class="syntax-string">"detail"</span><span class="syntax-tag">&gt;</span>설명 보기<span class="syntax-tag">&lt;/button&gt;</span>
+  <span class="syntax-tag">&lt;p</span> <span class="syntax-attr">id</span>=<span class="syntax-string">"detail"</span> <span class="syntax-attr">x-show</span>=<span class="syntax-string">"open"</span> <span class="syntax-attr">x-cloak</span><span class="syntax-tag">&gt;</span>변경을 확인하고 기록합니다.<span class="syntax-tag">&lt;/p&gt;</span>
+<span class="syntax-tag">&lt;/article&gt;</span></code></pre>
+        </div>
+        <div class="code-section"><h3 class="code-title">CSS · HTML의 Tailwind 클래스</h3>
+          <p class="code-note">별도 CSS에 카드 규칙을 적는 대신 클래스 이름을 조합합니다. 실제 스타일은 CDN으로 연결한 Tailwind가 준비합니다.</p>
+          <pre><code><span class="syntax-attr">class</span>=<span class="syntax-string">"max-w-80 rounded-xl bg-white p-6"</span></code></pre>
+        </div>
+        <div class="code-section"><h3 class="code-title">JavaScript · Alpine 속성의 표현식</h3>
+          <p class="code-note">Alpine이 클릭을 감지하고 이 JavaScript 표현식으로 상태를 바꿉니다. HTML의 <code>x-show</code>가 변경된 상태를 확인합니다.</p>
+          <pre><code>open = !open</code></pre>
+        </div>
+      </details>
     </section>
   </div>
   <p class="compare-note">정적 비교 화면이므로 Git 제목은 HTML에 미리 적혀 있습니다. 서버에서 Jinja2가 제목을 채우는 과정은 별도 서버 예제에서 확인합니다.</p>
+  <p class="compare-note">Tailwind CSS와 Alpine.js는 CDN에서 불러옵니다. 인터넷에 연결되어 있어야 오른쪽 카드의 모양과 버튼 동작을 확인할 수 있습니다. Tailwind Play CDN은 학습용입니다.</p>
   <p><a href="index.html">실습 단계로 돌아가기</a></p>
 </body>
 </html>

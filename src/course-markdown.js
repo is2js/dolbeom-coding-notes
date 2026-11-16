@@ -17,6 +17,19 @@ export function isCourseImageSource(src) {
   return typeof src === 'string' && (courseDiagramSources.has(src) || /^\.\/assets\/course\/(?:[a-z0-9][a-z0-9_-]*\/)*[a-z0-9][a-z0-9_-]*\.(?:png|jpe?g|webp)$/i.test(src));
 }
 
+// Keep lesson/editor hash navigation in the same tab; examples, local server
+// pages and external resources should not replace the current lesson.
+export function shouldOpenCourseLinkInNewTab(href, baseHref) {
+  if (typeof href !== 'string' || !href.trim() || href.trim().startsWith('#')) return false;
+  try {
+    const base = new URL(baseHref);
+    const target = new URL(href, base);
+    if (!['http:', 'https:'].includes(target.protocol)) return false;
+    if (target.origin === base.origin && target.pathname === base.pathname && target.hash) return false;
+    return true;
+  } catch { return false; }
+}
+
 function sanitizeCourseMarkup(markup) {
   const fragment = DOMPurify.sanitize(markup, {
     USE_PROFILES: { html: true },
@@ -34,6 +47,15 @@ function sanitizeCourseMarkup(markup) {
       if (!['src', 'alt', 'title'].includes(attribute.name)) img.removeAttribute(attribute.name);
     }
     img.setAttribute('loading', 'lazy');
+  }
+  for (const link of fragment.querySelectorAll('a')) {
+    link.removeAttribute('ping');
+    if (shouldOpenCourseLinkInNewTab(link.getAttribute('href'), document.baseURI)) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    } else {
+      link.removeAttribute('target');
+    }
   }
   const container = document.createElement('div');
   container.append(fragment);
@@ -61,6 +83,7 @@ export function renderCourseCaseMarkdown(value) {
     if (link?.classList.contains('case-image-trigger')) continue;
     const button = link || document.createElement('button');
     if (!link) button.type = 'button';
+    else button.removeAttribute('target'); // linked case images open the image viewer
     button.classList.add('case-image-trigger');
     button.setAttribute('aria-label', `${image.alt || '사례 이미지'} 크게 보기`);
     if (!link) { image.replaceWith(button); button.append(image); }

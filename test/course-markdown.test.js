@@ -1,7 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { isCourseImageSource } from '../src/course-markdown.js';
+import { isCourseImageSource, shouldOpenCourseLinkInNewTab } from '../src/course-markdown.js';
+
+test('lesson links keep app routes in place and open examples and resources in new tabs', () => {
+  for (const base of ['http://127.0.0.1:5188/', 'https://is2js.github.io/dolbeom-coding-notes/']) {
+    for (const href of ['./examples/course-card/template-preview.html', './examples/course-card/03-javascript/index.html', './examples/course-card/server-data/README.md', 'http://127.0.0.1:8000/api/dict', 'https://vite.dev/guide/', 'https://is2js.github.io/dolbeom-coding-notes/examples/course-card/template-preview.html']) {
+      assert.equal(shouldOpenCourseLinkInNewTab(href, base), true, `${base} ${href}`);
+    }
+    for (const href of ['#/editor/markdown/case', '#/lesson/ide/section-tools-vscode', '#section', '', 'mailto:someone@example.com', 'javascript:alert(1)', null]) {
+      assert.equal(shouldOpenCourseLinkInNewTab(href, base), false, `${base} ${href}`);
+    }
+    assert.equal(shouldOpenCourseLinkInNewTab(`${base}#/lesson/git/case`, base), false);
+  }
+});
 
 test('course images must be bundled static raster files in the course asset directory', () => {
   for (const src of ['./assets/course/example.png', './assets/course/terminal/codex-zip.webp', './assets/course/image-01.JPG']) {

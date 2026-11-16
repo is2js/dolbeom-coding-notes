@@ -330,8 +330,8 @@ Alpine.data('courseApp', () => ({
     document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     this.notify('기존 6강 초안을 JSON으로 백업했습니다. 원래 브라우저 데이터도 유지합니다.');
   },
-  recordDraft(data,dirty=true) {
-    if(!safeWrite(localStorage,RECOVERY_KEY,{course:clone(data),dirty,baseRevision:localSync?.revision || null,updatedAt:Date.now()})) {
+  recordDraft(data,dirty=true,baseRevision=localSync?.revision || null) {
+    if(!safeWrite(localStorage,RECOVERY_KEY,{course:clone(data),dirty,baseRevision,updatedAt:Date.now()})) {
       throw new Error('브라우저 초안 저장 공간이 부족합니다. JSON으로 백업해 주세요.');
     }
   },
@@ -342,7 +342,7 @@ Alpine.data('courseApp', () => ({
       this.notify('보관한 브라우저 초안을 복구했습니다.');
     } catch { this.notify('복구할 초안 구조를 읽을 수 없습니다. 저장된 원본으로 열었습니다.'); }
   },
-  acceptFileCourse(data,{force=false}={}) {
+  acceptFileCourse(data,{force=false,revision=null}={}) {
     const next=validateCourse(clone(data));
     const selectedStepId=this.step?.id;
     if(force)this.editor.replaceWorking(next);
@@ -351,7 +351,9 @@ Alpine.data('courseApp', () => ({
     this.stepIndex=Math.min(this.stepIndex,this.lesson.steps.length-1);
     if(this.route === 'learn')this.reconcileLearningFlow(selectedStepId);
     safeWrite(localStorage,DRAFT_KEY,next);
-    this.recordDraft(next,false);
+    // The transport advances its revision after this callback returns, so use
+    // the accepted snapshot's revision rather than its previous baseline.
+    this.recordDraft(next,false,revision);
     if(this.route==='learn')document.title=`${this.lesson.shortTitle} · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
     this.reconcilePresentation();
     return true;

@@ -208,6 +208,9 @@ function updateAuthoredTailwindCdn(lesson, latest) {
 // only where a field still matches the previous published default.
 export function upgradeNineDefaults(value, baseCourse) {
   if (!Array.isArray(value?.lessons) || value.lessons.length !== 9 || !Array.isArray(baseCourse?.lessons)) return value;
+  // A clean copy of the current file needs no migration. Adding migration
+  // markers alone would make it look like a locally edited course on reload.
+  if (equal(value, baseCourse)) return value;
   let updated = null;
   for (const id of ['ide', 'web-coding', 'web-tools', 'web', 'templates']) {
     const index = value.lessons.findIndex(item => item?.id === id);

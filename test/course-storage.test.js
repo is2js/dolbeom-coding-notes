@@ -24,6 +24,16 @@ test('the new curriculum reads its own drafts without modifying old browser data
   assert.deepEqual(s.contents(), before);
 });
 
+test('choosing the latest file remains clean when the saved course is reopened', () => {
+  const latest = JSON.parse(fs.readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
+  const recovery = { dirty: false, course: latest, baseRevision: 'latest-revision' };
+  const s = storage({ [COURSE_STORAGE.draft]: latest, [COURSE_STORAGE.recovery]: recovery });
+  const result = readCourseDrafts(s, { baseCourse: latest, local: true });
+  assert.equal(result.upgradedDefaults, false);
+  assert.deepEqual(result.stored, latest);
+  assert.deepEqual(result.recovery, recovery);
+});
+
 test('an unfinished six-lesson draft remains downloadable even with invalid titles', () => {
   const s = storage({ 'dolbeom.working.v2': { dirty: true, course: oldCourse } });
   assert.deepEqual(readCourseDrafts(s, { local: true }).legacyDraft, oldCourse);

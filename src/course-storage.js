@@ -3,6 +3,7 @@ import { previousIdeDefault } from './previous-ide-default.js';
 import { previousEightDefault, previousEightCourseMetadata } from './previous-eight-default.js';
 import { previousNineDefault } from './previous-nine-default.js';
 import { previousLiveWebDefault } from './previous-live-web-default.js';
+import { previousIdeToolsDefault } from './previous-ide-tools-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -149,16 +150,34 @@ function mergeLesson(current, previous, latest) {
   return result;
 }
 
+// Add the explicitly requested explanation without replacing an authored body.
+// Require the stable heading, and never insert a second copy.
+function addTailwindExplanation(lesson, latest) {
+  const target = lesson.sections.find(item => item.id === 'frontend-css');
+  const source = latest.sections.find(item => item.id === 'frontend-css');
+  const title = '### Tailwind CSS를 뭐라고 부를까요?';
+  const anchor = '### 1. 직접 작성한 CSS 다시 보기';
+  if (typeof target?.body !== 'string' || typeof source?.body !== 'string' || target._tailwindExplanation202611 === true) return;
+  const start = source.body.indexOf(title), end = source.body.indexOf(anchor, start);
+  const position = target.body.indexOf(anchor);
+  if (!target.body.includes(title) && start >= 0 && end > start && position >= 0
+      && target.body.indexOf(anchor, position + anchor.length) === -1) {
+    target.body = target.body.slice(0, position) + source.body.slice(start, end) + target.body.slice(position);
+  }
+  // Persist with an edited draft so a later intentional deletion stays deleted.
+  target._tailwindExplanation202611 = true;
+}
+
 // Keep nine-topic browser edits and ordering while adopting updated explanations
 // only where a field still matches the previous published default.
 export function upgradeNineDefaults(value, baseCourse) {
   if (!Array.isArray(value?.lessons) || value.lessons.length !== 9 || !Array.isArray(baseCourse?.lessons)) return value;
   let updated = null;
-  for (const id of ['web-coding', 'web', 'templates']) {
+  for (const id of ['ide', 'web-coding', 'web-tools', 'web', 'templates']) {
     const index = value.lessons.findIndex(item => item?.id === id);
     const current = value.lessons[index];
     const latest = baseCourse.lessons.find(item => item?.id === id);
-    const previous = previousNineDefault[id];
+    const previous = previousNineDefault[id] || previousIdeToolsDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;
     // Both released nine-topic versions are possible browser draft baselines.
@@ -166,6 +185,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     // move forward without replacing fields the author changed.
     const baselines = id === 'web' ? [previous, previousLiveWebDefault] : [previous];
     const merged = baselines.reduce((lesson, baseline) => mergeLesson(lesson, baseline, latest), current);
+    if (id === 'web-tools') addTailwindExplanation(merged, latest);
     if (!equal(current, merged)) {
       updated ||= clone(value);
       updated.lessons[index] = merged;

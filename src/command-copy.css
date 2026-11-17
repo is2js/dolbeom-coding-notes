@@ -1,6 +1,16 @@
 .copyable-code { margin: 1.1em 0; min-width: 0; border: 1px solid #30363f; border-radius: 10px; background: #111418; color: #e6edf3; box-shadow: 0 5px 16px #18213d0b; overflow: hidden; }
 .copyable-code pre, .markdown-body .copyable-code pre { min-width: 0; margin: 0; border: 0; border-radius: 0; background: transparent; color: #e6edf3; padding: 12px 14px; overflow-x: auto; white-space: pre; }
 .copyable-code pre code { padding: 0; background: transparent; color: inherit; white-space: pre; word-break: normal; overflow-wrap: normal; }
+/* Calm, readable syntax colours on the shared dark code surface. The selectors
+   are limited to code contents so toolbars and copy controls keep their states. */
+.copyable-code pre code :is(.hljs-tag, .hljs-name, .hljs-selector-tag, .hljs-keyword, .hljs-selector-pseudo) { color: #a2c9ee; }
+.copyable-code pre code :is(.hljs-attr, .hljs-attribute, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id) { color: #e9c68e; }
+.copyable-code pre code :is(.hljs-string, .hljs-regexp, .hljs-addition) { color: #b5dbbc; }
+.copyable-code pre code :is(.hljs-number, .hljs-literal, .hljs-symbol, .hljs-bullet) { color: #d4b6df; }
+.copyable-code pre code :is(.hljs-built_in, .hljs-title, .hljs-type, .hljs-function) { color: #aad5d4; }
+.copyable-code pre code :is(.hljs-comment, .hljs-quote) { color: #a4b2b2; font-style: italic; }
+.copyable-code pre code :is(.hljs-meta, .hljs-doctag, .hljs-section) { color: #e7bcaa; }
+.copyable-code pre code .hljs-deletion { color: #edb6ab; }
 .command-terminal-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px 6px; color: #a5afbc; font: 10px/1.4 var(--mono); letter-spacing: .09em; }
 .command-terminal-lights { display: inline-block; width: 7px; height: 7px; margin-right: 22px; border-radius: 50%; background: #ce756a; box-shadow: 11px 0 #ccb06d, 22px 0 #78a58b; }
 .command-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; }

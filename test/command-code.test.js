@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { marked } from 'marked';
 import { createCommandRenderer, renderCopyableCode } from '../src/command-code.js';
+import { highlightCourseCode } from '../src/code-highlighting.js';
 
 test('a grouped shell example offers a separate payload for each command without copying comment-only explanations', () => {
   const html=renderCopyableCode('pwd\n# 같은 내용을 읽는 명령\nls\ncat .\\memo.txt','powershell');
@@ -58,4 +59,37 @@ test('carriage-return boundaries display separately and multiline payloads survi
   const html=renderCopyableCode('Get-ChildItem `\r\n  -Name','powershell');
   assert.equal((html.match(/data-copy-value=/g)||[]).length,1);
   assert.ok(html.includes('data-copy-value="Get-ChildItem `&#13;&#10;  -Name"'));
+});
+
+test('HTML, CSS, JavaScript, Python and JSON examples receive language-specific tokens', () => {
+  const examples = [
+    ['html', '<article x-data="{ open: false }"><button @click="open = !open">열기</button></article>', /hljs-(?:name|tag)/],
+    ['css', '.card { padding: 24px; background: white; }', /hljs-(?:attribute|selector-class|number)/],
+    ['javascript', 'const detail = document.querySelector("#detail");', /hljs-keyword/],
+    ['python', 'def greeting(name):\n    return name', /hljs-keyword/],
+    ['json', '{"title": "Git", "minutes": 25}', /hljs-(?:attr|number|string)/],
+  ];
+  for (const [language, source, token] of examples) {
+    const html = renderCopyableCode(source, language);
+    assert.match(html, token, language);
+    assert.equal((html.match(/data-copy-kind="block"/g) || []).length, 1, language);
+  }
+});
+
+test('highlighting preserves the exact copy payload, escaping unsafe examples and falling back for unknown fences', () => {
+  const source = '<script>\r\nalert("<img src=x onerror=alert(1)> & 문장");\r\n</script>';
+  const html = renderCopyableCode(source, 'html');
+  assert.ok(html.includes('data-copy-value="&lt;script&gt;&#13;&#10;alert(&quot;&lt;img src=x onerror=alert(1)&gt; &amp; 문장&quot;);&#13;&#10;&lt;/script&gt;"'));
+  assert.ok(!html.includes('<script>'));
+  assert.ok(!html.includes('<img src='));
+  for (const language of ['', 'unrecognized', 'text']) {
+    assert.equal(highlightCourseCode('<b>one & two</b>', language), '&lt;b&gt;one &amp; two&lt;/b&gt;');
+  }
+  const decode = value => value.replace(/<\/?span(?: class="[^"]*")?>/g, '').replace(/&(amp|lt|gt|quot|#39|#x27);/g, (_, entity) => ({ amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", '#x27': "'" })[entity]);
+  for (const [language, example] of [
+    ['html', source],
+    ['css', '.card { color: red; }\n/* & < */'],
+    ['javascript', 'const item = "한글 & <태그>";\nconsole.log(item);'],
+    ['powershell', 'echo "<value> & test"\r\nGet-Location'],
+  ]) assert.equal(decode(highlightCourseCode(example, language)), example, language);
 });

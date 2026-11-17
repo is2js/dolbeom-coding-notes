@@ -1,5 +1,6 @@
 import { Renderer } from 'marked';
 import { commandUnits, isShellLanguage } from './command-copy-units.js';
+import { highlightCourseCode } from './code-highlighting.js';
 
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const escapeAttribute = value => escape(value).replace(/\r/g,'&#13;').replace(/\n/g,'&#10;');
@@ -13,7 +14,7 @@ function copyButton(text, { whole = false, index = 0 } = {}) {
 
 export function renderCopyableCode(text, language = '') {
   const units = commandUnits(text, language), lines = text.split(/\r\n|\r|\n/);
-  const code = source => `<pre><code${language ? ` class="language-${escape(language.split(/\s+/)[0])}"` : ''}>${escape(source)}</code></pre>`;
+  const code = source => `<pre><code${language ? ` class="language-${escape(language.split(/\s+/)[0])}"` : ''}>${highlightCourseCode(source, language)}</code></pre>`;
   if (!units.length) {
     if (isShellLanguage(language) || !text.trim()) return code(text);
     return `<div class="copyable-code code-block-whole"><div class="code-block-toolbar"><span>${escape(language || '코드')}</span>${copyButton(text,{whole:true})}</div>${code(text)}</div>`;

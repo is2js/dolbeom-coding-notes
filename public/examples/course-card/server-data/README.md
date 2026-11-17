@@ -7,7 +7,7 @@
 3. **SQLite:** Python이 DB 행을 읽어 `/api/sqlite`에서 JSON 응답으로 보내고 같은 카드에 표시합니다.
 4. **Jinja2:** 이번에는 FastAPI가 SQLite 데이터를 템플릿에 넣어 완성된 HTML을 `/sqlite`로 응답합니다. 브라우저는 서버가 만든 HTML을 표시합니다.
 
-Tailwind CSS는 모양, Alpine.js는 브라우저에서 카드 표시와 버튼 펼치기를 돕습니다. 2~4 단계는 Python 서버가 필요합니다. GitHub Pages는 정적 파일을 제공할 뿐 FastAPI나 SQLite를 실행하지 않습니다.
+Tailwind CSS는 모양, Alpine.js는 브라우저에서 카드 표시와 버튼 펼치기를 돕습니다. 2~4 단계는 Python 서버가 필요합니다. GitHub Pages는 정적 파일을 제공할 뿐 FastAPI나 SQLite를 실행하지 않습니다. 이 실습에서는 복사한 폴더에 `practice.py`를 **직접 새로 작성**합니다. `practice_complete.py`는 모든 단계를 끝낸 참고용 완성본이며, `main.py` 역시 기존 완성본이므로 덮어쓰지 않습니다.
 
 ## 1. HTML 안의 JSON 확인
 
@@ -57,23 +57,29 @@ python -c "import sys; print(sys.executable)"
 
 PowerShell에서 스크립트 실행이 차단되어 활성화가 실패할 수 있습니다. 그때는 실행 정책을 바꾸지 않아도 됩니다. 아래의 `python` 대신 매번 `.\.venv\Scripts\python.exe`를 사용하면 같은 가상환경에서 실행할 수 있습니다. 예를 들어 패키지 설치는 `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`입니다. [Python 가상환경 안내](https://docs.python.org/3/library/venv.html)
 
-### 2-4. 필요한 패키지 설치와 서버 실행
+### 2-4. 필요한 패키지 설치와 첫 번째 라우트 작성
 
 활성화한 터미널에서, 인터넷에 연결된 상태로 다음을 실행합니다.
 
 ```powershell
 python -m pip install -r requirements.txt
-python -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-첫 줄은 `requirements.txt`에 적힌 FastAPI·Uvicorn·Jinja2를 **이 가상환경에** 설치합니다. 둘째 줄은 서버를 실행합니다. `main:app`은 `main.py`의 `app`을 뜻하고, `127.0.0.1`은 내 컴퓨터를 가리킵니다. 시작 메시지가 나온 뒤에는 이 터미널을 열어 둡니다. 패키지 설치에 실패했다면 인터넷 연결과 Python·pip 오류 메시지를 먼저 확인하세요.
+이 명령은 `requirements.txt`에 적힌 FastAPI·Uvicorn·Jinja2를 **이 가상환경에** 설치합니다. 패키지 설치에 실패했다면 인터넷 연결과 Python·pip 오류 메시지를 먼저 확인하세요.
 
-가상환경 활성화에 실패했다면 아래처럼 두 명령에 가상환경의 Python 경로를 직접 사용하세요.
+가상환경 활성화에 실패했다면 아래처럼 가상환경의 Python 경로를 직접 사용하세요.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
+
+VS Code에서 이 복사본 안에 새 파일 `practice.py`를 만들고 [강의 본문의 첫 번째 서버 코드](https://is2js.github.io/dolbeom-coding-notes/#/lesson/templates/section-backend-python)를 입력해 저장합니다. 이미 `practice.py`가 있다면 덮어쓰지 말고 새 연습 폴더에서 시작합니다. 첫 코드는 `FastAPI()`로 앱을 만들고, `/static`에 HTML 폴더를 연결하며, `/api/dict` 요청에 `sample_data.py`의 Python 데이터를 반환합니다.
+
+```powershell
+python -m uvicorn practice:app --host 127.0.0.1 --port 8000
+```
+
+`practice:app`은 **`practice.py` 안의 `app`**을 뜻하며 `127.0.0.1`은 내 컴퓨터를 가리킵니다. 시작 메시지가 나온 뒤에는 이 터미널을 열어 둡니다. 가상환경을 활성화하지 않았다면 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다.
 
 서버를 중지할 때는 서버가 실행 중인 터미널을 선택하고 `Ctrl+C`를 누릅니다. 활성화한 가상환경에서 나갈 때는 서버를 중지한 뒤 `deactivate`를 입력합니다. 포트 `8000`을 이미 사용 중이면 `--port 8001`처럼 다른 포트를 정하고 브라우저 주소도 같은 번호로 바꿉니다. [FastAPI 서버 실행 안내](https://fastapi.tiangolo.com/deployment/manually/)
 
@@ -92,6 +98,8 @@ pwd
 
 같은 폴더의 `courses.sqlite3`는 DB 파일입니다. `lessons` 표에 데이터가 없을 때만 카드 행을 넣고, 이미 행이 있으면 덮어쓰거나 중복하지 않습니다. Python의 `sqlite3`는 표준 라이브러리라 별도 DB 서버가 필요하지 않습니다. [SQLite 공식 안내](https://docs.python.org/3/library/sqlite3.html)
 
+[강의의 두 번째 코드](https://is2js.github.io/dolbeom-coding-notes/#/lesson/templates/section-backend-sqlite)를 `practice.py` **맨 아래에 추가**해 DB를 읽는 함수와 `/api/sqlite` 경로를 만듭니다. 파일을 저장하고 서버 터미널에서 `Ctrl+C`로 중지한 뒤 `python -m uvicorn practice:app --host 127.0.0.1 --port 8000`으로 다시 켭니다. 활성화하지 않은 터미널에서는 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다.
+
 [SQLite 데이터 카드](http://127.0.0.1:8000/static/03-sqlite-api.html)를 열면 같은 HTML 카드가 이번에는 `/api/sqlite`에서 DB 행을 JSON으로 받아 표시합니다. DB를 만들기 전이라면 준비 상태를 확인하라는 문구가 표시됩니다. 행을 추가한 뒤 새로고침합니다.
 
 ```powershell
@@ -102,6 +110,6 @@ pwd
 
 ## 4. Jinja2 템플릿으로 변환
 
-[서버 템플릿 카드](http://127.0.0.1:8000/sqlite)를 엽니다. FastAPI가 같은 SQLite 행을 읽어 `templates/cards.html`에 전달하고, Jinja2가 카드 구조를 반복한 **완성된 HTML**을 서버에서 만듭니다. 이 주소는 브라우저에서 카드 데이터를 fetch해 HTML을 조립하는 대신 서버가 만든 HTML을 받습니다. Alpine 버튼 동작은 HTML을 받은 뒤 브라우저에서 실행됩니다. [FastAPI 템플릿 문서](https://fastapi.tiangolo.com/advanced/templates/)
+[강의의 세 번째 코드](https://is2js.github.io/dolbeom-coding-notes/#/lesson/templates/section-web-jinja)를 `practice.py` **맨 아래에 추가**해 템플릿과 `/sqlite` 경로를 연결하고 저장한 뒤 서버를 다시 켭니다. [서버 템플릿 카드](http://127.0.0.1:8000/sqlite)를 엽니다. FastAPI가 같은 SQLite 행을 읽어 `templates/cards.html`에 전달하고, Jinja2가 카드 구조를 반복한 **완성된 HTML**을 서버에서 만듭니다. 이 주소는 브라우저에서 카드 데이터를 fetch해 HTML을 조립하는 대신 서버가 만든 HTML을 받습니다. Alpine 버튼 동작은 HTML을 받은 뒤 브라우저에서 실행됩니다. [FastAPI 템플릿 문서](https://fastapi.tiangolo.com/advanced/templates/)
 
 `/api/sqlite`와 `/sqlite`는 같은 DB를 읽지만 전자는 JSON, 후자는 HTML을 응답합니다. DB가 없으면 `seed.py`를 실행하라는 오류가 나옵니다. 기존 파일을 지우지 말고 원인을 확인하세요. 실습은 로컬 예시이며 계정·인증이나 운영 배포 구성을 포함하지 않습니다.

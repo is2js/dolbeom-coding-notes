@@ -17,26 +17,65 @@ VS Code의 Live Server 확장이 있다면 해당 파일을 우클릭해 **Open 
 
 ## 2. FastAPI 준비와 Python 데이터
 
-`server-data` 폴더를 통째로 별도의 연습 위치에 복사하고 VS Code에서 폴더를 엽니다. Python 3.10 이상이 없다면 [Python Windows 설치 안내](https://docs.python.org/3/using/windows.html)를 확인해 설치합니다. 패키지 설치 시 인터넷이 필요합니다.
+### 2-1. Python 확인과 설치
 
-VS Code의 통합 PowerShell에서 `pwd`와 `ls`로 현재 폴더와 파일을 확인합니다. `pwd`는 Windows PowerShell의 `Get-Location`, `ls`는 `Get-ChildItem` 기본 별칭입니다. cmd에서는 위치 확인에 인수 없는 `cd`, 목록 확인에 `dir`을, macOS/Linux 기본 셸에서는 `pwd`, `ls`를 씁니다.
+이 예제는 **Windows와 Python 3.10 이상**을 기준으로 설명합니다. PowerShell에서 다음 명령으로 설치된 버전을 확인합니다.
+
+```powershell
+py -3 --version
+```
+
+`Python 3.12.5`처럼 `3.10` 이상의 버전이 나오면 다음 단계로 진행합니다. 숫자는 설치된 버전에 따라 다릅니다. `py`를 찾지 못하면 `python --version`도 실행해 보세요. 이 명령으로 Python 3.10 이상이 확인되면 아래 가상환경 생성 명령에서 `py -3` 대신 `python`을 사용합니다.
+
+Python이 없거나 버전이 낮다면 [Python 공식 다운로드](https://www.python.org/downloads/windows/)에서 Windows용 Python을 설치한 뒤 터미널을 새로 열고 버전을 다시 확인합니다. 설치 화면과 명령 등록 방법은 설치 방식에 따라 달라질 수 있습니다. [Windows에서 Python 사용하기](https://docs.python.org/3/using/windows.html)
+
+### 2-2. 실습 폴더 확인
+
+강의노트 저장소에서 `public/examples/course-card/server-data` 폴더를 **통째로 별도의 연습 위치에 복사**하고, VS Code에서 복사한 `server-data` 폴더를 엽니다. VS Code 메뉴 **터미널 → 새 터미널**에서 PowerShell을 열고 다음을 실행합니다.
 
 ```powershell
 pwd
 ls
-py -3 --version
 Test-Path .\.venv
 ```
 
-`main.py`, `sample_data.py`, `requirements.txt`, `templates`, `static`이 보이고 `Test-Path`가 `False`일 때만 다음을 실행합니다. `Test-Path`에는 PowerShell 기본 별칭이 없습니다. cmd의 존재 확인은 `if exist .venv echo 존재함`, macOS/Linux의 `test -e .venv`로 할 수 있으나 출력은 다릅니다. `.venv`가 이미 있으면 지우거나 덮어쓰지 말고 다른 연습 폴더를 씁니다.
+`pwd`는 현재 위치, `ls`는 파일 목록을 보여 줍니다. Windows PowerShell에서는 각각 `Get-Location`, `Get-ChildItem`의 기본 별칭입니다. cmd에서는 각각 인수 없는 `cd`, `dir`을 쓰고, macOS/Linux 기본 셸에서는 `pwd`, `ls`를 사용합니다. 같은 이름이라도 셸마다 옵션과 출력이 다를 수 있습니다.
+
+목록에 `main.py`, `sample_data.py`, `requirements.txt`, `templates`, `static`이 보이는지 확인하세요. `Test-Path`는 `.venv`가 있으면 `True`, 없으면 `False`를 표시합니다. 이 명령에는 PowerShell 기본 별칭이 없습니다. cmd에서는 `if exist .venv echo 존재함`, macOS/Linux에서는 `test -e .venv`로 존재 여부를 확인할 수 있지만 출력 방식은 다릅니다. **`False`일 때만** 다음 단계에서 가상환경을 만듭니다. 이미 존재하면 삭제하거나 덮어쓰지 말고 다른 연습 폴더를 사용합니다.
+
+### 2-3. 가상환경 만들기와 켜기
+
+가상환경은 이 프로젝트에 필요한 Python 패키지를 다른 프로젝트와 나누어 두는 폴더입니다. FastAPI 실행에 무조건 필요한 것은 아니지만, 패키지 버전이 섞이지 않도록 이 실습에서 사용합니다. 같은 `server-data` 폴더의 PowerShell에서 실행합니다.
 
 ```powershell
 py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -c "import sys; print(sys.executable)"
+```
+
+첫 줄은 Python에 포함된 `venv` 기능으로 `.venv` 폴더를 만듭니다. 둘째 줄은 **현재 터미널**에 가상환경을 활성화합니다. 보통 입력 줄 앞에 `(.venv)`가 표시됩니다. 셋째 줄의 경로 끝이 `server-data\.venv\Scripts\python.exe`인지 확인하세요. `py` 대신 `python --version`으로 확인한 경우 첫 줄을 `python -m venv .venv`로 바꿉니다.
+
+PowerShell에서 스크립트 실행이 차단되어 활성화가 실패할 수 있습니다. 그때는 실행 정책을 바꾸지 않아도 됩니다. 아래의 `python` 대신 매번 `.\.venv\Scripts\python.exe`를 사용하면 같은 가상환경에서 실행할 수 있습니다. 예를 들어 패키지 설치는 `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`입니다. [Python 가상환경 안내](https://docs.python.org/3/library/venv.html)
+
+### 2-4. 필요한 패키지 설치와 서버 실행
+
+활성화한 터미널에서, 인터넷에 연결된 상태로 다음을 실행합니다.
+
+```powershell
+python -m pip install -r requirements.txt
+python -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
+
+첫 줄은 `requirements.txt`에 적힌 FastAPI·Uvicorn·Jinja2를 **이 가상환경에** 설치합니다. 둘째 줄은 서버를 실행합니다. `main:app`은 `main.py`의 `app`을 뜻하고, `127.0.0.1`은 내 컴퓨터를 가리킵니다. 시작 메시지가 나온 뒤에는 이 터미널을 열어 둡니다. 패키지 설치에 실패했다면 인터넷 연결과 Python·pip 오류 메시지를 먼저 확인하세요.
+
+가상환경 활성화에 실패했다면 아래처럼 두 명령에 가상환경의 Python 경로를 직접 사용하세요.
+
+```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-`py`가 없다면 설치한 Python 실행 이름과 버전을 확인합니다. `main:app`은 `main.py`에 만든 `app`이며 `127.0.0.1`은 내 컴퓨터를 가리킵니다. 서버 종료는 실행 중인 터미널에서 `Ctrl+C`입니다. 포트 8000을 이미 사용 중이면 서버와 브라우저 주소에서 같은 다른 포트를 선택합니다.
+서버를 중지할 때는 서버가 실행 중인 터미널을 선택하고 `Ctrl+C`를 누릅니다. 활성화한 가상환경에서 나갈 때는 서버를 중지한 뒤 `deactivate`를 입력합니다. 포트 `8000`을 이미 사용 중이면 `--port 8001`처럼 다른 포트를 정하고 브라우저 주소도 같은 번호로 바꿉니다. [FastAPI 서버 실행 안내](https://fastapi.tiangolo.com/deployment/manually/)
 
 브라우저에서 [Python 데이터 카드](http://127.0.0.1:8000/static/02-dict-api.html)를 열고, 별도 탭에서 [Python 데이터 JSON 응답](http://127.0.0.1:8000/api/dict)을 살펴봅니다. `sample_data.py`에는 Python 리스트 안에 카드별 딕셔너리가 있습니다. FastAPI가 Python 데이터를 JSON 응답으로 만들고, HTML이 `fetch('/api/dict')`로 받아 카드를 채웁니다. Python 파일을 수정했다면 이 예제의 서버를 중지·재시작한 뒤 새로고침합니다.
 

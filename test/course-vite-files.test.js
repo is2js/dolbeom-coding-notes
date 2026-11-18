@@ -9,9 +9,12 @@ const normalize = text => text.replace(/\r\n/g, '\n').trim();
 test('frontend lesson introduces the example structure and explains the actual package.json', () => {
   const structure = body.match(/```text\n([\s\S]*?)\n```/);
   assert.ok(structure, 'missing example project structure');
-  for (const name of ['index.html', 'style.css', 'script.js', 'package.json', 'package-lock.json', 'README.md']) {
+  for (const name of ['index.html', 'style.css', 'script.js', 'package.json', 'package-lock.json']) {
     assert.ok(structure[1].includes(name), name);
   }
+  assert.doesNotMatch(body, /README\.md/i);
+  assert.match(body, /scripts\.dev/);
+  assert.match(body, /npm run dev/);
   assert.match(body, /https:\/\/github\.com\/is2js\/course-card-vite-example/);
 
   const start = body.indexOf('**`package.json`: 프로젝트의 약속**');

@@ -7,6 +7,7 @@ import { previousIdeToolsDefault } from './previous-ide-tools-default.js';
 import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
 import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.js';
+import { previousViteVisualDefault } from './previous-vite-visual-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -224,7 +225,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     // Apply each published baseline independently so untouched fields from
     // any release update without replacing the author's edited fields.
     const baselines = [previous];
-    if (id === 'web') baselines.push(previousLiveWebDefault);
+    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault);
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);
     if (id === 'templates') baselines.push(previousFastapiRoutesDefault);

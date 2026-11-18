@@ -1,3 +1,5 @@
+import { brandIconPaths } from './brand-icon-paths.js';
+
 // Crisp native SVG explanations: one instructional scene for every section.
 // Only packets, cursors and emphasis layers move; the complete diagram stays readable.
 const c = {
@@ -49,6 +51,14 @@ function arrow(prefix, x1, y1, x2, y2, { orange = false, dashed = false, delay =
     + `<g class='art-motion ${prefix}-packet' style='--art-dx:${x2 - x1}px;--art-dy:${y2 - y1}px;animation-delay:${delay}s'>${circle(x1, y1, 5.5, color, c.paper, 2)}</g>`;
 }
 const emphasis = (prefix, body, delay = 0) => `<g class='art-motion ${prefix}-emphasis' style='animation-delay:${delay}s'>${body}</g>`;
+// Inlined, locally bundled vectors remain crisp in enlargement and do not make
+// a third-party request during lessons. See DESIGN_REFERENCES.md for credits.
+function brandIcon(name,x,y,size) {
+  if (name === 'vue') return `<svg x='${x}' y='${y}' width='${size}' height='${size}' viewBox='0 0 261.76 226.69' aria-hidden='true'><g transform='matrix(1.3333 0 0 -1.3333 -76.311 313.34)'><g transform='translate(178.06 235.01)'><path d='m0 0-22.669-39.264-22.669 39.264h-75.491l98.16-170.02 98.16 170.02z' fill='#41b883'/></g><g transform='translate(178.06 235.01)'><path d='m0 0-22.669-39.264-22.669 39.264h-36.227l58.896-102.01 58.896 102.01z' fill='#aacdd5'/></g></g></svg>`;
+  const fill = {react:'#61dafb',fastapi:'#4ce2cb',flask:'#fffdf6',django:'#e1f1e1',spring:'#8bd75e'}[name];
+  return `<svg x='${x}' y='${y}' width='${size}' height='${size}' viewBox='0 0 24 24' aria-hidden='true'><path d='${brandIconPaths[name]}' fill='${fill}'/></svg>`;
+}
+const logoCredit = () => text(380, 538, 'Simple Icons · Vue © Evan You / CC BY 4.0 · creativecommons.org/licenses/by/4.0', 12, c.muted, 'middle', 550);
 function frame(prefix, heading, body, caption) {
   return `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 550' class='topic-art-svg section-art-svg ${prefix}' aria-hidden='true' focusable='false'>
     <defs>
@@ -340,18 +350,23 @@ function javascriptCardPractice() {
 
 function localAndRemote() {
   const p='sa-web-map';
-  return frame(p,'브라우저가 만드는 화면',`
+  return frame(p,'프론트엔드 · 브라우저 화면',`
     ${panel(45,107,287,301,'화면을 구성하는 파일',c.pale)}
-    ${pill(65,166,247,'HTML · 내용',c.paper,21)}
-    ${pill(65,231,247,'CSS · 모양',c.cream,21)}
-    ${pill(65,296,247,'JavaScript · 동작',c.paper,21)}
+    ${pill(65,160,247,'HTML · 내용',c.paper,21)}
+    ${pill(65,212,247,'CSS · 모양',c.cream,21)}
+    ${pill(65,264,247,'JavaScript · 동작',c.paper,21)}
+    ${rect(65,322,117,54,c.white,7,c.muted,2)}${rect(74,331,36,36,c.ink,6,c.ink,1.8)}
+    ${brandIcon('react',79,336,26)}${text(119,356,'React',17)}
+    ${rect(195,322,117,54,c.white,7,c.muted,2)}${rect(204,331,36,36,c.ink,6,c.ink,1.8)}
+    ${brandIcon('vue',209,336,26)}${text(249,356,'Vue',18)}
     ${arrow(p,344,254,392,254)}
     ${panel(405,107,309,301,'브라우저 · 화면')}
     ${rect(432,174,254,203,c.pale,8,c.teal,2)}
     ${text(453,219,'Git 강의 카드',25)}${rect(452,241,148,44,c.paper,6,c.teal,2)}
     ${text(526,270,'설명 보기',20,c.ink,'middle')}${lines(453,307,[205,157,182],c.sage,18,5)}
     ${emphasis(p,rect(447,236,158,54,'none',7,c.orange,3))}
-  `,'사용자가 보고 누르는 화면이 프론트엔드입니다');
+    ${logoCredit()}
+  `,'기본 기술이나 React · Vue로 사용자 화면을 만듭니다');
 }
 
 function webResponsibilities() {
@@ -369,7 +384,7 @@ function webResponsibilities() {
     ${text(201,361,'저장하면 화면 갱신',19,c.muted,'middle')}
     ${panel(405,112,309,281,'Vite · 개발 도구',c.cream)}
     ${card(428)}
-    ${text(560,331,'터미널에서 직접 실행',20,c.ink,'middle')}
+    ${text(560,331,'실행 명령 읽어보기',20,c.ink,'middle')}
     ${text(560,361,'npm run dev',20,c.teal,'middle',650,true)}
     ${pill(155,415,450,'이번 카드 실습: Live Server',c.pale,21)}
     ${emphasis(p,check(329,162))}
@@ -378,17 +393,30 @@ function webResponsibilities() {
 
 function serverToBrowser() {
   const p='sa-web-html';
-  return frame(p,'브라우저와 개발 서버가 주고받는 것',`
-    ${panel(48,118,252,262,'내 브라우저',c.pale)}
-    ${rect(70,185,209,152,c.paper,8)}${text(89,228,'Git',30)}
-    ${rect(89,249,137,41,c.cream,6,c.teal,2)}${text(158,277,'설명 보기',20,c.ink,'middle')}
-    ${server(501,162,135,170)}${text(568,129,'Live Server',24,c.ink,'middle')}
-    ${arrow(p,312,185,483,185)}${text(395,163,'파일 요청',21,c.teal,'middle')}
-    ${arrow(p,483,269,312,269,{orange:true,delay:1})}
-    ${text(397,305,'HTML · CSS · JS',19,c.orange,'middle')}
-    ${pill(70,411,218,'화면 표시 · 동작',c.pale,20)}
-    ${pill(457,411,222,'파일 제공',c.cream,21)}
-  `,'localhost는 현재 컴퓨터 자신을 가리킵니다');
+  const badge=(x,y,icon,name)=>rect(x,y,119,41,c.white,7,c.muted,1.7)
+    +rect(x+6,y+5,31,31,c.ink,5,c.ink,1.5)+brandIcon(icon,x+10,y+9,23)
+    +text(x+44,y+27,name,16,c.ink,'start',700);
+  return frame(p,'프론트엔드와 백엔드의 역할',`
+    ${panel(33,100,300,302,'프론트엔드 · 브라우저',c.pale)}
+    ${rect(53,164,257,102,c.white,7,c.muted,2)}
+    ${text(70,200,'Git 강의 카드',23)}${rect(70,215,120,33,c.pale,5,c.teal,1.6)}
+    ${text(130,238,'설명 보기',17,c.ink,'middle')}${lines(205,218,[82,59],c.sage,15,4)}
+    ${text(55,293,'화면을 만드는 선택지',18,c.muted)}
+    ${badge(54,309,'react','React')}${badge(186,309,'vue','Vue')}
+    ${text(183,379,'기본 HTML · CSS · JS도 가능',17,c.muted,'middle')}
+    ${panel(427,100,300,302,'백엔드 · 서버',c.cream)}
+    ${text(446,164,'Python',19,c.ink,'start',750,true)}
+    ${badge(446,176,'fastapi','FastAPI')}${badge(579,176,'flask','Flask')}
+    ${badge(446,230,'django','Django')}
+    ${text(446,299,'Java',19,c.ink,'start',750,true)}
+    ${badge(446,311,'spring','Spring')}
+    ${text(642,338,'요청 처리',18,c.muted,'middle')}
+    ${text(642,365,'데이터 준비',18,c.muted,'middle')}
+    ${arrow(p,346,197,414,197)}${text(380,177,'요청',18,c.teal,'middle')}
+    ${arrow(p,414,287,346,287,{orange:true,delay:1})}${text(380,319,'응답',18,c.orange,'middle')}
+    ${pill(169,425,422,'Live Server는 화면 파일 확인 도구',c.pale,18)}
+    ${logoCredit()}
+  `,'각 영역의 도구는 여러 선택지 중에서 고릅니다');
 }
 
 function htmlJsonCard() {
@@ -555,9 +583,9 @@ export const webSectionScenes = {
   'tools-html': {title:'HTML: 강의 카드의 내용과 구조 만들기',description:'VS Code에서 작성하는 index.html 본문의 h1 제목, button 버튼, p 설명이 같은 순서로 브라우저에 표시되는 구조를 비교합니다. 버튼의 속성은 그림에서 생략한 코드 일부입니다.',svg:htmlCardPractice()},
   'tools-css': {title:'CSS: 같은 카드에 색과 여백 더하기',description:'style.css의 padding 24px, 배경색과 둥근 모서리가 Git 카드에 적용되고 안쪽 여백이 생기는 모습을 보여 줍니다.',svg:cssCardPractice()},
   'tools-javascript': {title:'JavaScript: 버튼으로 설명 표시하기',description:'script.js의 클릭 이벤트와 hidden 상태 전환 코드 일부를 보여 주며, Git 카드 버튼을 누르기 전 접힌 설명과 누른 뒤 펼쳐진 설명을 비교합니다.',svg:javascriptCardPractice()},
-  'web-map': {title:'프론트엔드란? 브라우저에서 보이고 움직이는 화면',description:'HTML의 내용, CSS의 모양과 JavaScript의 동작이 브라우저의 강의 카드 화면에 나타나는 과정을 보여 줍니다.',svg:localAndRemote()},
-  'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'같은 강의 카드를 두 화면에 나란히 보여 줍니다. 실습에서는 VS Code Live Server를 사용하며, Vite는 프로젝트에 따라 터미널에서 직접 실행하는 별도 선택지입니다.',svg:webResponsibilities()},
-  'web-html': {title:'브라우저와 서버: 화면 요청과 백엔드의 역할',description:'내 브라우저가 Live Server에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 브라우저에서 표시하고 실행합니다.',svg:serverToBrowser()},
+  'web-map': {title:'프론트엔드란? 브라우저에서 보이고 움직이는 화면',description:'HTML·CSS·JavaScript 또는 React와 Vue 같은 선택지로 사용자가 보는 브라우저 화면을 구성합니다.',svg:localAndRemote()},
+  'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'같은 강의 카드를 두 화면에 나란히 보여 줍니다. 실습에서는 VS Code Live Server를 사용하며 Vite는 명령만 읽어 보는 별도 선택지입니다.',svg:webResponsibilities()},
+  'web-html': {title:'브라우저와 서버: 프론트엔드와 백엔드 비교',description:'프론트엔드의 React와 Vue, 백엔드의 Python FastAPI·Flask·Django와 Java Spring을 선택지로 구분하며 브라우저 요청과 서버 응답을 비교합니다.',svg:serverToBrowser()},
   'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
   'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'같은 FastAPI 주소에서 정적 화면과 API를 제공하고 Python 딕셔너리 목록을 JSON으로 보내 브라우저가 fetch로 읽습니다.',svg:pythonDictionaryApi()},
   'backend-sqlite': {title:'SQLite 데이터베이스의 카드 가져오기',description:'FastAPI가 SQLite 데이터베이스의 행을 조회해 JSON으로 응답하고 브라우저가 카드에 표시합니다.',svg:sqliteApi()},

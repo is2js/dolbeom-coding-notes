@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/section-scenes.js';
+import { brandIconPaths } from '../src/brand-icon-paths.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
   assert.equal(Object.keys(sectionScenes).length,41);
@@ -35,9 +36,16 @@ test('frontend and backend illustrations distinguish the server used in each ste
   assert.match(compare.svg, /Vite/);
   assert.match(compare.svg, /이번 카드 실습: Live Server/);
   assert.equal((compare.svg.match(/Git 강의 카드/g) || []).length, 2);
-  assert.match(compare.svg, /터미널에서 직접 실행/);
+  assert.match(compare.svg, /실행 명령 읽어보기/);
   assert.match(compare.description, /별도 선택지/);
-  assert.match(sectionScenes['web-html'].svg, /Live Server/);
+  const roles = sectionScenes['web-html'];
+  for (const name of ['React', 'Vue', 'Python', 'FastAPI', 'Flask', 'Django', 'Java', 'Spring', '요청', '응답', 'Live Server']) assert.ok(roles.svg.includes(name), name);
+  for (const name of ['react', 'fastapi', 'flask', 'django', 'spring']) assert.ok(roles.svg.includes(brandIconPaths[name]), `${name} logo`);
+  assert.match(roles.svg, /Evan You \/ CC BY 4\.0/);
+  assert.match(roles.svg, /#41b883/);
+  assert.match(roles.description, /프론트엔드.*React.*Vue.*백엔드.*FastAPI.*Flask.*Django.*Spring/);
+  assert.match(sectionScenes['web-map'].svg, /React/);
+  assert.match(sectionScenes['web-map'].svg, /Vue/);
   const api = sectionScenes['backend-python'];
   assert.match(api.svg, /FastAPI · :8000/);
   assert.match(api.svg, /브라우저 · :8000/);

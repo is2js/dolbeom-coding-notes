@@ -41,6 +41,12 @@
 - **Git 협업 과정 그림**, 확인일 2026년 11월 11일: [그림판으로 보는 Git 협업 기록](https://blog.chojaeseong.com/git/%ED%98%91%EC%97%85/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0/%EC%9A%B0%ED%85%8C%EC%BD%94/2022/02/17/git_%EA%B7%B8%EB%A6%BC%ED%8C%90%EC%9C%BC%EB%A1%9C_%EB%B3%B4%EB%8A%94_%ED%98%91%EC%97%85%EB%AF%B8%EC%85%98%28%EC%99%84%29.html). 원격 저장소와 각 작업자의 로컬 저장소를 영역으로 나누고 작업과 이동 방향을 단계별로 보여 주는 방식을 참고했습니다. GitHub 강의의 원격 연결·전송 그림에 적용하며, 그림은 현재 강의의 크림·세이지 SVG로 다시 만듭니다.
 - 원문은 fork와 여러 원격을 다루지만 입문 실습에서는 내 로컬과 GitHub의 `origin` 관계부터 표현합니다. `fetch`는 원격 정보와 기록을 가져오며 현재 작업 파일에 자동으로 병합하지 않는다는 점은 [Git 공식 원격 저장소 안내](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes)로 확인해 설명합니다.
 
+### 웹 기술 로고 배지
+
+- 확인일: 2026년 11월 18일. [is2js의 GitHub 프로필](https://github.com/is2js)의 기술 아이콘 배열을 참고하여 프론트엔드·백엔드 장면에 각 기술을 설명하는 작은 배지를 만들었습니다. 기술 로고는 해당 기술을 식별하기 위해 표시하며, 로고의 사용이 각 프로젝트의 추천·제휴를 뜻하지 않습니다.
+- React, FastAPI, Flask, Django, Spring: [Simple Icons의 17cd4ee 버전](https://github.com/simple-icons/simple-icons/tree/17cd4ee07612198a1d8777a060d4100423762a8b/icons)에서 각 기술의 SVG 경로를 가져와 `src/brand-icon-paths.js`에 포함했습니다. 이 아이콘들의 개별 라이선스 예외는 해당 버전의 [아이콘 메타데이터](https://github.com/simple-icons/simple-icons/blob/17cd4ee07612198a1d8777a060d4100423762a8b/data/simple-icons.json)에 표시되어 있지 않으며, 모음의 기본 라이선스는 [CC0 1.0](https://github.com/simple-icons/simple-icons/blob/17cd4ee07612198a1d8777a060d4100423762a8b/LICENSE.md)입니다. 카드 크기에 맞게 크기와 표시 색상을 변경했습니다. 브랜드명과 로고의 상표권은 각 권리자에게 있습니다.
+- Vue.js: [Evan You의 Vue.js Logo 2.svg](https://commons.wikimedia.org/wiki/File:Vue.js_Logo_2.svg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Wikimedia Commons가 명시한 이 파일의 이전 라이선스를 사용하고 크기와 내부 색상을 변경했습니다. [Vue의 현재 아트워크 안내](https://github.com/vuejs/art/blob/master/README.md)는 현재 버전에 더 제한적인 조건을 두므로 두 버전을 구분합니다.
+
 ## 구현 기준
 
 - 홈·강의·발표가 하나의 주제 썸네일 매핑을 공유하며 제목이나 순서를 바꿔도 같은 ID의 그림을 사용합니다.
@@ -51,7 +57,7 @@
 - 기본 주제 그림 7개와 소주제 그림 31개를 각각 재생성했습니다. 선명한 남색 윤곽선, 크림색 종이와 세이지색 패널, 청록색·황토색 신호를 조합하고 명령 커서·파일 이동·요청·응답 등 의미가 있는 일부 요소만 움직입니다. 작은 버튼은 긴 코드가 없는 별도 썸네일을 사용합니다.
 - 좌측 도구 바는 코드 작업실·파일 트리·개념 연결·터미널 실습·문서 편집을 나타내는 자체 선형 SVG 아이콘으로 표현합니다. 각 버튼의 기능과 아이콘의 뜻이 일치하도록 구성합니다.
 - 움직임 멈춤, 운영체제의 동작 줄이기 설정, 키보드 초점 표시와 대화상자 초점 복귀를 지원합니다.
-- 외부 로고·그림·3D 모델·코드·강의 원문은 복제하지 않습니다. 최초 디자인 표기를 유지하고 참고한 구성 원칙만 자체 UI에 반영합니다.
+- 참고 사이트의 그림·3D 모델·코드·강의 원문은 복제하지 않습니다. 최초 디자인 표기를 유지하고 참고한 구성 원칙은 자체 UI에 반영합니다. 기술 식별용 로고는 위에 출처와 이용 조건을 기록합니다.
 
 ## 나중에 참고 사이트를 추가할 때
 

@@ -27,36 +27,43 @@
   <div id="app" x-data="courseApp" @click="copyCodeFromEvent($event)" @resize.window.debounce.80ms="fitPreviewOutline()" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home', 'is-design-preview': designPreview, 'is-preview-outline-open': previewOutlineActive && previewOutlineOpen }" x-cloak>
     <a class="skip-link" :inert="previewOutlineOverlay" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
     <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
-      <button class="rail-toggle" :inert="previewOutlineOverlay" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>
-      <button type="button" class="rail-preview-toggle" x-ref="previewOutlineToggle" x-show="previewOutlineAvailable" :aria-expanded="previewOutlineActive && previewOutlineOpen" :aria-controls="previewOutlineActive ? 'preview-outline-panel' : null" title="강의 탐색" @click="togglePreviewOutline()" @keydown.escape="if (previewOutlineActive && previewOutlineOpen) closePreviewOutline(true)">
+      <button class="rail-toggle" x-show="!previewOutlineActive" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>
+      <button type="button" class="rail-preview-toggle" x-ref="previewOutlineToggle" x-show="previewOutlineAvailable && !(previewOutlineActive && previewOutlineOpen)" :aria-expanded="previewOutlineActive && previewOutlineOpen" :aria-controls="previewOutlineActive ? 'preview-outline-panel' : null" title="코스 메뉴" @click="togglePreviewOutline()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h6l2 2h10v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 11h18m-14 4h5"/></svg>
-        <span>강의 탐색</span>
+        <span>코스 메뉴</span>
       </button>
-      <nav class="rail-links" :inert="previewOutlineOverlay">
+      <nav class="rail-links" x-show="!previewOutlineActive">
         <button @click="goIntro()" :class="{active: route === 'home'}" aria-label="소개 홈" title="소개 홈" x-html="workspaceIcon('overview')"></button>
         <button @click="drawer = !drawer" :class="{active: drawer}" aria-label="전체 목차" title="전체 목차" x-html="workspaceIcon('outline')"></button>
         <button @click="route !== 'learn' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="workspaceIcon('concept')"></button>
         <button @click="route !== 'learn' ? goHome('demo') : showLearningDemo()" :class="{active: route === 'learn' && view === 'demo'}" aria-label="관련 예제" title="관련 예제" x-html="workspaceIcon('practice')"></button>
         <button @click="openEditor()" :class="{active: route === 'editor'}" aria-label="강의 편집기" title="강의 편집기" x-html="workspaceIcon('edit')"></button>
       </nav>
-      <div class="rail-signature"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark" aria-hidden="true" x-html="workspaceIcon('mark')"></span></div>
+      <div class="rail-signature" x-show="!previewOutlineActive"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark" aria-hidden="true" x-html="workspaceIcon('mark')"></span></div>
       <div class="preview-outline-backdrop" x-show="previewOutlineOverlay" aria-hidden="true" @click="closePreviewOutline(true)"></div>
       <template x-if="previewOutlineActive">
         <nav id="preview-outline-panel" class="lesson-preview-outline" aria-labelledby="preview-outline-title" x-show="previewOutlineOpen" x-data="{ expandedTopic: lessonId }"
-          x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (previewOutlineOpen && expandedTopic === lessonId && learningPageId) revealPreviewSection($el)" @keydown.escape.stop="closePreviewOutline(true)">
+          x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (route === 'learn' && previewOutlineOpen && expandedTopic === lessonId && learningPageId) revealPreviewSection($el)" @keydown.escape.stop="closePreviewOutline(true)">
           <div class="lesson-preview-outline-heading">
             <div>
-              <h2 id="preview-outline-title">강의 탐색</h2>
-              <small x-text="course.lessons.length + '개 주제'"></small>
+              <h2 id="preview-outline-title">코스 메뉴</h2>
+              <button type="button" class="lesson-preview-original" @click="toggleDesignPreview()">기존 화면으로</button>
             </div>
-            <button type="button" class="lesson-preview-outline-close" aria-label="강의 탐색 닫기" @click="closePreviewOutline(true)" x-html="icon('close')"></button>
+            <button type="button" class="lesson-preview-outline-close" aria-label="코스 메뉴 닫기" @click="closePreviewOutline(true)" x-html="icon('close')"></button>
           </div>
+          <ul class="lesson-preview-shortcuts" aria-label="코스 도구">
+            <li><button type="button" :aria-current="route === 'home' ? 'page' : null" @click="runPreviewMenuAction(() => goIntro())"><span aria-hidden="true" x-html="workspaceIcon('overview')"></span>소개 홈</button></li>
+            <li><button type="button" :aria-current="route === 'learn' && view === 'map' ? 'page' : null" @click="runPreviewMenuAction(() => route === 'learn' ? view = 'map' : goHome())"><span aria-hidden="true" x-html="workspaceIcon('concept')"></span>설명 그림</button></li>
+            <li><button type="button" :aria-current="route === 'learn' && view === 'demo' ? 'page' : null" @click="runPreviewMenuAction(() => route === 'learn' ? showLearningDemo() : goHome('demo'))"><span aria-hidden="true" x-html="workspaceIcon('practice')"></span>관련 예제</button></li>
+            <li><button type="button" :aria-current="route === 'editor' ? 'page' : null" @click="runPreviewMenuAction(() => openEditor())"><span aria-hidden="true" x-html="workspaceIcon('edit')"></span>강의 편집</button></li>
+          </ul>
           <div class="lesson-preview-outline-topics">
+            <h3 class="lesson-preview-topics-title"><span>강의 목차</span><small x-text="course.lessons.length + '개 주제'"></small></h3>
             <ol class="lesson-preview-folders">
               <template x-for="(topic, index) in course.lessons" :key="topic.id">
                 <li :data-topic="topic.id">
-                  <button type="button" class="lesson-preview-folder" :class="{ 'is-current-topic': topic.id === lessonId }"
-                    :aria-current="topic.id === lessonId ? 'location' : null" :aria-expanded="expandedTopic === topic.id" :aria-controls="'preview-folder-' + topic.id"
+                  <button type="button" class="lesson-preview-folder" :class="{ 'is-current-topic': route === 'learn' && topic.id === lessonId }"
+                    :aria-current="route === 'learn' && topic.id === lessonId ? 'location' : null" :aria-expanded="expandedTopic === topic.id" :aria-controls="'preview-folder-' + topic.id"
                     @click="expandedTopic = expandedTopic === topic.id ? null : topic.id">
                     <span class="lesson-preview-folder-icon" aria-hidden="true">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5A1.5 1.5 0 0 1 4 5h5l2 2h9a1.5 1.5 0 0 1 1.5 1.5V17a2 2 0 0 1-2 2H4.5a2 2 0 0 1-2-2Z" fill="var(--folder-fill)"/><path d="M3 10h18m-14 5h4"/></svg>
@@ -69,10 +76,10 @@
                       <ol class="lesson-preview-sections">
                         <template x-for="page in previewPagesFor(topic)" :key="page.id">
                           <li>
-                            <a :href="previewPageAddress(topic.id, page.id)" :aria-current="topic.id === lessonId && page.id === learningPageId ? 'step' : null" @click="selectPreviewSection($event, topic.id, page.id)">
-                              <span class="lesson-preview-section-marker" aria-hidden="true"></span>
+                            <a :href="previewPageAddress(topic.id, page.id)" :aria-current="route === 'learn' && topic.id === lessonId && page.id === learningPageId ? 'step' : null" @click="selectPreviewSection($event, topic.id, page.id)">
+                              <svg class="lesson-preview-section-marker" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5h-5v11h7v-9zM9.5 2.5v2h2"/><path d="M6 7.5h4m-4 2h4"/></svg>
                               <span x-text="navigationPageTitle(page)"></span>
-                              <span class="lesson-preview-current-label" x-show="topic.id === lessonId && page.id === learningPageId" aria-hidden="true">현재</span>
+                              <span class="lesson-preview-current-label" x-show="route === 'learn' && topic.id === lessonId && page.id === learningPageId" aria-hidden="true">현재</span>
                             </a>
                           </li>
                         </template>
@@ -83,6 +90,18 @@
               </template>
             </ol>
           </div>
+          <details class="lesson-preview-progress">
+            <summary><strong class="lesson-preview-progress-title">진행</strong><span class="lesson-preview-progress-total" aria-live="polite" x-text="previewProgressCompleted + ' / ' + course.lessons.length + ' 주제 완료'"></span></summary>
+            <div class="lesson-preview-progress-detail">
+              <p class="lesson-preview-progress-meta"><span>전체 진행률</span><strong x-text="previewProgressPercent + '%'"></strong></p>
+              <p class="lesson-preview-progress-meta" x-show="route === 'learn'"><span>현재 주제 내 위치</span><strong x-text="(learningPageIndex + 1) + ' / ' + learningPages.length"></strong></p>
+              <ol class="lesson-preview-progress-lessons">
+                <template x-for="topic in course.lessons" :key="topic.id">
+                  <li><span x-text="topic.shortTitle"></span><span class="lesson-preview-progress-status" :class="{ 'is-done': completed.includes(topic.id) }" x-text="completed.includes(topic.id) ? '완료' : '미완료'"></span></li>
+                </template>
+              </ol>
+            </div>
+          </details>
         </nav>
       </template>
     </aside>

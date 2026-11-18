@@ -1,0 +1,62 @@
+.lesson-preview-progress {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  border-top: 1px solid #ded4bf;
+  background: #f3eee0;
+  color: #415a4e;
+}
+
+.lesson-preview-progress > summary {
+  display: grid;
+  grid-template-columns: 1fr auto 10px;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 13px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.lesson-preview-progress > summary::-webkit-details-marker { display: none; }
+.lesson-preview-progress > summary:hover { background: #ece9da; }
+.lesson-preview-progress > summary:focus-visible { outline: 2px solid #795b32; outline-offset: -2px; }
+.lesson-preview-progress > summary::after {
+  content: '';
+  justify-self: center;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid;
+  border-bottom: 1.5px solid;
+  transform: translateY(-1px) rotate(45deg);
+}
+
+.lesson-preview-progress[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+.lesson-preview-progress-title { font-size: 12px; font-weight: 740; }
+.lesson-preview-progress-total { font-size: 11px; font-variant-numeric: tabular-nums; }
+.lesson-preview-progress-detail { padding: 0 13px 9px; }
+
+.lesson-preview-progress-meta,
+.lesson-preview-progress-lessons li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 7px;
+  margin: 0;
+  padding: 4px 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.lesson-preview-progress-meta strong { font-variant-numeric: tabular-nums; }
+.lesson-preview-outline .lesson-preview-progress-lessons {
+  max-height: min(24dvh, 160px);
+  margin-top: 4px;
+  padding: 5px 3px 0 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  border-top: 1px solid #ddd8c7;
+}
+
+.lesson-preview-progress-lessons li > span:first-child { color: #46544b; overflow-wrap: anywhere; }
+.lesson-preview-progress-status { flex: none; color: #5d6758; }
+.lesson-preview-progress-status.is-done { color: #355f48; font-weight: 750; }

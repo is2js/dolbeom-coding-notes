@@ -10,8 +10,7 @@
   white-space: nowrap;
 }
 
-.lesson-preview-switch:hover,
-.lesson-preview-switch[aria-pressed='true'] {
+.lesson-preview-switch:hover {
   border-color: #75988b;
   background: #e3eddf;
   color: #284f43;

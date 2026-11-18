@@ -47,6 +47,7 @@ import './case-image-viewer.css';
 import './workspace-rail.css';
 import './topic-navigation.css';
 import './lesson-preview-navigation.css';
+import './lesson-preview-progress.css';
 import './lesson-preview-motion.css';
 import './lesson-preview-scene-details.css';
 import './lesson-preview-topic-details.css';
@@ -127,7 +128,7 @@ Alpine.data('courseApp', () => ({
   designPreview: designPreviewRequested(),
   previewOutlineWide: widePreviewOutline(),
   previewOutlineOpen: widePreviewOutline(),
-  get previewOutlineAvailable() { return this.route === 'learn' && !!this.course && !this.loading; },
+  get previewOutlineAvailable() { return this.route !== 'present' && !!this.course && !this.loading; },
   get previewOutlineActive() { return this.designPreview && this.previewOutlineAvailable; },
   get previewOutlineOverlay() { return this.previewOutlineActive && this.previewOutlineOpen && !this.previewOutlineWide; },
   previewPagesFor: buildLessonFlow,
@@ -153,14 +154,22 @@ Alpine.data('courseApp', () => ({
     this.previewOutlineOpen = false;
     if (restoreFocus) this.$nextTick(() => this.$refs.previewOutlineToggle?.focus({preventScroll:true}));
   },
-  selectPreviewSection(event, topicId, pageId) {
+  async runPreviewMenuAction(action) {
+    const overlay = this.previewOutlineOverlay;
+    if (overlay) this.closePreviewOutline();
+    await action();
+    if (overlay) this.$nextTick(() => this.focusMain({preventScroll:true}));
+  },
+  async selectPreviewSection(event, topicId, pageId) {
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     event.preventDefault();
-    if (!this.previewOutlineWide) {
-      this.closePreviewOutline();
-      this.$nextTick(() => document.getElementById('lesson-main')?.focus({preventScroll:true}));
-    }
-    this.showLesson(topicId, pageId);
+    await this.runPreviewMenuAction(async () => {
+      if (this.route === 'editor' && !await prepareLearningReturn(this.editor)) {
+        this.notify('저장 상태를 확인한 뒤 다시 강의로 돌아가 주세요. 입력한 내용은 편집기에 남아 있습니다.');
+        return;
+      }
+      this.showLesson(topicId, pageId);
+    });
   },
   revealPreviewSection(outline) {
     this.$nextTick(() => {
@@ -175,6 +184,13 @@ Alpine.data('courseApp', () => ({
     });
   },
   completed: [], drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
+  get previewProgressCompleted() {
+    return this.course?.lessons.filter(lesson => this.completed.includes(lesson.id)).length ?? 0;
+  },
+  get previewProgressPercent() {
+    const total = this.course?.lessons.length ?? 0;
+    return total ? Math.round(this.previewProgressCompleted / total * 100) : 0;
+  },
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
@@ -338,6 +354,7 @@ Alpine.data('courseApp', () => ({
     history.replaceState(history.state, '', url);
     this.designPreview = designPreviewRequested();
     this.previewOutlineOpen = this.designPreview && this.previewOutlineWide;
+    if (!this.designPreview) this.$nextTick(() => this.$refs.previewOutlineToggle?.focus({preventScroll:true}));
   },
   showLesson(id,pageId='case') {
     if(!COURSE_IDS.includes(id)) return;
@@ -386,7 +403,7 @@ Alpine.data('courseApp', () => ({
     const address=editorAddress(this.editor.lessonId,this.editor.focusId || 'case');
     if(location.hash !== address)history.replaceState(null,'',address);
   },
-  focusMain() { const main=document.querySelector(this.route==='editor'?(this.editor.uiMode === 'focus' ? '.editor-focus' : '.editor-workspace'):this.route==='present'?'#presentation-main':this.route==='home'?'#intro-main':'#lesson-main');if(main){main.tabIndex=-1;main.focus();} },
+  focusMain(options) { const main=document.querySelector(this.route==='editor'?(this.editor.uiMode === 'focus' ? '.editor-focus' : '.editor-workspace'):this.route==='present'?'#presentation-main':this.route==='home'?'#intro-main':'#lesson-main');if(main){main.tabIndex=-1;main.focus(options);} },
   exportLegacyDraft() {
     if(!this.legacyDraft)return;
     const blob=new Blob([JSON.stringify(this.legacyDraft,null,2)+'\n'],{type:'application/json;charset=utf-8'});

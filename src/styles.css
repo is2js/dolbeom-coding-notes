@@ -91,12 +91,11 @@
 @media (max-width: 480px) { .learning-path-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } .learning-path-step { min-height: 66px; flex-direction: row; align-items: center; padding: 9px 8px; gap: 8px; } .learning-path-number { width: 20px; height: 20px; padding: 0; flex-shrink: 0; } .learning-path-copy strong { font-size: 12px; line-height: 1.55; } .learning-path-copy small { font-size: 9px; } }
 @media (min-width: 1021px) and (max-height: 850px) { .learning-workspace { grid-template-rows: auto minmax(405px, calc(100dvh - 380px)) auto; } }
 @media (max-width: 720px) { .map-stage { overflow: clip; } }
-/* Reading and editing links share the same quiet course palette. */
+/* Reader headings and learning controls. */
 .reader-edit-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
 .reader-edit-heading h3 { margin: 0; font-size: 26px; line-height: 1.5; color: var(--ink); letter-spacing: -.04em; }
-.reader-edit-link { flex-shrink: 0; margin-top: 8px; color: var(--teal); font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
 .learning-path-controls .note-edit-entry { color: #376e61; font-weight: 700; border: 1px solid #b8c9ae; padding: 5px 9px; border-radius: 4px; background: #f4f5e8; }
-@media (max-width: 720px) { .reader-edit-heading { flex-direction: column; gap: 5px; } .reader-edit-heading h3 { font-size: 22px; } .reader-edit-link { margin: 0; } .learning-path-heading { flex-wrap: wrap; } .learning-path-controls { flex-wrap: wrap; } }
+@media (max-width: 720px) { .reader-edit-heading { flex-direction: column; gap: 5px; } .reader-edit-heading h3 { font-size: 22px; } .learning-path-heading { flex-wrap: wrap; } .learning-path-controls { flex-wrap: wrap; } }
 .sample-padding-comparison > div { padding: 24px; }
 @media (max-width: 720px) {
   .map-stage { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 8px; min-height: 0; padding: 300px 0 8px; }

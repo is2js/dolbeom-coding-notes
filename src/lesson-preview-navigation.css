@@ -135,11 +135,8 @@
 
 .lesson-preview-outline ol { margin: 0; padding: 0; list-style: none; }
 .lesson-preview-shortcuts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 4px;
   margin: 0;
-  padding: 7px 8px 8px;
+  padding: 3px 8px 4px;
   border-bottom: 1px solid #ded4bf;
   list-style: none;
 }

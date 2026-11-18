@@ -1,6 +1,5 @@
 .lesson-flow-workspace { display: grid; gap: 22px; padding-bottom: 12px; }
-.lesson-flow-workspace :where(.lesson-flow-fast, .lesson-edit-current, .lesson-current-note > footer button, .lesson-flow-navigation > button) { min-height: 44px; min-width: 44px; }
-.lesson-edit-current { display: inline-flex; align-items: center; }
+.lesson-flow-workspace :where(.lesson-flow-fast, .lesson-current-note > footer button, .lesson-flow-navigation > button) { min-height: 44px; min-width: 44px; }
 .lesson-flow-workspace .learning-path { position: static; }
 /* Reuse the course illustrations by stable topic ID, even if the order changes. */
 .lesson-flow-workspace .learning-path-step, .presentation-topics button { position: relative; isolation: isolate; overflow: hidden; }
@@ -55,7 +54,6 @@
 .lesson-current-note { min-width: 0; border: 1px solid #adc1a8; background: #fcf8ed; border-radius: 8px; padding: 22px; box-shadow: 0 5px 17px #536d4d06; }
 .lesson-current-note > header { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 15px; }
 .lesson-current-label { font-size: 11px; font-weight: 700; color: #4e8270; }
-.lesson-edit-current { font-size: 11px; color: #779078; text-decoration: underline; text-underline-offset: 4px; white-space: nowrap; }
 .lesson-current-note > h2 { font-size: 22px; line-height: 1.55; color: #315448; font-weight: 750; letter-spacing: -.045em; margin: 0 0 14px; word-break: keep-all; overflow-wrap: anywhere; }
 .lesson-current-cue { font-size: 11px; line-height: 1.8; background: #edf0df; color: #71886d; padding: 10px 12px; border-radius: 4px; margin: 0 0 17px; }
 .lesson-current-prose { max-height: min(64vh,690px); min-height: 230px; overflow: auto; scrollbar-width: thin; scrollbar-color: #a8b89e #eee9da; padding-right: 8px; }

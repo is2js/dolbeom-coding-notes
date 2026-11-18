@@ -56,7 +56,10 @@ import './command-copy.css';
 import './prose.css';
 import './markdown-practice.css';
 
-document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
+const canEditCourse = import.meta.env.DEV && ['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname);
+if (canEditCourse) {
+  document.getElementById('editor-host').innerHTML = `<template x-if="editor && editor.working && route === 'editor'">${editorHtml}</template>`;
+}
 document.getElementById('learning-template').innerHTML = lessonHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml).replace('<!-- MARKDOWN_PRACTICE -->', markdownPracticeHtml.replace('PRACTICE_BODY', 'learningPage.section.body'));
 document.getElementById('intro-template').innerHTML = homeHtml;
 document.getElementById('presentation-host').innerHTML = `<template x-if="course && !loading && route === 'present'">${presentationHtml.replace('<!-- SHARED_DEMO -->', demoHtml).replace('<!-- TOPIC_NAVIGATION -->', topicNavigationHtml).replace('<!-- MARKDOWN_PRACTICE -->', markdownPracticeHtml.replace('PRACTICE_BODY', 'presentationPage.section.body'))}</template>`;
@@ -70,7 +73,7 @@ const LAST_KEY = COURSE_STORAGE.last;
 const RECOVERY_KEY = COURSE_STORAGE.recovery;
 const clone = value => JSON.parse(JSON.stringify(value));
 const sameCourse = (a,b) => JSON.stringify(a) === JSON.stringify(b);
-const designPreviewRequested = () => new URLSearchParams(location.search).get('design') === 'preview';
+const usesCurrentDesign = () => new URLSearchParams(location.search).get('design') !== 'legacy';
 const widePreviewOutline = () => window.matchMedia('(min-width: 1120px)').matches;
 function readPreviewVisits() {
   const visits = safeRead(localStorage, COURSE_STORAGE.previewVisits, {});
@@ -129,8 +132,9 @@ Alpine.data('courseApp', () => ({
   ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods, ...caseImageViewerState(), ...caseImageViewerMethods,
   loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
   siteUpdatedAt: __SITE_UPDATED_AT__, siteUpdatedLabel: formatSiteUpdatedAt(__SITE_UPDATED_AT__),
+  canEditCourse,
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,
-  designPreview: designPreviewRequested(),
+  designPreview: usesCurrentDesign(),
   previewOutlineWide: widePreviewOutline(),
   previewOutlineOpen: widePreviewOutline(),
   get previewOutlineAvailable() { return this.route !== 'present' && !!this.course && !this.loading; },
@@ -288,40 +292,10 @@ Alpine.data('courseApp', () => ({
       if (!response.ok) throw new Error(`강의 데이터 응답: ${response.status}`);
       this.baseCourse = validateCourse(await response.json());
       this.course = clone(this.baseCourse);
-      const {stored,recovery,legacyDraft,migratedFromSeven,migratedFromEight,upgradedDefaults} = readCourseDrafts(localStorage,{local:import.meta.env.DEV,baseCourse:this.baseCourse});
-      this.legacyDraft=legacyDraft;
-      if (stored) { try { this.course = validateCourse(stored); this.hasDraft = true; } catch { this.notify('저장된 편집본 형식이 달라 기본 콘텐츠로 열었습니다.'); } }
       const saved = safeRead(localStorage, PROGRESS_KEY, []);
       this.completed = Array.isArray(saved) ? [...new Set(saved.filter(id=>COURSE_IDS.includes(id)))] : [];
       this.previewVisits = readPreviewVisits();
-      this.editor = createEditor({
-        getCourse:()=>clone(this.course), onApply:(data,meta)=>this.applyCourse(data,meta),
-        onReset:()=>this.resetCourse(), toast:message=>this.notify(message), renderMarkdown:markdown,
-        onDraft:data=>this.recordDraft(data,!!(this.editor?.isDirty || this.editor?.hasUnsaved)),
-        onChange:()=>{if(this.editor?.isDirty || this.editor?.hasUnsaved)localSync?.markEdited();},
-      });
-      this.editor.open();
-      // A migrated saved draft may be the only copy of edits made before the
-      // curriculum changed. Reconcile it with the local file instead of silently
-      // treating an older clean recovery as permission to overwrite it.
-      const draft = recovery?.dirty ? recovery.course : (!recovery || ((migratedFromSeven || migratedFromEight || upgradedDefaults) && import.meta.env.DEV)) && stored && !sameCourse(stored,this.baseCourse) ? stored : null;
-      if (import.meta.env.DEV) {
-        localSync = createLocalCourseSync({
-          onState:state=>{ this.syncState=state; },
-          isDirty:()=>!!(this.editor.isDirty || this.editor.hasUnsaved),
-          onRemote:(data,meta)=>this.acceptFileCourse(data,meta),
-        });
-        const connected = await localSync.connect({draft,baseRevision:recovery?.baseRevision});
-        if (connected.restoreDraft && draft) this.restoreWorkingDraft(draft);
-        const poll = ()=>{ if(document.visibilityState!=='hidden')void localSync.poll(); };
-        const pollTimer=setInterval(poll,2000);
-        window.addEventListener('focus',poll);
-        document.addEventListener('visibilitychange',poll);
-        window.addEventListener('pagehide',()=>{clearInterval(pollTimer); if(this.editor.isDirty || this.editor.hasUnsaved)this.recordDraft(this.editor.working,true);},{once:true});
-      } else {
-        this.syncState={mode:'browser',status:'synced',conflict:false,message:'브라우저에 자동 저장됩니다. 공개 강의 반영은 JSON을 프로젝트에 반영한 뒤 수동 배포해 주세요.'};
-        if(draft)this.restoreWorkingDraft(draft);
-      }
+      if (canEditCourse) await this.initCourseEditing();
       this.initPresentation();
       this.initTopicNavigation();
       this.readRoute(true);
@@ -332,8 +306,6 @@ Alpine.data('courseApp', () => ({
           this.syncTopicNavigation();
         });
       }
-      this.$watch('editor.lessonId', () => this.syncEditorAddress());
-      this.$watch('editor.focusId', () => this.syncEditorAddress());
       this.$watch('course.lessons', () => this.syncTopicNavigation());
       window.addEventListener('hashchange', ()=>this.readRoute());
       this.$watch('readerOpen', open=>{
@@ -348,8 +320,41 @@ Alpine.data('courseApp', () => ({
       this.loading = false;
     } catch (e) { this.error = e.message || '실행 서버와 강의 JSON을 확인해 주세요.'; this.loading=false; }
   },
+  async initCourseEditing() {
+    if (!canEditCourse) return;
+    const {stored,recovery,legacyDraft,migratedFromSeven,migratedFromEight,upgradedDefaults} = readCourseDrafts(localStorage,{local:true,baseCourse:this.baseCourse});
+    this.legacyDraft = legacyDraft;
+    if (stored) {
+      try { this.course = validateCourse(stored); this.hasDraft = true; }
+      catch { this.notify('저장된 편집본 형식이 달라 기본 콘텐츠로 열었습니다.'); }
+    }
+    this.editor = createEditor({
+      getCourse:()=>clone(this.course), onApply:(data,meta)=>this.applyCourse(data,meta),
+      onReset:()=>this.resetCourse(), toast:message=>this.notify(message), renderMarkdown:markdown,
+      onDraft:data=>this.recordDraft(data,!!(this.editor?.isDirty || this.editor?.hasUnsaved)),
+      onChange:()=>{if(this.editor?.isDirty || this.editor?.hasUnsaved)localSync?.markEdited();},
+    });
+    this.editor.open();
+    // Reconcile migrated browser drafts with the project file before saving.
+    const needsRecovery = !recovery || migratedFromSeven || migratedFromEight || upgradedDefaults;
+    const draft = recovery?.dirty ? recovery.course : needsRecovery && stored && !sameCourse(stored,this.baseCourse) ? stored : null;
+    localSync = createLocalCourseSync({
+      onState:state=>{ this.syncState=state; },
+      isDirty:()=>!!(this.editor.isDirty || this.editor.hasUnsaved),
+      onRemote:(data,meta)=>this.acceptFileCourse(data,meta),
+    });
+    const connected = await localSync.connect({draft,baseRevision:recovery?.baseRevision});
+    if (connected.restoreDraft && draft) this.restoreWorkingDraft(draft);
+    const poll = ()=>{ if(document.visibilityState!=='hidden')void localSync.poll(); };
+    const pollTimer=setInterval(poll,2000);
+    window.addEventListener('focus',poll);
+    document.addEventListener('visibilitychange',poll);
+    window.addEventListener('pagehide',()=>{clearInterval(pollTimer); if(this.editor.isDirty || this.editor.hasUnsaved)this.recordDraft(this.editor.working,true);},{once:true});
+    this.$watch('editor.lessonId', () => this.syncEditorAddress());
+    this.$watch('editor.focusId', () => this.syncEditorAddress());
+  },
   readRoute(initial=false) {
-    this.designPreview = designPreviewRequested();
+    this.designPreview = usesCurrentDesign();
     this.closeArtViewer({restoreFocus:false});
     if (this.readPresentationRoute(initial)) return;
     this.pausePresentationTimers(); this.rehearsalOpen=false; this.readerOpen=false;
@@ -359,8 +364,8 @@ Alpine.data('courseApp', () => ({
       document.title='돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우';
       return;
     }
-    const editing = parseEditorRoute(location.hash, this.editor.working || this.course, this.editor.lessonId || this.lessonId);
-    if (editing) {
+    const editing = parseEditorRoute(location.hash, this.editor?.working || this.course, this.editor?.lessonId || this.lessonId);
+    if (canEditCourse && editing) {
       this.editor.open();
       if (this.editor.lessonId !== editing.lessonId) this.editor.selectLesson(editing.lessonId);
       this.editor.focusItem(editing.itemId);
@@ -370,7 +375,9 @@ Alpine.data('courseApp', () => ({
     }
     const first = this.course.lessons[0].id;
     const last = initial ? resolveLessonAlias(safeRead(localStorage,LAST_KEY,first)) : first;
-    const learning = parseLessonRoute(location.hash,this.course,last) || {lessonId:COURSE_IDS.includes(last)?last:first,pageId:'case'};
+    const learning = editing
+      ? {lessonId:editing.lessonId,pageId:editing.itemId === 'case' ? 'case' : 'section-' + editing.itemId}
+      : parseLessonRoute(location.hash,this.course,last) || {lessonId:COURSE_IDS.includes(last)?last:first,pageId:'case'};
     this.selectLearningLocation(learning.lessonId,learning.pageId);
     this.route='learn'; this.infoTab='case'; this.readerOpen=false;
     this.rememberPreviewPage();
@@ -381,10 +388,10 @@ Alpine.data('courseApp', () => ({
   },
   toggleDesignPreview() {
     const url = new URL(location.href);
-    if (this.designPreview) url.searchParams.delete('design');
-    else url.searchParams.set('design', 'preview');
+    if (this.designPreview) url.searchParams.set('design', 'legacy');
+    else url.searchParams.delete('design');
     history.replaceState(history.state, '', url);
-    this.designPreview = designPreviewRequested();
+    this.designPreview = usesCurrentDesign();
     this.previewOutlineOpen = this.designPreview && this.previewOutlineWide;
     this.rememberPreviewPage();
     if (!this.designPreview) this.$nextTick(() => this.$refs.previewOutlineToggle?.focus({preventScroll:true}));
@@ -420,7 +427,7 @@ Alpine.data('courseApp', () => ({
     window.scrollTo({top:0,behavior:'instant'});
   },
   openEditor(itemId=this.route === 'learn' && this.learningPage?.kind === 'section' ? this.learningPage.section.id : this.route === 'editor' ? this.editor.focusId : 'case', id=this.lessonId) {
-    if(!this.editor)return;
+    if(!canEditCourse || !this.editor)return;
     this.readerOpen=false;this.editor.open();
     if(this.editor.lessonId !== id)this.editor.selectLesson(id);
     const target=this.editor.focusItem(itemId);

@@ -1,4 +1,5 @@
 import { brandIconPaths } from './brand-icon-paths.js';
+import { previewFocus } from './preview-art-accents.js';
 
 // Crisp native SVG explanations: one instructional scene for every section.
 // Only packets, cursors and emphasis layers move; the complete diagram stays readable.
@@ -48,7 +49,7 @@ function server(x, y, w = 135, h = 172) {
 function arrow(prefix, x1, y1, x2, y2, { orange = false, dashed = false, delay = 0 } = {}) {
   const color = orange ? c.orange : c.teal;
   return `<path d='M${x1} ${y1}L${x2} ${y2}' fill='none' stroke='${color}' stroke-width='3' stroke-linecap='round' ${dashed ? "stroke-dasharray='7 6'" : ''} marker-end='url(#${prefix}-${orange ? 'amber' : 'teal'}-arrow)'/>`
-    + `<g class='art-motion ${prefix}-packet' style='--art-dx:${x2 - x1}px;--art-dy:${y2 - y1}px;animation-delay:${delay}s'>${circle(x1, y1, 5.5, color, c.paper, 2)}</g>`;
+    + `<g class='art-motion ${prefix}-packet preview-art-packet' style='--art-dx:${x2 - x1}px;--art-dy:${y2 - y1}px;animation-delay:${delay}s'>${circle(x1, y1, 5.5, color, c.paper, 2)}</g>`;
 }
 const emphasis = (prefix, body, delay = 0) => `<g class='art-motion ${prefix}-emphasis' style='animation-delay:${delay}s'>${body}</g>`;
 // Inlined, locally bundled vectors remain crisp in enlargement and do not make
@@ -96,6 +97,8 @@ function structuredPrompt() {
     ${text(430, 297, '중요', 25, c.ink)}${text(430, 344, '가이드', 22, c.teal)}
     ${path('M430 351h76', 'none', c.teal, 2)}${emphasis(p, rect(422, 217, 256, 47, 'none', 5, c.teal, 3))}
     ${pill(182, 414, 396, '제목 · 목록 · 강조 · 링크', c.pale, 21)}
+    ${previewFocus(58, 255, 132, 37, 'source')}
+    ${previewFocus(422, 269, 107, 39, 'output', 1.05)}
   `, '계획문의 문법이 화면에 어떻게 보이는지 비교합니다');
 }
 
@@ -140,6 +143,8 @@ function readmeSections() {
     ${text(448, 334, '03', 18, c.teal, 'start', 700, true)}${text(494, 334, '확인 방법', 21)}
     ${emphasis(p, rect(426, 165, 277, 64, 'none', 8, c.teal, 3))}
     ${pill(190, 420, 380, '제목 · 목록 · 링크 · 표', c.pale, 21)}
+    ${previewFocus(427, 231, 275, 62, 'source', 1.1)}
+    ${previewFocus(427, 296, 275, 62, 'inspect', 2.2)}
   `, '소개와 준비, 확인 방법을 한 문서에 담습니다');
 }
 
@@ -168,6 +173,8 @@ function readmeToGithub() {
     ${lines(539, 272, [137, 116, 130], c.sage, 15, 5)}
     ${emphasis(p, check(670, 325))}
     ${pill(154, 421, 452, '작성 → 커밋 → push → 화면 확인', c.pale, 20)}
+    ${previewFocus(313, 267, 137, 65, 'state', .65)}
+    ${previewFocus(518, 165, 194, 182, 'output', 1.7)}
   `, '원래 작업 폴더에서 쓴 README를 GitHub에서 확인합니다');
 }
 
@@ -195,6 +202,8 @@ function readmeFetchAndPull() {
     ${emphasis(p, check(659, 291))}
     ${pill(542, 333, 164, '② pull 반영', c.softOrange, 19)}
     ${pill(154, 414, 452, 'fetch로 확인 → pull로 작업 폴더에 반영', c.pale, 19)}
+    ${previewFocus(301, 328, 157, 46, 'inspect')}
+    ${previewFocus(537, 328, 174, 46, 'source', 1.25)}
   `, '홈의 기존 git-practice-clone에 반영합니다');
 }
 
@@ -239,6 +248,9 @@ function vscodeFinding() {
     ${rect(438,234,241,50,c.paper,6,c.muted,2)}${text(452,267,'문구 검색 결과',22,c.muted)}
     ${rect(438,302,241,50,c.paper,6,c.muted,2)}${text(452,335,'명령 팔레트',22,c.muted)}
     ${emphasis(p, path('M657 179v25', 'none', c.orange, 4))}
+    ${previewFocus(433, 161, 251, 60, 'inspect')}
+    ${previewFocus(433, 229, 251, 60, 'output', .95)}
+    ${previewFocus(433, 297, 251, 60, 'state', 1.9)}
   `, '파일 · 내용 · 명령을 구별하면 찾기가 빨라집니다');
 }
 
@@ -261,6 +273,7 @@ function sharedShortcutPractice() {
     ${rect(433, 302, 261, 54, c.softOrange, 7, c.orange, 1.8)}
     ${text(450, 336, '화면 · 터미널', 22, c.ink)}${check(656, 336)}
     ${pill(110, 417, 540, 'VS Code 실습 · PyCharm 키맵 비교', c.pale, 20)}
+    ${previewFocus(428, 163, 271, 64, 'inspect', 1.05)}
   `, '키를 누른 뒤 화면에서 바뀐 결과를 확인합니다');
 }
 
@@ -297,6 +310,8 @@ function integratedWorkbench() {
     ${text(525,350,'마지막 push 내용',18,c.muted)}${text(525,382,'저장만으론 그대로',17,c.muted)}
     ${emphasis(p,rect(289,319,181,74,'none',6,c.teal,2.5))}
     ${pill(215,424,330,'저장 · 커밋 · push는 별도',c.pale,19)}
+    ${previewFocus(55, 184, 257, 34, 'source')}
+    ${previewFocus(428, 192, 269, 30, 'output', 1.05)}
   `, '문서·미리보기·변경·원격을 차례로 살펴봅니다');
 }
 
@@ -313,6 +328,8 @@ function htmlCardPractice() {
     ${text(454,314,'변경을 확인하고',21,c.muted)}${text(454,346,'기록합니다.',21,c.muted)}
     ${arrow(p,395,243,422,243)}
     ${pill(65,429,184,'h1 · 제목',c.pale,21)}${pill(289,429,184,'button · 버튼',c.cream,20)}${pill(513,429,184,'p · 설명',c.pale,21)}
+    ${previewFocus(77, 237, 282, 36, 'source')}
+    ${previewFocus(448, 215, 154, 58, 'output', 1.2)}
   `,'제목 · 버튼 · 설명이 같은 순서로 화면에 놓입니다');
 }
 
@@ -328,6 +345,8 @@ function cssCardPractice() {
     ${arrow(p,383,248,418,248)}
     ${emphasis(p,path('M451 188h23m-23-7v14m23-14v14','none',c.orange,4))}
     ${pill(447,426,242,'24px 안쪽 여백',c.softOrange,22)}
+    ${previewFocus(85, 195, 211, 41, 'source')}
+    ${previewFocus(441, 421, 254, 46, 'output', 1.1)}
   `,'같은 구조에서 색 · 여백 · 모서리가 달라집니다');
 }
 
@@ -345,6 +364,8 @@ function javascriptCardPractice() {
     ${arrow(p,405,251,430,251)}${arrow(p,569,244,569,266,{orange:true,delay:1})}
     ${emphasis(p,rect(505,323,184,67,'none',5,c.teal,3))}
     ${pill(89,429,235,'click · hidden 변경',c.cream,21)}${pill(470,429,209,'접힘 ↔ 펼침',c.pale,22)}
+    ${previewFocus(516, 145, 172, 45, 'source')}
+    ${previewFocus(69, 269, 294, 30, 'state', .85)}
   `,'버튼을 다시 누르면 설명을 숨깁니다');
 }
 
@@ -365,6 +386,7 @@ function localAndRemote() {
     ${text(453,219,'Git 강의 카드',25)}${rect(452,241,148,44,c.paper,6,c.teal,2)}
     ${text(526,270,'설명 보기',20,c.ink,'middle')}${lines(453,307,[205,157,182],c.sage,18,5)}
     ${emphasis(p,rect(447,236,158,54,'none',7,c.orange,3))}
+    ${previewFocus(59, 317, 259, 64, 'source')}
     ${logoCredit()}
   `,'기본 기술이나 React · Vue로 사용자 화면을 만듭니다');
 }
@@ -388,6 +410,8 @@ function webResponsibilities() {
     ${text(560,361,'npm run dev',20,c.teal,'middle',650,true)}
     ${pill(155,415,450,'이번 카드 실습: Live Server',c.pale,21)}
     ${emphasis(p,check(329,162))}
+    ${previewFocus(96, 337, 207, 34, 'inspect')}
+    ${previewFocus(475, 336, 171, 35, 'source', 1.5)}
   `,'같은 화면을 확인하는 방법이 다릅니다');
 }
 
@@ -415,6 +439,8 @@ function serverToBrowser() {
     ${arrow(p,346,197,414,197)}${text(380,177,'요청',18,c.teal,'middle')}
     ${arrow(p,414,287,346,287,{orange:true,delay:1})}${text(380,319,'응답',18,c.orange,'middle')}
     ${pill(169,425,422,'Live Server는 화면 파일 확인 도구',c.pale,18)}
+    ${previewFocus(48, 158, 267, 114, 'output', 1.85)}
+    ${previewFocus(441, 171, 263, 107, 'inspect', .65)}
     ${logoCredit()}
   `,'각 영역의 도구는 여러 선택지 중에서 고릅니다');
 }
@@ -433,6 +459,7 @@ function htmlJsonCard() {
     ${text(527,270,'설명 보기',20,c.ink,'middle')}
     ${lines(454,315,[204,161],c.sage,17,5)}
     ${emphasis(p,rect(449,184,205,53,'none',7,c.orange,3))}
+    ${previewFocus(58, 224, 235, 39, 'source')}
   `,'데이터를 HTML 안에 두고 브라우저에서 읽습니다');
 }
 
@@ -451,6 +478,8 @@ function pythonDictionaryApi() {
     ${lines(446,280,[202,147,185],c.sage,16,5)}
     ${emphasis(p,check(658,319))}
     ${pill(156,417,449,'화면과 API 모두 FastAPI 주소',c.pale,21)}
+    ${previewFocus(58, 296, 136, 36, 'source')}
+    ${previewFocus(418, 213, 280, 145, 'output', 1.2)}
   `,'서버의 Python 데이터가 JSON 응답으로 전달됩니다');
 }
 
@@ -472,6 +501,9 @@ function sqliteApi() {
     ${rect(545,187,158,136,c.pale,7,c.teal,2)}
     ${text(565,228,'Git',28)}${lines(565,254,[113,91],c.sage,17,5)}
     ${emphasis(p,check(678,299))}
+    ${previewFocus(65, 230, 128, 39, 'state')}
+    ${previewFocus(289, 232, 171, 32, 'source', 1.1)}
+    ${previewFocus(540, 182, 168, 146, 'output', 2.1)}
   `,'DB의 행을 조회해 같은 카드 화면에 보여 줍니다');
 }
 
@@ -494,6 +526,8 @@ function templateEngines() {
     ${text(592,229,'Git',26)}${lines(592,249,[91,72],c.sage,17,5)}
     ${emphasis(p,check(678,310))}
     ${pill(167,420,426,'FastAPI 주소에서 HTML 제공',c.pale,20)}
+    ${previewFocus(345, 163, 151, 55, 'state', .8)}
+    ${previewFocus(572, 178, 134, 156, 'output', 1.8)}
   `,'Jinja2가 만든 HTML을 브라우저가 화면에 표시합니다');
 }
 
@@ -508,6 +542,8 @@ function cardLayers() {
     ${arrow(p,368,193,426,248)}${arrow(p,368,355,426,315,{delay:1.1})}
     ${emphasis(p,path('M459 230h23m-23-7v14m23-14v14','none',c.orange,4))}
     ${pill(474,425,199,'여백 · 모서리',c.cream,22)}
+    ${previewFocus(68, 352, 246, 32, 'source')}
+    ${previewFocus(452, 204, 239, 172, 'output', 1.25)}
   `,'Tailwind도 CSS를 적용해 같은 모양을 만듭니다');
 }
 
@@ -521,6 +557,8 @@ function alpineStateGraph() {
     ${text(172,246,'클릭 이벤트',22,c.muted,'middle')}${text(591,246,'현재 상태',22,c.muted,'middle')}
     ${emphasis(p,rect(438,345,247,58,'none',7,c.teal,4),1.7)}
     ${path('M93 382l-7 28 13-5 8 14 8-4-8-14 13-5Z',c.orange,c.ink,2.2)}
+    ${previewFocus(74, 347, 202, 36, 'source')}
+    ${previewFocus(261, 152, 249, 40, 'state', .95)}
   `,'HTML의 상태와 클릭을 브라우저에서 연결합니다');
 }
 
@@ -542,6 +580,8 @@ function environmentParity() {
     ${panel(53,113,293,283,'PyCharm 실행 설정',c.pale)}${panel(414,113,291,283,'PowerShell',c.ink)}
     ${labels.map((label,i)=>{const y=183+i*72;return text(75,y,label,23)+lines(76,y+15,[238],c.sage,0,5)+text(435,y,label,23,c.paper)+lines(435,y+15,[237],c.sage,0,5)+arrow(p,359,y-6,400,y-6,{delay:i*.8});}).join('')}
     ${pill(115,425,534,'.venv / Scripts / python.exe',c.cream,24)}
+    ${previewFocus(68, 229, 250, 50, 'source')}
+    ${previewFocus(428, 229, 250, 50, 'output', .9)}
   `,'실행 파일 · 스크립트 · 작업 위치를 같은 기준으로 봅니다');
 }
 
@@ -554,6 +594,8 @@ function addressAndBuild() {
     ${panel(55,289,244,124,'서버로 요청')}${code(78,374,'/notes/',c.teal,29)}
     ${panel(362,289,342,124,'브라우저가 읽는 fragment',c.softOrange)}${code(385,374,'#/lesson/terminal',c.ink,24)}
     ${pill(86,430,589,'원본 src → 빌드 → 배포 파일',c.cream,23)}
+    ${previewFocus(68, 161, 154, 47, 'inspect')}
+    ${previewFocus(247, 161, 336, 47, 'source', 1.1)}
   `,'# 뒤의 fragment는 HTTP 요청에 전송되지 않습니다');
 }
 
@@ -565,6 +607,8 @@ function completeClassNames() {
     ${panel(407,103,299,176,'상태별 매핑',c.pale)}${code(429,181,'bg-teal-500',c.teal,25)}${code(429,225,'bg-slate-500',c.teal,25)}
     ${panel(188,332,384,98,'content 경로 확인')}${code(211,408,'./templates/**/*.html',c.ink,24)}
     ${arrow(p,555,291,491,322,{delay:.9})}${emphasis(p,check(663,250))}
+    ${previewFocus(423, 158, 257, 79, 'inspect')}
+    ${previewFocus(202, 384, 334, 33, 'output', 1.2)}
   `,'실제 템플릿과 완전한 클래스가 빌드 대상에 있어야 합니다');
 }
 

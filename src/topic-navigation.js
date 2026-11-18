@@ -33,7 +33,7 @@ export const topicNavigationMethods = {
   handlePresentationEntryKeys(event) {
     if (this.route !== 'learn' || event.defaultPrevented || event.repeat || event.isComposing
         || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
-        || this.topicNavigationOpen || this.drawer || this.readerOpen || this.rehearsalOpen || this.artViewerOpen) return;
+        || this.topicNavigationOpen || this.drawer || this.previewOutlineOverlay || this.readerOpen || this.rehearsalOpen || this.artViewerOpen) return;
     if (event.code !== 'KeyP' && String(event.key || '').toLowerCase() !== 'p') return;
     if (event.target?.isContentEditable || event.target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"]), [role="textbox"], dialog[open]')) return;
     if (globalThis.document?.querySelector?.('dialog[open]')) return;

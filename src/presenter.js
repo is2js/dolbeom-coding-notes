@@ -111,7 +111,7 @@ export const presenterMethods = {
     return this.illustrationPaused || this.prefersReducedMotion || !this.artPageVisible || !['case', 'section', 'recap'].includes(this.presentationPage?.kind);
   },
   handlePresentationKeys(event) {
-    if (!['learn', 'present'].includes(this.route) || this.readerOpen || this.rehearsalOpen || this.artViewerOpen || this.caseImageOpen || this.topicNavigationOpen || this.drawer || event.defaultPrevented || event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+    if (!['learn', 'present'].includes(this.route) || this.readerOpen || this.rehearsalOpen || this.artViewerOpen || this.caseImageOpen || this.topicNavigationOpen || this.drawer || this.previewOutlineOverlay || event.defaultPrevented || event.repeat || event.isComposing || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
     if (this.route === 'present' && event.key === 'Escape' && document.fullscreenElement) {
       event.preventDefault(); void this.togglePresentationFullscreen(); return;
     }

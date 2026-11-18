@@ -14,6 +14,7 @@
     <path d="M180 315 292 371 404 315 568 397" fill="none" stroke="#367d7b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M292 371v-97l111-56 165 82" fill="none" stroke="#c67f5c" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M596 300c55 0 55 97 0 97" fill="none" stroke="#c67f5c" stroke-width="5" stroke-linecap="round" />
+    <path class="art-motion preview-topic-accent preview-git-branch" display="none" d="M292 371v-97l111-56 165 82h28c55 0 55 97 0 97h-28" pathLength="1" fill="none" stroke="#fff1bd" stroke-width="3.8" stroke-linecap="round" stroke-dasharray=".16 1" />
     <path d="M151 315v18c0 19 58 19 58 0v-18" fill="#aac1a0" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <ellipse cx="180" cy="315" rx="29" ry="15" fill="#aac1a0" stroke="#26334b" stroke-width="3" />
     <circle cx="180" cy="315" r="5" fill="#fff9ec" stroke="#26334b" stroke-width="2" />
@@ -39,6 +40,7 @@
     <circle cx="568" cy="300" r="5" fill="#fff9ec" stroke="#26334b" stroke-width="2" />
     <text x="568" y="357" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="17" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">실험</text>
     <circle class="art-motion git-trace" cx="292" cy="371" r="37" fill="none" stroke="#367d7b" stroke-width="3" />
+    <ellipse class="art-motion preview-topic-accent preview-git-merge" display="none" cx="568" cy="397" rx="38" ry="23" fill="none" stroke="#bb7f37" stroke-width="3" />
     <text x="380" y="133" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="26" font-weight="750" text-anchor="middle" fill="#26334b" stroke="none">변경을 나누고, 다시 연결하기</text>
   </g>
 </svg>

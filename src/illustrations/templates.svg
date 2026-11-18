@@ -17,6 +17,7 @@
     <rect x="91" y="241" width="224" height="79" rx="10" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
     <text x="109" y="272" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">TEMPLATE</text>
     <text x="110" y="299" font-family="Consolas,monospace" font-size="19" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">{{ lesson.title }}</text>
+    <path class="art-motion preview-topic-accent preview-template-field" display="none" d="M111 306h200" fill="none" stroke="#c68b45" stroke-width="3" stroke-linecap="round" />
     <rect x="99" y="358" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
     <rect x="91" y="348" width="224" height="79" rx="10" fill="#eddfc4" stroke="#26334b" stroke-width="3" />
     <text x="109" y="379" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">SERVER</text>
@@ -36,6 +37,7 @@
     <circle cx="501" cy="172" r="3.8" fill="#aac1a0" stroke="none" stroke-width="0" />
     <text x="523" y="178" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#5d746c" stroke="none">CARD</text>
     <text x="475" y="239" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="38" font-weight="800" text-anchor="start" fill="#26334b" stroke="none">Git</text>
+    <path class="art-motion preview-topic-accent preview-template-output" display="none" d="M474 249h53" fill="none" stroke="#c68b45" stroke-width="3" stroke-linecap="round" />
     <path d="M475 264L628 264" fill="none" stroke="#b9c5ad" stroke-width="2" stroke-linecap="round" />
     <text x="475" y="302" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="650" text-anchor="start" fill="#5d746c" stroke="none">변경을 기록하기</text>
     <rect x="474" y="327" width="155" height="48" rx="7" fill="#367d7b" stroke="#26334b" stroke-width="2" />

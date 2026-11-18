@@ -20,6 +20,7 @@
     <rect x="107" y="163" width="129" height="229" rx="5" fill="#eddfc4" stroke="#b9c5ad" stroke-width="1.5" />
     <text x="121" y="194" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="18" font-weight="750" text-anchor="start" fill="#5d746c" stroke="none">PROJECT</text>
     <text x="122" y="231" font-family="Consolas,monospace" font-size="15" font-weight="600" text-anchor="start" fill="#367d7b" stroke="none">README.md</text>
+    <rect class="art-motion preview-topic-accent" display="none" x="116" y="210" width="109" height="31" rx="5" fill="none" stroke="#367d7b" stroke-width="2.6" />
     <text x="122" y="269" font-family="Consolas,monospace" font-size="15" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">note.txt</text>
     <text x="122" y="307" font-family="Consolas,monospace" font-size="12.5" font-weight="600" text-anchor="start" fill="#26334b" stroke="none">branch-note.txt</text>
     <rect x="250" y="164" width="375" height="154" rx="5" fill="#253c4b" stroke="#26334b" stroke-width="2" />
@@ -28,6 +29,7 @@
     <text x="270" y="281" font-family="Consolas,monospace" font-size="21" font-weight="650" text-anchor="start" fill="#a6d9c8" stroke="none">[note.txt](./note.txt)</text>
     <rect x="250" y="333" width="179" height="59" rx="5" fill="#f0ddcf" stroke="#b9c5ad" stroke-width="1.5" />
     <rect x="442" y="333" width="183" height="59" rx="5" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.5" />
+    <rect class="art-motion preview-topic-accent preview-topic-beat-after" display="none" x="442" y="333" width="183" height="59" rx="5" fill="none" stroke="#367d7b" stroke-width="3" />
     <text x="268" y="370" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700" text-anchor="start" fill="#9c644d" stroke="none">− 이전 제목</text>
     <text x="460" y="370" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700" text-anchor="start" fill="#367d7b" stroke="none">+ 바뀐 제목</text>
     <rect class="art-motion ide-cursor" x="555" y="259" width="10" height="24" fill="#e4b75f" />

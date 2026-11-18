@@ -27,6 +27,7 @@
     <path d="M216 321L302 321" fill="none" stroke="#367d7b" stroke-width="5" stroke-linecap="round" />
     <path d="M216 340L281 340" fill="none" stroke="#aac1a0" stroke-width="5" stroke-linecap="round" />
     <path d="M216 359L294 359" fill="none" stroke="#aac1a0" stroke-width="5" stroke-linecap="round" />
+    <path class="art-motion preview-topic-accent preview-web-page" display="none" d="M216 321h86m-86 19h65m-65 19h78" fill="none" stroke="#367d7b" stroke-width="5" stroke-linecap="round" />
     <path d="M499 194l28-18h111l-28 18Z" fill="#aac1a0" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M610 194l28-18v231l-28 18Z" fill="#367d7b" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
     <rect x="499" y="194" width="111" height="231" rx="6" fill="#eddfc4" stroke="#26334b" stroke-width="3" />
@@ -34,6 +35,7 @@
     <circle cx="526" cy="231" r="4" fill="#e4b75f" stroke="none" stroke-width="0" />
     <path d="M543 231L582 231" fill="none" stroke="#aac1a0" stroke-width="3" stroke-linecap="round" />
     <rect x="512" y="263" width="85" height="34" rx="4" fill="#253c4b" stroke="#26334b" stroke-width="2" />
+    <rect class="art-motion preview-topic-accent preview-web-server" display="none" x="512" y="263" width="85" height="34" rx="4" fill="none" stroke="#e4b75f" stroke-width="3" />
     <circle cx="526" cy="280" r="4" fill="#e4b75f" stroke="none" stroke-width="0" />
     <path d="M543 280L582 280" fill="none" stroke="#aac1a0" stroke-width="3" stroke-linecap="round" />
     <rect x="512" y="312" width="85" height="34" rx="4" fill="#253c4b" stroke="#26334b" stroke-width="2" />

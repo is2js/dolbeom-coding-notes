@@ -23,6 +23,13 @@
     <rect x="437" y="256" width="133" height="43" rx="7" fill="#fff9ec" stroke="#367d7b" stroke-width="2"/>
     <text x="503" y="284" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="19" text-anchor="middle" fill="#26334b" stroke="none">설명 보기</text>
     <path d="M438 326h180m-180 19h143m-143 19h164" stroke="#87a18b" stroke-width="5" fill="none"/>
+    <g class="art-motion preview-topic-accent" display="none" fill="none" stroke="#367d7b" stroke-width="2.9" stroke-linecap="round">
+      <path d="M93 258h141M419 215v10m0-5h12m0-5v10m205 155h11m0-11v11"/>
+    </g>
+    <g class="art-motion preview-topic-accent preview-topic-beat-after" display="none" fill="none" stroke="#a77638" stroke-width="2.9" stroke-linecap="round">
+      <path d="M93 356h157m188-30h180"/>
+      <rect x="437" y="256" width="133" height="43" rx="7"/>
+    </g>
     <path class="art-motion web-tools-pulse" d="M592 279l-5 23 9-6 4 11 7-3-4-11 11-1Z" fill="#e4b75f" stroke-width="2"/>
   </g>
   <text x="380" y="507" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="650" text-anchor="middle" fill="#5d746c">모양과 브라우저 동작을 간결하게 표현합니다</text>

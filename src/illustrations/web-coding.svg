@@ -32,6 +32,17 @@
     <rect x="435" y="251" width="135" height="45" rx="7" fill="#fff9ec" stroke="#367d7b" stroke-width="2"/>
     <text x="502" y="280" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#26334b" stroke="none">설명 보기</text>
     <path d="M436 322h185M436 342h145M436 362h170" stroke="#87a18b" stroke-width="5"/>
+    <g class="art-motion preview-topic-accent" display="none" fill="none" stroke="#367d7b" stroke-width="3" stroke-linecap="round">
+      <path d="M83 190v41M435 239h43"/>
+    </g>
+    <g class="art-motion preview-topic-accent preview-topic-beat-after" display="none" fill="none" stroke="#a77638" stroke-width="3" stroke-linecap="round">
+      <path d="M83 265v41"/>
+      <path d="M414 216v-20q0-8 8-8h20m183 204h20q8 0 8-8v-20"/>
+    </g>
+    <g class="art-motion preview-topic-accent preview-topic-beat-final" display="none" fill="none" stroke="#367d7b" stroke-width="3" stroke-linecap="round">
+      <path d="M83 340v41M436 322h185"/>
+      <rect x="435" y="251" width="135" height="45" rx="7"/>
+    </g>
     <path class="art-motion web-coding-highlight" d="M592 281l-5 23 9-6 4 11 7-3-4-11 11-1Z" fill="#e4b75f" stroke="#26334b" stroke-width="2"/>
   </g>
   <text x="380" y="508" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="650" text-anchor="middle" fill="#5d746c" stroke="none">내용 · 모양 · 동작을 하나의 화면으로</text>

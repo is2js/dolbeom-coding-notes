@@ -48,6 +48,8 @@ import './workspace-rail.css';
 import './topic-navigation.css';
 import './lesson-preview-navigation.css';
 import './lesson-preview-motion.css';
+import './lesson-preview-scene-details.css';
+import './lesson-preview-topic-details.css';
 import './site-update.css';
 import './command-copy.css';
 import './prose.css';
@@ -68,6 +70,7 @@ const RECOVERY_KEY = COURSE_STORAGE.recovery;
 const clone = value => JSON.parse(JSON.stringify(value));
 const sameCourse = (a,b) => JSON.stringify(a) === JSON.stringify(b);
 const designPreviewRequested = () => new URLSearchParams(location.search).get('design') === 'preview';
+const widePreviewOutline = () => window.matchMedia('(min-width: 1120px)').matches;
 let localSync = null;
 const paths = {
   chevron: '<path d="m9 5 7 7-7 7"/>', chevronLeft: '<path d="m15 5-7 7 7 7"/>',
@@ -122,13 +125,48 @@ Alpine.data('courseApp', () => ({
   siteUpdatedAt: __SITE_UPDATED_AT__, siteUpdatedLabel: formatSiteUpdatedAt(__SITE_UPDATED_AT__),
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,
   designPreview: designPreviewRequested(),
+  previewOutlineWide: widePreviewOutline(),
+  previewOutlineOpen: widePreviewOutline(),
+  get previewOutlineAvailable() { return this.route === 'learn' && !!this.course && !this.loading; },
+  get previewOutlineActive() { return this.designPreview && this.previewOutlineAvailable; },
+  get previewOutlineOverlay() { return this.previewOutlineActive && this.previewOutlineOpen && !this.previewOutlineWide; },
   previewPagesFor: buildLessonFlow,
-  revealPreviewSection(outline, outlineOpen) {
+  previewPageAddress: lessonAddress,
+  fitPreviewOutline() {
+    const wide = widePreviewOutline();
+    if (wide === this.previewOutlineWide) return;
+    this.previewOutlineWide = wide;
+    if (wide) this.previewOutlineOpen = true;
+    else this.closePreviewOutline(!!document.activeElement?.closest('#preview-outline-panel'));
+  },
+  togglePreviewOutline() {
+    if (this.previewOutlineActive && this.previewOutlineOpen) {
+      this.closePreviewOutline(true);
+      return;
+    }
+    if (!this.designPreview) this.toggleDesignPreview();
+    this.drawer = false;
+    this.previewOutlineOpen = true;
+    this.$nextTick(() => document.querySelector('.lesson-preview-outline-close')?.focus({preventScroll:true}));
+  },
+  closePreviewOutline(restoreFocus = false) {
+    this.previewOutlineOpen = false;
+    if (restoreFocus) this.$nextTick(() => this.$refs.previewOutlineToggle?.focus({preventScroll:true}));
+  },
+  selectPreviewSection(event, topicId, pageId) {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    event.preventDefault();
+    if (!this.previewOutlineWide) {
+      this.closePreviewOutline();
+      this.$nextTick(() => document.getElementById('lesson-main')?.focus({preventScroll:true}));
+    }
+    this.showLesson(topicId, pageId);
+  },
+  revealPreviewSection(outline) {
     this.$nextTick(() => {
       const current = outline.querySelector('[aria-current="step"]');
       if (!current?.getClientRects().length) return;
-      const list = outline.querySelector('.lesson-preview-outline-topics');
-      const scroller = outlineOpen && getComputedStyle(list).overflowY === 'auto' ? list : outline;
+      const scroller = outline.querySelector('.lesson-preview-outline-topics');
       if (scroller.scrollHeight <= scroller.clientHeight) return;
       const viewport = scroller.getBoundingClientRect();
       const item = current.getBoundingClientRect();
@@ -299,6 +337,7 @@ Alpine.data('courseApp', () => ({
     else url.searchParams.set('design', 'preview');
     history.replaceState(history.state, '', url);
     this.designPreview = designPreviewRequested();
+    this.previewOutlineOpen = this.designPreview && this.previewOutlineWide;
   },
   showLesson(id,pageId='case') {
     if(!COURSE_IDS.includes(id)) return;

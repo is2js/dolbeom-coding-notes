@@ -17,6 +17,7 @@
     <text x="140" y="229" font-family="Consolas,monospace" font-size="22" font-weight="700" text-anchor="start" fill="#eff3de" stroke="none"># 강의 수정</text>
     <text x="140" y="272" font-family="Consolas,monospace" font-size="20" font-weight="600" text-anchor="start" fill="#d8e9d6" stroke="none">- 예시 추가</text>
     <text x="140" y="310" font-family="Consolas,monospace" font-size="19" font-weight="600" text-anchor="start" fill="#e5bf7d" stroke="none">- 쉽게 설명</text>
+    <path class="art-motion preview-topic-accent" display="none" d="M131 209v103" fill="none" stroke="#e4b75f" stroke-width="2.8" stroke-linecap="round" />
     <path d="M350 272L408 272" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" />
     <path d="M399 265l9 7-9 7" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
     <g class="art-motion markdown-render">
@@ -28,6 +29,7 @@
     <text x="454" y="171" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">계획 문서</text>
     <text x="455" y="226" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="30" font-weight="800" text-anchor="start" fill="#26334b" stroke="none">작업 계획</text>
     <path d="M455 247L625 247" fill="none" stroke="#b9c5ad" stroke-width="2" stroke-linecap="round" />
+    <path class="art-motion preview-topic-accent preview-topic-beat-after" display="none" d="M455 247h130" fill="none" stroke="#367d7b" stroke-width="3.5" stroke-linecap="round" />
     <circle cx="462" cy="281" r="4" fill="#367d7b" stroke="none" stroke-width="0" />
     <text x="477" y="289" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="22" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">목표와 단계</text>
     <circle cx="462" cy="319" r="4" fill="#367d7b" stroke="none" stroke-width="0" />

@@ -24,11 +24,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div id="app" x-data="courseApp" @click="copyCodeFromEvent($event)" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home', 'is-design-preview': designPreview }" x-cloak>
-    <a class="skip-link" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
+  <div id="app" x-data="courseApp" @click="copyCodeFromEvent($event)" @resize.window.debounce.80ms="fitPreviewOutline()" :class="{ 'is-presenting': route === 'present', 'is-learning-flow': route === 'learn', 'is-intro': route === 'home', 'is-design-preview': designPreview, 'is-preview-outline-open': previewOutlineActive && previewOutlineOpen }" x-cloak>
+    <a class="skip-link" :inert="previewOutlineOverlay" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
     <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
-      <button class="rail-toggle" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>
-      <nav class="rail-links">
+      <button class="rail-toggle" :inert="previewOutlineOverlay" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>
+      <button type="button" class="rail-preview-toggle" x-ref="previewOutlineToggle" x-show="previewOutlineAvailable" :aria-expanded="previewOutlineActive && previewOutlineOpen" :aria-controls="previewOutlineActive ? 'preview-outline-panel' : null" title="강의 탐색" @click="togglePreviewOutline()" @keydown.escape="if (previewOutlineActive && previewOutlineOpen) closePreviewOutline(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h6l2 2h10v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 11h18m-14 4h5"/></svg>
+        <span>강의 탐색</span>
+      </button>
+      <nav class="rail-links" :inert="previewOutlineOverlay">
         <button @click="goIntro()" :class="{active: route === 'home'}" aria-label="소개 홈" title="소개 홈" x-html="workspaceIcon('overview')"></button>
         <button @click="drawer = !drawer" :class="{active: drawer}" aria-label="전체 목차" title="전체 목차" x-html="workspaceIcon('outline')"></button>
         <button @click="route !== 'learn' ? goHome() : view = 'map'" :class="{active: route === 'learn' && view === 'map'}" aria-label="설명 그림" title="설명 그림" x-html="workspaceIcon('concept')"></button>
@@ -36,9 +40,54 @@
         <button @click="openEditor()" :class="{active: route === 'editor'}" aria-label="강의 편집기" title="강의 편집기" x-html="workspaceIcon('edit')"></button>
       </nav>
       <div class="rail-signature"><span>A FIELD GUIDE BY</span><strong>돌범 / DOLBEOM</strong><span class="signature-mark" aria-hidden="true" x-html="workspaceIcon('mark')"></span></div>
+      <div class="preview-outline-backdrop" x-show="previewOutlineOverlay" aria-hidden="true" @click="closePreviewOutline(true)"></div>
+      <template x-if="previewOutlineActive">
+        <nav id="preview-outline-panel" class="lesson-preview-outline" aria-labelledby="preview-outline-title" x-show="previewOutlineOpen" x-data="{ expandedTopic: lessonId }"
+          x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (previewOutlineOpen && expandedTopic === lessonId && learningPageId) revealPreviewSection($el)" @keydown.escape.stop="closePreviewOutline(true)">
+          <div class="lesson-preview-outline-heading">
+            <div>
+              <h2 id="preview-outline-title">강의 탐색</h2>
+              <small x-text="course.lessons.length + '개 주제'"></small>
+            </div>
+            <button type="button" class="lesson-preview-outline-close" aria-label="강의 탐색 닫기" @click="closePreviewOutline(true)" x-html="icon('close')"></button>
+          </div>
+          <div class="lesson-preview-outline-topics">
+            <ol class="lesson-preview-folders">
+              <template x-for="(topic, index) in course.lessons" :key="topic.id">
+                <li :data-topic="topic.id">
+                  <button type="button" class="lesson-preview-folder" :class="{ 'is-current-topic': topic.id === lessonId }"
+                    :aria-current="topic.id === lessonId ? 'location' : null" :aria-expanded="expandedTopic === topic.id" :aria-controls="'preview-folder-' + topic.id"
+                    @click="expandedTopic = expandedTopic === topic.id ? null : topic.id">
+                    <span class="lesson-preview-folder-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5A1.5 1.5 0 0 1 4 5h5l2 2h9a1.5 1.5 0 0 1 1.5 1.5V17a2 2 0 0 1-2 2H4.5a2 2 0 0 1-2-2Z" fill="var(--folder-fill)"/><path d="M3 10h18m-14 5h4"/></svg>
+                    </span>
+                    <span class="lesson-preview-folder-label"><small x-text="String(index + 1).padStart(2, '0') + ' · ' + coreMinutes(topic) + '분'"></small><strong x-text="topic.shortTitle"></strong></span>
+                    <span class="lesson-preview-chevron" aria-hidden="true" x-html="icon('chevron')"></span>
+                  </button>
+                  <div :id="'preview-folder-' + topic.id" x-show="expandedTopic === topic.id">
+                    <template x-if="expandedTopic === topic.id">
+                      <ol class="lesson-preview-sections">
+                        <template x-for="page in previewPagesFor(topic)" :key="page.id">
+                          <li>
+                            <a :href="previewPageAddress(topic.id, page.id)" :aria-current="topic.id === lessonId && page.id === learningPageId ? 'step' : null" @click="selectPreviewSection($event, topic.id, page.id)">
+                              <span class="lesson-preview-section-marker" aria-hidden="true"></span>
+                              <span x-text="navigationPageTitle(page)"></span>
+                              <span class="lesson-preview-current-label" x-show="topic.id === lessonId && page.id === learningPageId" aria-hidden="true">현재</span>
+                            </a>
+                          </li>
+                        </template>
+                      </ol>
+                    </template>
+                  </div>
+                </li>
+              </template>
+            </ol>
+          </div>
+        </nav>
+      </template>
     </aside>
 
-    <div class="workspace" x-show="route !== 'present'">
+    <div class="workspace" :inert="previewOutlineOverlay" x-show="route !== 'present'">
       <div class="site-update-bar"><p class="site-update" title="현재 사이트를 빌드한 시각 · 한국 표준시"><span>업데이트</span><time :datetime="siteUpdatedAt" x-text="siteUpdatedLabel"></time></p></div>
       <header class="masthead" x-show="route !== 'editor'">
         <a class="brand" href="./" @click.prevent="goIntro()" aria-label="돌범이 풀어주는 코딩 강의 홈">

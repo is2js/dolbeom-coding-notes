@@ -1,331 +1,276 @@
-import { previewFocus, previewSignal } from './preview-art-accents.js';
+import {
+  archive, at, box, colors as c, cursor, flow, glow, ink, key, label, line,
+  monitor, oval, page, platform, pocket, shadow, shape, spool, stage, tag, tick,
+} from './tool-art-props.js';
 
-// Self-contained, crisp diagrams. Complete static geometry explains each idea;
-// named motion layers only trace the command, transfer, or review action.
-const C = { ink:'#1d2a42', teal:'#267c78', sage:'#cbdcc5', light:'#fff9ed', paper:'#f6ecd7', cream:'#e6d4ae', amber:'#e8b55c', red:'#ae674f', paleRed:'#f1d9c9', muted:'#586b64', line:'#bdc7b3', white:'#fffdf7' };
-const esc = value => String(value).replace(/[&<>"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[char]));
-const text = (x,y,value,{size=22,fill=C.ink,weight=550,anchor='start',mono=false}={}) => `<text x="${x}" y="${y}" fill="${fill}" stroke="none" font-size="${size}" font-weight="${weight}" text-anchor="${anchor}" font-family="${mono?'Consolas,monospace':'Pretendard,Malgun Gothic,system-ui,sans-serif'}">${esc(value)}</text>`;
-const path = (d,stroke=C.ink,width=2.8,extra='') => `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" ${extra}/>`;
-const rect = (x,y,w,h,fill=C.light,r=10,extra='') => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" ${/\bstroke=/.test(extra)?'':`stroke="${C.ink}"`} ${/\bstroke-width=/.test(extra)?'':'stroke-width="2.6"'} ${extra}/>`;
-const circle = (x,y,r,fill=C.sage,extra='') => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${C.ink}" stroke-width="2.8" ${extra}/>`;
-const check = (x,y,scale=1) => `<g transform="translate(${x} ${y}) scale(${scale})">${path('M-10 0l7 7 17-20',C.teal,4)}</g>`;
-const cursor = (p,x,y,fill=C.teal,h=23) => `<rect x="${x}" y="${y}" width="5" height="${h}" rx="1" fill="${fill}" class="art-motion ${p}-cursor"/>`;
-const arrow = (p,d) => path(d,C.teal,3.4,`marker-end="url(#${p}-arrow)"`);
-const flow = (p,d,delay=0,direction='out') => path(d,C.amber,5,`class="art-motion ${p}-flow preview-art-flow" data-direction="${direction}" pathLength="100" stroke-dasharray="9 91" stroke-dashoffset="100" opacity="0" style="animation-delay:${delay}s"`);
-const pill = (x,y,w,label,fill=C.sage,mono=false) => rect(x,y,w,36,fill,7,'stroke-width="1.8"') + text(x+w/2,y+25,label,{size:20,mono,anchor:'middle',weight:650});
-
-function panel(x,y,w,h,title,body,{dark=false,titleSize=23}={}) {
-  return `<g stroke-linejoin="round"><path d="M${x+w} ${y+10}l9 8v${h-9}l-9-9Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="2.6"/><path d="M${x} ${y+h}l9 9h${w}l-9-9Z" fill="${C.cream}" stroke="${C.ink}" stroke-width="2.6"/>`
-    + rect(x,y,w,h,dark?C.ink:C.light)
-    + `<path d="M${x+10} ${y}h${w-20}q10 0 10 10v32H${x}V${y+10}q0-10 10-10Z" fill="${C.ink}"/>`
-    + text(x+17,y+29,title,{size:titleSize,fill:C.light,weight:700})
-    + `<circle cx="${x+w-17}" cy="${y+21}" r="4" fill="${C.amber}"/>`
-    + path(`M${x} ${y+42}h${w}`,C.ink,2.6) + body + '</g>';
-}
-
-function document(x,y,w=82,h=100,fill=C.white) {
-  const f=20;
-  return `<g stroke="${C.ink}" stroke-width="2.6" stroke-linejoin="round"><path d="M${x+6} ${y+7}h${w-f}l${f} ${f}v${h-f}H${x+6}Z" fill="${C.cream}"/><path d="M${x} ${y}h${w-f}l${f} ${f}v${h-f}H${x}Z" fill="${fill}"/><path d="M${x+w-f} ${y}v${f}h${f}" fill="${C.cream}"/>`
-    + path(`M${x+15} ${y+h*.43}h${w-30}`,C.teal,4) + path(`M${x+15} ${y+h*.6}h${w-35}M${x+15} ${y+h*.77}h${w-42}`,C.line,4) + '</g>';
-}
-
-function folder(x,y,w=180,h=115) {
-  return `<g stroke="${C.ink}" stroke-width="2.8" stroke-linejoin="round"><path d="M${x} ${y+17}V${y}h${w*.36}l14 17h${w*.64-14}v${h-17}H${x}Z" fill="${C.amber}"/><path d="M${x-7} ${y+36}h${w+18}l-16 ${h-36}H${x+4}Z" fill="${C.paper}"/>`
-    + path(`M${x+12} ${y+47}h${w-21}`,C.white,3) + '</g>';
-}
-
-function commit(x,y,label,r=28) {
-  return `<g stroke="${C.ink}" stroke-width="2.8"><path d="M${x-r} ${y}v22c0 19 ${r*2} 19 ${r*2} 0v-22" fill="${C.teal}"/><ellipse cx="${x}" cy="${y}" rx="${r}" ry="14" fill="${C.sage}"/><ellipse cx="${x}" cy="${y}" rx="9" ry="4" fill="${C.white}"/></g>`
-    + text(x,y+67,label,{size:22,anchor:'middle',weight:700});
-}
-function remoteRepository(x,y) {
-  return rect(x+6,y+7,150,116,C.cream,7) + rect(x,y,150,116,C.sage,7)
-    + rect(x+12,y+14,126,34,C.white,5) + text(x+75,y+37,'note.txt',{size:18,anchor:'middle',mono:true,weight:700})
-    + path(`M${x+39} ${y+81}h72`,C.teal,3) + circle(x+39,y+81,8,C.amber) + circle(x+111,y+81,8,C.white);
-}
-const key = (x,y,w,label,active=false) => rect(x+2,y+5,w,37,C.cream,6) + rect(x,y,w,37,active?C.sage:C.white,6) + text(x+w/2,y+26,label,{size:20,mono:true,anchor:'middle',weight:650});
-
-function scene(p,heading,contents,footer='') {
-  return `<svg xmlns="http://www.w3.org/2000/svg" class="topic-art-svg section-art-svg ${p}" viewBox="0 0 760 550" aria-hidden="true" focusable="false"><defs><marker id="${p}-arrow" viewBox="0 0 10 10" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1l7 4-7 4" fill="none" stroke="${C.teal}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`
-    + `<style>.${p} .${p}-flow{animation:${p}-travel 5.8s ease-in-out infinite}.${p} .${p}-cursor{animation:${p}-blink 2.6s steps(2,end) infinite}.${p} .${p}-focus{animation:${p}-focus 5.8s ease-in-out infinite}@keyframes ${p}-travel{0%,8%{stroke-dashoffset:100;opacity:0}20%{opacity:1}77%{stroke-dashoffset:0;opacity:1}90%,100%{stroke-dashoffset:0;opacity:0}}@keyframes ${p}-blink{0%,48%{opacity:1}49%,100%{opacity:.18}}@keyframes ${p}-focus{0%,100%{stroke-opacity:.4}35%,70%{stroke-opacity:1}}@media(prefers-reduced-motion:reduce){.${p} .art-motion{animation:none!important}}</style>`
-    + text(380,61,heading,{size:27,anchor:'middle',weight:750}) + path('M80 81h600',C.line,1.4)
-    + `<ellipse cx="384" cy="450" rx="264" ry="16" fill="${C.ink}" opacity=".055"/>`
-    + contents + (footer?text(380,513,footer,{size:21,anchor:'middle',fill:C.muted,weight:600}):'') + '</svg>';
-}
+const code = (x, y, value, color = ink, size = 16) => label(x, y, value, { color, size, mono: true, anchor: 'start', weight: 650 });
 
 function locationScene() {
-  const p='section-terminal-example';
-  return scene(p,'터미널 ↔ 탐색기 · 같은 폴더 확인',
-    panel(56,108,335,326,'PowerShell',
-      rect(75,164,296,45,'#dfebd6',6,'stroke="none"')
-      + text(88,194,'pwd',{size:25,fill:C.teal,mono:true,weight:750}) + text(157,194,'= Get-Location',{size:18,mono:true})
-      + text(88,232,'explorer.exe .',{size:23,mono:true})
-      + text(88,271,'cd .  ·  cd ..',{size:22,mono:true,fill:C.teal})
-      + text(88,310,'ls',{size:24,fill:C.teal,mono:true,weight:750}) + text(138,310,'= Get-ChildItem',{size:18,mono:true})
-      + text(88,350,'mkdir → 빈 폴더 삭제',{size:20})
-      + text(88,394,'다시 mkdir → cd',{size:21,fill:C.muted}) + cursor(p,328,374))
-    + arrow(p,'M402 231h29') + flow(p,'M402 231h29')
-    + panel(446,108,258,176,'파일 탐색기',rect(465,165,220,41,C.white,6)
-      + text(477,193,'C:\\Users',{size:22,mono:true,fill:C.teal})
-      + text(467,242,'Win + R → 경로 입력',{size:20}) + text(467,269,'같은 위치의 폴더',{size:20,fill:C.muted}))
-    + arrow(p,'M575 296v20') + flow(p,'M575 296v20',1.3)
-    + panel(446,329,258,105,'탐색기 주소창',text(575,407,'wt -d .',{size:25,anchor:'middle',mono:true,fill:C.teal,weight:750}))
-    + previewFocus(80,211,221,31,'source')
-    + previewFocus(461,161,227,48,'output',.9)
-    + previewFocus(503,380,145,37,'inspect',2.1),
-    '현재 위치와 부모 폴더 → 만들기와 삭제 연습');
+  const id = 'section-terminal-example';
+  const command = (y, short, long) => code(103, y, short, '#f0d58d', 18) + code(147, y, long, '#d7e5d3', 15);
+  const fileBrowser = box(513, 197, 138, 26, '#e2ead9', 5, 'none') + code(526, 216, 'C:\\Users', c.green)
+    + pocket(535, 232, 89, 57, '#e4bc77');
+  return stage(id,
+    platform(id, 210, 357, 153, 51) + platform(id, 583, 352, 129, 52)
+    + flow(id, 'M340 207C394 178 452 181 492 208')
+    + flow(id, 'M516 345C463 391 374 390 330 342', { color: '#688897', pulse: '#97c3c1', delay: 1.35 })
+    + monitor(id, 75, 132, 262, 213, 'PowerShell', box(91, 174, 224, 28, '#596a56', 5, 'none')
+      + command(194, 'pwd', '= Get-Location') + code(103, 221, 'explorer.exe .', c.ivory)
+      + code(103, 245, 'cd .  ·  cd ..', '#d7e5d3', 15) + command(270, 'ls', '= Get-ChildItem')
+      + code(103, 295, 'mkdir → 빈 폴더 삭제', '#d7e5d3', 15)
+      + code(103, 320, '다시 mkdir → cd', '#d7e5d3', 15) + cursor(id, 256, 306), { dark: true, stand: true })
+    + monitor(id, 497, 156, 172, 147, '파일 탐색기', fileBrowser, { stand: true })
+    + tag(583, 124, 111, 'Win + R', { mono: true })
+    + tag(582, 365, 104, 'wt -d .', { color: c.sage, mono: true, textColor: c.green })
+    + tag(413, 176, 165, '같은 폴더 · 두 화면', { size: 15 }));
 }
 
 function guiCliScene() {
-  const p='section-terminal-gui-cli';
-  return scene(p,'같은 note.txt를 두 화면에서 확인',
-    panel(43,115,282,297,'PowerShell · CLI',
-      text(64,198,'New-Item / ni',{mono:true,size:23}) + text(64,236,'note.txt',{mono:true,size:25,fill:C.teal,weight:700})
-      + path('M64 256h239',C.line,1.6) + text(64,298,'Get-Content / cat',{mono:true,size:20,fill:C.teal,weight:650})
-      + text(64,337,'note.txt',{mono:true,size:25}) + text(64,382,'내용 읽기',{size:22}) + cursor(p,237,316))
-    + document(348,201,64,92) + arrow(p,'M332 244h8') + flow(p,'M332 244h8')
-    + arrow(p,'M420 244h8') + flow(p,'M420 244h8',.8) + text(380,332,'같은 파일',{size:19,anchor:'middle',fill:C.teal,weight:700})
-    + panel(438,115,278,297,'메모장 · GUI',
-      text(460,191,'note.txt',{mono:true,size:22,fill:C.teal}) + path('M460 207h233',C.line,1.6)
-      + text(460,252,'Hello, Codex!',{mono:true,size:25}) + cursor(p,654,230)
-      + pill(461,291,225,'Ctrl+S · 저장',C.sage) + text(461,382,'탐색기에서 파일 확인',{size:20}))
-    + arrow(p,'M569 427v35H185v-35') + flow(p,'M569 427v35H185v-35',1.4,'return')
-    + previewFocus(343,195,81,104,'source',.7)
-    + previewFocus(453,222,214,39,'output',1.35),
-    '메모장에서 저장한 내용을 PowerShell로 다시 읽기');
+  const id = 'section-terminal-gui-cli';
+  return stage(id,
+    platform(id, 168, 341, 107, 44) + platform(id, 593, 336, 102, 42)
+    + platform(id, 378, 305, 91, 55, '#efe4ca')
+    + flow(id, 'M260 237c32-5 49 3 67 20')
+    + flow(id, 'M436 255c21-19 37-24 55-19', { delay: 1 })
+    + flow(id, 'M548 375C452 436 296 431 198 375', { color: '#678896', pulse: '#9dc5c0', delay: 2.05 })
+    + monitor(id, 56, 153, 197, 162, 'PowerShell', code(76, 216, 'New-Item / ni', c.ivory)
+      + code(76, 248, 'Get-Content / cat', '#e6cf93', 15) + code(76, 278, 'note.txt', c.ivory) + cursor(id, 157, 265), { dark: true, stand: true })
+    + page(341, 193, 80, 108, { surface: c.ivory, angle: -11 })
+    + tag(379, 323, 119, 'note.txt', { mono: true, color: c.sage, textColor: c.green })
+    + monitor(id, 502, 150, 191, 156, '메모장', code(522, 216, 'Hello, Codex!', c.green, 16)
+      + line('M521 233h133', '#abae92', 1.5) + tag(596, 266, 111, 'Ctrl+S · 저장', { color: c.sage }), { stand: true }));
 }
 
 function hostShellScene() {
-  const p='section-terminal-host-shell';
-  return scene(p,'Windows Terminal은 셸을 담는 작업 창',
-    panel(53,108,646,318,'Windows Terminal · 창 / 탭 / 분할',
-      pill(74,166,188,'탭 1',C.sage) + pill(282,166,188,'탭 2',C.paper) + pill(490,166,188,'탭 3',C.paper)
-      + rect(74,220,188,182,C.ink,8) + rect(282,220,188,182,'#285e61',8) + rect(490,220,188,182,'#3a4b60',8)
-      + text(168,259,'PowerShell 7',{size:23,anchor:'middle',fill:C.light,weight:700})
-      + text(168,296,'pwsh.exe',{size:20,anchor:'middle',fill:C.sage,mono:true}) + text(96,366,'PS >',{size:26,mono:true,fill:C.white}) + cursor(p,167,344,C.amber)
-      + text(376,253,'Windows',{size:23,anchor:'middle',fill:C.light,weight:700})
-      + text(376,282,'PowerShell 5.1',{size:20,anchor:'middle',fill:C.light,weight:700})
-      + text(376,315,'powershell.exe',{size:19,anchor:'middle',fill:C.sage,mono:true}) + text(304,366,'PS >',{size:26,mono:true,fill:C.white})
-      + text(584,262,'명령 프롬프트',{size:22,anchor:'middle',fill:C.light,weight:700})
-      + text(584,299,'cmd.exe',{size:21,anchor:'middle',fill:C.sage,mono:true}) + text(514,366,'C:\\>',{size:26,mono:true,fill:C.white}))
-    + previewFocus(69,214,198,193,'source')
-    + previewFocus(277,214,198,193,'inspect',1.45)
-    + previewFocus(485,214,198,193,'output',2.9),
-    '호스트는 창을 관리하고, 선택한 셸은 명령을 해석');
+  const id = 'section-terminal-host-shell';
+  const shells = [
+    { x: 124, y: 211, fill: '#e4ead8', name: 'PowerShell 7', executable: 'pwsh.exe', prompt: 'PS >' },
+    { x: 295, y: 214, fill: '#f2e4c6', name: 'PowerShell 5.1', executable: 'powershell.exe', prompt: 'PS >' },
+    { x: 466, y: 211, fill: '#eadde8', name: '명령 프롬프트', executable: 'cmd.exe', prompt: 'C:\\>' },
+  ];
+  return stage(id,
+    shadow(id, 381, 400, 270, 28)
+    + shape('M107 173h544l34 53v128l-33 35H106l-26-31V226Z', '#d1bd93')
+    + shape('M80 221l29-48h541l35 48-27 120H106Z', `url(#${id}-linen)`)
+    + box(107, 212, 547, 132, '#d2d2b5', 15, '#938e72', 2)
+    + tag(378, 172, 177, 'Windows Terminal', { color: c.sage, mono: true })
+    + shells.map(({ x, y, fill, name, executable, prompt }, index) => box(x + 4, y + 7, 157, 125, '#a7a086', 9)
+      + box(x, y, 157, 125, fill, 8)
+      + box(x + 10, y + 15, 137, 63, c.dark, 5, 'none')
+      + code(x + 22, y + 46, prompt, '#f3e1af', 22)
+      + cursor(id, x + 83, y + 29)
+      + label(x + 78, y + 100, name, { size: 16, weight: 720 })
+      + label(x + 78, y + 119, executable, { size: 12, mono: true, color: c.green })
+      + glow(id, x + 5, y + 10, 147, 73, index * 1.35)).join('')
+    + line('M98 359h573', '#eee6c9', 2)
+    + label(379, 375, '하나의 창 · 세 가지 셸', { size: 15, color: c.green, weight: 680 }));
 }
 
 function shortcutsScene() {
-  const p='section-terminal-shortcuts';
-  return scene(p,'설정 → 창 분할 → 포커스 이동',
-    panel(49,112,207,310,'설정',text(70,191,'작업 설정',{size:23}) + pill(70,211,164,'단축키 확인',C.sage)
-      + text(70,286,'기본 · 강사',{size:23}) + path('M72 311h158',C.teal,4) + circle(125,311,7,C.white)
-      + key(76,354,79,'Ctrl') + key(174,354,49,','))
-    + arrow(p,'M269 271h21') + flow(p,'M269 271h21')
-    + panel(304,112,402,310,'한 탭 안에서 두 패널 사용',rect(325,175,170,218,C.ink,8) + rect(511,175,172,218,'#285e61',8)
-      + text(345,224,'PS >',{mono:true,size:28,fill:C.white}) + text(531,224,'PS >',{mono:true,size:28,fill:C.white})
-      + cursor(p,418,202,C.amber,27) + text(410,356,'현재 포커스',{size:21,anchor:'middle',fill:C.sage})
-      + text(597,356,'다른 패널',{size:21,anchor:'middle',fill:C.sage})
-      + `<rect x="320" y="170" width="180" height="228" rx="11" fill="none" stroke="${C.amber}" stroke-width="3.5" class="art-motion ${p}-focus"/>`)
-    + text(152,462,'Ctrl + ,',{size:23,anchor:'middle',mono:true,fill:C.teal,weight:700})
-    + text(504,462,'Ctrl + Shift + \\',{size:24,anchor:'middle',mono:true,fill:C.teal,weight:700})
-    + previewFocus(505,169,183,230,'output',1.25),
-    '강사 설정: 오른쪽 분할 · Ctrl+Alt+방향키로 이동');
+  const id = 'section-terminal-shortcuts';
+  return stage(id,
+    platform(id, 189, 355, 133, 56) + platform(id, 557, 350, 143, 52)
+    + flow(id, 'M312 298C357 265 380 253 421 245', { delay: .6 })
+    + at(185, 285, shape('M-100-23h195l31 70-243 10Z', '#b6a07b')
+      + shape('M-100-33h195l31 65-243 10Z', `url(#${id}-linen)`)
+      + key(-82, -20, 52, 'Ctrl', true) + key(-21, -20, 43, ',')
+      + key(32, -20, 52, 'Alt') + box(-66, 18, 130, 16, '#f1e5cd', 5, '#a99879', 1.4))
+    + tag(185, 218, 131, '작업 설정', { size: 16 })
+    + monitor(id, 427, 143, 251, 180, '터미널 · 오른쪽 분할',
+      box(439, 187, 106, 108, '#344b46', 4, 'none')
+      + box(552, 187, 113, 108, '#3c5149', 4, 'none')
+      + code(452, 222, 'PS >', '#f7e1a2', 21)
+      + code(563, 222, 'PS >', '#e0e9d1', 21)
+      + cursor(id, 612, 206)
+      + glow(id, 549, 184, 119, 114, 1.2), { stand: true })
+    + tag(555, 373, 156, 'Ctrl + Shift + \\', { color: c.ivory, mono: true })
+    + tag(384, 410, 183, 'Ctrl+Alt+방향키 · 이동', { color: c.sage, size: 14 }));
 }
 
 function diffScene() {
-  const p='section-git-example';
-  return scene(p,'같은 연습 폴더에 Git 기록 공간 만들기',
-    panel(67,118,622,313,'git-practice/ · 연습 폴더',
-      document(160,198,74,99,C.white) + pill(136,304,122,'note.txt',C.white,true) + text(197,377,'앞에서 만든 파일',{size:22,anchor:'middle',weight:700})
-      + path('M324 179v218',C.line,1.6)
-      + folder(413,207,182,119) + pill(446,245,117,'.git',C.sage,true)
-      + text(506,368,'기록과 설정 보관',{size:22,anchor:'middle',weight:700})
-      + `<rect x="402" y="193" width="214" height="147" rx="13" fill="none" stroke="${C.teal}" stroke-width="3" stroke-dasharray="9 7" class="art-motion ${p}-focus"/>`)
-    + pill(81,449,285,'git init -b main',C.paper,true)
-    + pill(392,449,285,'ls -Force로 .git 확인',C.paper)
-    + previewFocus(132,299,130,44,'source'),
-    '.git는 숨겨진 기록 공간 · 안의 파일은 직접 고치지 않기');
+  const id = 'section-git-example';
+  return stage(id,
+    platform(id, 376, 338, 229, 84)
+    + shape('M194 203l21-31h90l26 22h212l17 142-359 9Z', '#cfad73')
+    + page(232, 173, 105, 137, { surface: c.ivory, angle: -16 })
+    + page(395, 166, 105, 131, { surface: c.sage, angle: 11 })
+    + shape('M185 254q5-15 19-15h347q14 0 18 16l-33 96q-4 8-13 8H217q-13 0-17-10Z', '#d6a45e')
+    + shape('M188 254l373 1-23 70q-4 10-17 11H216q-17 0-20-12Z', '#e9bf7d')
+    + line('M205 260h339', '#fff0c4', 2.5)
+    + tag(377, 294, 132, 'git-practice/', { mono: true, color: '#f3daa0' })
+    + tag(282, 218, 109, 'note.txt', { mono: true })
+    + tag(451, 207, 70, '.git', { mono: true, color: c.sage, textColor: c.green })
+    + glow(id, 408, 186, 86, 45)
+    + tag(270, 417, 171, 'git init -b main', { mono: true })
+    + tag(490, 417, 137, 'ls -Force', { mono: true }));
 }
 
 function versionFlowScene() {
-  const p='section-git-why';
-  return scene(p,'저장한 내용 중 다음 기록에 넣을 내용 선택',
-    panel(33,130,190,273,'작업 파일',
-      document(83,196,82,111,C.white) + text(128,350,'note.txt',{size:21,mono:true,anchor:'middle',weight:700})
-      + text(128,382,'version 1',{size:20,mono:true,anchor:'middle',fill:C.teal}),{titleSize:22})
-    + arrow(p,'M234 262h36') + flow(p,'M234 262h36')
-    + panel(283,130,190,273,'스테이징',
-      document(333,196,82,111,C.sage) + check(411,293,.8)
-      + text(378,350,'다음 기록에',{size:21,anchor:'middle',weight:700})
-      + text(378,382,'담을 내용',{size:21,anchor:'middle',fill:C.teal}),{titleSize:22})
-    + arrow(p,'M484 262h36') + flow(p,'M484 262h36',1.2)
-    + panel(533,130,190,273,'커밋 기록',
-      commit(628,239,'version 1',31)
-      + text(628,351,'그 시점의 상태',{size:20,anchor:'middle',weight:700})
-      + text(628,381,'메시지와 함께',{size:20,anchor:'middle',fill:C.teal}),{titleSize:22})
-    + pill(147,433,213,'git add note.txt',C.paper,true)
-    + pill(397,433,213,'git commit',C.sage,true)
-    + previewFocus(74,190,103,127,'source')
-    + previewFocus(325,190,103,127,'state',1.2)
-    + previewFocus(584,213,89,64,'inspect',2.4),
-    '파일 저장 · 다음 기록 선택 · 커밋은 서로 다른 단계');
+  const id = 'section-git-why';
+  return stage(id,
+    platform(id, 137, 308, 100, 50) + platform(id, 379, 307, 107, 52) + platform(id, 619, 306, 99, 47)
+    + flow(id, 'M220 253C248 240 265 246 291 259')
+    + flow(id, 'M471 258c23-13 47-15 65-5', { delay: 1.4 })
+    + page(98, 172, 79, 116, { surface: c.ivory, angle: -12 })
+    + tag(138, 302, 104, 'note.txt', { mono: true })
+    + at(379, 256, shape('M-65-1l29-22h115l-25 22Z', '#f9efd4')
+      + shape('M-65-1v41H54l25-21v-42L54-1Z', '#9aab91')
+      + box(-65, -1, 119, 41, c.sage, 6) + box(-45, 11, 77, 11, '#708d76', 4, 'none'))
+    + page(355, 168, 64, 103, { surface: '#dfe9d5', angle: 9 })
+    + tick(430, 268)
+    + spool(617, 249, 43, c.sage) + spool(617, 230, 43, c.sage)
+    + tag(617, 308, 115, 'version 1', { color: c.sage, mono: true })
+    + label(138, 393, '작업 파일', { weight: 720 })
+    + label(379, 393, '스테이징', { weight: 720 })
+    + label(619, 393, '커밋 기록', { weight: 720 })
+    + tag(254, 318, 151, 'git add note.txt', { mono: true, size: 13 })
+    + tag(511, 321, 119, 'git commit', { mono: true, size: 13 }));
 }
 
 function twoVersionsScene() {
-  const p='section-git-diff';
-  return scene(p,'두 버전의 차이를 읽고 새 기록 남기기',
-    document(75,134,145,190,C.white) + pill(91,170,109,'버전 1',C.paper)
-    + arrow(p,'M240 229h55') + flow(p,'M240 229h55')
-    + document(319,134,145,190,C.sage) + pill(335,170,109,'버전 2',C.light)
-    + arrow(p,'M481 229h37') + flow(p,'M481 229h37',1)
-    + panel(535,135,165,189,'차이 · diff',
-      text(551,218,'− 버전 1',{size:20,fill:C.red,weight:700})
-      + text(551,260,'+ 버전 2',{size:20,fill:C.teal,weight:700}),{titleSize:20})
-    + path('M145 380h249',C.teal,4) + circle(145,380,13,C.amber) + circle(394,380,13,C.sage)
-    + text(145,435,'첫 커밋',{size:22,anchor:'middle',weight:700})
-    + text(394,435,'두 번째 커밋',{size:22,anchor:'middle',weight:700})
-    + pill(529,376,173,'기록 · log',C.paper)
-    + previewFocus(546,193,144,37,'source')
-    + previewFocus(546,235,144,37,'inspect',.9),
-    'diff로 비교 → 확인한 버전 2를 커밋');
+  const id = 'section-git-diff';
+  return stage(id,
+    platform(id, 220, 329, 148, 66) + platform(id, 550, 327, 134, 54)
+    + flow(id, 'M340 236C369 210 391 216 423 234')
+    + page(112, 185, 117, 157, { surface: c.ivory, mark: c.rose, angle: -18 })
+    + page(205, 153, 126, 163, { surface: '#e4edd9', angle: 15 })
+    + tag(155, 277, 75, '버전 1', { color: c.blush })
+    + tag(272, 248, 76, '버전 2', { color: c.sage })
+    + monitor(id, 439, 164, 210, 145, 'diff',
+      box(455, 204, 177, 33, '#f0d5c6', 4, 'none') + code(468, 226, '− 버전 1', c.rose)
+      + box(455, 248, 177, 33, '#dae8d3', 4, 'none') + code(468, 270, '+ 버전 2', c.green)
+      + glow(id, 453, 246, 182, 37, 1.3), { stand: true })
+    + flow(id, 'M268 403c55 15 128 15 193 0', { color: '#799682', delay: 2 })
+    + spool(251, 396, 17, c.honey) + spool(480, 395, 17, c.sage)
+    + label(251, 444, '첫 커밋', { size: 15 }) + label(480, 444, '두 번째 커밋', { size: 15 }));
 }
 
 function promptScene() {
-  const p='section-git-prompt';
-  return scene(p,'HEAD는 이전 기록 확인 · main은 최신 유지',
-    pill(101,118,134,'HEAD',C.amber,true) + arrow(p,'M168 163v51')
-    + pill(525,118,134,'main',C.sage,true) + arrow(p,'M592 163v51')
-    + path('M191 241h378',C.line,4)
-    + circle(168,241,23,C.amber) + circle(592,241,23,C.sage)
-    + text(168,290,'버전 1 커밋',{size:23,anchor:'middle',weight:700})
-    + text(592,290,'버전 2 커밋',{size:23,anchor:'middle',weight:700})
-    + pill(89,315,158,'version 1',C.paper,true)
-    + pill(513,315,158,'version 2',C.paper,true)
-    + text(168,389,'지금 잠시 보는 기록',{size:21,anchor:'middle',fill:C.muted})
-    + text(592,389,'최신 작업 위치',{size:21,anchor:'middle',fill:C.muted})
-    + arrow(p,'M258 424h244') + flow(p,'M258 424h244')
-    + text(380,463,'git switch main → 복귀',{size:24,anchor:'middle',mono:true,fill:C.teal,weight:700})
-    + previewSignal(168,241,28,'source')
-    + previewSignal(592,241,28,'inspect',1.35),
-    'main의 기록을 지우지 않고 이전 커밋에 다녀오기');
+  const id = 'section-git-prompt';
+  return stage(id,
+    platform(id, 383, 324, 282, 85, '#f3e7c9')
+    + line('M186 283c68 42 310 42 382 0', '#93a58e', 4)
+    + flow(id, 'M211 245C307 173 457 177 544 245', { color: '#6c9385', delay: .5 })
+    + spool(182, 280, 48, c.honey) + spool(575, 280, 48, c.sage)
+    + line('M182 248v-48M575 248v-48', ink, 2.4)
+    + tag(182, 183, 89, 'HEAD', { color: '#eed6a1', mono: true })
+    + tag(575, 183, 89, 'main', { color: c.sage, mono: true })
+    + label(185, 348, '버전 1 커밋', { size: 16 })
+    + label(575, 348, '버전 2 커밋', { size: 16 })
+    + tag(383, 438, 176, 'git switch main', { color: c.ivory, mono: true }));
 }
 
 function branchMergeScene() {
-  const p='section-git-branch';
-  return scene(p,'브랜치에서 수정하고 main에 합치기',
-    rect(51,108,658,328,C.cream,12)
-    + rect(45,102,658,328,C.light,12)
-    + text(105,135,'① 브랜치 만들기',{size:20,fill:C.muted,weight:700})
-    + text(290,135,'② 파일을 추가해 커밋',{size:20,fill:C.muted,weight:700})
-    + pill(563,133,110,'main',C.sage,true)
-    + arrow(p,'M618 178v24')
-    // A merge commit has two parents: the old main commit and the branch commit.
-    + arrow(p,'M145 225H606')
-    + arrow(p,'M139 240Q210 320 346 320')
-    + arrow(p,'M394 320Q533 320 614 241')
-    + flow(p,'M139 240Q210 320 346 320')
-    + flow(p,'M394 320Q533 320 614 241',1.1)
-    + circle(125,225,20,C.amber)
-    + circle(370,320,20,C.sage)
-    + circle(630,225,20,C.teal)
-    + text(125,192,'기존 커밋',{size:21,anchor:'middle',weight:700})
-    + text(630,300,'병합 커밋',{size:21,anchor:'middle',weight:700})
-    + text(370,290,'branch-note.txt 커밋',{size:19,anchor:'middle',mono:true,weight:700})
-    + pill(264,389,212,'practice-branch',C.sage,true)
-    + arrow(p,'M370 389v-46')
-    + rect(247,443,266,40,C.white,8)
-    + text(380,471,'git merge --no-ff',{size:22,anchor:'middle',mono:true,fill:C.teal,weight:700})
-    + previewSignal(125,225,26,'source')
-    + previewSignal(370,320,26,'state',1.1)
-    + previewSignal(630,225,26,'inspect',2.2),
-    '이번 실습은 --no-ff로 병합 커밋을 남겨 흐름을 확인합니다');
+  const id = 'section-git-branch';
+  return stage(id,
+    platform(id, 379, 304, 301, 115, '#f1e5c7')
+    + line('M198 291c125 9 256 2 371-8', '#dcd0ac', 12)
+    + line('M201 294c56 22 115 63 173 62 59 0 130-37 192-72', '#ddd0af', 12)
+    + flow(id, 'M215 291c122 9 239 2 326-6', { color: '#779682', pulse: '#c5ce9c' })
+    + flow(id, 'M216 304c44 21 85 44 130 50', { color: '#819883', delay: .55 })
+    + flow(id, 'M402 353c48-8 91-35 138-58', { color: '#819883', delay: 1.5 })
+    + spool(190, 287, 30, c.honey) + spool(374, 351, 27, c.sage) + spool(568, 279, 37, '#a4c3a7')
+    + label(185, 253, '기존 커밋', { size: 15 })
+    + label(567, 241, '병합 커밋', { size: 16, weight: 720 })
+    + line('M568 226v-17', ink, 2) + tag(568, 196, 81, 'main', { mono: true, color: c.sage })
+    + tag(367, 390, 170, 'branch-note.txt 커밋', { size: 14, mono: true })
+    + tag(371, 324, 147, 'practice-branch', { mono: true, size: 14 })
+    + tag(381, 471, 187, 'git merge --no-ff', { mono: true, color: '#dfedda' }));
 }
 
 function cloneScene() {
-  const p='section-github-clone';
-  return scene(p,'내 저장소와 GitHub를 연결하기',
-    panel(35,115,290,300,'내 컴퓨터 · 로컬 저장소',
-      folder(84,174,190,98) + pill(100,207,157,'note.txt',C.white,true)
-      + text(180,304,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
-      + rect(57,324,246,55,C.sage,7)
-      + text(180,347,'origin = 원격 주소 별칭',{size:18,anchor:'middle',weight:700})
-      + text(180,369,'내 로컬 Git에 저장',{size:17,anchor:'middle',fill:C.muted}),{titleSize:20})
-    + arrow(p,'M338 235h80') + flow(p,'M338 235h80')
-    + text(378,217,'push',{size:22,mono:true,anchor:'middle',fill:C.teal,weight:700})
-    + arrow(p,'M418 305h-80') + flow(p,'M418 305h-80',1.3,'return')
-    + text(378,290,'fetch',{size:22,mono:true,anchor:'middle',fill:C.teal,weight:700})
-    + panel(435,115,290,300,'GitHub · 원격 저장소',
-      remoteRepository(505,183)
-      + text(580,339,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
-      + text(580,374,'커밋 기록을 보관',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
-    + text(380,464,'fetch 후에도 작업 파일은 그대로',{size:21,anchor:'middle',fill:C.teal,weight:700})
-    + previewFocus(52,319,256,65,'output',2)
-    + previewSignal(616,264,14,'source',1.2),
-    'push는 보내기 · fetch는 가져오기');
+  const id = 'section-github-clone';
+  return stage(id,
+    platform(id, 184, 328, 135, 61) + platform(id, 572, 332, 128, 59)
+    + label(178, 132, '내 컴퓨터 · 로컬 저장소', { size: 16, weight: 690 })
+    + monitor(id, 87, 161, 188, 131, 'git-practice', pocket(122, 216, 116, 53, '#e6bc74')
+      + tag(181, 244, 80, 'note.txt', { size: 13, mono: true }), { stand: true })
+    + tag(180, 384, 198, 'origin = 원격 주소 별칭', { size: 14, color: c.sage })
+    + flow(id, 'M296 226C361 200 408 200 475 227')
+    + label(388, 195, 'push', { size: 16, mono: true, color: c.green, weight: 720 })
+    + flow(id, 'M470 282C409 311 356 311 299 284', { color: '#658b98', pulse: '#98c9cb', delay: 1.35 })
+    + label(384, 331, 'fetch', { size: 16, mono: true, color: '#597c88', weight: 720 })
+    + label(571, 130, 'GitHub · 원격 저장소', { size: 16, weight: 690 })
+    + archive(id, 497, 172)
+    + spool(560, 209, 24, c.sage)
+    + tag(569, 384, 130, '커밋 기록', { color: c.ivory }));
 }
 
 function remoteRolesScene() {
-  const p='section-github-roles';
-  return scene(p,'GitHub에서 다른 폴더로 복제하기',
-    panel(45,115,275,291,'GitHub · 원격 저장소',
-      remoteRepository(107,183)
-      + text(182,339,'git-practice',{size:20,anchor:'middle',mono:true,weight:700})
-      + text(182,374,'버전 1 · 버전 2 기록',{size:20,anchor:'middle',fill:C.muted}),{titleSize:20})
-    + arrow(p,'M335 242h88') + flow(p,'M335 242h88')
-    + text(379,218,'clone',{size:23,mono:true,anchor:'middle',fill:C.teal,weight:700})
-    + panel(438,115,275,291,'내 컴퓨터 · 사용자 홈',
-      folder(475,180,199,120) + pill(496,218,156,'note.txt',C.white,true)
-      + text(575,337,'~/git-practice-clone',{size:17,anchor:'middle',mono:true,weight:700})
-      + text(575,374,'origin = 원격 주소 별칭',{size:19,anchor:'middle',fill:C.muted}),{titleSize:20})
-    + pill(255,443,250,'git clone 주소',C.sage,true)
-    + previewFocus(469,173,215,137,'output',1.25),
-    '사용자 홈의 새 폴더에 복제합니다');
+  const id = 'section-github-roles';
+  return stage(id,
+    label(184, 149, 'GitHub · 원격 저장소', { size: 17, weight: 700 })
+    + archive(id, 107, 191, '#aec7ac')
+    + flow(id, 'M286 259C345 220 392 226 451 256', { delay: .45 })
+    + tag(371, 215, 110, 'git clone', { mono: true, color: c.sage })
+    + label(554, 144, '내 컴퓨터 · 사용자 홈', { size: 17, weight: 700 })
+    + platform(id, 552, 338, 151, 64)
+    + pocket(510, 196, 115, 93, '#cfc0a0') + label(566, 267, '원래 폴더', { size: 14 })
+    + pocket(463, 251, 172, 95, '#e6ba72', page(70, -15, 64, 79, { surface: c.ivory, angle: -9 }))
+    + tag(548, 317, 83, 'note.txt', { mono: true, size: 13 })
+    + tag(552, 395, 210, '~/git-practice-clone', { mono: true, size: 15 })
+    + label(552, 428, 'origin = 원격 주소 별칭', { size: 14, color: c.green }));
 }
 
 function pipeScene() {
-  const p='section-terminal-bonus';
-  return scene(p,'파이프는 왼쪽 결과를 오른쪽으로 전달',
-    panel(57,108,644,102,'PowerShell · 명령 읽기',text(80,184,'Get-ChildItem -File | Select-Object Name',{mono:true,size:22,fill:C.teal,weight:650}))
-    + panel(58,255,250,190,'파일 목록 · ls',text(79,339,'note.txt',{size:23,mono:true}) + text(79,379,'README.md',{size:23,mono:true}) + text(79,419,'파일의 여러 속성',{size:21,fill:C.muted}))
-    + arrow(p,'M324 348h104') + flow(p,'M324 348h104') + text(376,316,'|',{size:43,anchor:'middle',mono:true,weight:750})
-    + panel(445,255,250,190,'이름 선택 · select',text(467,337,'Name',{size:22,mono:true,fill:C.teal,weight:700})
-      + text(467,377,'note.txt',{size:23,mono:true}) + text(467,417,'README.md',{size:23,mono:true}),{titleSize:22})
-    + previewFocus(460,311,79,38,'output',1.25),
-    'ls · select는 PowerShell의 기본 별칭');
+  const id = 'section-terminal-bonus';
+  return stage(id,
+    tag(380, 129, 407, 'Get-ChildItem -File | Select-Object Name', { color: c.sage, mono: true })
+    + platform(id, 168, 329, 100, 43) + platform(id, 590, 328, 116, 45)
+    + shadow(id, 376, 339, 100, 17)
+    + shape('M244 265h67q64 0 64 42h124v32H374q-28 0-32-21-3-19-32-19h-66Z', '#d4a65d')
+    + line('M248 270h64q62 0 62 45h121', '#f5d798', 3.5)
+    + flow(id, 'M257 283h56q43 0 45 29 4 13 21 13h109', { color: '#657e65', delay: .4 })
+    + page(117, 189, 80, 112, { angle: -18 })
+    + page(145, 207, 81, 117, { angle: 12, surface: '#dce7d3' })
+    + tag(171, 352, 119, 'ls · 파일 목록', { size: 15 })
+    + box(518, 232, 149, 37, c.ivory, 7, '#9c9b7e', 1.5)
+    + box(518, 278, 149, 37, c.ivory, 7, '#9c9b7e', 1.5)
+    + label(592, 256, 'note.txt', { mono: true, size: 16 })
+    + label(592, 302, 'README.md', { mono: true, size: 16 })
+    + tag(592, 352, 135, 'select · 이름만', { color: c.sage, size: 15 }));
 }
 
 function vscodeSetupScene() {
-  const p='section-tools-vscode-setup';
-  return scene(p,'VS Code 설치부터 같은 문서 열기까지',
-    panel(34,124,211,294,'공식 다운로드',
-      text(139,201,'Windows',{size:25,anchor:'middle',weight:700})
-      + document(99,225,80,100,C.sage)
-      + text(139,377,'설치 파일 받기',{size:22,anchor:'middle'}),{titleSize:22})
-    + arrow(p,'M255 271h16') + flow(p,'M255 271h16')
-    + panel(279,124,211,294,'User Setup 설치',
-      rect(300,190,169,59,C.paper,8) + check(323,222,.7)
-      + text(341,226,'옵션 확인',{size:21,weight:650})
-      + text(385,296,'설치 완료',{size:25,anchor:'middle',weight:700})
-      + text(385,345,'편집기 열기',{size:22,anchor:'middle'}),{titleSize:20})
-    + arrow(p,'M500 271h16') + flow(p,'M500 271h16',1)
-    + panel(524,124,211,294,'폴더 열기',
-      folder(549,190,157,101) + pill(548,229,160,'README.md',C.white,true)
-      + text(629,340,'git-practice-clone',{size:16,anchor:'middle',mono:true})
-      + text(629,379,'같은 README',{size:22,anchor:'middle',fill:C.teal,weight:700}),{titleSize:22})
-    + previewFocus(294,184,181,71,'source',.9)
-    + previewFocus(542,224,172,46,'output',1.85),
-    '설치 후 앞에서 만든 복제본의 문서를 다시 엽니다');
+  const id = 'section-tools-vscode-setup';
+  return stage(id,
+    platform(id, 125, 315, 85, 42) + platform(id, 379, 328, 119, 50) + platform(id, 627, 312, 94, 42)
+    + flow(id, 'M201 241c23-18 49-20 77-10')
+    + flow(id, 'M484 242c30-13 57-12 81 0', { delay: 1.6 })
+    + page(86, 193, 77, 116, { surface: c.ivory, angle: -9 })
+    + line('M124 185v-23m-12 13 12 12 12-12', c.green, 4)
+    + label(126, 367, '공식 다운로드', { size: 16, weight: 680 })
+    + monitor(id, 286, 174, 188, 133, 'Windows', box(306, 220, 147, 42, '#e2ead7', 5, 'none')
+      + tick(328, 242, .85) + label(392, 248, 'User Setup 설치', { size: 15, weight: 700 })
+      + glow(id, 302, 216, 156, 51, 1), { stand: true })
+    + pocket(569, 220, 116, 91, '#dfb672', page(47, -19, 62, 87, { surface: c.ivory, angle: 10 }))
+    + tag(628, 273, 95, 'README.md', { mono: true, size: 13 })
+    + label(628, 364, 'git-practice-clone', { mono: true, size: 14, weight: 680 }));
 }
 
 function errorReportScene() {
-  const p='section-git-bonus';
-  const rows=[['현재 폴더','git-practice'],['현재 브랜치','main'],['실행 명령','git push'],['오류 전문','오류 원문 전체 첨부'],['보존할 작업','note.txt의 내 수정']];
-  const body=rows.map(([label,value],i)=>{const y=184+i*52;return text(137,y,`${i+1}. ${label}`,{size:22,weight:700,fill:C.teal})
-    + text(330,y,value,{size:21,mono:i<3}) + (i<4?path(`M134 ${y+17}h488`,C.line,1.4):'');}).join('');
-  return scene(p,'다섯 줄의 상태로 도움 요청하기',panel(110,110,536,338,'동기화 오류 보고 · 가상 예시',body)
-    + circle(139,482,14,C.sage) + check(139,482,.65) + text(167,489,'토큰 · 비밀번호는 지우고 공유',{size:23,weight:650}) + cursor(p,606,376)
-    + previewFocus(128,310,493,44,'source') + previewSignal(139,482,20,'inspect',1.25));
+  const id = 'section-git-bonus';
+  const rows = [['폴더', 'git-practice'], ['브랜치', 'main'], ['명령', 'git push'], ['오류', '오류 원문 함께 보기'], ['내 수정', 'note.txt 보존']];
+  return stage(id,
+    platform(id, 407, 376, 239, 88, '#f1e0ba')
+    + at(221, 146, box(5, 8, 277, 241, '#aa9872', 13)
+      + box(0, 0, 277, 241, '#d4b685', 13)
+      + box(12, 13, 254, 215, c.ivory, 8)
+      + box(77, -11, 122, 27, '#aebca4', 6)
+      + label(138, 7, '동기화 오류 보고', { size: 14, weight: 720 })
+      + rows.map(([heading, example], index) => {
+        const y = 57 + index * 35;
+        return box(27, y - 11, 11, 11, c.sage, 2, '#8fa08c', 1.2) + label(49, y, heading, { size: 14, anchor: 'start', color: c.green, weight: 660 })
+          + label(137, y, example, { size: 14, anchor: 'start', mono: index < 3 });
+      }).join(''))
+    + glow(id, 242, 296, 229, 31)
+    + at(581, 325, shape('M0-55 43-30v45Q39 46 0 64-40 46-43 15v-45Z', '#91a88d')
+      + shape('M0-59 37-38v47Q32 32 0 50-33 32-37 9v-47Z', '#d9e7d1')
+      + box(-12, -5, 24, 18, c.honey, 4) + line('M-7-5v-6a7 7 0 0 1 14 0v6', ink, 2.3)
+      + oval(0, 4, 2, 2, ink, 'none'))
+    + tag(568, 403, 168, '비밀번호 · 토큰 제외', { color: c.sage, size: 14 }));
 }
+
 
 export const toolSectionScenes = {
   'tools-vscode-setup': {

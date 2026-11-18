@@ -1,33 +1,84 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-github" aria-hidden="true" focusable="false">
-  <defs><marker id="topic-github-arrow" viewBox="0 0 10 10" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1l7 4-7 4" fill="none" stroke="#367d7b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-  <style>.topic-art-github .github-send{animation:topic-github-send 5.8s ease-in-out infinite}.topic-art-github .github-receive{animation:topic-github-receive 5.8s ease-in-out infinite}@keyframes topic-github-send{0%,10%{transform:translateX(0);opacity:.2}35%{transform:translateX(76px);opacity:1}50%,100%{transform:translateX(76px);opacity:.2}}@keyframes topic-github-receive{0%,45%{transform:translateX(0);opacity:.2}72%{transform:translateX(-76px);opacity:1}92%,100%{transform:translateX(-76px);opacity:.2}}@media(prefers-reduced-motion:reduce){.topic-art-github .art-motion{animation:none!important}}</style>
-  <text x="380" y="61" text-anchor="middle" fill="#26334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27" font-weight="750">내 컴퓨터와 GitHub 연결하기</text>
-  <path d="M80 81h600" fill="none" stroke="#bdc7b3" stroke-width="1.4"/>
-  <ellipse cx="380" cy="450" rx="264" ry="16" fill="#26334b" opacity=".055"/>
-  <g stroke="#26334b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M320 125l9 8v294l-9-9Z" fill="#e6d4ae"/><path d="M45 418l9 9h275l-9-9Z" fill="#e6d4ae"/>
-    <rect x="45" y="115" width="275" height="303" rx="10" fill="#fff9ec"/>
-    <path d="M55 115h255q10 0 10 10v32H45v-32q0-10 10-10Z" fill="#26334b" stroke="none"/>
-    <path d="M83 205v-27h69l17 18h87v102H83Z" fill="#e4b75f"/>
-    <path d="M77 224h191l-15 74H89Z" fill="#eddfc4"/>
-    <rect x="101" y="225" width="142" height="39" rx="6" fill="#fff9ec"/>
-    <rect x="69" y="335" width="227" height="57" rx="7" fill="#cbdcc5"/>
-    <path d="M705 125l9 8v294l-9-9Z" fill="#e6d4ae"/><path d="M430 418l9 9h275l-9-9Z" fill="#e6d4ae"/>
-    <rect x="430" y="115" width="275" height="303" rx="10" fill="#fff9ec"/>
-    <path d="M440 115h255q10 0 10 10v32H430v-32q0-10 10-10Z" fill="#26334b" stroke="none"/>
-    <rect x="489" y="188" width="151" height="118" rx="7" fill="#e6d4ae"/><rect x="483" y="181" width="151" height="118" rx="7" fill="#cbdcc5"/>
-    <rect x="495" y="195" width="127" height="34" rx="5" fill="#fff9ec"/><path d="M521 263h73" fill="none" stroke="#367d7b"/><circle cx="521" cy="263" r="8" fill="#e4b75f"/><circle cx="594" cy="263" r="8" fill="#fff9ec"/>
+  <defs>
+    <linearGradient id="topic-github-paper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="#fffaf0" />
+    <stop offset="1" stop-color="#eadcc0" />
+    </linearGradient>
+    <filter id="topic-github-shade" x="-30%" y="-200%" width="160%" height="500%">
+      <feGaussianBlur stdDeviation="9" />
+    </filter>
+  </defs>
+  <style>
+    .topic-art-github .lesson-signal { animation: github-topic-signal 4.8s linear var(--beat) infinite; }
+    .topic-art-github .lesson-ping { animation: github-topic-ping 4.8s ease-in-out var(--beat) infinite; }
+    @keyframes github-topic-signal {
+      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
+      65%,100%{stroke-dashoffset:-1;opacity:0}
+    }
+    @keyframes github-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
+    @media(prefers-reduced-motion:reduce) { .topic-art-github .art-motion { animation:none!important; } }
+  </style>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="380" cy="429" rx="261" ry="19" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-github-shade)" />
+    <g transform="translate(240 351)"><path d="M-144 -2L-9 55q9 4 18 0L144 -2v12L9 67q-9 4-18 0L-144 10Z" fill="#c7b08a" stroke="#314347" stroke-width="2.5" />
+    <path d="M-141 -7 -9 -58q9-4 18 0L141 -7q6 3 0 7L9 55q-9 4-18 0L-141 0q-6-4 0-7Z" fill="url(#topic-github-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-134 -3 -9 -52q9-4 18 0L134 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 59v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    </g>
+    <g transform="translate(568 353)"><path d="M-113 -2L-9 60q9 4 18 0L113 -2v12L9 72q-9 4-18 0L-113 10Z" fill="#aebfa0" stroke="#314347" stroke-width="2.5" />
+    <path d="M-110 -7 -9 -63q9-4 18 0L110 -7q6 3 0 7L9 60q-9 4-18 0L-110 0q-6-4 0-7Z" fill="url(#topic-github-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-103 -3 -9 -57q9-4 18 0L103 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 64v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    </g>
+    <path d="M300 238C345 205 416 200 475 235" fill="none" stroke="#a7733e" stroke-width="3.6" />
+    <path d="M300 238C345 205 416 200 475 235" fill="none" stroke="#ffdda4" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.25s" stroke-dasharray=".12 1" />
+    <g transform="translate(476 236) rotate(31)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
+    </g>
+    <path d="M475 291C427 337 350 334 301 294" fill="none" stroke="#688c9e" stroke-width="3.5" />
+    <path d="M475 291C427 337 350 334 301 294" fill="none" stroke="#bed7db" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:2.15s" stroke-dasharray=".12 1" />
+    <g transform="translate(300 293) rotate(222)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#688c9e" stroke-width="2.45" />
+    </g>
+    <g transform="translate(133 222)"><path d="M6 21V9q0-5 6-5h40l12 11h69q7 0 7 7v80H7Z" fill="#e7bb63" stroke="#314347" stroke-width="2.7" />
+    <g transform="translate(33 4)"><path d="M5 2h34l18 18v54q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#ae9a74" stroke="#314347" stroke-width="2.1" transform="translate(5 5)" />
+    <path d="M5 2h34l18 18v54q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#fff9e9" stroke="#314347" stroke-width="2.2" />
+    <path d="M39 3v17h17" fill="#eee3cb" stroke="#314347" stroke-width="1.6" />
+    <path d="M12 41h28m-28 9h21" fill="none" stroke="#456f6b" stroke-width="2.1" />
+    </g><path d="M2 59h144l-11 50H14Z" fill="#eee3cb" stroke="#314347" stroke-width="2.7" />
+    <path d="M19 69h111" fill="none" stroke="#fff9e9" stroke-width="1.4" opacity=".6" />
+    </g>
+    <rect x="244" y="252" width="44" height="42" rx="5" fill="#cfe2c5" stroke="#314347" stroke-width="2" />
+    <path d="M254 279h24m-24-10h19" fill="none" stroke="#456f6b" stroke-width="2" />
+    <g transform="translate(501 258)"><path d="M2 1 16-11h116l-8 12v44l14-12V-11M2 1h124" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="124" height="44" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <rect x="11" y="10" width="73" height="23" rx="4" fill="#cfe2c5" stroke="#9eb898" stroke-width="1.4" />
+    <circle cx="106" cy="21" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    </g>
+    <g transform="translate(501 220)"><path d="M2 1 16-11h116l-8 12v36l14-12V-11M2 1h124" fill="#cfe2c5" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="124" height="36" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M16 17h65" fill="none" stroke="#456f6b" stroke-width="2.4" />
+    <circle cx="106" cy="18" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    </g>
+    <g transform="translate(501 181)"><path d="M2 1 16-11h116l-8 12v36l14-12V-11M2 1h124" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="124" height="36" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M20 18h54" fill="none" stroke="#456f6b" stroke-width="2.4" />
+    <circle cx="106" cy="18" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    </g>
+    <circle cx="607" cy="199" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:1.3s" opacity=".42" />
+    <circle cx="263" cy="270" r="8" fill="none" stroke="#688c9e" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:2.8s" opacity=".42" />
+    <g transform="translate(350 184)"><rect x="1" y="2" width="59" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="59" height="25" rx="7" fill="#fff9e9" stroke="#a7733e" stroke-width="1.35" />
+    <text x="29.5" y="17" text-anchor="middle" fill="#a7733e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">push</text></g>
+    <g transform="translate(350 324)"><rect x="1" y="2" width="64" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="64" height="25" rx="7" fill="#fff9e9" stroke="#688c9e" stroke-width="1.35" />
+    <text x="32" y="17" text-anchor="middle" fill="#688c9e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">fetch</text></g>
+    <g transform="translate(343 254)"><rect x="1" y="2" width="78" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="78" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
+    <text x="39" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">origin</text></g>
+    <g transform="translate(166 370)"><rect x="1" y="2" width="103" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="103" height="25" rx="7" fill="#fff9e9" stroke="#314347" stroke-width="1.35" />
+    <text x="51.5" y="17" text-anchor="middle" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">로컬 저장소</text></g>
+    <g transform="translate(512 370)"><rect x="1" y="2" width="100" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="100" height="25" rx="7" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
+    <text x="50" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">GitHub</text></g>
   </g>
-  <g font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" stroke="none" fill="#fff9ec" font-size="20" font-weight="700"><text x="62" y="144">내 컴퓨터 · 로컬</text><text x="447" y="144">GitHub · 원격</text></g>
-  <g font-family="Consolas,monospace" stroke="none" fill="#26334b" font-weight="700" text-anchor="middle"><text x="172" y="251" font-size="20">note.txt</text><text x="558" y="218" font-size="19">note.txt</text><text x="183" y="320" font-size="20">git-practice</text><text x="558" y="347" font-size="20">git-practice</text></g>
-  <text x="182" y="359" text-anchor="middle" fill="#26334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700">origin = 원격 주소 별칭</text>
-  <text x="182" y="382" text-anchor="middle" fill="#586b64" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="17">로컬 Git에 저장</text>
-  <text x="558" y="376" text-anchor="middle" fill="#586b64" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20">커밋 기록을 보관</text>
-  <g fill="none" stroke="#367d7b" stroke-width="3.5" stroke-linecap="round" marker-end="url(#topic-github-arrow)"><path d="M337 230h78"/><path d="M415 304h-78"/></g>
-  <g font-family="Consolas,monospace" font-size="21" font-weight="700" fill="#367d7b" stroke="none" text-anchor="middle"><text x="376" y="213">push</text><text x="376" y="288">fetch</text></g>
-  <circle class="art-motion github-send" cx="337" cy="230" r="5" fill="#e4b75f"/><circle class="art-motion github-receive" cx="415" cy="304" r="5" fill="#e4b75f"/>
-  <circle class="art-motion preview-topic-accent preview-github-remote" display="none" cx="594" cy="263" r="16" fill="none" stroke="#af7130" stroke-width="3"/>
-  <text x="380" y="471" text-anchor="middle" fill="#367d7b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="700">fetch 후에도 작업 파일은 그대로</text>
-  <path class="art-motion preview-topic-accent preview-github-fetch" display="none" d="M238 483h284" fill="none" stroke="#367d7b" stroke-width="2.8" stroke-linecap="round"/>
-  <text x="380" y="512" text-anchor="middle" fill="#586b64" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="600">push는 보내기 · fetch는 가져오기</text>
 </svg>

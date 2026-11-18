@@ -1,36 +1,78 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-web-tools" aria-hidden="true" focusable="false">
-  <defs><marker id="web-tools-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto"><path d="M2 2L10 6L2 10" fill="none" stroke="#367d7b" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-  <style>.topic-art-web-tools .web-tools-pulse{animation:web-tools-pulse 5.4s ease-in-out infinite}@keyframes web-tools-pulse{0%,15%,100%{opacity:.35}40%,70%{opacity:1}}@media(prefers-reduced-motion:reduce){.topic-art-web-tools .art-motion{animation:none!important}}</style>
-  <ellipse cx="380" cy="459" rx="305" ry="25" fill="#26334b" opacity=".08"/>
-  <g stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="61" y="52" width="211" height="36" rx="8" fill="#dce9cf" stroke="#b9c5ad" stroke-width="2"/>
-    <text x="166" y="76" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="18" font-weight="750" text-anchor="middle" fill="#5d746c" stroke="none">STYLE · INTERACTION</text>
-    <path d="M62 142h239l12 10v271H74l-12-10Z" fill="#b9c7ac"/><rect x="62" y="132" width="239" height="281" rx="10" fill="#fff9ec"/>
-    <path d="M62 175h239" fill="none" stroke="#b9c5ad" stroke-width="2"/>
-    <text x="80" y="160" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">HTML에 더하는 도구</text>
-    <rect x="78" y="198" width="207" height="72" rx="7" fill="#e5eee0" stroke="#a5bda7" stroke-width="2"/>
-    <text x="93" y="225" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">Tailwind CSS</text>
-    <text x="93" y="251" font-family="Consolas,monospace" font-size="18" fill="#367d7b" stroke="none">p-6 · rounded</text>
-    <rect x="78" y="291" width="207" height="83" rx="7" fill="#f6e7c8" stroke="#d7c6a5" stroke-width="2"/>
-    <text x="93" y="321" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">Alpine.js</text>
-    <text x="93" y="348" font-family="Consolas,monospace" font-size="18" fill="#a77638" stroke="none">x-data · @click</text>
-    <path d="M319 269h52" fill="none" stroke="#367d7b" stroke-width="3.4" marker-end="url(#web-tools-arrow)"/>
-    <path d="M683 141l13 9v274l-13 9Z" fill="#bcaa85"/><path d="M386 423l13 10h297l-13-10Z" fill="#eddfc4"/>
-    <rect x="386" y="131" width="297" height="292" rx="10" fill="#fff9ec"/><path d="M386 173h297" fill="none" stroke="#b9c5ad" stroke-width="2"/>
-    <text x="407" y="160" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" fill="#26334b" stroke="none">같은 강의 카드</text>
-    <rect x="414" y="195" width="240" height="199" rx="10" fill="#dce9cf" stroke="#91ac91" stroke-width="2"/>
-    <text x="437" y="240" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="29" font-weight="700" fill="#26334b" stroke="none">Git</text>
-    <rect x="437" y="256" width="133" height="43" rx="7" fill="#fff9ec" stroke="#367d7b" stroke-width="2"/>
-    <text x="503" y="284" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="19" text-anchor="middle" fill="#26334b" stroke="none">설명 보기</text>
-    <path d="M438 326h180m-180 19h143m-143 19h164" stroke="#87a18b" stroke-width="5" fill="none"/>
-    <g class="art-motion preview-topic-accent" display="none" fill="none" stroke="#367d7b" stroke-width="2.9" stroke-linecap="round">
-      <path d="M93 258h141M419 215v10m0-5h12m0-5v10m205 155h11m0-11v11"/>
+  <defs>
+    <linearGradient id="topic-web-tools-paper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="#fffaf0" />
+    <stop offset="1" stop-color="#eadcc0" />
+    </linearGradient>
+    <filter id="topic-web-tools-shade" x="-30%" y="-200%" width="160%" height="500%">
+      <feGaussianBlur stdDeviation="9" />
+    </filter>
+  </defs>
+  <style>
+    .topic-art-web-tools .lesson-signal { animation: web-tools-topic-signal 4.8s linear var(--beat) infinite; }
+    .topic-art-web-tools .lesson-ping { animation: web-tools-topic-ping 4.8s ease-in-out var(--beat) infinite; }
+    @keyframes web-tools-topic-signal {
+      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
+      65%,100%{stroke-dashoffset:-1;opacity:0}
+    }
+    @keyframes web-tools-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
+    @media(prefers-reduced-motion:reduce) { .topic-art-web-tools .art-motion { animation:none!important; } }
+  </style>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="392" cy="429" rx="264" ry="23" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-web-tools-shade)" />
+    <g transform="translate(229 376)"><path d="M-130 -2L-9 52q9 4 18 0L130 -2v12L9 64q-9 4-18 0L-130 10Z" fill="#bfad8f" stroke="#314347" stroke-width="2.5" />
+    <path d="M-127 -7 -9 -55q9-4 18 0L127 -7q6 3 0 7L9 52q-9 4-18 0L-127 0q-6-4 0-7Z" fill="url(#topic-web-tools-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-120 -3 -9 -49q9-4 18 0L120 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 56v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
     </g>
-    <g class="art-motion preview-topic-accent preview-topic-beat-after" display="none" fill="none" stroke="#a77638" stroke-width="2.9" stroke-linecap="round">
-      <path d="M93 356h157m188-30h180"/>
-      <rect x="437" y="256" width="133" height="43" rx="7"/>
+    <g transform="translate(532 366)"><path d="M-144 -2L-9 67q9 4 18 0L144 -2v12L9 79q-9 4-18 0L-144 10Z" fill="#b4bc9f" stroke="#314347" stroke-width="2.5" />
+    <path d="M-141 -7 -9 -70q9-4 18 0L141 -7q6 3 0 7L9 67q-9 4-18 0L-141 0q-6-4 0-7Z" fill="url(#topic-web-tools-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-134 -3 -9 -64q9-4 18 0L134 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 71v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
     </g>
-    <path class="art-motion web-tools-pulse" d="M592 279l-5 23 9-6 4 11 7-3-4-11 11-1Z" fill="#e4b75f" stroke-width="2"/>
+    <path d="M239 248C298 232 347 221 409 230" fill="none" stroke="#688c9e" stroke-width="3.3" />
+    <path d="M239 248C298 232 347 221 409 230" fill="none" stroke="#ccdde4" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.25s" stroke-dasharray=".12 1" />
+    <g transform="translate(409 230) rotate(6)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#688c9e" stroke-width="2.45" />
+    </g>
+    <path d="M296 345C359 349 380 299 424 295" fill="none" stroke="#a7733e" stroke-width="3.15" />
+    <path d="M296 345C359 349 380 299 424 295" fill="none" stroke="#ffe0a0" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:1.5s" stroke-dasharray=".12 1" />
+    <g transform="translate(424 295) rotate(-18)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
+    </g>
+    <g transform="translate(155 168) rotate(12)"><path d="M9 0h126q7 0 7 7v19q0 7-7 7H9q-7 0-7-7V7q0-7 7-7Z" fill="#cedee2" stroke="#314347" stroke-width="2.2" />
+    <path d="M16 7v11m13-11v7m13-7v11m13-11v7m13-7v11m13-11v7m13-7v11m13-11v7m13-7v11" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    </g>
+    <g transform="translate(143 217) rotate(-7)"><rect x="0" y="0" width="115" height="37" rx="7" fill="#cfe2c5" stroke="#314347" stroke-width="2.3" />
+    <rect x="11" y="10" width="23" height="17" rx="4" fill="#9dbb99" stroke="#456f6b" stroke-width="1.4" />
+    <text x="51" y="24" text-anchor="start" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="15" font-weight="650">p-6</text></g>
+    <g transform="translate(183 294)"><rect x="3" y="5" width="119" height="44" rx="9" fill="#b2a487" stroke="#314347" stroke-width="2.3" />
+    <rect x="0" y="0" width="115" height="44" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.6" />
+    <rect x="10" y="11" width="46" height="21" rx="11" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.6" />
+    <circle cx="44" cy="21.5" r="7" fill="#456f6b" stroke="none" stroke-width="2" />
+    <text x="66" y="26" text-anchor="start" fill="#314347" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">x-data</text></g>
+    <g transform="translate(426 154)"><path d="M0 5 9-4q4-4 10-4h196q9 0 9 9v149l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
+    <rect x="0" y="0" width="211" height="158" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
+    <path d="M0 21h211" fill="none" stroke="#b3baac" stroke-width="1.4" />
+    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
+    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
+    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
+    <rect x="23" y="43" width="165" height="92" rx="10" fill="#e6edce" stroke="#456f6b" stroke-width="1.85" />
+    <path d="M28 70v-19h24m114 0h15v19m0 46v15h-21m-108 0H28v-18" fill="none" stroke="#87a27f" stroke-width="1.8" />
+    <text x="42" y="69" text-anchor="start" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="15" font-weight="650">Git 강의 카드</text><rect x="43" y="84" width="56" height="18" rx="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    <path d="M51 93h40" fill="none" stroke="#314347" stroke-width="1.5" />
+    <path d="M43 116h114" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    </g><g transform="translate(520.95 312)"><path d="M2 0H19l4 14 12 7v5h-49v-5L0 14Z" fill="#eee3cb" stroke="#314347" stroke-width="2.2" />
+    <path d="M-13 21h48" fill="none" stroke="#83765c" stroke-width="1.2" />
+    </g>
+    <circle cx="227" cy="315" r="8" fill="none" stroke="#e7bb63" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:1.9s" opacity=".42" />
+    <circle cx="524" cy="273" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:2.8s" opacity=".42" />
+    <g transform="translate(149 112)"><rect x="1" y="2" width="111" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="111" height="25" rx="7" fill="#cedee2" stroke="#456f6b" stroke-width="1.35" />
+    <text x="55.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">Tailwind CSS</text></g>
+    <g transform="translate(184 370)"><rect x="1" y="2" width="106" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="106" height="25" rx="7" fill="#fff9e9" stroke="#a7733e" stroke-width="1.35" />
+    <text x="53" y="17" text-anchor="middle" fill="#a7733e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">Alpine.js</text></g>
+    <g transform="translate(482 382)"><rect x="1" y="2" width="93" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="93" height="25" rx="7" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
+    <text x="46.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">같은 카드</text></g>
   </g>
-  <text x="380" y="507" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="650" text-anchor="middle" fill="#5d746c">모양과 브라우저 동작을 간결하게 표현합니다</text>
 </svg>

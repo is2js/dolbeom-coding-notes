@@ -28,9 +28,9 @@
     <a class="skip-link" :inert="previewOutlineOverlay" :href="route === 'present' ? '#presentation-main' : route === 'editor' ? '#editor-title' : route === 'home' ? '#intro-main' : '#lesson-main'" @click.prevent="focusMain()">본문으로 바로가기</a>
     <aside class="rail" aria-label="주 메뉴" x-show="route !== 'present'">
       <button class="rail-toggle" x-show="!previewOutlineActive" @click="drawer = !drawer" :aria-expanded="drawer" aria-label="전체 목차 열기" x-html="workspaceIcon('toggle')"></button>
-      <button type="button" class="rail-preview-toggle" x-ref="previewOutlineToggle" x-show="previewOutlineAvailable && !(previewOutlineActive && previewOutlineOpen)" :aria-expanded="previewOutlineActive && previewOutlineOpen" :aria-controls="previewOutlineActive ? 'preview-outline-panel' : null" title="코스 메뉴" @click="togglePreviewOutline()">
+      <button type="button" class="rail-preview-toggle" x-ref="previewOutlineToggle" x-show="previewOutlineActive && !previewOutlineOpen" :aria-expanded="previewOutlineOpen" aria-controls="preview-outline-panel" title="메뉴" @click="togglePreviewOutline()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h6l2 2h10v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><path d="M3 11h18m-14 4h5"/></svg>
-        <span>코스 메뉴</span>
+        <span>메뉴</span>
       </button>
       <nav class="rail-links" x-show="!previewOutlineActive">
         <button @click="goIntro()" :class="{active: route === 'home'}" aria-label="소개 홈" title="소개 홈" x-html="workspaceIcon('overview')"></button>
@@ -45,10 +45,9 @@
           x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (route === 'learn' && previewOutlineOpen && expandedTopic === lessonId && learningPageId) revealPreviewSection($el)" @keydown.escape.stop="closePreviewOutline(true)">
           <div class="lesson-preview-outline-heading">
             <div>
-              <h2 id="preview-outline-title">코스 메뉴</h2>
-              <button type="button" class="lesson-preview-original" @click="toggleDesignPreview()">기존 화면으로</button>
+              <h2 id="preview-outline-title">메뉴</h2>
             </div>
-            <button type="button" class="lesson-preview-outline-close" aria-label="코스 메뉴 닫기" @click="closePreviewOutline(true)" x-html="icon('close')"></button>
+            <button type="button" class="lesson-preview-outline-close" aria-label="메뉴 닫기" @click="closePreviewOutline(true)" x-html="icon('close')"></button>
           </div>
           <ul class="lesson-preview-shortcuts" aria-label="코스 도구">
             <li><button type="button" :aria-current="route === 'home' ? 'page' : null" @click="runPreviewMenuAction(() => goIntro())"><span aria-hidden="true" x-html="workspaceIcon('overview')"></span>소개 홈</button></li>
@@ -86,6 +85,7 @@
               </template>
             </ol>
           </div>
+          <div class="lesson-preview-progress-panel">
           <details class="lesson-preview-progress" open>
             <summary><strong class="lesson-preview-progress-title">진행</strong><span class="lesson-preview-progress-total" aria-live="polite" x-text="previewProgressCompleted + ' / ' + course.lessons.length + ' 주제 완료'"></span></summary>
             <div class="lesson-preview-progress-detail">
@@ -106,13 +106,14 @@
               </ol>
             </div>
           </details>
+          <button type="button" class="lesson-preview-progress-reset" :disabled="!hasLearningProgress" @click="$refs.progressResetDialog.showModal()" aria-label="학습 진행 초기화" title="이 브라우저의 학습 진행 기록 초기화">초기화</button>
+          </div>
         </nav>
       </template>
     </aside>
 
     <div class="workspace" :inert="previewOutlineOverlay" x-show="route !== 'present'">
       <div class="site-update-bar">
-        <button type="button" class="site-editor-entry" x-show="canEditCourse && course && !loading && route !== 'editor'" @click="openEditor()" aria-label="강의 편집"><span aria-hidden="true" x-html="workspaceIcon('edit')"></span>편집</button>
         <p class="site-update" title="현재 사이트를 빌드한 시각 · 한국 표준시"><span>업데이트</span><time :datetime="siteUpdatedAt" x-text="siteUpdatedLabel"></time></p>
       </div>
       <header class="masthead" x-show="route !== 'editor'">
@@ -139,6 +140,16 @@
 
     <section id="presentation-host"></section>
     <div id="art-viewer-host"></div>
+    <dialog class="progress-reset-dialog" x-ref="progressResetDialog" aria-labelledby="progress-reset-title" aria-describedby="progress-reset-copy">
+      <form method="dialog">
+        <h2 id="progress-reset-title">학습 진행을 초기화할까요?</h2>
+        <p id="progress-reset-copy">이 브라우저의 주제 완료 표시와 열어 본 절 기록이 지워집니다.</p>
+        <div>
+          <button type="submit" autofocus>취소</button>
+          <button type="button" @click="resetLearningProgress(); $refs.progressResetDialog.close()">초기화</button>
+        </div>
+      </form>
+    </dialog>
 
     <div x-show="drawer" class="drawer-backdrop" @click.self="drawer=false" @keydown.escape.window="drawer=false" x-transition.opacity><aside class="contents-drawer" aria-label="전체 목차"><div class="drawer-header"><span class="eyebrow">YOUR LEARNING PATH</span><button @click="drawer=false" aria-label="목차 닫기" x-html="icon('close')"></button></div><h2>차근차근, 내 것으로.</h2><p x-text="'AI가 한 일을 이해하는 ' + (course?.lessons.length || 0) + '개의 주제.'"></p><template x-for="(l,i) in (course?.lessons || [])" :key="l.id"><button class="drawer-lesson" @click="showLesson(l.id);drawer=false" :aria-current="l.id===lessonId?'step':null"><span x-text="String(i+1).padStart(2,'0')"></span><div><b x-text="l.shortTitle"></b><small x-text="coreMinutes(l)+'분 · '+l.sections.filter(s=>!s.optional).length+'개 절'"></small></div><span x-html="icon(completed.includes(l.id)?'check':'arrow')"></span></button></template><div class="drawer-note"><span x-html="icon('bulb')"></span>모든 강의는 사례로 시작합니다.<br>위에서부터 순서대로 이어 가 보세요.</div></aside></div>
 

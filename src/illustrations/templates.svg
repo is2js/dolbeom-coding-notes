@@ -1,46 +1,94 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-templates" aria-hidden="true" focusable="false">
   <defs>
-    <filter id="topic-templates-shadow" x="-15%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#26334b" flood-opacity=".12" />
+    <linearGradient id="topic-templates-paper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="#fffaf0" />
+    <stop offset="1" stop-color="#eadcc0" />
+    </linearGradient>
+    <filter id="topic-templates-shade" x="-30%" y="-200%" width="160%" height="500%">
+      <feGaussianBlur stdDeviation="9" />
     </filter>
   </defs>
-  <style>.topic-art-templates .art-motion{transform-box:fill-box;transform-origin:center}.topic-art-templates .templates-compose{animation:topic-templates-compose 4.8s ease-in-out infinite}@keyframes topic-templates-compose{0%,100%{transform:translateX(0);opacity:.1}40%,70%{transform:translateX(41px);opacity:1}}@media(prefers-reduced-motion:reduce){.topic-art-templates .art-motion{animation:none!important}}</style>
-  <ellipse cx="380" cy="466" rx="280" ry="26" fill="#26334b" opacity=".08" />
-  <g stroke-linejoin="round">
-    <rect x="87" y="51" width="244" height="34" rx="7" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.7" />
-    <text x="209" y="74" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">TEMPLATE / COMPOSITION</text>
-    <rect x="99" y="144" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
-    <rect x="91" y="134" width="224" height="79" rx="10" fill="#dce9cf" stroke="#26334b" stroke-width="3" />
-    <text x="109" y="165" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">DATA</text>
-    <text x="110" y="191" font-family="Consolas,monospace" font-size="22" font-weight="650" text-anchor="start" fill="#367d7b" stroke="none">dict / SQLite</text>
-    <rect x="99" y="251" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
-    <rect x="91" y="241" width="224" height="79" rx="10" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
-    <text x="109" y="272" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">TEMPLATE</text>
-    <text x="110" y="299" font-family="Consolas,monospace" font-size="19" font-weight="650" text-anchor="start" fill="#26334b" stroke="none">{{ lesson.title }}</text>
-    <path class="art-motion preview-topic-accent preview-template-field" display="none" d="M111 306h200" fill="none" stroke="#c68b45" stroke-width="3" stroke-linecap="round" />
-    <rect x="99" y="358" width="224" height="79" rx="10" fill="#bcaa85" stroke="#26334b" stroke-width="3" />
-    <rect x="91" y="348" width="224" height="79" rx="10" fill="#eddfc4" stroke="#26334b" stroke-width="3" />
-    <text x="109" y="379" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="start" fill="#26334b" stroke="none">SERVER</text>
-    <text x="110" y="407" font-family="Consolas,monospace" font-size="20" font-weight="650" text-anchor="start" fill="#5d746c" stroke="none">FastAPI / Jinja2</text>
-    <path d="M345 177h26v210h-26" fill="none" stroke="#b9c5ad" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M372 281L428 281" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" />
-    <path d="M419 274l9 7-9 7" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
-    <g class="art-motion templates-compose">
-      <circle cx="372" cy="281" r="5" fill="#e4b75f" stroke="#fff9ec" stroke-width="2" />
+  <style>
+    .topic-art-templates .lesson-signal { animation: templates-topic-signal 4.8s linear var(--beat) infinite; }
+    .topic-art-templates .lesson-ping { animation: templates-topic-ping 4.8s ease-in-out var(--beat) infinite; }
+    @keyframes templates-topic-signal {
+      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
+      65%,100%{stroke-dashoffset:-1;opacity:0}
+    }
+    @keyframes templates-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
+    @media(prefers-reduced-motion:reduce) { .topic-art-templates .art-motion { animation:none!important; } }
+  </style>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="383" cy="427" rx="259" ry="24" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-templates-shade)" />
+    <g transform="translate(211 365)"><path d="M-122 -2L-9 52q9 4 18 0L122 -2v12L9 64q-9 4-18 0L-122 10Z" fill="#c5b491" stroke="#314347" stroke-width="2.5" />
+    <path d="M-119 -7 -9 -55q9-4 18 0L119 -7q6 3 0 7L9 52q-9 4-18 0L-119 0q-6-4 0-7Z" fill="url(#topic-templates-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-112 -3 -9 -49q9-4 18 0L112 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 56v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
     </g>
-    <path d="M654 163l16 11v248l-16 12Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M453 410l16 14h201l-16-14Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <rect x="453" y="153" width="201" height="257" rx="12" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
-    <path d="M453 191L654 191" fill="none" stroke="#b9c5ad" stroke-width="2" stroke-linecap="round" />
-    <circle cx="471" cy="172" r="3.8" fill="#c67f5c" stroke="none" stroke-width="0" />
-    <circle cx="486" cy="172" r="3.8" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <circle cx="501" cy="172" r="3.8" fill="#aac1a0" stroke="none" stroke-width="0" />
-    <text x="523" y="178" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#5d746c" stroke="none">CARD</text>
-    <text x="475" y="239" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="38" font-weight="800" text-anchor="start" fill="#26334b" stroke="none">Git</text>
-    <path class="art-motion preview-topic-accent preview-template-output" display="none" d="M474 249h53" fill="none" stroke="#c68b45" stroke-width="3" stroke-linecap="round" />
-    <path d="M475 264L628 264" fill="none" stroke="#b9c5ad" stroke-width="2" stroke-linecap="round" />
-    <text x="475" y="302" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="650" text-anchor="start" fill="#5d746c" stroke="none">변경을 기록하기</text>
-    <rect x="474" y="327" width="155" height="48" rx="7" fill="#367d7b" stroke="#26334b" stroke-width="2" />
-    <text x="551" y="359" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#fff9ec" stroke="none">설명 보기 ↓</text>
+    <g transform="translate(380 362)"><path d="M-101 -2L-9 52q9 4 18 0L101 -2v12L9 64q-9 4-18 0L-101 10Z" fill="#aeba9f" stroke="#314347" stroke-width="2.5" />
+    <path d="M-98 -7 -9 -55q9-4 18 0L98 -7q6 3 0 7L9 52q-9 4-18 0L-98 0q-6-4 0-7Z" fill="url(#topic-templates-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-91 -3 -9 -49q9-4 18 0L91 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 56v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    </g>
+    <g transform="translate(571 364)"><path d="M-104 -2L-9 54q9 4 18 0L104 -2v12L9 66q-9 4-18 0L-104 10Z" fill="#bcb799" stroke="#314347" stroke-width="2.5" />
+    <path d="M-101 -7 -9 -57q9-4 18 0L101 -7q6 3 0 7L9 54q-9 4-18 0L-101 0q-6-4 0-7Z" fill="url(#topic-templates-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-94 -3 -9 -51q9-4 18 0L94 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 58v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    </g>
+    <path d="M241 241C263 233 282 244 312 264" fill="none" stroke="#a7733e" stroke-width="3.3" />
+    <path d="M241 241C263 233 282 244 312 264" fill="none" stroke="#ffdfa1" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.35s" stroke-dasharray=".12 1" />
+    <g transform="translate(313 264) rotate(30)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
+    </g>
+    <path d="M241 325C268 334 292 319 312 300" fill="none" stroke="#8b7395" stroke-width="3.3" />
+    <path d="M241 325C268 334 292 319 312 300" fill="none" stroke="#e6dbea" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:1.3s" stroke-dasharray=".12 1" />
+    <g transform="translate(313 299) rotate(-37)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#8b7395" stroke-width="2.45" />
+    </g>
+    <path d="M442 281C476 270 490 268 525 275" fill="none" stroke="#456f6b" stroke-width="3.6" />
+    <path d="M442 281C476 270 490 268 525 275" fill="none" stroke="#d8e9ba" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:2.4s" stroke-dasharray=".12 1" />
+    <g transform="translate(526 275) rotate(11)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#456f6b" stroke-width="2.45" />
+    </g>
+    <g transform="translate(176 188)"><path d="M0 15v55c0 24 69 24 69 0V15" fill="#e6c37e" stroke="#314347" stroke-width="2.45" />
+    <ellipse cx="34.5" cy="15" rx="34.5" ry="14" fill="#f5e1a9" stroke="#314347" stroke-width="2.3" />
+    <path d="M0 33c0 22 69 22 69 0M0 51c0 22 69 22 69 0" fill="none" stroke="#9c7b46" stroke-width="1.35" />
+    <ellipse cx="34.5" cy="12" rx="20" ry="5" fill="#fff4d2" stroke="none" stroke-width="2" />
+    </g>
+    <g transform="translate(158 289) rotate(6)"><rect x="4" y="5" width="84" height="45" rx="6" fill="#b59fbe" stroke="#314347" stroke-width="2" />
+    <rect x="0" y="0" width="84" height="45" rx="6" fill="#e3d4e7" stroke="#314347" stroke-width="2.2" />
+    <text x="42" y="29" text-anchor="middle" fill="#8b7395" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">{{ title }}</text></g>
+    <g transform="translate(318 270)"><path d="M2 1 16-11h111l-8 12v46l14-12V-11M2 1h119" fill="#cfe2c5" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="119" height="46" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M17 22h51m10 0h13" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    <circle cx="102" cy="22" r="3.5" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    </g>
+    <g transform="translate(318 213)"><path d="M2 1 16-11h111l-8 12v45l14-12V-11M2 1h119" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="119" height="45" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M17 21h49m10 0h16" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    <circle cx="102" cy="21" r="3.5" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    </g>
+    <circle cx="420" cy="291" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:1.5s" opacity=".42" />
+    <g transform="translate(530 197)"><path d="M0 5 9-4q4-4 10-4h117q9 0 9 9v123l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
+    <rect x="0" y="0" width="132" height="132" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
+    <path d="M0 21h132" fill="none" stroke="#b3baac" stroke-width="1.4" />
+    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
+    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
+    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
+    <rect x="12" y="40" width="107" height="71" rx="5" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.7" />
+    <text x="22" y="63" text-anchor="start" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">Git 강의 카드</text><rect x="21" y="73" width="52" height="18" rx="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    <path d="M29 82h36" fill="none" stroke="#314347" stroke-width="1.5" />
+    <path d="M23 101h69" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    </g>
+    <circle cx="597" cy="259" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:3.1s" opacity=".42" />
+    <g transform="translate(167 134)"><rect x="1" y="2" width="87" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="87" height="25" rx="7" fill="#fff9e9" stroke="#a7733e" stroke-width="1.35" />
+    <text x="43.5" y="17" text-anchor="middle" fill="#a7733e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">SQLite</text></g>
+    <g transform="translate(160 359)"><rect x="1" y="2" width="89" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="89" height="25" rx="7" fill="#fff9e9" stroke="#8b7395" stroke-width="1.35" />
+    <text x="44.5" y="17" text-anchor="middle" fill="#8b7395" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">Jinja2</text></g>
+    <g transform="translate(335 356)"><rect x="1" y="2" width="87" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="87" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
+    <text x="43.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">FastAPI</text></g>
+    <g transform="translate(549 362)"><rect x="1" y="2" width="80" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="80" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
+    <text x="40" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">HTML</text></g>
   </g>
 </svg>

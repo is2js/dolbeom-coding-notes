@@ -105,15 +105,6 @@
   letter-spacing: -.035em;
 }
 
-.lesson-preview-original {
-  display: inline-block;
-  min-height: 32px;
-  color: #536757;
-  font-size: 11px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.lesson-preview-original:hover { color: #254d3f; }
 .lesson-preview-outline-close {
   display: grid;
   place-items: center;

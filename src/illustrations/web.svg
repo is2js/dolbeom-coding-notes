@@ -1,63 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-web" aria-hidden="true" focusable="false">
   <defs>
-    <filter id="topic-web-shadow" x="-15%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#26334b" flood-opacity=".12" />
+    <linearGradient id="topic-web-paper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="#fffaf0" />
+    <stop offset="1" stop-color="#eadcc0" />
+    </linearGradient>
+    <filter id="topic-web-shade" x="-30%" y="-200%" width="160%" height="500%">
+      <feGaussianBlur stdDeviation="9" />
     </filter>
   </defs>
-  <style>.topic-art-web .art-motion{transform-box:fill-box;transform-origin:center}.topic-art-web .web-request{animation:topic-web-request 4.6s ease-in-out infinite}.topic-art-web .web-response{animation:topic-web-response 4.6s ease-in-out infinite}@keyframes topic-web-request{0%,100%{transform:translateX(0);opacity:.1}45%,58%{transform:translateX(93px);opacity:1}}@keyframes topic-web-response{0%,100%{transform:translateX(0);opacity:.1}60%,82%{transform:translateX(-93px);opacity:1}}@media(prefers-reduced-motion:reduce){.topic-art-web .art-motion{animation:none!important}}</style>
-  <ellipse cx="380" cy="466" rx="280" ry="26" fill="#26334b" opacity=".08" />
-  <g stroke-linejoin="round">
-    <g stroke="#26334b" stroke-width="2.4">
-      <rect x="358" y="110" width="103" height="55" rx="7" fill="#fff9ec" />
-      <text x="409" y="144" font-family="Consolas,monospace" font-size="15" text-anchor="middle" fill="#367d7b" stroke="none">package.json</text>
-      <path d="M459 151h64v24" fill="none" stroke="#5d746c" stroke-dasharray="5 5" />
+  <style>
+    .topic-art-web .lesson-signal { animation: web-topic-signal 4.8s linear var(--beat) infinite; }
+    .topic-art-web .lesson-ping { animation: web-topic-ping 4.8s ease-in-out var(--beat) infinite; }
+    @keyframes web-topic-signal {
+      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
+      65%,100%{stroke-dashoffset:-1;opacity:0}
+    }
+    @keyframes web-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
+    @media(prefers-reduced-motion:reduce) { .topic-art-web .art-motion { animation:none!important; } }
+  </style>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="389" cy="431" rx="264" ry="20" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-web-shade)" />
+    <g transform="translate(245 365)"><path d="M-153 -2L-9 62q9 4 18 0L153 -2v12L9 74q-9 4-18 0L-153 10Z" fill="#bab692" stroke="#314347" stroke-width="2.5" />
+    <path d="M-150 -7 -9 -65q9-4 18 0L150 -7q6 3 0 7L9 62q-9 4-18 0L-150 0q-6-4 0-7Z" fill="url(#topic-web-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-143 -3 -9 -59q9-4 18 0L143 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 66v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
     </g>
-    <rect x="90" y="51" width="203" height="34" rx="7" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.7" />
-    <text x="191.5" y="74" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">WEB / REQUEST</text>
-    <path d="M335 208l16 11v196l-16 12Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M90 403l16 14h245l-16-14Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <rect x="90" y="198" width="245" height="205" rx="12" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
-    <path d="M90 236L335 236" fill="none" stroke="#b9c5ad" stroke-width="2" stroke-linecap="round" />
-    <circle cx="108" cy="217" r="3.8" fill="#c67f5c" stroke="none" stroke-width="0" />
-    <circle cx="123" cy="217" r="3.8" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <circle cx="138" cy="217" r="3.8" fill="#aac1a0" stroke="none" stroke-width="0" />
-    <text x="160" y="223" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#5d746c" stroke="none">BROWSER</text>
-    <rect x="109" y="251" width="207" height="45" rx="6" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.8" />
-    <rect x="109" y="310" width="92" height="72" rx="6" fill="#eddfc4" stroke="#b9c5ad" stroke-width="1.8" />
-    <path d="M216 321L302 321" fill="none" stroke="#367d7b" stroke-width="5" stroke-linecap="round" />
-    <path d="M216 340L281 340" fill="none" stroke="#aac1a0" stroke-width="5" stroke-linecap="round" />
-    <path d="M216 359L294 359" fill="none" stroke="#aac1a0" stroke-width="5" stroke-linecap="round" />
-    <path class="art-motion preview-topic-accent preview-web-page" display="none" d="M216 321h86m-86 19h65m-65 19h78" fill="none" stroke="#367d7b" stroke-width="5" stroke-linecap="round" />
-    <path d="M499 194l28-18h111l-28 18Z" fill="#aac1a0" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M610 194l28-18v231l-28 18Z" fill="#367d7b" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <rect x="499" y="194" width="111" height="231" rx="6" fill="#eddfc4" stroke="#26334b" stroke-width="3" />
-    <rect x="512" y="214" width="85" height="34" rx="4" fill="#253c4b" stroke="#26334b" stroke-width="2" />
-    <circle cx="526" cy="231" r="4" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <path d="M543 231L582 231" fill="none" stroke="#aac1a0" stroke-width="3" stroke-linecap="round" />
-    <rect x="512" y="263" width="85" height="34" rx="4" fill="#253c4b" stroke="#26334b" stroke-width="2" />
-    <rect class="art-motion preview-topic-accent preview-web-server" display="none" x="512" y="263" width="85" height="34" rx="4" fill="none" stroke="#e4b75f" stroke-width="3" />
-    <circle cx="526" cy="280" r="4" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <path d="M543 280L582 280" fill="none" stroke="#aac1a0" stroke-width="3" stroke-linecap="round" />
-    <rect x="512" y="312" width="85" height="34" rx="4" fill="#253c4b" stroke="#26334b" stroke-width="2" />
-    <circle cx="526" cy="329" r="4" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <path d="M543 329L582 329" fill="none" stroke="#aac1a0" stroke-width="3" stroke-linecap="round" />
-    <rect x="512" y="361" width="85" height="34" rx="4" fill="#253c4b" stroke="#26334b" stroke-width="2" />
-    <circle cx="526" cy="378" r="4" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <path d="M543 378L582 378" fill="none" stroke="#aac1a0" stroke-width="3" stroke-linecap="round" />
-    <path d="M359 262L472 262" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" />
-    <path d="M463 255l9 7-9 7" fill="none" stroke="#367d7b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
-    <g class="art-motion web-request">
-      <circle cx="359" cy="262" r="5" fill="#e4b75f" stroke="#fff9ec" stroke-width="2" />
+    <g transform="translate(575 355)"><path d="M-117 -2L-9 61q9 4 18 0L117 -2v12L9 73q-9 4-18 0L-117 10Z" fill="#b3c09f" stroke="#314347" stroke-width="2.5" />
+    <path d="M-114 -7 -9 -64q9-4 18 0L114 -7q6 3 0 7L9 61q-9 4-18 0L-114 0q-6-4 0-7Z" fill="url(#topic-web-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-107 -3 -9 -58q9-4 18 0L107 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 65v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
     </g>
-    <path d="M471 328L359 328" fill="none" stroke="#c67f5c" stroke-width="3.6" stroke-linecap="round" />
-    <path d="m368 321-9 7 9 7" fill="none" stroke="#c67f5c" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
-    <text x="414" y="242" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="#367d7b" stroke="none">요청</text>
-    <text x="414" y="361" font-family="Consolas,monospace" font-size="15" font-weight="700" text-anchor="middle" fill="#c67f5c" stroke="none">HTML / CSS / JS</text>
-    <text x="553" y="462" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="750" text-anchor="middle" fill="#26334b" stroke="none">개발 서버</text>
-    <g class="art-motion web-response">
-      <circle cx="470" cy="328" r="5" fill="#e4b75f" stroke="#fff9ec" stroke-width="2" />
+    <path d="M326 218C376 183 419 183 482 216" fill="none" stroke="#a7733e" stroke-width="3.5" />
+    <path d="M326 218C376 183 419 183 482 216" fill="none" stroke="#ffe4ae" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.2s" stroke-dasharray=".12 1" />
+    <g transform="translate(484 216) rotate(28)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
     </g>
-    <rect x="473" y="100" width="174" height="34" rx="7" fill="#fff9ec" stroke="#b9c5ad" stroke-width="1.7" />
-    <text x="560" y="123" font-family="Consolas,monospace" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">npm run dev</text>
+    <path d="M490 281C438 321 382 330 326 292" fill="none" stroke="#688c9e" stroke-width="3.6" />
+    <path d="M490 281C438 321 382 330 326 292" fill="none" stroke="#d0e9e9" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:2s" stroke-dasharray=".12 1" />
+    <g transform="translate(325 292) rotate(215)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#688c9e" stroke-width="2.45" />
+    </g>
+    <g transform="translate(119 177)"><path d="M0 5 9-4q4-4 10-4h192q9 0 9 9v134l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
+    <rect x="0" y="0" width="207" height="143" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
+    <path d="M0 21h207" fill="none" stroke="#b3baac" stroke-width="1.4" />
+    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
+    <circle cx="21" cy="11" r="2.6" fill="#cedee2" stroke="none" stroke-width="2" />
+    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
+    <rect x="12" y="33" width="182" height="20" rx="4" fill="#e8ecd8" stroke="none" stroke-width="0" />
+    <circle cx="23" cy="42" r="3" fill="#456f6b" stroke="none" stroke-width="2" />
+    <path d="M35 43h105" fill="none" stroke="#456f6b" stroke-width="2" />
+    <rect x="19" y="66" width="78" height="54" rx="5" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.55" />
+    <path d="m34 103 17-17 10 7 15-12" fill="none" stroke="#456f6b" stroke-width="2.3" />
+    <path d="M111 76h55 M111 88h69 M111 100h47 M111 112h58" fill="none" stroke="#688c9e" stroke-width="2" />
+    </g>
+    <path d="M121 320h206l32 24H94Z" fill="#fff9e9" stroke="#314347" stroke-width="2.55" />
+    <path d="M94 344h265v7H94Z" fill="#b9aa89" stroke="#314347" stroke-width="2" />
+    <path d="M133 328h182m-174 7h157" fill="none" stroke="#7e8a79" stroke-width="1.4" />
+    <g transform="translate(508 272)"><path d="M2 1 16-11h120l-8 12v39l14-12V-11M2 1h128" fill="#b0c9a7" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="128" height="39" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M15 19h54m7 0h16" fill="none" stroke="#456f6b" stroke-width="2" />
+    <circle cx="111" cy="19" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    </g>
+    <g transform="translate(508 225)"><path d="M2 1 16-11h120l-8 12v40l14-12V-11M2 1h128" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="128" height="40" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M15 20h54m8 0h17" fill="none" stroke="#456f6b" stroke-width="2" />
+    <circle cx="111" cy="20" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    </g>
+    <g transform="translate(508 176)"><path d="M2 1 16-11h120l-8 12v40l14-12V-11M2 1h128" fill="#cfe2c5" stroke="#314347" stroke-width="2.25" />
+    <rect x="1" y="0" width="128" height="40" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
+    <path d="M15 20h54m8 0h17" fill="none" stroke="#456f6b" stroke-width="2" />
+    <circle cx="111" cy="20" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    </g>
+    <circle cx="620" cy="246" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:1.4s" opacity=".42" />
+    <circle cx="221" cy="263" r="8" fill="none" stroke="#688c9e" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:3.1s" opacity=".42" />
+    <g transform="translate(371 158)"><rect x="1" y="2" width="58" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="58" height="25" rx="7" fill="#fff9e9" stroke="#a7733e" stroke-width="1.35" />
+    <text x="29" y="17" text-anchor="middle" fill="#a7733e" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">요청</text></g>
+    <g transform="translate(368 322)"><rect x="1" y="2" width="60" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="60" height="25" rx="7" fill="#cedee2" stroke="#688c9e" stroke-width="1.35" />
+    <text x="30" y="17" text-anchor="middle" fill="#688c9e" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">응답</text></g>
+    <g transform="translate(153 391)"><rect x="1" y="2" width="109" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="109" height="25" rx="7" fill="#cedee2" stroke="#456f6b" stroke-width="1.35" />
+    <text x="54.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">브라우저</text></g>
+    <g transform="translate(512 371)"><rect x="1" y="2" width="118" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="118" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
+    <text x="59" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">npm run dev</text></g>
   </g>
 </svg>

@@ -77,4 +77,13 @@
     </div>
   </section>
   <section class="intro-bottom"><div><span class="intro-kicker">READY TO BEGIN?</span><h2>이제 첫 번째 이야기로.</h2></div><button type="button" class="intro-primary" @click="showLesson(course.lessons[0].id)">윈도우 터미널부터 시작하기 ↗</button></section>
+  <template x-if="canEditCourse">
+    <details class="intro-operator">
+      <summary>운영 도구</summary>
+      <div class="intro-operator-actions">
+        <button type="button" @click="openEditor()">강의 편집</button>
+        <button type="button" @click="toggleDesignPreview()" x-text="designPreview ? '기존 화면으로' : '새 화면으로'"></button>
+      </div>
+    </details>
+  </template>
 </main>

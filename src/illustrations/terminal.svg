@@ -1,68 +1,80 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-terminal" aria-hidden="true" focusable="false">
   <defs>
-    <filter id="topic-terminal-shadow" x="-15%" y="-20%" width="140%" height="150%">
-      <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#26334b" flood-opacity=".12" />
+    <linearGradient id="topic-terminal-paper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="#fffaf0" />
+    <stop offset="1" stop-color="#eadcc0" />
+    </linearGradient>
+    <filter id="topic-terminal-shade" x="-30%" y="-200%" width="160%" height="500%">
+      <feGaussianBlur stdDeviation="9" />
     </filter>
   </defs>
-  <style>.topic-art-terminal .art-motion{transform-box:fill-box;transform-origin:center}.topic-art-terminal .terminal-caret{animation:topic-terminal-blink 1.4s steps(2,end) infinite}@keyframes topic-terminal-blink{0%,45%{opacity:1}50%,100%{opacity:.08}}@media(prefers-reduced-motion:reduce){.topic-art-terminal .art-motion{animation:none!important}}</style>
-  <ellipse cx="380" cy="466" rx="280" ry="26" fill="#26334b" opacity=".08" />
-  <g stroke-linejoin="round">
-    <rect x="110" y="51" width="172" height="34" rx="7" fill="#dce9cf" stroke="#b9c5ad" stroke-width="1.7" />
-    <text x="196" y="74" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="middle" fill="#5d746c" stroke="none">TERMINAL / GUI</text>
-    <path d="M525 119l16 11v233l-16 12Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M119 351l16 14h406l-16-14Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <rect x="119" y="109" width="406" height="242" rx="12" fill="#253c4b" stroke="#26334b" stroke-width="3" />
-    <path d="M119 147L525 147" fill="none" stroke="#7e9a9d" stroke-width="2" stroke-linecap="round" />
-    <circle cx="137" cy="128" r="3.8" fill="#c67f5c" stroke="none" stroke-width="0" />
-    <circle cx="152" cy="128" r="3.8" fill="#e4b75f" stroke="none" stroke-width="0" />
-    <circle cx="167" cy="128" r="3.8" fill="#aac1a0" stroke="none" stroke-width="0" />
-    <text x="189" y="134" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="16" font-weight="700" text-anchor="start" fill="#d6e4d5" stroke="none">POWERSHELL</text>
-    <text x="149" y="185" font-family="Consolas,monospace" font-size="23" font-weight="600" text-anchor="start" fill="#dcebd7" stroke="none">PS ...\project&gt;</text>
-    <text x="149" y="234" font-family="Consolas,monospace" font-size="30" font-weight="700" text-anchor="start" fill="#fff4d6" stroke="none">npm run dev</text>
-    <path class="art-motion preview-topic-accent preview-terminal-command" display="none" d="M149 250h220" fill="none" stroke="#e4b75f" stroke-width="3" stroke-linecap="round" />
-    <rect class="art-motion terminal-caret" x="358" y="211" width="13" height="29" rx="1" fill="#e4b75f" />
-    <text x="149" y="286" font-family="Consolas,monospace" font-size="21" font-weight="600" text-anchor="start" fill="#a9d3c0" stroke="none">localhost: ...</text>
-    <!-- AI response card: an archive and a command are handed to the learner. -->
-    <path d="M548 101h139v132H548z" fill="#c8b89b" stroke="#26334b" stroke-width="3" />
-    <rect x="538" y="91" width="139" height="132" rx="9" fill="#fff9ec" stroke="#26334b" stroke-width="3" />
-    <path d="M538 126h139" fill="none" stroke="#c8d4bf" stroke-width="2" />
-    <text x="552" y="115" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="17" font-weight="700" fill="#5d746c" stroke="none">AI 응답</text>
-    <path d="M553 144h34l7 7h24v31h-65z" fill="#e4b75f" stroke="#26334b" stroke-width="2.5" />
-    <path d="M583 147v27m-4-23h8m-8 7h8m-8 7h8" fill="none" stroke="#26334b" stroke-width="2" />
-    <text x="628" y="171" font-family="Consolas,monospace" font-size="17" font-weight="700" fill="#26334b" stroke="none">ZIP</text>
-    <path d="M553 197h93m-93 10h68" fill="none" stroke="#87a69d" stroke-width="3" stroke-linecap="round" />
-    <rect class="art-motion preview-topic-accent preview-terminal-instruction" display="none" x="546" y="190" width="107" height="24" rx="5" fill="none" stroke="#367d7b" stroke-width="2.5" />
-    <path d="M174 365h320l58 59H119Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M119 424h433v12H119Z" fill="#bcaa85" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <rect x="170" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="207" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="244" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="281" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="318" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="355" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="392" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="429" y="379" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="160" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="197" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="234" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="271" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="308" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="345" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="382" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="419" y="390" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="150" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="187" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="224" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="261" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="298" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="335" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="372" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <rect x="409" y="401" width="28" height="5" rx="1" fill="#aac1a0" stroke="#5d746c" stroke-width="1" />
-    <path d="M544 305V287h44.85l17 18H659v83H544Z" fill="#e4b75f" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M539 330H669l-16 58H549Z" fill="#eddfc4" stroke="#26334b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-    <text x="601" y="423" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="19" font-weight="700" text-anchor="middle" fill="#26334b" stroke="none">작업 폴더</text>
-    <path d="M541 248h58v28" fill="none" stroke="#367d7b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="m591 267 8 9 8-9" fill="none" stroke="#367d7b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-    <circle cx="599" cy="247" r="6" fill="#e4b75f" stroke="#26334b" stroke-width="2" />
+  <style>
+    .topic-art-terminal .lesson-signal { animation: terminal-topic-signal 4.8s linear var(--beat) infinite; }
+    .topic-art-terminal .lesson-ping { animation: terminal-topic-ping 4.8s ease-in-out var(--beat) infinite; }
+    @keyframes terminal-topic-signal {
+      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
+      65%,100%{stroke-dashoffset:-1;opacity:0}
+    }
+    @keyframes terminal-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
+    @media(prefers-reduced-motion:reduce) { .topic-art-terminal .art-motion { animation:none!important; } }
+  </style>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="380" cy="423" rx="253" ry="21" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-terminal-shade)" />
+    <g transform="translate(271 358)"><path d="M-165 -2L-9 58q9 4 18 0L165 -2v12L9 70q-9 4-18 0L-165 10Z" fill="#c9b895" stroke="#314347" stroke-width="2.5" />
+    <path d="M-162 -7 -9 -61q9-4 18 0L162 -7q6 3 0 7L9 58q-9 4-18 0L-162 0q-6-4 0-7Z" fill="url(#topic-terminal-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-155 -3 -9 -55q9-4 18 0L155 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 62v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    </g>
+    <g transform="translate(511 366)"><path d="M-163 -2L-9 57q9 4 18 0L163 -2v12L9 69q-9 4-18 0L-163 10Z" fill="#b7bea5" stroke="#314347" stroke-width="2.5" />
+    <path d="M-160 -7 -9 -60q9-4 18 0L160 -7q6 3 0 7L9 57q-9 4-18 0L-160 0q-6-4 0-7Z" fill="url(#topic-terminal-paper)" stroke="#314347" stroke-width="2.5" />
+    <path d="M-153 -3 -9 -54q9-4 18 0L153 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
+    <path d="M0 61v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    </g>
+    <path d="M277 304C310 305 323 327 353 326C384 325 396 302 417 298" fill="none" stroke="#b48b5e" stroke-width="3.4" />
+    <path d="M277 304C310 305 323 327 353 326C384 325 396 302 417 298" fill="none" stroke="#e7bb63" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.3s" stroke-dasharray=".12 1" />
+    <g transform="translate(418 298) rotate(-15)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
+    </g>
+    <g transform="translate(145 234)"><path d="M6 21V9q0-5 6-5h40l12 11h69q7 0 7 7v80H7Z" fill="#e7bb63" stroke="#314347" stroke-width="2.7" />
+    <g transform="translate(29 10)"><path d="M5 2h39l18 18v56q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#ae9a74" stroke="#314347" stroke-width="2.1" transform="translate(5 5)" />
+    <path d="M5 2h39l18 18v56q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#fff9e9" stroke="#314347" stroke-width="2.2" />
+    <path d="M44 3v17h17" fill="#eee3cb" stroke="#314347" stroke-width="1.6" />
+    <path d="M10 43h28 M10 51h24" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    </g><path d="M2 59h144l-11 50H14Z" fill="#efce90" stroke="#314347" stroke-width="2.7" />
+    <path d="M19 69h111" fill="none" stroke="#fff9e9" stroke-width="1.4" opacity=".6" />
+    </g>
+    <g transform="translate(160 369)"><rect x="1" y="2" width="100" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="100" height="25" rx="7" fill="#fff9e9" stroke="#314347" stroke-width="1.35" />
+    <text x="50" y="17" text-anchor="middle" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">프로젝트 ZIP</text></g>
+    <g transform="translate(143 140)"><path d="M0 5 9-4q4-4 10-4h141q9 0 9 9v63l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
+    <rect x="0" y="0" width="156" height="72" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
+    <path d="M0 21h156" fill="none" stroke="#b3baac" stroke-width="1.4" />
+    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
+    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
+    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
+    <circle cx="25" cy="44" r="9" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.4" />
+    <path d="M21 44l3 3 5-6" fill="none" stroke="#456f6b" stroke-width="1.7" />
+    <path d="M44 38h89 M44 47h70 M44 56h78" fill="none" stroke="#78887e" stroke-width="1.9" />
+    </g>
+    <path d="M193 212v13l13-13" fill="none" stroke="#314347" stroke-width="2" />
+    <g transform="translate(163 101)"><rect x="1" y="2" width="104" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="104" height="25" rx="7" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
+    <text x="52" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">AI 실행 안내</text></g>
+    <g transform="translate(375 160)"><path d="M0 5 9-4q4-4 10-4h245q9 0 9 9v141l-9 9V12Z" fill="#566b66" stroke="#314347" stroke-width="2.5" />
+    <rect x="0" y="0" width="260" height="150" rx="9" fill="#31484a" stroke="#314347" stroke-width="2.5" />
+    <path d="M0 21h260" fill="none" stroke="#738982" stroke-width="1.4" />
+    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
+    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
+    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
+    <text x="15" y="49" text-anchor="start" fill="#e2e8c7" stroke="none" font-family="Consolas,monospace" font-size="16" font-weight="650">&gt; npm install</text><text x="15" y="82" text-anchor="start" fill="#fcdfa3" stroke="none" font-family="Consolas,monospace" font-size="16" font-weight="650">&gt; npm run dev</text><rect x="159" y="69" width="8" height="14" rx="1" fill="#f5cc71" stroke="none" stroke-width="0" class="art-motion lesson-ping" style="--beat:1s" />
+    <path d="M17 112h80 M17 123h114" fill="none" stroke="#81958d" stroke-width="1.8" />
+    </g><g transform="translate(492 310)"><path d="M2 0H19l4 14 12 7v5h-49v-5L0 14Z" fill="#eee3cb" stroke="#314347" stroke-width="2.2" />
+    <path d="M-13 21h48" fill="none" stroke="#83765c" stroke-width="1.2" />
+    </g>
+    <path d="M408 352h177l21 16H386Z" fill="#fff9e9" stroke="#314347" stroke-width="2.2" />
+    <path d="M386 368h220v6H386Z" fill="#b6a785" stroke="#314347" stroke-width="2" />
+    <path d="M413 359h140" fill="none" stroke="#78887e" stroke-width="1.2" />
+    <g transform="translate(449 399)"><rect x="1" y="2" width="105" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
+    <rect x="0" y="0" width="105" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
+    <text x="52.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">PowerShell</text></g>
   </g>
 </svg>

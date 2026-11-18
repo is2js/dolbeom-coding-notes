@@ -14,5 +14,5 @@ const scenes = {
 
 export function topicThumbnail(id) {
   const key = Object.hasOwn(scenes, id) ? id : 'fallback';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" fill="none" aria-hidden="true" focusable="false" data-topic-thumbnail="${key}"><g stroke="#26334b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" fill="none" aria-hidden="true" focusable="false" data-topic-thumbnail="${key}"><ellipse cx="80" cy="99" rx="64" ry="8" fill="#857459" opacity=".10"/><ellipse cx="80" cy="99" rx="54" ry="5" fill="#857459" opacity=".07"/><g stroke="#38434a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
 }

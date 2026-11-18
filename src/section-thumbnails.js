@@ -1,19 +1,20 @@
 import { topicThumbnail } from './topic-thumbnails.js';
 
-// Small silhouettes are authored separately from the text-rich teaching diagrams.
+// Miniatures preserve the main prop and read clearly at navigation size.
 // Stable section IDs keep the miniature attached when a lecturer edits a title.
-const ink = '#26344e', teal = '#2e8390', cream = '#fff5df', sage = '#bad0b5', gold = '#e7b65e';
+const ink = '#38434a', teal = '#487d77', cream = '#fff9eb', sage = '#c4d5ba', gold = '#ebc780';
 const box = (x,y,w,h,fill=cream,r=5) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}"/>`;
 const path = (d,color=ink,width=2.6) => `<path d="${d}" fill="none" stroke="${color}" stroke-width="${width}"/>`;
 const dot = (x,y,r=6,fill=teal) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`;
-const label = (x,y,value,size=18) => `<text x="${x}" y="${y}" font-family="Consolas,monospace" font-size="${size}" font-weight="700" fill="${ink}" stroke="none">${value}</text>`;
-const window = (x,y,w,h,body='',fill=cream) => box(x+5,y+5,w,h,'#d2bd96')+box(x,y,w,h,fill)+path(`M${x} ${y+13}h${w}`)+dot(x+8,y+7,1.4,gold)+dot(x+14,y+7,1.4,sage)+body;
-const folder = (x,y,w=49,h=35) => `<path d="M${x} ${y+8}v-8h${w*.4}l7 8h${w*.6-7}v${h-8}h-${w}Z" fill="${gold}"/>`+path(`M${x} ${y+13}h${w}`);
-const page = (x,y,body='',fill=cream) => `<path d="M${x} ${y}h31l12 12v46h-43Z" fill="${fill}"/>`+path(`M${x+31} ${y}v12h12`)+body;
+const label = (x,y,value,size=18) => `<text x="${x}" y="${y}" font-family="Consolas,monospace" font-size="${Math.round(size * .87)}" font-weight="700" fill="${ink}" stroke="none">${value}</text>`;
+const window = (x,y,w,h,body='',fill=cream) => box(x+4,y+4,w,h,'#baa98d')+box(x,y,w,h,fill)+path(`M${x+1} ${y+13}h${w-2}`,'#82968a',1.5)+dot(x+8,y+7,1.4,gold)+dot(x+14,y+7,1.4,sage)+body;
+const folder = (x,y,w=49,h=35) => `<path d="M${x} ${y+8}v-8h${w*.4}l7 8h${w*.6-7}v${h-8}h-${w}Z" fill="#c9aa70"/><path d="M${x} ${y+13}h${w}l-4 ${h-13}h-${w-8}Z" fill="${gold}"/>`;
+const pageShape = (x,y,fill) => `<path d="M${x} ${y}h31l12 12v46h-43Z" fill="${fill}"/>`;
+const page = (x,y,body='',fill=cream) => pageShape(x+3,y+3,'#cabea4')+pageShape(x,y,fill)+path(`M${x+31} ${y}v12h12`,'#a19173',1.6)+body;
 const arrow = (x,y,w=24) => path(`M${x} ${y}h${w}m-6-5 6 5-6 5`,teal,3);
 const check = (x,y) => path(`M${x} ${y}l6 6 13-16`,teal,4);
 const rows = (x,y) => path(`M${x} ${y}h25m-25 9h20m-20 9h25`,'#718371',3);
-const server = (x,y) => box(x+5,y-5,38,62,'#8ba99d')+box(x,y,38,62,sage)+[0,1,2].map(i=>box(x+6,y+7+i*17,26,10,cream,2)+dot(x+11,y+12+i*17,1.5,teal)).join('');
+const server = (x,y) => box(x+5,y-4,38,62,'#8d9f94')+box(x,y,38,62,sage)+[0,1,2].map(i=>box(x+6,y+7+i*17,26,10,cream,3)+dot(x+11,y+12+i*17,1.5,teal)).join('');
 const keys = (first,second) => box(24,31,51,35,cream)+label(35,55,first,17)+box(84,42,51,35,sage)+label(95,66,second,17);
 const scenes = {
   'terminal-example': window(13,20,77,57,path('M25 45l8 7-8 7m19 0h13',teal,3),'#e0ebd8')+folder(101,46)+arrow(85,39,20)+path('M103 88H85m6-5-6 5 6 5',teal,3),
@@ -62,5 +63,5 @@ const scenes = {
 export function sectionThumbnail(id, topicId='terminal') {
   const key = String(id || '').replace(/^section-/, '');
   if (!Object.hasOwn(scenes,key)) return topicThumbnail(topicId);
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" aria-hidden="true" focusable="false" data-section-thumbnail="${key}"><ellipse cx="80" cy="98" rx="64" ry="7" fill="#26344e" opacity=".09"/><g fill="none" stroke="${ink}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 112" aria-hidden="true" focusable="false" data-section-thumbnail="${key}"><ellipse cx="80" cy="99" rx="64" ry="8" fill="#857459" opacity=".10"/><ellipse cx="80" cy="99" rx="54" ry="5" fill="#857459" opacity=".07"/><g fill="none" stroke="${ink}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${scenes[key]}</g></svg>`;
 }

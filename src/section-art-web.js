@@ -1,615 +1,673 @@
 import { brandIconPaths } from './brand-icon-paths.js';
-import { previewFocus } from './preview-art-accents.js';
 
-// Crisp native SVG explanations: one instructional scene for every section.
-// Only packets, cursors and emphasis layers move; the complete diagram stays readable.
-const c = {
-  ink: '#25334b', muted: '#435c62', teal: '#287d7b', sage: '#8da88f', pale: '#dce8d6',
-  cream: '#f2e6ce', sand: '#d5bd92', paper: '#fffaf0', orange: '#c68b45',
-  softOrange: '#f4dfbd', white: '#fffdf6', red: '#a94e48', softRed: '#f0d7ce',
+const color = {
+  ink: '#263747', muted: '#4a5c60', edge: '#978e79', wire: '#90a497',
+  paper: '#fff9ec', cream: '#eadfc8', light: '#f5ecda', shade: '#d4c6ab',
+  mint: '#dce9d8', sage: '#abc2a5', teal: '#387970', blue: '#d8e6ed',
+  lilac: '#e7dded', rust: '#a65b50', rose: '#f2d8cc', gold: '#c18d47', ochre: '#f2dfaa',
 };
-const escapeText = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-const text = (x, y, value, size = 23, color = c.ink, anchor = 'start', weight = 650, mono = false) =>
-  `<text x='${x}' y='${y}' font-size='${size}' fill='${color}' text-anchor='${anchor}' font-weight='${weight}'${mono ? " font-family='Consolas,IBM Plex Mono,monospace'" : ''}>${escapeText(value)}</text>`;
-const rect = (x, y, w, h, fill = c.paper, r = 10, stroke = c.ink, sw = 2.7) =>
-  `<rect x='${x}' y='${y}' width='${w}' height='${h}' rx='${r}' fill='${fill}' stroke='${stroke}' stroke-width='${sw}'/>`;
-const path = (d, fill = 'none', stroke = c.ink, sw = 2.7) =>
-  `<path d='${d}' fill='${fill}' stroke='${stroke}' stroke-width='${sw}' stroke-linecap='round' stroke-linejoin='round'/>`;
-const circle = (x, y, r = 6, fill = c.teal, stroke = c.ink, sw = 2.3) =>
-  `<circle cx='${x}' cy='${y}' r='${r}' fill='${fill}' stroke='${stroke}' stroke-width='${sw}'/>`;
-const pill = (x, y, w, label, fill = c.pale, size = 20) =>
-  rect(x, y, w, 36, fill, 8, c.muted, 1.7) + text(x + w / 2, y + 25, label, size, c.muted, 'middle');
-const code = (x, y, value, color = c.ink, size = 19) => text(x, y, value, size, color, 'start', 550, true);
-const lines = (x, y, widths, fill = c.sand, gap = 15, h = 5) => widths.map((w, i) =>
-  `<rect x='${x}' y='${y + i * gap}' width='${w}' height='${h}' rx='2.5' fill='${fill}'/>`).join('');
-const check = (x, y, color = c.teal) => path(`M${x} ${y}l8 8 17-20`, 'none', color, 4);
+const esc = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+const svgGroup = (body, transform) => `<g transform='${transform}'>${body}</g>`;
+const text = (x, y, value, { size = 16, fill = color.muted, align = 'start', mono = false, weight = 650 } = {}) =>
+  `<text x='${x}' y='${y}' fill='${fill}' stroke='none' font-size='${size}' font-weight='${weight}' text-anchor='${align}'${mono ? " font-family='Consolas,monospace'" : ''}>${esc(value)}</text>`;
+const code = (x, y, value, size = 16, fill = color.teal) => text(x, y, value, { size, fill, mono: true });
+const center = (x, y, value, size = 16, fill = color.muted) => text(x, y, value, { size, fill, align: 'middle' });
+const shape = (d, fill = 'none', stroke = color.ink, width = 2.15) =>
+  `<path d='${d}' fill='${fill}' stroke='${stroke}' stroke-width='${width}' stroke-linecap='round' stroke-linejoin='round'/>`;
+const box = (x, y, w, h, fill = color.paper, r = 8, stroke = color.ink, width = 2.15) =>
+  `<rect x='${x}' y='${y}' width='${w}' height='${h}' rx='${r}' fill='${fill}' stroke='${stroke}' stroke-width='${width}'/>`;
+const dot = (x, y, r = 5, fill = color.sage, stroke = color.ink, width = 1.6) =>
+  `<circle cx='${x}' cy='${y}' r='${r}' fill='${fill}' stroke='${stroke}' stroke-width='${width}'/>`;
+const shadow = (x, y, rx, ry) =>
+  `<ellipse cx='${x}' cy='${y}' rx='${rx + 5}' ry='${ry + 4}' fill='#493c29' opacity='.045'/><ellipse cx='${x}' cy='${y}' rx='${rx}' ry='${ry}' fill='#493c29' opacity='.085'/>`;
+const bars = (x, y, widths, fill = color.sage, gap = 14, h = 4) =>
+  widths.map((w, i) => box(x, y + i * gap, w, h, fill, h / 2, 'none', 0)).join('');
+const tick = (x, y, fill = color.teal) => shape(`M${x} ${y}l5 5 10-12`, 'none', fill, 2.8);
 
-function panel(x, y, w, h, label, fill = c.paper) {
-  return path(`M${x + w} ${y + 8}l9 8v${h - 9}l-9 9Z`, c.sand)
-    + path(`M${x} ${y + h}l9 8h${w}l-9-8Z`, c.cream)
-    + rect(x, y, w, h, fill)
-    + rect(x, y, w, 42, fill === c.ink ? c.muted : c.cream, 9)
-    + path(`M${x} ${y + 42}h${w}`, 'none', c.ink, 2.7)
-    + text(x + 17, y + 28, label, 20, fill === c.ink ? c.paper : c.ink);
+function plinth(x, y, w, tone = color.light, side = color.shade) {
+  const dx = 40, h = 30, r = x + w;
+  return shadow(x + w / 2, y + h + 12, w / 2 + 21, 15)
+    + shape(`M${x + 9} ${y + 1}H${r - dx}l${dx + 2} ${h - 9}q6 5 6 10v11q0 6-8 6H${x + dx}q-10 0-16-5L${x + 1} ${y + 16}q-8-8 8-15Z`, side)
+    + shape(`M${x + 7} ${y}H${r - dx - 5}q5 0 11 4l${dx - 2} 18q9 6-2 8H${x + dx + 4}q-9 0-15-4L${x - 2} ${y + 11}q-10-7 9-11Z`, tone)
+    + shape(`M${x + dx + 11} ${y + 24}H${r - 14}`, 'none', color.paper, 1.5);
 }
-function sheet(x, y, w, h, fill = c.paper) {
-  return path(`M${x + 7} ${y + 8}h${w - 24}l24 24v${h - 24}H${x + 7}Z`, c.sand)
-    + path(`M${x} ${y}h${w - 24}l24 24v${h - 24}H${x}Z`, fill)
-    + path(`M${x + w - 24} ${y}v24h24`, c.cream);
+
+function captionChip(x, y, label, w, fill = color.paper) {
+  return box(x - w / 2, y - 19, w, 28, fill, 8, color.edge, 1.35)
+    + center(x, y, label, 15);
 }
-function server(x, y, w = 135, h = 172) {
-  const step = (h - 30) / 3;
-  return path(`M${x} ${y}l18-12h${w}l-18 12Z`, c.pale)
-    + path(`M${x + w} ${y}l18-12v${h}l-18 12Z`, c.muted)
-    + rect(x, y, w, h, c.cream, 5)
-    + [0, 1, 2].map(i => rect(x + 12, y + 12 + i * step, w - 24, step - 9, c.paper, 4)
-      + circle(x + 27, y + 12 + i * step + (step - 9) / 2, 4.5, c.teal, c.teal)
-      + lines(x + 42, y + 10 + i * step + (step - 9) / 2, [w - 67], c.sage, 0, 4)).join('');
+
+function flow(prefix, x1, y1, x2, y2, { second = false, delay = 0 } = {}) {
+  const tint = second ? color.gold : color.teal;
+  return `<path d='M${x1} ${y1}L${x2} ${y2}' fill='none' stroke='${tint}' stroke-width='2.2' stroke-linecap='round' marker-end='url(#${prefix}-${second ? 'return' : 'forward'})'/>
+    <g class='art-motion ${prefix}-packet' style='--art-dx:${x2 - x1}px;--art-dy:${y2 - y1}px;animation-delay:${delay}s'>${dot(x1, y1, 4.7, tint, color.paper, 1.5)}</g>`;
 }
-function arrow(prefix, x1, y1, x2, y2, { orange = false, dashed = false, delay = 0 } = {}) {
-  const color = orange ? c.orange : c.teal;
-  return `<path d='M${x1} ${y1}L${x2} ${y2}' fill='none' stroke='${color}' stroke-width='3' stroke-linecap='round' ${dashed ? "stroke-dasharray='7 6'" : ''} marker-end='url(#${prefix}-${orange ? 'amber' : 'teal'}-arrow)'/>`
-    + `<g class='art-motion ${prefix}-packet preview-art-packet' style='--art-dx:${x2 - x1}px;--art-dy:${y2 - y1}px;animation-delay:${delay}s'>${circle(x1, y1, 5.5, color, c.paper, 2)}</g>`;
+const pulse = (prefix, body, delay = 0) => `<g class='art-motion ${prefix}-pulse' style='animation-delay:${delay}s'>${body}</g>`;
+
+function standingWindow(x, y, w, h, { tone = color.mint, title = '', body = '', stand = true } = {}) {
+  const standX = x + w / 2;
+  return (stand
+    ? shadow(standX, y + h + 37, w / 2 - 2, 12)
+      + shape(`M${standX - 13} ${y + h - 1}h26l9 24h-44Z`, color.shade)
+      + shape(`M${standX - 23} ${y + h + 24}h46l22 12h-90Z`, color.light)
+      + shape(`M${standX - 45} ${y + h + 36}h90v4h-90Z`, color.shade)
+    : shadow(standX, y + h + 8, w / 2, 10))
+    + shape(`M${x + 8} ${y}l11-8h${w - 19}q10 0 10 9v${h - 8}l-10 9Z`, color.cream)
+    + box(x, y, w, h, color.paper, 11)
+    + shape(`M${x + 11} ${y + 1}h${w - 22}q10 0 10 10v16H${x + 1}V${y + 11}q0-10 10-10Z`, tone, color.ink, 1.2)
+    + dot(x + 13, y + 14, 2.7, color.teal, 'none') + dot(x + 24, y + 14, 2.7, color.edge, 'none')
+    + (title ? text(x + 35, y + 19, title, { size: 14, fill: color.ink }) : '')
+    + body;
 }
-const emphasis = (prefix, body, delay = 0) => `<g class='art-motion ${prefix}-emphasis' style='animation-delay:${delay}s'>${body}</g>`;
-// Inlined, locally bundled vectors remain crisp in enlargement and do not make
-// a third-party request during lessons. See DESIGN_REFERENCES.md for credits.
-function brandIcon(name,x,y,size) {
-  if (name === 'vue') return `<svg x='${x}' y='${y}' width='${size}' height='${size}' viewBox='0 0 261.76 226.69' aria-hidden='true'><g transform='matrix(1.3333 0 0 -1.3333 -76.311 313.34)'><g transform='translate(178.06 235.01)'><path d='m0 0-22.669-39.264-22.669 39.264h-75.491l98.16-170.02 98.16 170.02z' fill='#41b883'/></g><g transform='translate(178.06 235.01)'><path d='m0 0-22.669-39.264-22.669 39.264h-36.227l58.896-102.01 58.896 102.01z' fill='#aacdd5'/></g></g></svg>`;
-  const fill = {react:'#61dafb',fastapi:'#4ce2cb',flask:'#fffdf6',django:'#e1f1e1',spring:'#8bd75e'}[name];
-  return `<svg x='${x}' y='${y}' width='${size}' height='${size}' viewBox='0 0 24 24' aria-hidden='true'><path d='${brandIconPaths[name]}' fill='${fill}'/></svg>`;
+
+function documentPage(x, y, w, h, { tone = color.paper, label = '', body = '' } = {}) {
+  const fold = 19, r = x + w, bottom = y + h;
+  return shadow(x + w / 2, bottom + 12, w / 2 - 3, 12)
+    + shape(`M${x + 7} ${y + 11}H${r - fold + 7}l${fold} ${fold}V${bottom + 11}H${x + 7}Z`, color.shade)
+    + shape(`M${x} ${y}H${r - fold}l${fold} ${fold}V${bottom}H${x}Z`, tone)
+    + shape(`M${r - fold} ${y}v${fold}h${fold}Z`, color.cream, color.ink, 1.65)
+    + (label ? text(x + 13, y + 26, label, { fill: color.ink, size: 15 }) : '')
+    + body;
 }
-const logoCredit = () => text(380, 538, 'Simple Icons · Vue © Evan You / CC BY 4.0 · creativecommons.org/licenses/by/4.0', 12, c.muted, 'middle', 550);
-function frame(prefix, heading, body, caption) {
+
+function folder(x, y, w, h, tone = color.ochre) {
+  return shape(`M${x} ${y + 15}v-9q0-6 6-6h${w * .38}l14 13h${w * .62 - 20}q6 0 6 6v${h - 19}H${x}Z`, tone)
+    + shape(`M${x} ${y + h}l13-${h - 34}q2-5 7-5h${w - 11}q6 0 5 5l-12 ${h - 34}Z`, color.light)
+    + shape(`M${x + 21} ${y + 41}h${w - 23}`, 'none', color.paper, 1.4);
+}
+
+function cylinder(x, y, w = 106, h = 155, tone = color.mint) {
+  const cx = x + w / 2;
+  const body = shape(`M${x} ${y}v${h}c0 24 ${w} 24 ${w} 0V${y}`, tone);
+  return shadow(cx, y + h + 28, w / 2 + 12, 12) + body
+    + [h * .32, h * .65].map(n => shape(`M${x} ${y + n}c0 24 ${w} 24 ${w} 0`, 'none', color.ink, 1.5)).join('')
+    + `<ellipse cx='${cx}' cy='${y}' rx='${w / 2}' ry='17' fill='${color.paper}' stroke='${color.ink}' stroke-width='2.15'/>`
+    + shape(`M${x + 14} ${y + 32}v${h - 37}`, 'none', color.paper, 2)
+    + dot(x + w - 20, y + 35, 3, color.teal, 'none');
+}
+
+function rack(x, y, w = 123, h = 148, body = color.light) {
+  const right = x + w;
+  return shadow(x + w / 2 + 9, y + h + 15, w / 2 + 2, 13)
+    + shape(`M${x} ${y}l17-12h${w}l-17 12Z`, color.paper)
+    + shape(`M${right} ${y}l17-12v${h}l-17 12Z`, color.shade)
+    + box(x, y, w, h, body, 7)
+    + [0, 1, 2].map(i => {
+      const yy = y + 12 + i * ((h - 19) / 3);
+      return box(x + 10, yy, w - 20, (h - 41) / 3, color.paper, 5, color.edge, 1.2)
+        + dot(x + 23, yy + (h - 41) / 6, 3, i === 1 ? color.gold : color.teal, 'none')
+        + shape(`M${x + 37} ${yy + (h - 41) / 6}h${w - 56}`, 'none', color.shade, 2.4);
+    }).join('');
+}
+
+function card(x, y, w, h, { title = 'Git', button = '설명 보기', open = false, tone = color.mint } = {}) {
+  return box(x, y, w, h, tone, 8, color.teal, 1.6)
+    + text(x + 12, y + 26, title, { size: 18, fill: color.ink, weight: 720 })
+    + box(x + 12, y + 40, Math.min(w - 24, 88), 25, color.paper, 5, color.teal, 1.1)
+    + text(x + 21, y + 57, button, { size: 13, fill: color.ink })
+    + (open ? bars(x + 12, y + 77, [w - 27, w - 47], color.sage, 10, 3.2) : '');
+}
+
+function keycap(x, y, w, label, tone = color.paper) {
+  return box(x, y + 5, w, 36, color.shade, 7)
+    + box(x, y, w, 35, tone, 7)
+    + center(x + w / 2, y + 23, label, 15, color.ink);
+}
+
+function keyboard(x, y, groups) {
+  const caps = groups.map(([label, w, tone], i) => {
+    const offset = groups.slice(0, i).reduce((sum, [, width]) => sum + width + 8, 0);
+    return keycap(x + 16 + offset, y + 13, w, label, tone);
+  }).join('');
+  const w = groups.reduce((sum, [, width]) => sum + width + 8, 0) + 24;
+  return shadow(x + w / 2, y + 66, w / 2 + 4, 11)
+    + shape(`M${x} ${y + 53}h${w}l16 10H${x + 14}Z`, color.shade)
+    + box(x, y, w, 55, color.light, 11)
+    + caps;
+}
+
+function cursor(x, y, fill = color.ochre) {
+  return shape(`M${x} ${y}l0 28 7-8 5 10 6-3-5-10 10-2Z`, fill);
+}
+
+function picture(x, y, w, h) {
+  const bottom = y + h - 10;
+  return box(x, y, w, h, color.blue, 5, color.ink, 1.6)
+    + dot(x + w * .78, y + h * .28, h * .085, color.ochre, color.gold, 1.15)
+    + shape(`M${x + 7} ${bottom}l${w * .23} -${h * .31} ${w * .18} ${h * .16} ${w * .16} -${h * .11} ${w * .22} ${h * .26}Z`, color.sage, color.teal, 1.4);
+}
+
+function frame(prefix, heading, body, caption, context = '') {
+  const markers = [['forward', color.teal], ['return', color.gold]].map(([name, tint]) =>
+    `<marker id='${prefix}-${name}' viewBox='0 0 12 12' refX='10' refY='6' markerWidth='9' markerHeight='9' orient='auto' markerUnits='userSpaceOnUse'>${shape('M2 2l8 4-8 4', 'none', tint, 2.1)}</marker>`).join('');
   return `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 550' class='topic-art-svg section-art-svg ${prefix}' aria-hidden='true' focusable='false'>
-    <defs>
-      <marker id='${prefix}-teal-arrow' viewBox='0 0 12 12' refX='10' refY='6' markerWidth='9' markerHeight='9' orient='auto' markerUnits='userSpaceOnUse'><path d='M2 2L10 6L2 10' fill='none' stroke='${c.teal}' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/></marker>
-      <marker id='${prefix}-amber-arrow' viewBox='0 0 12 12' refX='10' refY='6' markerWidth='9' markerHeight='9' orient='auto' markerUnits='userSpaceOnUse'><path d='M2 2L10 6L2 10' fill='none' stroke='${c.orange}' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/></marker>
-    </defs>
+    <desc>${esc([heading, context, caption].filter(Boolean).join(' · '))}</desc>
+    <defs>${markers}</defs>
     <style>
-      @keyframes ${prefix}-packet{0%,10%{transform:translate(0,0);opacity:0}18%,76%{opacity:1}94%,100%{transform:translate(var(--art-dx),var(--art-dy));opacity:0}}
-      @keyframes ${prefix}-emphasis{0%,12%,100%{opacity:.2}35%,70%{opacity:1}}
-      .${prefix} .${prefix}-packet{animation:${prefix}-packet 5.2s ease-in-out infinite}
-      .${prefix} .${prefix}-emphasis{animation:${prefix}-emphasis 5.2s ease-in-out infinite}
-      @media(prefers-reduced-motion:reduce){.${prefix} .art-motion{animation:none!important}}
+      @keyframes ${prefix}-packet{0%,12%{transform:translate(0,0);opacity:0}20%,72%{opacity:1}96%,100%{transform:translate(var(--art-dx),var(--art-dy));opacity:0}}
+      @keyframes ${prefix}-pulse{0%,100%{opacity:.34}45%,65%{opacity:1}}
+      .${prefix}-packet{animation:${prefix}-packet 4.9s ease-in-out infinite}
+      .${prefix}-pulse{animation:${prefix}-pulse 4.9s ease-in-out infinite}
+      @media(prefers-reduced-motion:reduce){.${prefix} .${prefix}-packet{display:none}.${prefix} .art-motion{animation:none!important}}
     </style>
-    <path d='M61 465h637' stroke='${c.sand}' stroke-width='1.4'/>
-    <g font-family='Pretendard Variable,Pretendard,Malgun Gothic,system-ui,sans-serif' stroke-linejoin='round'>
-      ${text(380, 53, heading, 27, c.ink, 'middle', 750)}
+    <g font-family='Pretendard Variable,Pretendard,Malgun Gothic,system-ui,sans-serif'>
       ${body}
-      ${text(380, 512, caption, 22, c.muted, 'middle', 550)}
+      ${center(380, 502, caption, 16)}
     </g>
   </svg>`;
 }
 
+// Locally bundled brand artwork. Credits are in DESIGN_REFERENCES.md and on artwork with Vue.
+function brandIcon(name, x, y, size) {
+  if (name === 'vue') return `<svg x='${x}' y='${y}' width='${size}' height='${size}' viewBox='0 0 261.76 226.69' aria-hidden='true'><g transform='matrix(1.3333 0 0 -1.3333 -76.311 313.34)'><g transform='translate(178.06 235.01)'><path d='m0 0-22.669-39.264-22.669 39.264h-75.491l98.16-170.02 98.16 170.02z' fill='#41b883'/></g><g transform='translate(178.06 235.01)'><path d='m0 0-22.669-39.264-22.669 39.264h-36.227l58.896-102.01 58.896 102.01z' fill='#aacdd5'/></g></g></svg>`;
+  const fill = { react: '#61dafb', fastapi: '#4ce2cb', flask: '#fffdf6', django: '#e1f1e1', spring: '#8bd75e' }[name];
+  return `<svg x='${x}' y='${y}' width='${size}' height='${size}' viewBox='0 0 24 24' aria-hidden='true'><path d='${brandIconPaths[name]}' fill='${fill}'/></svg>`;
+}
+function brandTile(x, y, icon, name) {
+  return box(x, y + 4, 83, 32, color.shade, 6, color.edge, 1.3)
+    + box(x, y, 83, 32, color.paper, 6, color.edge, 1.3)
+    + box(x + 4, y + 4, 24, 24, color.ink, 4, 'none', 0)
+    + brandIcon(icon, x + 7, y + 7, 18)
+    + text(x + 33, y + 21, name, { size: 12.5, fill: color.ink });
+}
+const logoCredit = () => center(380, 533, 'Simple Icons · Vue © Evan You / CC BY 4.0 · creativecommons.org/licenses/by/4.0', 12);
+
+
 function structuredPrompt() {
   const p = 'sa-markdown-map';
+  const source = documentPage(91, 147, 222, 211, {
+    tone: color.light,
+    label: 'Markdown 원문',
+    body: code(112, 222, '## 계획', 20) + code(112, 260, '- 문서 작성') + code(112, 300, '**중요**', 16, color.gold),
+  });
+  const rendered = documentPage(455, 140, 200, 222, {
+    label: '읽는 화면',
+    body: text(476, 211, '계획', { size: 20, fill: color.ink }) + bars(476, 229, [146], color.shade)
+      + dot(482, 267, 3, color.teal, 'none') + text(495, 272, '문서 작성')
+      + text(476, 312, '중요', { fill: color.ink, weight: 800 }),
+  });
   return frame(p, 'Codex 계획문으로 문법 연습', `
-    ${panel(46, 105, 292, 282, 'Markdown 원문')}
-    ${code(67, 185, '## 계획', c.ink, 24)}
-    ${code(67, 233, '- 문서 작성', c.teal, 22)}
-    ${code(67, 280, '**중요**', c.orange, 22)}
-    ${code(67, 326, '[가이드](주소)', c.muted, 19)}
-    ${arrow(p, 350, 245, 395, 245)}
-    ${panel(405, 105, 308, 282, '읽는 화면')}
-    ${text(430, 190, '계획', 28)}${path('M430 205h242', 'none', c.sand, 2)}
-    ${circle(438, 242, 4, c.teal, c.teal)}${text(453, 250, '문서 작성', 23, c.muted)}
-    ${text(430, 297, '중요', 25, c.ink)}${text(430, 344, '가이드', 22, c.teal)}
-    ${path('M430 351h76', 'none', c.teal, 2)}${emphasis(p, rect(422, 217, 256, 47, 'none', 5, c.teal, 3))}
-    ${pill(182, 414, 396, '제목 · 목록 · 강조 · 링크', c.pale, 21)}
-    ${previewFocus(58, 255, 132, 37, 'source')}
-    ${previewFocus(422, 269, 107, 39, 'output', 1.05)}
-  `, '계획문의 문법이 화면에 어떻게 보이는지 비교합니다');
+    ${plinth(84, 346, 584)}
+    ${svgGroup(source, 'rotate(-7 202 253)')}
+    ${svgGroup(rendered, 'rotate(6 555 251)')}
+    ${flow(p, 330, 258, 428, 248)}
+    ${pulse(p, shape('M473 320h50', 'none', color.gold, 2.8), 1.25)}
+  `, '원문을 써 보고 읽는 화면과 비교합니다');
 }
 
 function typoraImageFlow() {
   const p = 'sa-markdown-typora-images';
   return frame(p, '이미지와 문서를 함께 공유하기', `
-    ${panel(36, 146, 168, 178, '클립보드')}
-    ${rect(58, 207, 124, 91, c.pale, 5)}${circle(151, 230, 9, c.softOrange, c.orange, 2)}
-    ${path('M68 281l28-30 21 18 17-18 38 30Z', c.sage, c.teal, 2.5)}
-    ${arrow(p, 211, 228, 239, 228)}${pill(47, 344, 150, 'Ctrl + V', c.pale, 20)}
-    ${panel(249, 105, 266, 281, 'Typora · 내 프로젝트')}
-    ${rect(268, 164, 225, 82, c.white, 5, c.muted, 1.8)}
-    ${code(282, 191, 'README.md', c.ink, 21)}${code(282, 218, '![이미지](assets/...)', c.teal, 18)}
-    ${path('M270 286v-17h79l10 11h133v66H270Z', c.softOrange, c.ink, 2.5)}
-    ${text(285, 312, 'assets/', 22, c.ink, 'start', 650, true)}${text(285, 339, '이미지 파일', 20, c.muted)}
-    ${arrow(p, 523, 228, 556, 228, {orange:true,delay:1})}
-    ${panel(565, 146, 155, 178, 'GitHub')}
-    ${sheet(587, 210, 55, 73, c.paper)}${text(595, 255, 'MD', 19, c.teal, 'start', 700, true)}
-    ${rect(653, 210, 43, 73, c.pale, 4)}${path('M660 266l10-13 7 8 7-10 7 15', 'none', c.teal, 2)}
-    ${pill(555, 344, 178, 'commit · push', c.softOrange, 18)}
-    ${emphasis(p, rect(267, 266, 228, 83, 'none', 6, c.teal, 3))}
-  `, '이미지는 로컬에 저장하고 Git으로 함께 올립니다');
+    ${plinth(69, 343, 604)}
+    ${documentPage(84, 185, 126, 143, {tone: color.blue, body: picture(95, 205, 103, 87)})}
+    ${keycap(102, 321, 87, 'Ctrl + V', color.mint)}
+    ${folder(274, 238, 169, 109)}
+    ${documentPage(302, 131, 135, 173, {label: 'README.md', body: bars(316, 188, [100, 64], color.sage)})}
+    ${captionChip(354, 388, 'assets/', 100, color.ochre)}
+    ${standingWindow(519, 170, 151, 143, {title: 'GitHub', body: picture(542, 210, 103, 78)})}
+    ${flow(p, 220, 250, 284, 221)}
+    ${flow(p, 454, 238, 509, 238, {second: true, delay: 1.25})}
+  `, '이미지는 로컬에 저장하고 Git으로 함께 올립니다', 'Typora · 내 프로젝트 · commit · push');
 }
 
 function readmeSections() {
   const p = 'sa-tools-markdown';
+  const chapter = (x, y, number, label, tone) => documentPage(x, y, 154, 89, {
+    tone,
+    body: dot(x + 21, y + 25, 10, color.paper, color.edge, 1.3)
+      + center(x + 21, y + 30, number, 11, color.ink)
+      + text(x + 37, y + 30, label, { size: 14, fill: color.ink })
+      + bars(x + 14, y + 50, [114, 88], color.shade),
+  });
   return frame(p, 'README에 프로젝트를 소개합니다', `
-    ${panel(43, 105, 308, 283, 'README.md · 원문')}
-    ${sheet(65, 165, 260, 189, c.white)}
-    ${code(82, 198, '# Git 연습 메모', c.ink, 21)}
-    ${code(82, 234, '## 소개', c.teal, 19)}
-    ${code(82, 268, '## 준비', c.orange, 19)}
-    ${code(82, 302, '## 확인 방법', c.teal, 19)}
-    ${lines(82, 316, [182, 142], c.sand, 13, 4)}
-    ${arrow(p, 362, 250, 400, 250)}
-    ${panel(412, 105, 305, 283, '차례대로 채우기')}
-    ${rect(431, 170, 267, 54, c.pale, 7, c.teal, 2)}
-    ${text(448, 204, '01', 18, c.teal, 'start', 700, true)}${text(494, 204, '프로젝트 소개', 21)}
-    ${rect(431, 235, 267, 54, c.cream, 7, c.sand, 2)}
-    ${text(448, 269, '02', 18, c.orange, 'start', 700, true)}${text(494, 269, '준비할 것', 21)}
-    ${rect(431, 300, 267, 54, c.pale, 7, c.teal, 2)}
-    ${text(448, 334, '03', 18, c.teal, 'start', 700, true)}${text(494, 334, '확인 방법', 21)}
-    ${emphasis(p, rect(426, 165, 277, 64, 'none', 8, c.teal, 3))}
-    ${pill(190, 420, 380, '제목 · 목록 · 링크 · 표', c.pale, 21)}
-    ${previewFocus(427, 231, 275, 62, 'source', 1.1)}
-    ${previewFocus(427, 296, 275, 62, 'inspect', 2.2)}
-  `, '소개와 준비, 확인 방법을 한 문서에 담습니다');
+    ${plinth(83, 391, 598)}
+    ${svgGroup(documentPage(112, 146, 220, 241, {
+      label: 'README.md',
+      body: code(133, 219, '# Git 연습 메모', 18, color.ink)
+        + code(133, 255, '## 소개') + code(133, 286, '## 준비') + code(133, 318, '## 확인 방법'),
+    }), 'rotate(-7 222 267)')}
+    ${chapter(487, 115, '1', '프로젝트 소개', color.mint)}
+    ${chapter(469, 220, '2', '준비할 것', color.ochre)}
+    ${chapter(451, 325, '3', '확인 방법', color.blue)}
+    ${flow(p, 350, 250, 451, 250)}
+  `, '소개와 준비, 확인 방법을 한 문서에 담습니다', '제목 · 목록 · 링크 · 표');
 }
 
 function readmeToGithub() {
   const p = 'sa-markdown-readme-push';
   return frame(p, 'README를 작성해 GitHub에서 보기', `
-    ${panel(36, 111, 224, 282, '원래 작업 폴더')}
-    ${path('M59 200v-17h63l10 12h105v117H59Z', c.softOrange, c.ink, 2.5)}
-    ${sheet(79, 166, 142, 132, c.paper)}
-    ${code(91, 199, 'README.md', c.teal, 19)}
-    ${text(91, 229, '# 연습 메모', 19, c.ink)}
-    ${lines(92, 246, [107, 83, 98], c.sand, 14, 5)}
-    ${pill(54, 333, 188, 'git-practice', c.pale, 18)}
-    ${arrow(p, 267, 249, 292, 249)}
-    ${panel(302, 135, 158, 230, 'Git 기록')}
-    ${rect(318, 201, 126, 55, c.paper, 6, c.muted, 2)}
-    ${text(381, 235, 'add', 22, c.ink, 'middle', 700, true)}
-    ${rect(318, 272, 126, 55, c.pale, 6, c.teal, 2)}
-    ${text(381, 306, 'commit', 22, c.ink, 'middle', 700, true)}
-    ${arrow(p, 468, 249, 495, 249, {delay:1.2})}
-    ${panel(505, 111, 219, 282, 'GitHub 저장소')}
-    ${rect(523, 170, 183, 172, c.white, 6, c.muted, 1.8)}
-    ${text(539, 204, 'README.md', 19, c.teal, 'start', 700, true)}
-    ${path('M537 218h154', 'none', c.sand, 2)}
-    ${text(539, 251, 'Git 연습 메모', 21, c.ink, 'start', 700)}
-    ${lines(539, 272, [137, 116, 130], c.sage, 15, 5)}
-    ${emphasis(p, check(670, 325))}
-    ${pill(154, 421, 452, '작성 → 커밋 → push → 화면 확인', c.pale, 20)}
-    ${previewFocus(313, 267, 137, 65, 'state', .65)}
-    ${previewFocus(518, 165, 194, 182, 'output', 1.7)}
-  `, '원래 작업 폴더에서 쓴 README를 GitHub에서 확인합니다');
+    ${plinth(72, 350, 603)}
+    ${folder(84, 245, 176, 111)}
+    ${documentPage(118, 150, 132, 151, {label: 'README.md', body: bars(131, 205, [95, 72, 85], color.sage)})}
+    ${captionChip(170, 397, 'git-practice', 138)}
+    ${shape('M326 282l48-45 49 45-49 46Z', color.ochre)}
+    ${shape('M326 282v11l48 44 49-44v-11l-49 46Z', color.shade)}
+    ${center(374, 288, 'commit', 15, color.ink)}
+    ${standingWindow(500, 157, 172, 164, {title: 'GitHub 저장소', body: code(517, 217, 'README.md') + bars(517, 235, [123, 107, 114], color.sage)})}
+    ${flow(p, 267, 273, 318, 282)}
+    ${flow(p, 430, 278, 490, 241, {second: true, delay: .95})}
+    ${center(460, 298, 'push', 14, color.gold)}
+    ${pulse(p, tick(635, 289), 1.9)}
+  `, '저장소에서 README 화면 확인', '원래 작업 폴더 · Git 기록');
 }
 
 function readmeFetchAndPull() {
   const p = 'sa-markdown-readme-fetch';
   return frame(p, '원격의 새 기록을 다른 복제본에서 확인', `
-    ${panel(36, 116, 200, 264, 'GitHub · 원격')}
-    ${sheet(79, 184, 105, 132, c.white)}
-    ${code(91, 217, 'README.md', c.teal, 16)}
-    ${lines(91, 239, [75, 61, 70], c.sage, 15, 5)}
-    ${pill(54, 333, 166, '새 커밋', c.pale, 20)}
-    ${arrow(p, 243, 246, 278, 246)}
-    ${panel(288, 116, 184, 264, '원격 추적 기록')}
-    ${rect(307, 181, 146, 132, c.white, 7, c.muted, 2)}
-    ${text(380, 217, 'origin/main', 20, c.teal, 'middle', 700, true)}
-    ${text(380, 256, '새 기록 확인', 20, c.ink, 'middle')}
-    ${text(380, 287, '파일은 그대로', 18, c.muted, 'middle')}
-    ${pill(306, 333, 148, '① fetch', c.pale, 20)}
-    ${arrow(p, 479, 246, 514, 246, {orange:true,delay:1.2})}
-    ${panel(524, 116, 200, 264, '기존 복제 폴더')}
-    ${path('M548 204v-17h54l10 12h87v112H548Z', c.softOrange, c.ink, 2.5)}
-    ${sheet(570, 176, 105, 127, c.paper)}
-    ${code(580, 211, 'README.md', c.teal, 16)}
-    ${lines(581, 232, [73, 59, 68], c.sage, 14, 5)}
-    ${emphasis(p, check(659, 291))}
-    ${pill(542, 333, 164, '② pull 반영', c.softOrange, 19)}
-    ${pill(154, 414, 452, 'fetch로 확인 → pull로 작업 폴더에 반영', c.pale, 19)}
-    ${previewFocus(301, 328, 157, 46, 'inspect')}
-    ${previewFocus(537, 328, 174, 46, 'source', 1.25)}
+    ${plinth(68, 361, 607)}
+    ${rack(88, 182, 99, 140, color.blue)}
+    ${center(139, 373, 'GitHub · 원격', 15)}
+    ${documentPage(322, 180, 131, 162, {label: 'origin/main', tone: color.mint, body: bars(336, 242, [89, 70], color.wire)})}
+    ${center(388, 382, '파일은 그대로', 15)}
+    ${folder(532, 245, 132, 105, color.ochre)}
+    ${documentPage(559, 169, 100, 138, {body: code(570, 198, 'README.md', 13) + bars(571, 219, [65, 50], color.sage)})}
+    ${flow(p, 219, 240, 308, 242)}
+    ${center(262, 219, '① fetch', 15, color.teal)}
+    ${flow(p, 465, 249, 548, 237, {second: true, delay: 1.15})}
+    ${center(509, 222, '② pull 반영', 15, color.gold)}
   `, '홈의 기존 git-practice-clone에 반영합니다');
 }
 
 function markdownBranches() {
   const p = 'sa-markdown-code';
   return frame(p, '같은 문법, 다른 편집 경험', `
-    ${sheet(282, 197, 191, 230)}${code(304, 250, '# 노트', c.ink, 25)}${code(304, 291, '- 목록', c.muted, 22)}${code(304, 332, '[링크]', c.muted, 22)}
-    ${pill(303, 362, 142, 'Markdown', c.pale, 19)}
-    ${panel(55, 105, 205, 170, 'Notion')}${rect(76, 167, 163, 30, c.pale, 4, c.muted, 1.7)}
-    ${rect(76, 210, 97, 30, c.cream, 4, c.muted, 1.7)}${rect(185, 210, 54, 30, c.softOrange, 4, c.muted, 1.7)}
-    ${panel(503, 105, 205, 170, 'Obsidian')}
-    ${path('M536 217l65-40 65 45m-65-45 3 63m-68-23 68 23 62-18', 'none', c.teal, 3)}
-    ${[[536,217],[601,177],[666,222],[604,240]].map(([x,y])=>circle(x,y,8,c.pale)).join('')}
-    ${arrow(p, 284, 253, 249, 285)}${arrow(p, 472, 253, 507, 285, {delay:1.1})}
-    ${text(158, 327, '블록으로 편집', 22, c.muted, 'middle')}${text(606, 327, '노트를 연결', 22, c.muted, 'middle')}
-    ${emphasis(p, rect(294, 223, 152, 126, 'none', 4, c.orange, 3))}
-  `, '공통 핵심 문법과 앱별 확장을 나누어 확인합니다');
+    ${plinth(78, 350, 601)}
+    ${standingWindow(87, 170, 169, 145, {
+      title: 'Notion',
+      body: box(104, 216, 136, 23, color.mint, 4, color.edge, 1.2)
+        + box(104, 251, 83, 25, color.ochre, 4, color.edge, 1.2)
+        + box(197, 251, 43, 25, color.lilac, 4, color.edge, 1.2),
+    })}
+    ${standingWindow(512, 170, 157, 145, {
+      tone: color.lilac, title: 'Obsidian',
+      body: shape('M537 275l51-54 56 48m-56-48 5 68m-56-14 56 14 51-20', 'none', color.wire, 1.65)
+        + [[537,275],[588,221],[644,269],[593,289]].map(([x,y])=>dot(x,y,6,color.lilac)).join(''),
+    })}
+    ${documentPage(315, 211, 128, 156, {label: 'Markdown', body: code(329, 269, '# 노트') + code(329, 304, '- 목록')})}
+    ${flow(p, 307, 277, 265, 254)}
+    ${flow(p, 452, 279, 504, 254, {second: true, delay: 1.1})}
+  `, '블록으로 편집하거나 노트를 연결합니다');
 }
 
 function reviewDiff() {
   const p = 'sa-tools-map';
   return frame(p, '변경한 코드에서 세 가지 확인', `
-    ${panel(58, 100, 641, 300, 'PyCharm · 변경 비교')}
-    ${path('M378 143v256', 'none', c.muted, 2)}
-    ${text(80, 180, '변경 전', 23)}${text(400, 180, '변경 후', 23)}
-    ${rect(79, 200, 277, 53, c.softRed, 5, c.red, 2)}${text(94, 234, '− 제목: 터미널', 23, c.red)}
-    ${rect(400, 200, 277, 53, c.pale, 5, c.teal, 2)}${text(415, 234, '+ 윈도우 터미널', 23, c.teal)}
-    ${code(94, 294, 'id: terminal', c.muted, 23)}${code(415, 294, 'id: terminal', c.muted, 23)}
-    ${lines(94, 318, [226,191], c.sand, 21)}${lines(415, 318, [226,191], c.sand, 21)}
-    ${[0,1,2].map(i=>pill(90+i*219,423,200,['01 경로','02 차이','03 실행'][i],i===1?c.pale:c.cream,22)).join('')}
-    ${emphasis(p, rect(397,197,283,59,'none',6,c.teal,4))}
+    ${plinth(139, 387, 474)}
+    ${standingWindow(187, 106, 378, 253, {
+      title: 'PyCharm · 변경 비교',
+      body: shape('M376 150v184', 'none', color.edge, 1.5)
+        + code(209, 180, '이전', 15, color.muted) + code(393, 180, '변경', 15, color.muted)
+        + box(208, 201, 148, 30, color.rose, 5, 'none', 0) + code(218, 221, '− 제목: 터미널', 15, color.rust)
+        + box(392, 201, 151, 30, color.mint, 5, 'none', 0) + code(402, 221, '+ 윈도우 터미널', 15)
+        + code(216, 268, 'id: terminal', 15, color.muted) + code(397, 268, 'id: terminal', 15, color.muted)
+        + bars(215, 297, [113, 95], color.shade) + bars(400, 297, [123, 90], color.shade),
+    })}
+    ${pulse(p, svgGroup(cursor(514, 228), 'rotate(-8 514 228)'), 1)}
+    ${captionChip(259, 441, '경로', 65)}
+    ${captionChip(376, 441, '차이', 65, color.mint)}
+    ${captionChip(493, 441, '실행', 65)}
   `, '바뀐 줄을 읽고, 유지할 ID와 실행 결과도 확인합니다');
 }
 
 function vscodeFinding() {
   const p = 'sa-tools-vscode';
-  const items = [['Ctrl + P', '파일 이름', c.cream], ['Ctrl + Shift + F', '프로젝트 내용', c.pale], ['Ctrl + Shift + P', '기능 이름', c.softOrange]];
+  const controls = [['Ctrl + P', 143, color.mint], ['Ctrl + Shift + F', 166, color.blue], ['Ctrl + Shift + P', 166, color.ochre]];
+  const results = [['README.md', color.mint], ['프로젝트 내용', color.blue], ['명령 팔레트', color.ochre]];
   return frame(p, '단축키는 찾을 대상에 맞게', `
-    ${items.map(([key,label,fill],i)=>{const y=101+i*110; return rect(62,y,293,85,fill,9) + code(82,y+33,key,c.ink,23) + text(82,y+65,label,21,c.muted) + arrow(p,365,y+43,404,y+43,{delay:i*.8});}).join('')}
-    ${panel(416, 101, 284, 306, 'VS Code')}
-    ${rect(438,166,241,50,c.pale,6,c.teal,2)}${text(452,199,'README.md',24,c.ink)}
-    ${rect(438,234,241,50,c.paper,6,c.muted,2)}${text(452,267,'문구 검색 결과',22,c.muted)}
-    ${rect(438,302,241,50,c.paper,6,c.muted,2)}${text(452,335,'명령 팔레트',22,c.muted)}
-    ${emphasis(p, path('M657 179v25', 'none', c.orange, 4))}
-    ${previewFocus(433, 161, 251, 60, 'inspect')}
-    ${previewFocus(433, 229, 251, 60, 'output', .95)}
-    ${previewFocus(433, 297, 251, 60, 'state', 1.9)}
-  `, '파일 · 내용 · 명령을 구별하면 찾기가 빨라집니다');
+    ${plinth(76, 374, 589)}
+    ${controls.map(([key, w, tone], i) => keycap(115 + i * 8, 164 + i * 77, w, key, tone)).join('')}
+    ${standingWindow(398, 128, 262, 232, {
+      title: 'VS Code',
+      body: results.map(([label, tone], i) => box(422, 171 + i * 57, 210, 34, tone, 6, color.edge, 1.05)
+        + text(434, 193 + i * 57, label, { size: 15, fill: color.ink })).join(''),
+    })}
+    ${controls.map(([,w], i) => flow(p, 129 + i * 8 + w, 182 + i * 77, 397, 186 + i * 57, {delay: i * .8, second: i === 2})).join('')}
+  `, '파일 이름 · 내용 · 명령을 구별하면 찾기가 빨라집니다');
 }
 
 function sharedShortcutPractice() {
   const p = 'sa-tools-shortcuts-practice';
+  const outcomes = [['찾기 · 이동', color.mint], ['편집 · 저장', color.blue], ['화면 · 터미널', color.ochre]];
   return frame(p, '손으로 익히는 편집기 단축키', `
-    ${panel(46, 105, 310, 281, '단축키를 눌러 보기')}
-    ${rect(69, 183, 264, 136, c.cream, 12, c.ink, 2.7)}
-    ${[0,1,2].map(row => [0,1,2,3,4,5].map(col =>
-      rect(83 + col * 39, 197 + row * 31, 31, 24, row === 1 && col === 1 ? c.pale : c.paper, 4, c.muted, 1.6)).join('')).join('')}
-    ${rect(125, 294, 151, 13, c.paper, 3, c.muted, 1.4)}
-    ${emphasis(p, rect(119, 223, 37, 30, 'none', 5, c.teal, 3))}
-    ${pill(88, 340, 226, '키 누르기', c.pale, 21)}
-    ${arrow(p, 364, 247, 403, 247)}
-    ${panel(414, 105, 300, 281, '편집기에서 결과 확인')}
-    ${rect(433, 168, 261, 54, c.pale, 7, c.teal, 1.8)}
-    ${text(450, 202, '찾기 · 이동', 22, c.ink)}${check(656, 202)}
-    ${rect(433, 235, 261, 54, c.paper, 7, c.muted, 1.8)}
-    ${text(450, 269, '편집 · 저장', 22, c.ink)}${check(656, 269)}
-    ${rect(433, 302, 261, 54, c.softOrange, 7, c.orange, 1.8)}
-    ${text(450, 336, '화면 · 터미널', 22, c.ink)}${check(656, 336)}
-    ${pill(110, 417, 540, 'VS Code 실습 · PyCharm 키맵 비교', c.pale, 20)}
-    ${previewFocus(428, 163, 271, 64, 'inspect', 1.05)}
-  `, '키를 누른 뒤 화면에서 바뀐 결과를 확인합니다');
+    ${plinth(64, 353, 627)}
+    ${svgGroup(keyboard(104, 257, [['Ctrl', 44, color.mint], ['Shift', 53, color.paper], ['P', 33, color.ochre]]), 'rotate(-8 194 293)')}
+    ${center(200, 205, '단축키를 눌러 보기', 16)}
+    ${standingWindow(429, 139, 248, 211, {
+      tone: color.lilac,
+      title: '편집기에서 결과 확인',
+      body: outcomes.map(([label, tone], i) => box(449, 186 + i * 47, 201, 32, tone, 6, color.edge, 1.1)
+        + text(461, 207 + i * 47, label, { size: 15 }) + tick(626, 199 + i * 47)).join(''),
+    })}
+    ${flow(p, 307, 273, 418, 251)}
+    ${pulse(p, cursor(599, 259), 1.1)}
+  `, 'VS Code에서 눌러 보고 PyCharm의 키맵도 비교합니다');
 }
 
 function pycharmEnvironment() {
   const p = 'sa-tools-pycharm';
   return frame(p, '실행 환경과 단축키 설정 구별하기', `
-    ${panel(210,88,340,91,'PyCharm',c.pale)}${text(380,159,'프로젝트 작업실',23,c.muted,'middle')}
-    ${arrow(p,279,190,227,232)}${arrow(p,481,190,534,232,{delay:.9})}
-    ${panel(60,244,304,176,'인터프리터')}${code(80,315,'Python 실행 파일',c.ink,22)}
-    ${text(80,354,'실행할 Python',23,c.muted)}${text(80,391,'작업 폴더도 확인',22,c.muted)}
-    ${panel(410,244,287,176,'VSCode 키맵')}
-    ${rect(438,306,94,48,c.cream,6)}${code(455,337,'Ctrl',c.ink,22)}
-    ${rect(547,306,119,48,c.cream,6)}${text(606,337,'단축키',23,c.ink,'middle')}
-    ${text(553,391,'조작 방법을 연결',22,c.muted,'middle')}
-    ${emphasis(p, check(324,390))}
+    ${plinth(67, 354, 624)}
+    ${rack(103, 211, 107, 126, color.mint)}
+    ${captionChip(160, 391, 'Python 실행 환경', 148)}
+    ${standingWindow(280, 128, 195, 158, {
+      title: 'PyCharm',
+      body: box(307, 177, 139, 65, color.mint, 6, color.edge, 1.1)
+        + shape('M365 195l19 14-19 13Z', color.sage, color.teal, 1.7),
+    })}
+    ${keyboard(527, 275, [['Ctrl', 44, color.mint], ['P', 31, color.blue]])}
+    ${captionChip(576, 391, 'VS Code 키맵', 140)}
+    ${flow(p, 295, 275, 225, 270)}
+    ${flow(p, 472, 278, 531, 279, {delay: 1.1, second: true})}
   `, '실행할 환경과 익숙한 키 배치는 서로 다른 설정입니다');
 }
 
 function integratedWorkbench() {
   const p = 'sa-codex-context';
+  const screen = box(272, 149, 173, 94, color.light, 4, color.edge, 1.4)
+    + code(282, 172, '# Git 연습 메모', 15) + bars(283, 190, [116, 93], color.sage)
+    + box(455, 149, 171, 94, color.mint, 4, color.edge, 1.4)
+    + text(466, 172, 'Markdown 미리보기', { size: 13 }) + bars(467, 190, [131, 109], color.sage)
+    + box(272, 251, 173, 40, color.ink, 5, 'none', 0) + code(282, 276, '> git diff', 14, color.mint)
+    + box(455, 251, 171, 40, color.blue, 5, 'none', 0) + text(466, 276, 'Git 변경 비교', { size: 14 });
   return frame(p, 'README 한 줄로 도구 연결하기', `
-    ${panel(42,100,287,129,'README 수정 · 저장')}
-    ${code(62,177,'# Git 연습 메모',c.teal,21)}
-    ${text(62,207,'소개 문장 한 줄 수정',20,c.muted)}
-    ${arrow(p,340,165,405,165)}
-    ${panel(414,100,303,129,'Markdown 미리보기')}
-    ${text(436,178,'Git 연습 메모',24,c.ink)}${path('M436 189h235','none',c.sand,2)}
-    ${text(436,213,'바뀐 문장을 읽어 봅니다',19,c.muted)}
-    ${panel(42,274,209,127,'통합 터미널',c.ink)}
-    ${code(59,350,'git status',c.pale,19)}${code(59,380,'git diff',c.paper,19)}
-    ${panel(279,274,201,127,'Git 변경 비교')}
-    ${text(298,350,'− 이전 문장',20,c.red)}${text(298,381,'+ 수정 문장',20,c.teal)}
-    ${panel(509,274,208,127,'GitHub 원격')}
-    ${text(525,350,'마지막 push 내용',18,c.muted)}${text(525,382,'저장만으론 그대로',17,c.muted)}
-    ${emphasis(p,rect(289,319,181,74,'none',6,c.teal,2.5))}
-    ${pill(215,424,330,'저장 · 커밋 · push는 별도',c.pale,19)}
-    ${previewFocus(55, 184, 257, 34, 'source')}
-    ${previewFocus(428, 192, 269, 30, 'output', 1.05)}
-  `, '문서·미리보기·변경·원격을 차례로 살펴봅니다');
+    ${plinth(72, 366, 608)}
+    ${documentPage(87, 170, 124, 164, { label: 'README.md', tone: color.blue, body: bars(103, 220, [86, 64, 76], color.wire) })}
+    ${standingWindow(250, 102, 398, 209, { title: 'VS Code 작업대', body: screen })}
+    ${flow(p, 218, 248, 246, 248)}
+    ${pulse(p, dot(614, 267, 4, color.gold, color.paper, 1.1), 1.1)}
+    ${rack(546, 337, 72, 82, color.light)}
+    ${captionChip(450, 413, 'GitHub 원격', 118)}
+  `, '원격 파일은 저장만으론 그대로입니다', 'README 수정 · 저장 · 통합 터미널');
 }
 
 function htmlCardPractice() {
-  const p='sa-tools-html';
-  return frame(p,'HTML · 구조와 화면을 연결하기',`
-    ${panel(49,97,338,314,'VS Code · index.html',c.ink)}
-    ${code(68,176,'<article>',c.pale,21)}${code(83,220,'<h1>Git</h1>',c.paper,22)}
-    ${code(83,263,'<button>설명 보기</button>',c.paper,18)}
-    ${code(83,303,'<p>변경을 확인하고',c.paper,19)}${code(83,332,'기록합니다.</p>',c.paper,19)}
-    ${code(68,380,'</article>',c.pale,21)}
-    ${panel(432,97,274,314,'브라우저 화면')}${text(454,195,'Git',34)}
-    ${rect(454,222,141,45,c.cream,6)}${text(525,251,'설명 보기',22,c.ink,'middle')}
-    ${text(454,314,'변경을 확인하고',21,c.muted)}${text(454,346,'기록합니다.',21,c.muted)}
-    ${arrow(p,395,243,422,243)}
-    ${pill(65,429,184,'h1 · 제목',c.pale,21)}${pill(289,429,184,'button · 버튼',c.cream,20)}${pill(513,429,184,'p · 설명',c.pale,21)}
-    ${previewFocus(77, 237, 282, 36, 'source')}
-    ${previewFocus(448, 215, 154, 58, 'output', 1.2)}
-  `,'제목 · 버튼 · 설명이 같은 순서로 화면에 놓입니다');
+  const p = 'sa-tools-html';
+  return frame(p, 'HTML · 구조와 화면을 연결하기', `
+    ${plinth(76, 379, 602)}
+    ${documentPage(86, 112, 309, 252, {
+      label: 'VS Code · index.html',
+      body: code(110, 177, '<article>', 16, color.muted)
+        + code(126, 212, '<h1>Git</h1>', 16, color.teal)
+        + code(126, 251, '<button>설명 보기</button>', 15, color.teal)
+        + code(126, 287, '<p>변경을 확인하고', 16, color.teal)
+        + code(126, 311, '기록합니다.</p>', 16, color.teal)
+        + code(110, 338, '</article>', 16, color.muted),
+    })}
+    ${standingWindow(468, 141, 193, 202, {title: '브라우저', body: card(486, 184, 159, 133, {open: true})})}
+    ${flow(p, 403, 248, 461, 242)}
+    ${pulse(p, shape('M503 294h106', 'none', color.gold, 2), 1.35)}
+  `, '제목 · 버튼 · 설명이 같은 순서로 화면에 놓입니다');
 }
 
 function cssCardPractice() {
-  const p='sa-tools-css';
-  return frame(p,'CSS · 내용에 모양 더하기',`
-    ${panel(53,99,318,303,'style.css')}${code(74,180,'.card {',c.ink,23)}
-    ${code(91,224,'padding: 24px;',c.teal,23)}${code(91,266,'background: white;',c.muted,21)}
-    ${code(91,308,'border-radius: 12px;',c.muted,20)}${code(74,364,'}',c.ink,23)}
-    ${panel(430,99,274,303,'같은 Git 카드',c.pale)}${rect(450,169,236,207,c.white,12)}
-    ${text(474,212,'Git',32)}${rect(474,234,145,43,c.teal,7,c.teal)}${text(546,263,'설명 보기',22,c.paper,'middle')}
-    ${text(474,316,'변경을 확인하고',21,c.muted)}${text(474,347,'기록합니다.',21,c.muted)}
-    ${arrow(p,383,248,418,248)}
-    ${emphasis(p,path('M451 188h23m-23-7v14m23-14v14','none',c.orange,4))}
-    ${pill(447,426,242,'24px 안쪽 여백',c.softOrange,22)}
-    ${previewFocus(85, 195, 211, 41, 'source')}
-    ${previewFocus(441, 421, 254, 46, 'output', 1.1)}
-  `,'같은 구조에서 색 · 여백 · 모서리가 달라집니다');
+  const p = 'sa-tools-css';
+  return frame(p, 'CSS · 내용에 모양 더하기', `
+    ${plinth(74, 366, 612)}
+    ${documentPage(97, 149, 236, 203, {
+      label: 'style.css',
+      body: code(118, 212, '.card {', 17, color.ink) + code(131, 248, 'padding: 24px;', 17)
+        + code(131, 282, 'border-radius: 12px;', 16) + code(118, 319, '}', 17, color.ink),
+    })}
+    ${standingWindow(444, 119, 211, 229, {title: '같은 Git 카드', body: card(461, 169, 172, 145, {open: true})})}
+    ${flow(p, 351, 257, 435, 257)}
+    ${pulse(p, shape('M462 241h12m-12-5v10m12-10v10', 'none', color.gold, 2.2), 1.1)}
+    ${captionChip(543, 416, '24px 안쪽 여백', 158, color.ochre)}
+  `, '같은 구조에서 색 · 여백 · 모서리가 달라집니다');
 }
 
 function javascriptCardPractice() {
-  const p='sa-tools-javascript';
-  return frame(p,'JavaScript · 클릭하면 상태가 바뀝니다',`
-    ${panel(46,96,350,311,'script.js · 핵심 코드',c.ink)}
-    ${code(62,173,'button.addEventListener(',c.pale,19)}${code(75,207,"'click', () => {",c.paper,20)}
-    ${code(75,251,'const isHidden = detail.hidden;',c.paper,18)}${code(75,288,'detail.hidden = !isHidden;',c.paper,18)}
-    ${code(75,361,'});',c.pale,21)}
-    ${panel(438,96,268,140,'누르기 전')}${text(459,175,'Git',29)}${pill(523,149,158,'설명 보기',c.cream,20)}
-    ${text(459,215,'설명 접힘',21,c.muted)}
-    ${panel(438,277,268,130,'누른 뒤',c.pale)}${text(459,352,'Git',28)}
-    ${text(513,350,'변경을 확인하고',20,c.muted)}${text(513,381,'기록합니다.',20,c.muted)}
-    ${arrow(p,405,251,430,251)}${arrow(p,569,244,569,266,{orange:true,delay:1})}
-    ${emphasis(p,rect(505,323,184,67,'none',5,c.teal,3))}
-    ${pill(89,429,235,'click · hidden 변경',c.cream,21)}${pill(470,429,209,'접힘 ↔ 펼침',c.pale,22)}
-    ${previewFocus(516, 145, 172, 45, 'source')}
-    ${previewFocus(69, 269, 294, 30, 'state', .85)}
-  `,'버튼을 다시 누르면 설명을 숨깁니다');
+  const p = 'sa-tools-javascript';
+  return frame(p, 'JavaScript · 클릭하면 상태가 바뀝니다', `
+    ${plinth(71, 370, 616)}
+    ${documentPage(99, 151, 245, 187, {
+      label: 'script.js',
+      body: code(119, 220, 'click → hidden 변경', 17, color.ink)
+        + code(119, 256, 'detail.hidden = !isHidden;', 13) + bars(120, 285, [172, 128], color.shade),
+    })}
+    ${standingWindow(415, 123, 253, 217, {
+      title: '브라우저',
+      body: card(433, 169, 101, 139, {tone: color.light}) + card(549, 169, 101, 139, {open: true}),
+    })}
+    ${flow(p, 362, 247, 406, 231)}
+    ${center(483, 330, '접힘', 13)}${center(599, 330, '펼침', 13)}
+    ${pulse(p, cursor(490, 231), .65)}
+  `, '버튼을 다시 누르면 설명을 숨깁니다');
 }
 
+
 function localAndRemote() {
-  const p='sa-web-map';
-  return frame(p,'프론트엔드 · 브라우저 화면',`
-    ${panel(45,107,287,301,'화면을 구성하는 파일',c.pale)}
-    ${pill(65,160,247,'HTML · 내용',c.paper,21)}
-    ${pill(65,212,247,'CSS · 모양',c.cream,21)}
-    ${pill(65,264,247,'JavaScript · 동작',c.paper,21)}
-    ${rect(65,322,117,54,c.white,7,c.muted,2)}${rect(74,331,36,36,c.ink,6,c.ink,1.8)}
-    ${brandIcon('react',79,336,26)}${text(119,356,'React',17)}
-    ${rect(195,322,117,54,c.white,7,c.muted,2)}${rect(204,331,36,36,c.ink,6,c.ink,1.8)}
-    ${brandIcon('vue',209,336,26)}${text(249,356,'Vue',18)}
-    ${arrow(p,344,254,392,254)}
-    ${panel(405,107,309,301,'브라우저 · 화면')}
-    ${rect(432,174,254,203,c.pale,8,c.teal,2)}
-    ${text(453,219,'Git 강의 카드',25)}${rect(452,241,148,44,c.paper,6,c.teal,2)}
-    ${text(526,270,'설명 보기',20,c.ink,'middle')}${lines(453,307,[205,157,182],c.sage,18,5)}
-    ${emphasis(p,rect(447,236,158,54,'none',7,c.orange,3))}
-    ${previewFocus(59, 317, 259, 64, 'source')}
+  const p = 'sa-web-map';
+  const layer = (x, y, label, front, top) => shape(`M${x} ${y}h134l27 15-134 0Z`, top)
+    + shape(`M${x} ${y}l27 15h134v20H${x + 27}l-27-15Z`, front)
+    + text(x + 38, y + 29, label, { size: 13.5, fill: color.ink });
+  return frame(p, '프론트엔드 · 브라우저 화면', `
+    ${plinth(72, 365, 615)}
+    ${layer(112, 271, 'JavaScript · 동작', color.ochre, color.paper)}
+    ${layer(106, 224, 'CSS · 모양', color.blue, color.paper)}
+    ${layer(100, 177, 'HTML · 내용', color.mint, color.paper)}
+    ${brandTile(114, 323, 'react', 'React')}${brandTile(210, 323, 'vue', 'Vue')}
+    ${standingWindow(436, 115, 234, 217, {title: '브라우저', body: card(459, 162, 188, 143, {title:'Git 강의 카드', open:true})})}
+    ${flow(p, 280, 223, 429, 225)}
+    ${pulse(p, cursor(534, 232), 1.45)}
     ${logoCredit()}
-  `,'기본 기술이나 React · Vue로 사용자 화면을 만듭니다');
+  `, '화면의 구조 · 모양 · 동작을 만듭니다');
 }
 
 function webResponsibilities() {
-  const p='sa-web-http';
-  // Both paths display the same card. Vite is a separate, manually started option.
-  const card = (x) => rect(x, 183, 263, 111, c.white, 7, c.muted, 1.8)
-    + rect(x + 14, 198, 235, 82, c.pale, 6, c.teal, 2)
-    + text(x + 28, 227, 'Git 강의 카드', 21)
-    + rect(x + 28, 239, 118, 27, c.paper, 5, c.teal, 1.7)
-    + text(x + 87, 258, '설명 보기', 16, c.teal, 'middle');
-  return frame(p,'같은 카드, 두 가지 실행 방법',`
-    ${panel(46,112,309,281,'Live Server · VS Code',c.pale)}
-    ${card(69)}
-    ${text(201,331,'VS Code에서 파일 열기',20,c.ink,'middle')}
-    ${text(201,361,'저장하면 화면 갱신',19,c.muted,'middle')}
-    ${panel(405,112,309,281,'Vite · 개발 도구',c.cream)}
-    ${card(428)}
-    ${text(560,331,'실행 명령 읽어보기',20,c.ink,'middle')}
-    ${text(560,361,'npm run dev',20,c.teal,'middle',650,true)}
-    ${pill(155,415,450,'이번 카드 실습: Live Server',c.pale,21)}
-    ${emphasis(p,check(329,162))}
-    ${previewFocus(96, 337, 207, 34, 'inspect')}
-    ${previewFocus(475, 336, 171, 35, 'source', 1.5)}
-  `,'같은 화면을 확인하는 방법이 다릅니다');
+  const p = 'sa-web-http';
+  const monitor = (x, y, label, tone) => standingWindow(x, y, 228, 191, {
+    title: label,
+    tone,
+    body: card(x + 17, y + 44, 196, 124, {title: 'Git 강의 카드', open: true}),
+  });
+  return frame(p, '같은 카드, 두 가지 실행 방법', `
+    ${plinth(62, 367, 297)}${plinth(399, 367, 291, color.light)}
+    ${monitor(83, 136, 'Live Server · VS Code', color.mint)}
+    ${monitor(419, 136, 'Vite · 개발 도구', color.lilac)}
+    ${captionChip(195, 425, '저장하면 화면 갱신', 188, color.mint)}
+    ${captionChip(537, 425, 'npm run dev', 157, color.lilac)}
+    ${pulse(p, tick(293, 154))}
+    ${pulse(p, cursor(600, 246), 1.2)}
+    ${center(376, 215, '=', 21, color.wire)}
+  `, '이번 카드 실습: Live Server · Vite 실행 명령 읽어보기');
 }
 
 function serverToBrowser() {
-  const p='sa-web-html';
-  const badge=(x,y,icon,name)=>rect(x,y,119,41,c.white,7,c.muted,1.7)
-    +rect(x+6,y+5,31,31,c.ink,5,c.ink,1.5)+brandIcon(icon,x+10,y+9,23)
-    +text(x+44,y+27,name,16,c.ink,'start',700);
-  return frame(p,'프론트엔드와 백엔드의 역할',`
-    ${panel(33,100,300,302,'프론트엔드 · 브라우저',c.pale)}
-    ${rect(53,164,257,102,c.white,7,c.muted,2)}
-    ${text(70,200,'Git 강의 카드',23)}${rect(70,215,120,33,c.pale,5,c.teal,1.6)}
-    ${text(130,238,'설명 보기',17,c.ink,'middle')}${lines(205,218,[82,59],c.sage,15,4)}
-    ${text(55,293,'화면을 만드는 선택지',18,c.muted)}
-    ${badge(54,309,'react','React')}${badge(186,309,'vue','Vue')}
-    ${text(183,379,'기본 HTML · CSS · JS도 가능',17,c.muted,'middle')}
-    ${panel(427,100,300,302,'백엔드 · 서버',c.cream)}
-    ${text(446,164,'Python',19,c.ink,'start',750,true)}
-    ${badge(446,176,'fastapi','FastAPI')}${badge(579,176,'flask','Flask')}
-    ${badge(446,230,'django','Django')}
-    ${text(446,299,'Java',19,c.ink,'start',750,true)}
-    ${badge(446,311,'spring','Spring')}
-    ${text(642,338,'요청 처리',18,c.muted,'middle')}
-    ${text(642,365,'데이터 준비',18,c.muted,'middle')}
-    ${arrow(p,346,197,414,197)}${text(380,177,'요청',18,c.teal,'middle')}
-    ${arrow(p,414,287,346,287,{orange:true,delay:1})}${text(380,319,'응답',18,c.orange,'middle')}
-    ${pill(169,425,422,'Live Server는 화면 파일 확인 도구',c.pale,18)}
-    ${previewFocus(48, 158, 267, 114, 'output', 1.85)}
-    ${previewFocus(441, 171, 263, 107, 'inspect', .65)}
+  const p = 'sa-web-html';
+  return frame(p, '프론트엔드와 백엔드의 역할', `
+    ${plinth(67, 346, 623)}
+    ${standingWindow(90, 134, 219, 189, {
+      title: '프론트엔드 · 브라우저',
+      body: card(105, 174, 189, 130, { title: 'Git 강의 카드', open: true }),
+    })}
+    ${rack(499, 146, 133, 153, color.blue)}
+    ${captionChip(567, 329, '백엔드 · 서버', 130, color.blue)}
+    ${flow(p, 328, 198, 484, 198)}
+    ${center(407, 182, '요청', 15, color.teal)}
+    ${flow(p, 485, 251, 324, 251, {second: true, delay: 1.5})}
+    ${center(406, 277, '응답', 15, color.gold)}
+    ${brandTile(101, 399, 'react', 'React')}${brandTile(197, 399, 'vue', 'Vue')}
+    ${center(455, 370, 'Python', 13.5)}${center(648, 370, 'Java', 13.5)}
+    ${brandTile(325, 388, 'fastapi', 'FastAPI')}${brandTile(414, 388, 'flask', 'Flask')}
+    ${brandTile(503, 388, 'django', 'Django')}${brandTile(606, 388, 'spring', 'Spring')}
     ${logoCredit()}
-  `,'각 영역의 도구는 여러 선택지 중에서 고릅니다');
+  `, '브라우저는 화면을 그리고 서버는 요청을 처리합니다', 'Live Server는 화면 파일 확인 도구');
 }
 
 function htmlJsonCard() {
-  const p='sa-backend-html-json';
-  return frame(p,'HTML 안의 JSON으로 카드 채우기',`
-    ${panel(45,110,298,286,'HTML · JSON 데이터',c.pale)}
-    ${code(66,190,'{ "title": "Git" }',c.ink,22)}
-    ${code(66,247,'JSON.parse(...)',c.teal,22)}
-    ${text(66,320,'브라우저 안에서 읽기',20,c.muted)}
-    ${arrow(p,354,253,397,253)}
-    ${panel(409,110,307,286,'브라우저 · 카드')}
-    ${rect(431,175,262,184,c.pale,7,c.teal,2)}
-    ${text(455,219,'Git',30)}${rect(454,241,146,44,c.paper,6,c.teal,2)}
-    ${text(527,270,'설명 보기',20,c.ink,'middle')}
-    ${lines(454,315,[204,161],c.sage,17,5)}
-    ${emphasis(p,rect(449,184,205,53,'none',7,c.orange,3))}
-    ${previewFocus(58, 224, 235, 39, 'source')}
-  `,'데이터를 HTML 안에 두고 브라우저에서 읽습니다');
+  const p = 'sa-backend-html-json';
+  return frame(p, 'HTML 안의 JSON으로 카드 채우기', `
+    ${plinth(91, 370, 581)}
+    ${svgGroup(documentPage(103, 155, 200, 190, {
+      label: 'HTML',
+      body: code(120, 211, '{ "title": "Git" }', 17)
+        + box(121, 239, 162, 48, color.lilac, 7, color.edge, 1.3)
+        + code(133, 270, 'JSON.parse(...)', 15, color.ink),
+    }), 'rotate(-5 203 250)')}
+    ${standingWindow(429, 118, 222, 222, {title: '브라우저 · 카드', body: card(452, 167, 177, 140, {open: true})})}
+    ${flow(p, 322, 248, 421, 249)}
+    ${pulse(p, shape('M462 199h28', 'none', color.gold, 2.8), 1.05)}
+  `, 'HTML 안에 둔 데이터를 브라우저에서 읽습니다');
 }
 
 function pythonDictionaryApi() {
-  const p='sa-backend-python';
-  return frame(p,'Python 딕셔너리와 JSON 응답',`
-    ${panel(45,105,282,289,'FastAPI · :8000',c.pale)}
-    ${code(66,186,'{ "title": "Git" }',c.ink,21)}
-    ${pill(65,228,239,'Python 딕셔너리',c.cream,20)}
-    ${code(66,320,'/api/dict',c.teal,21)}
-    ${arrow(p,338,250,389,250)}
-    ${panel(402,105,314,289,'브라우저 · :8000')}
-    ${text(424,190,'JSON 응답을 읽기',23,c.ink)}
-    ${rect(424,218,269,134,c.pale,7,c.teal,2)}
-    ${text(446,258,'Git',28)}
-    ${lines(446,280,[202,147,185],c.sage,16,5)}
-    ${emphasis(p,check(658,319))}
-    ${pill(156,417,449,'화면과 API 모두 FastAPI 주소',c.pale,21)}
-    ${previewFocus(58, 296, 136, 36, 'source')}
-    ${previewFocus(418, 213, 280, 145, 'output', 1.2)}
-  `,'서버의 Python 데이터가 JSON 응답으로 전달됩니다');
+  const p = 'sa-backend-python';
+  return frame(p, 'Python 딕셔너리와 JSON 응답', `
+    ${plinth(72, 364, 617)}
+    ${rack(100, 161, 111, 148)}
+    ${captionChip(151, 354, 'FastAPI · :8000', 150, color.ochre)}
+    ${documentPage(255, 163, 146, 164, {
+      label: '/api/dict',
+      tone: color.mint,
+      body: code(267, 245, '"title": "Git"', 13, color.ink) + bars(269, 268, [78, 99], color.sage),
+    })}
+    ${standingWindow(491, 142, 175, 178, {title: '브라우저 · :8000', body: card(507, 187, 143, 111, {open: true})})}
+    ${flow(p, 230, 242, 249, 242)}
+    ${flow(p, 412, 244, 484, 233, {delay: 1.15})}
+    ${pulse(p, dot(202, 192, 4, color.teal, color.paper, 1.4), .65)}
+  `, '화면과 API 모두 FastAPI 주소에서 제공됩니다');
 }
 
 function sqliteApi() {
-  const p='sa-backend-sqlite';
-  return frame(p,'SQLite에서 카드 데이터를 가져오기',`
-    ${panel(35,119,193,254,'SQLite 파일',c.cream)}
-    ${rect(56,181,150,125,c.pale,6,c.teal,2)}
-    ${text(130,219,'Git',24,c.ink,'middle')}
-    ${lines(78,239,[106,81],c.sage,17,5)}
-    ${text(130,340,'저장된 행',20,c.muted,'middle')}
-    ${arrow(p,236,245,267,245)}
-    ${panel(278,119,197,254,'FastAPI',c.pale)}
-    ${text(294,198,'조회 → JSON',22)}
-    ${code(294,253,'/api/sqlite',c.teal,19)}
-    ${text(294,313,'서버에서 처리',20,c.muted)}
-    ${arrow(p,484,245,513,245,{delay:1})}
-    ${panel(525,119,200,254,'브라우저')}
-    ${rect(545,187,158,136,c.pale,7,c.teal,2)}
-    ${text(565,228,'Git',28)}${lines(565,254,[113,91],c.sage,17,5)}
-    ${emphasis(p,check(678,299))}
-    ${previewFocus(65, 230, 128, 39, 'state')}
-    ${previewFocus(289, 232, 171, 32, 'source', 1.1)}
-    ${previewFocus(540, 182, 168, 146, 'output', 2.1)}
-  `,'DB의 행을 조회해 같은 카드 화면에 보여 줍니다');
+  const p = 'sa-backend-sqlite';
+  return frame(p, 'SQLite에서 카드 데이터를 가져오기', `
+    ${plinth(68, 363, 627)}
+    ${cylinder(91, 166, 109, 150, color.lilac)}
+    ${center(144, 155, 'SQLite', 16, color.ink)}
+    ${rack(306, 164, 117, 159, color.mint)}
+    ${captionChip(365, 360, '/api/sqlite', 104, color.mint)}
+    ${standingWindow(528, 156, 145, 165, {title: '브라우저', body: card(540, 195, 120, 111, {open: true})})}
+    ${flow(p, 212, 242, 299, 242)}
+    ${flow(p, 449, 244, 519, 236, {second: true, delay: 1.15})}
+    ${center(253, 222, '조회', 14)}
+    ${center(483, 222, 'JSON', 14)}
+  `, 'DB의 행을 조회해 같은 카드 화면에 보여 줍니다');
 }
 
 function templateEngines() {
-  const p='sa-web-jinja';
-  return frame(p,'서버 템플릿에 데이터 넣기',`
-    ${panel(48,111,239,287,'FastAPI · DB',c.pale)}
-    ${code(67,183,'title: Git',c.teal,23)}
-    ${pill(66,226,202,'딕셔너리 / DB',c.cream,20)}
-    ${text(66,321,'카드 목록',22,c.muted)}
-    ${arrow(p,294,249,326,249)}
-    ${panel(336,111,177,287,'Jinja2 · 서버')}
-    ${code(352,183,'{{ lesson.',c.teal,18)}
-    ${code(352,207,'title }}',c.teal,18)}
-    ${text(352,255,'반복 · 결합',20,c.ink)}
-    ${text(352,320,'HTML 생성',19,c.muted)}
-    ${arrow(p,522,249,551,249,{delay:1})}
-    ${panel(562,111,153,287,'브라우저',c.pale)}
-    ${rect(578,184,122,144,c.paper,7,c.teal,2)}
-    ${text(592,229,'Git',26)}${lines(592,249,[91,72],c.sage,17,5)}
-    ${emphasis(p,check(678,310))}
-    ${pill(167,420,426,'FastAPI 주소에서 HTML 제공',c.pale,20)}
-    ${previewFocus(345, 163, 151, 55, 'state', .8)}
-    ${previewFocus(572, 178, 134, 156, 'output', 1.8)}
-  `,'Jinja2가 만든 HTML을 브라우저가 화면에 표시합니다');
+  const p = 'sa-web-jinja';
+  return frame(p, '서버 템플릿에 데이터 넣기', `
+    ${plinth(72, 363, 623)}
+    ${cylinder(106, 195, 93, 115, color.blue)}
+    ${center(152, 176, 'DB', 18, color.ink)}
+    ${documentPage(295, 137, 174, 185, {
+      label: 'Jinja2',
+      tone: color.lilac,
+      body: code(310, 217, '{{ lesson.title }}', 14)
+        + box(310, 251, 130, 34, color.paper, 6, color.edge, 1.3)
+        + center(375, 273, 'HTML 생성', 14),
+    })}
+    ${standingWindow(543, 160, 133, 161, {title: '브라우저', body: card(554, 200, 108, 107, {open: true})})}
+    ${flow(p, 213, 246, 287, 245)}
+    ${flow(p, 482, 246, 534, 245, {second: true, delay: 1.2})}
+    ${pulse(p, tick(428, 304), .8)}
+  `, 'FastAPI 주소에서 HTML 제공 · 브라우저가 화면을 그립니다');
 }
 
 function cardLayers() {
-  const p='sa-frontend-css';
-  return frame(p,'같은 CSS를 다른 방식으로 표현',`
-    ${panel(53,104,303,141,'CSS 속성')}${code(74,184,'padding: 24px;',c.teal,23)}${code(74,222,'border-radius: .75rem;',c.muted,19)}
-    ${panel(53,293,303,117,'Tailwind 클래스',c.cream)}${code(74,375,'p-6  rounded-xl',c.teal,24)}
-    ${panel(438,142,267,254,'같은 Git 카드',c.pale)}${rect(458,210,227,161,c.paper,12)}${text(482,253,'Git',32)}
-    ${rect(482,269,142,41,c.teal,7,c.teal)}${text(553,297,'설명 보기',21,c.paper,'middle')}
-    ${text(482,345,'변경을 기록',19,c.muted)}
-    ${arrow(p,368,193,426,248)}${arrow(p,368,355,426,315,{delay:1.1})}
-    ${emphasis(p,path('M459 230h23m-23-7v14m23-14v14','none',c.orange,4))}
-    ${pill(474,425,199,'여백 · 모서리',c.cream,22)}
-    ${previewFocus(68, 352, 246, 32, 'source')}
-    ${previewFocus(452, 204, 239, 172, 'output', 1.25)}
-  `,'Tailwind도 CSS를 적용해 같은 모양을 만듭니다');
+  const p = 'sa-frontend-css';
+  return frame(p, '같은 CSS를 다른 방식으로 표현', `
+    ${plinth(65, 374, 631)}
+    ${svgGroup(documentPage(87, 131, 242, 89, {
+      label: 'CSS 속성', tone: color.blue,
+      body: code(103, 190, 'padding: 24px;', 17),
+    }), 'rotate(-5 208 176)')}
+    ${svgGroup(documentPage(88, 270, 241, 91, {
+      label: 'Tailwind 클래스', tone: color.mint,
+      body: code(105, 329, 'p-6  rounded-xl', 17),
+    }), 'rotate(4 208 314)')}
+    ${standingWindow(465, 141, 197, 204, {title: '같은 Git 카드',body: card(479, 180, 166, 142, {open:true})})}
+    ${flow(p, 344, 185, 457, 222)}
+    ${flow(p, 347, 308, 457, 270, {second: true, delay: 1.45})}
+    ${captionChip(559, 414, '여백 · 모서리', 142, color.ochre)}
+    ${pulse(p, shape('M480 218h13m-13-5v10m13-10v10', 'none', color.gold, 2.2), 1.15)}
+  `, '기본 CSS와 유틸리티 클래스의 결과를 비교합니다');
 }
 
 function alpineStateGraph() {
-  const p='sa-frontend-alpine';
-  return frame(p,'클릭 → 상태 → 화면 표시',`
-    ${panel(242,94,277,121,'x-data',c.pale)}${code(269,180,'open: false ↔ true',c.teal,24)}
-    ${panel(56,284,288,143,'@click',c.cream)}${code(82,374,'open = !open',c.ink,25)}
-    ${panel(418,284,287,143,'x-show',c.paper)}${rect(440,347,243,54,c.pale,7,c.teal,2)}${text(561,382,'설명 표시',25,c.ink,'middle')}
-    ${arrow(p,232,271,302,225)}${arrow(p,479,225,548,271,{delay:1.1})}
-    ${text(172,246,'클릭 이벤트',22,c.muted,'middle')}${text(591,246,'현재 상태',22,c.muted,'middle')}
-    ${emphasis(p,rect(438,345,247,58,'none',7,c.teal,4),1.7)}
-    ${path('M93 382l-7 28 13-5 8 14 8-4-8-14 13-5Z',c.orange,c.ink,2.2)}
-    ${previewFocus(74, 347, 202, 36, 'source')}
-    ${previewFocus(261, 152, 249, 40, 'state', .95)}
-  `,'HTML의 상태와 클릭을 브라우저에서 연결합니다');
+  const p = 'sa-frontend-alpine';
+  return frame(p, '클릭 → 상태 → 화면 표시', `
+    ${plinth(74, 363, 616)}
+    ${keycap(97, 248, 112, '@click', color.ochre)}
+    ${pulse(p, cursor(178, 266), .15)}
+    ${shadow(375, 258, 77, 12)}
+    ${box(303, 146, 141, 74, color.mint, 37)}
+    ${box(309, 151, 129, 63, color.sage, 31, color.edge, 1.35)}
+    ${dot(402, 183, 23, color.paper, color.teal, 2.2)}
+    ${center(374, 126, 'x-data', 17, color.ink)}
+    ${center(374, 285, 'open · true / false', 15)}
+    ${standingWindow(509, 214, 158, 137, {title: 'x-show', body: card(522, 248, 132, 93, {open: true})})}
+    ${flow(p, 217, 259, 294, 201)}
+    ${flow(p, 450, 202, 503, 254, {second: true, delay: 1.1})}
+  `, '클릭이 상태를 바꾸고 현재 상태가 설명을 표시합니다');
 }
 
 function reusablePrompt() {
-  const p='sa-codex-bonus';
-  return frame(p,'다음 작업에 다시 쓰는 요청 카드',`
-    ${sheet(66,102,344,323)}${text(91,149,'# 작업 카드',27)}
-    ${[['문제와 원하는 동작',c.pale],['프로젝트 · 관련 파일',c.cream],['유지할 기술 · 변경',c.softOrange],['검증 명령 · 입력 결과',c.pale]].map(([label,fill],i)=>rect(88,169+i*57,293,43,fill,6,c.muted,1.8)+text(101,198+i*57,label,22)).join('')}
-    ${panel(479,154,223,231,'다음 요청')}${text(500,235,'실제 맥락으로',24)}${text(500,272,'빈칸 바꾸기',24)}
-    ${pill(498,311,184,'복사 → 수정',c.pale,22)}
-    ${arrow(p,422,270,467,270)}${emphasis(p,check(661,359))}
-  `,'문제 · 맥락 · 보존 조건 · 확인을 함께 전달합니다');
+  const p = 'sa-codex-bonus';
+  const notes = [['문제', color.mint], ['맥락', color.blue], ['보존', color.ochre], ['확인', color.lilac]];
+  const notesFor = (x, y) => notes.map(([label,tone], index) => box(x, y + index * 33, 162, 22, tone, 4, color.edge, 1.1)
+    + text(x + 9, y + 16 + index * 33, label, {size: 13, fill: color.ink}) + bars(x + 49, y + 9 + index * 33, [89], color.shade)).join('');
+  return frame(p, '다음 작업에 다시 쓰는 요청 카드', `
+    ${plinth(83, 366, 601)}
+    ${svgGroup(documentPage(104, 137, 209, 212, {label: '요청 카드', body: notesFor(123, 185)}), 'rotate(-6 207 238)')}
+    ${standingWindow(439, 126, 219, 215, {title: '다음 요청', tone: color.lilac, body: notesFor(463, 181)})}
+    ${flow(p, 326, 246, 427, 233)}
+    ${pulse(p, cursor(582, 239), 1.25)}
+  `, '비어 있는 구획을 다음 작업의 실제 정보로 채웁니다');
 }
 
 function environmentParity() {
-  const p='sa-tools-bonus';
-  const labels=['스크립트 경로','Python 실행 파일','작업 폴더'];
-  return frame(p,'실행 버튼과 터미널의 기준 맞추기',`
-    ${panel(53,113,293,283,'PyCharm 실행 설정',c.pale)}${panel(414,113,291,283,'PowerShell',c.ink)}
-    ${labels.map((label,i)=>{const y=183+i*72;return text(75,y,label,23)+lines(76,y+15,[238],c.sage,0,5)+text(435,y,label,23,c.paper)+lines(435,y+15,[237],c.sage,0,5)+arrow(p,359,y-6,400,y-6,{delay:i*.8});}).join('')}
-    ${pill(115,425,534,'.venv / Scripts / python.exe',c.cream,24)}
-    ${previewFocus(68, 229, 250, 50, 'source')}
-    ${previewFocus(428, 229, 250, 50, 'output', .9)}
-  `,'실행 파일 · 스크립트 · 작업 위치를 같은 기준으로 봅니다');
+  const p = 'sa-tools-bonus';
+  const hints = [['스크립트 경로', color.mint], ['Python 실행 파일', color.blue], ['작업 폴더', color.ochre]];
+  const display = (x, y) => hints.map(([label, tone], i) => box(x, y + i * 42, 183, 26, tone, 4, color.edge, 1.1)
+    + text(x + 11, y + 18 + i * 42, label, {size: 14,fill: color.ink})).join('');
+  return frame(p, '실행 버튼과 터미널의 기준 맞추기', `
+    ${plinth(78, 374, 602)}
+    ${standingWindow(93, 139, 221, 202, {title: 'PyCharm 실행 설정', body: display(111, 190)})}
+    ${standingWindow(447, 139, 221, 202, {title: 'PowerShell', tone: color.blue, body: display(465, 190)})}
+    ${hints.map((_,i)=>flow(p, 329, 201 + i * 42, 436, 201 + i * 42, { delay: i * .65, second: i === 1 })).join('')}
+    ${captionChip(380, 435, '.venv / Scripts / python.exe', 236)}
+  `, '두 방법에서 실행 파일 · 스크립트 · 작업 위치를 비교합니다');
 }
 
 function addressAndBuild() {
-  const p='sa-web-bonus';
-  return frame(p,'주소의 경로와 브라우저 해시 구별',`
-    ${panel(53,100,652,132,'브라우저 주소')}${code(77,187,'/notes/   #/lesson/terminal',c.ink,29)}
-    ${path('M77 207h139m44 0h369','none',c.teal,4)}
-    ${arrow(p,147,246,147,277)}${arrow(p,483,246,483,277,{orange:true,delay:1})}
-    ${panel(55,289,244,124,'서버로 요청')}${code(78,374,'/notes/',c.teal,29)}
-    ${panel(362,289,342,124,'브라우저가 읽는 fragment',c.softOrange)}${code(385,374,'#/lesson/terminal',c.ink,24)}
-    ${pill(86,430,589,'원본 src → 빌드 → 배포 파일',c.cream,23)}
-    ${previewFocus(68, 161, 154, 47, 'inspect')}
-    ${previewFocus(247, 161, 336, 47, 'source', 1.1)}
-  `,'# 뒤의 fragment는 HTTP 요청에 전송되지 않습니다');
+  const p = 'sa-web-bonus';
+  return frame(p, '주소의 경로와 브라우저 해시 구별', `
+    ${plinth(85, 361, 591)}
+    ${box(129, 123, 498, 57, color.paper, 16, color.edge, 1.65)}
+    ${dot(153, 153, 4, color.sage, 'none')}
+    ${code(174, 158, '/notes/', 20)}
+    ${code(287, 158, '#/lesson/terminal', 20, color.gold)}
+    ${shape('M174 168h83m30 0h200', 'none', color.shade, 1.6)}
+    ${rack(139, 237, 109, 117, color.mint)}
+    ${standingWindow(477, 233, 158, 104, {title: '브라우저', body:bars(495, 279, [114, 76], color.sage)})}
+    ${flow(p, 200, 188, 193, 231)}
+    ${flow(p, 393, 188, 482, 227, {second: true, delay: 1.1})}
+    ${center(194, 437, '서버 요청', 15)}${center(552, 437, '화면 안 위치', 15)}
+  `, '# 뒤의 fragment는 HTTP 요청에 전송되지 않습니다');
 }
 
 function completeClassNames() {
-  const p='sa-frontend-bonus';
-  return frame(p,'Tailwind 3 · 완전한 클래스 문자열',`
-    ${panel(54,103,302,176,'소스에서 확인',c.cream)}${code(76,182,'bg-${color}-500',c.red,25)}
-    ${text(76,225,'결과 문자열이 없음',22,c.red)}${path('M77 242h252','none',c.red,3)}
-    ${panel(407,103,299,176,'상태별 매핑',c.pale)}${code(429,181,'bg-teal-500',c.teal,25)}${code(429,225,'bg-slate-500',c.teal,25)}
-    ${panel(188,332,384,98,'content 경로 확인')}${code(211,408,'./templates/**/*.html',c.ink,24)}
-    ${arrow(p,555,291,491,322,{delay:.9})}${emphasis(p,check(663,250))}
-    ${previewFocus(423, 158, 257, 79, 'inspect')}
-    ${previewFocus(202, 384, 334, 33, 'output', 1.2)}
-  `,'실제 템플릿과 완전한 클래스가 빌드 대상에 있어야 합니다');
+  const p = 'sa-frontend-bonus';
+  return frame(p, 'Tailwind 3 · 완전한 클래스 문자열', `
+    ${plinth(77, 373, 606)}
+    ${svgGroup(documentPage(106, 150, 217, 175, {
+      label: '조립 문자열',
+      tone: color.light,
+      body: code(119, 222, 'bg-$' + '{color}-500', 19, color.rust)
+        + shape('M118 230h169', 'none', color.rust, 1.9)
+        + bars(119, 258, [134, 105], color.shade),
+    }), 'rotate(-5 215 237)')}
+    ${documentPage(446, 131, 207, 211, {
+      label: '완전한 문자열',
+      tone: color.mint,
+      body: code(462, 202, 'bg-teal-500', 18) + code(462, 239, 'bg-slate-500', 18)
+        + code(462, 289, './templates/**/*.html', 13, color.ink),
+    })}
+    ${flow(p, 337, 239, 436, 237)}
+    ${pulse(p, tick(618, 225), 1.1)}
+    ${captionChip(539, 413, 'content 경로', 130)}
+  `, '실제 템플릿 경로와 완전한 클래스가 빌드 대상에 있어야 합니다');
 }
 
 export const webSectionScenes = {

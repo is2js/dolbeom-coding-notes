@@ -1,3 +1,5 @@
+.lesson-preview-progress-panel { position: relative; }
+
 .lesson-preview-progress {
   padding-bottom: env(safe-area-inset-bottom, 0px);
   border-top: 1px solid #ded4bf;
@@ -11,7 +13,7 @@
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  padding: 9px 13px;
+  padding: 9px 60px 9px 13px;
   cursor: pointer;
   list-style: none;
 }
@@ -32,6 +34,43 @@
 .lesson-preview-progress[open] > summary::after { transform: translateY(1px) rotate(225deg); }
 .lesson-preview-progress-title { font-size: 12px; font-weight: 740; }
 .lesson-preview-progress-total { font-size: 11px; font-variant-numeric: tabular-nums; }
+.lesson-preview-progress-reset {
+  position: absolute;
+  inset: 7px 8px auto auto;
+  min-height: 30px;
+  padding: 3px 6px;
+  border: 1px solid #c6b99c;
+  border-radius: 5px;
+  background: #fbf6e8;
+  color: #625b49;
+  font-size: 11px;
+  font-weight: 650;
+}
+.lesson-preview-progress-reset:hover:not(:disabled) { background: #eae2cf; }
+.lesson-preview-progress-reset:disabled { opacity: .55; }
+.progress-reset-dialog {
+  width: min(400px, calc(100% - 32px));
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #bcb298;
+  border-radius: 10px;
+  background: #faf5e9;
+  color: #37483f;
+}
+.progress-reset-dialog::backdrop { background: #252a2859; }
+.progress-reset-dialog h2 { margin: 0; font-size: 17px; font-weight: 750; }
+.progress-reset-dialog p { margin: 8px 0 16px; font-size: 13px; line-height: 1.6; }
+.progress-reset-dialog form > div { display: flex; justify-content: flex-end; gap: 8px; }
+.progress-reset-dialog button {
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid #c6b99c;
+  border-radius: 6px;
+  background: #f8f1e1;
+  font-size: 13px;
+}
+.progress-reset-dialog button:last-child { border-color: #a47258; color: #6b3926; background: #f3e1d5; }
+.progress-reset-dialog button:focus-visible { outline: 2px solid #795b32; outline-offset: 2px; }
 .lesson-preview-progress-detail { padding: 0 13px 9px; }
 
 .lesson-preview-progress-meta {

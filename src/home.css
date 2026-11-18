@@ -62,3 +62,30 @@
 @media(max-width:900px){.intro-path .intro-lesson-list button{min-height:160px}}
 @media(max-width:560px){.intro-path .intro-lesson-list button{min-height:155px;padding:14px 12px}.intro-path .intro-lesson-list strong{font-size:13px}.lesson-card-art svg{width:105%}}
 @media(prefers-reduced-motion:reduce){.lesson-card-art svg{transition:none}.intro-lesson-list button:hover .lesson-card-art svg,.intro-lesson-list button:focus-visible .lesson-card-art svg{transform:none}}
+
+.intro-operator {
+  max-width: 340px;
+  margin: 24px 0 0 auto;
+  padding-block-start: 5px;
+  border-top: 1px solid #d6d0bd;
+  color: #59675b;
+  font-size: 12px;
+}
+.intro-operator > summary {
+  width: fit-content;
+  min-height: 36px;
+  padding: 8px 4px;
+  cursor: pointer;
+}
+.intro-operator-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 0 8px; }
+.intro-operator-actions button {
+  min-height: 38px;
+  padding: 5px 10px;
+  border: 1px solid #c4ceba;
+  border-radius: 5px;
+  background: #edf0e3;
+  color: #435f4e;
+  font-weight: 650;
+}
+.intro-operator-actions button:hover { background: #e0ead8; }
+.intro-operator :is(summary, button):focus-visible { outline: 2px solid #795b32; outline-offset: 2px; }

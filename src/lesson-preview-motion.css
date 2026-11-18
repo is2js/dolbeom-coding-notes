@@ -1,21 +1,3 @@
-.lesson-preview-switch {
-  min-height: 44px;
-  padding: 7px 11px;
-  border: 1px solid #c4b89f;
-  border-radius: 7px;
-  background: #faf4e6;
-  color: #435e51;
-  font-size: 12px;
-  font-weight: 650;
-  white-space: nowrap;
-}
-
-.lesson-preview-switch:hover {
-  border-color: #75988b;
-  background: #e3eddf;
-  color: #284f43;
-}
-
 /* A stationary work surface underneath the interchangeable drawings. */
 .is-design-preview :is(.lesson-visual-figure > .isometric-grid, .presentation-figure > .presentation-figure-grid) {
   --workbench-grid-line: #9c876037;

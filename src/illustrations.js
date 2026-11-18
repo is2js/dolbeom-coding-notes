@@ -14,8 +14,8 @@ const descriptions = {
   'web-tools': 'Tailwind CSS의 스타일 클래스와 Alpine.js의 상태 및 클릭 동작을 같은 강의 카드에 적용하는 입체 작업대',
   web: '브라우저가 npm run dev로 시작한 개발 서버에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 표시하는 입체 모형',
   templates: '딕셔너리 또는 SQLite 데이터와 Jinja2 템플릿을 FastAPI 서버에서 HTML로 결합해 카드로 표시하는 입체 모형',
-  'web-architecture': '브라우저의 React·Svelte와 서버의 FastAPI·Spring, 선택적으로 연결하는 DB의 역할',
-  'server-rendering': '서버에서 템플릿과 데이터를 HTML로 합치고 브라우저에서 표시하는 흐름',
+  'web-architecture': '왼쪽 브라우저가 오른쪽 서버로 요청을 보내고 서버의 응답을 받습니다. 서버는 필요한 경우 연결된 저장소에서 데이터를 읽습니다.',
+  'server-rendering': '템플릿과 데이터를 서버에서 결합해 HTML을 만든 뒤 브라우저로 보내 카드로 표시합니다.',
   ...sectionDescriptions,
 };
 

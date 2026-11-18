@@ -49,8 +49,6 @@ import './topic-navigation.css';
 import './lesson-preview-navigation.css';
 import './lesson-preview-progress.css';
 import './lesson-preview-motion.css';
-import './lesson-preview-scene-details.css';
-import './lesson-preview-topic-details.css';
 import './site-update.css';
 import './command-copy.css';
 import './prose.css';
@@ -73,8 +71,12 @@ const LAST_KEY = COURSE_STORAGE.last;
 const RECOVERY_KEY = COURSE_STORAGE.recovery;
 const clone = value => JSON.parse(JSON.stringify(value));
 const sameCourse = (a,b) => JSON.stringify(a) === JSON.stringify(b);
-const usesCurrentDesign = () => new URLSearchParams(location.search).get('design') !== 'legacy';
+const usesCurrentDesign = () => !canEditCourse || new URLSearchParams(location.search).get('design') !== 'legacy';
 const widePreviewOutline = () => window.matchMedia('(min-width: 1120px)').matches;
+function readCompletedTopics() {
+  const saved = safeRead(localStorage, PROGRESS_KEY, []);
+  return Array.isArray(saved) ? [...new Set(saved.filter(id => COURSE_IDS.includes(id)))] : [];
+}
 function readPreviewVisits() {
   const visits = safeRead(localStorage, COURSE_STORAGE.previewVisits, {});
   return visits && typeof visits === 'object' && !Array.isArray(visits) ? visits : {};
@@ -137,8 +139,7 @@ Alpine.data('courseApp', () => ({
   designPreview: usesCurrentDesign(),
   previewOutlineWide: widePreviewOutline(),
   previewOutlineOpen: widePreviewOutline(),
-  get previewOutlineAvailable() { return this.route !== 'present' && !!this.course && !this.loading; },
-  get previewOutlineActive() { return this.designPreview && this.previewOutlineAvailable; },
+  get previewOutlineActive() { return this.designPreview && this.route !== 'present' && !!this.course && !this.loading; },
   get previewOutlineOverlay() { return this.previewOutlineActive && this.previewOutlineOpen && !this.previewOutlineWide; },
   previewPagesFor: buildLessonFlow,
   previewPageAddress: lessonAddress,
@@ -154,7 +155,6 @@ Alpine.data('courseApp', () => ({
       this.closePreviewOutline(true);
       return;
     }
-    if (!this.designPreview) this.toggleDesignPreview();
     this.drawer = false;
     this.previewOutlineOpen = true;
     this.$nextTick(() => document.querySelector('.lesson-preview-outline-close')?.focus({preventScroll:true}));
@@ -200,6 +200,23 @@ Alpine.data('courseApp', () => ({
     const total = this.course?.lessons.length ?? 0;
     return total ? Math.round(this.previewProgressCompleted / total * 100) : 0;
   },
+  get hasLearningProgress() {
+    return this.completed.length > 0 || Object.values(this.previewVisits).some(pages => Array.isArray(pages) && pages.length > 0);
+  },
+  resetLearningProgress() {
+    if (!this.hasLearningProgress) return;
+    try {
+      localStorage.removeItem(PROGRESS_KEY);
+      localStorage.removeItem(COURSE_STORAGE.previewVisits);
+    } catch {
+      this.notify('진행 기록을 초기화하지 못했습니다.');
+      return;
+    }
+    this.completed = [];
+    this.previewVisits = {};
+    this.notify('학습 진행 기록을 초기화했습니다.');
+    this.$nextTick(() => document.querySelector('.lesson-preview-progress > summary')?.focus({preventScroll:true}));
+  },
   get previewTopicProgress() {
     return (this.course?.lessons || []).map(topic => {
       const pages = buildLessonFlow(topic);
@@ -221,9 +238,12 @@ Alpine.data('courseApp', () => ({
     const { lessonId, learningPageId } = this;
     const stored = readPreviewVisits();
     const previous = visitedPageIds(stored, lessonId);
-    const current = [...new Set([...previous, ...visitedPageIds(this.previewVisits, lessonId), learningPageId])];
-    this.previewVisits = {...this.previewVisits, ...stored, [lessonId]: current};
-    if (current.length !== previous.length) safeWrite(localStorage, COURSE_STORAGE.previewVisits, this.previewVisits);
+    if (previous.includes(learningPageId)) {
+      this.previewVisits = stored;
+      return;
+    }
+    this.previewVisits = {...stored, [lessonId]: [...previous, learningPageId]};
+    safeWrite(localStorage, COURSE_STORAGE.previewVisits, this.previewVisits);
   },
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
@@ -292,8 +312,7 @@ Alpine.data('courseApp', () => ({
       if (!response.ok) throw new Error(`강의 데이터 응답: ${response.status}`);
       this.baseCourse = validateCourse(await response.json());
       this.course = clone(this.baseCourse);
-      const saved = safeRead(localStorage, PROGRESS_KEY, []);
-      this.completed = Array.isArray(saved) ? [...new Set(saved.filter(id=>COURSE_IDS.includes(id)))] : [];
+      this.completed = readCompletedTopics();
       this.previewVisits = readPreviewVisits();
       if (canEditCourse) await this.initCourseEditing();
       this.initPresentation();
@@ -308,6 +327,11 @@ Alpine.data('courseApp', () => ({
       }
       this.$watch('course.lessons', () => this.syncTopicNavigation());
       window.addEventListener('hashchange', ()=>this.readRoute());
+      window.addEventListener('storage', event => {
+        if (event.storageArea !== localStorage) return;
+        if (event.key === PROGRESS_KEY || event.key === null) this.completed = readCompletedTopics();
+        if (event.key === COURSE_STORAGE.previewVisits || event.key === null) this.previewVisits = readPreviewVisits();
+      });
       this.$watch('readerOpen', open=>{
         if(open && !this.$refs.reader.open) this.$refs.reader.showModal();
         else if(!open && this.$refs.reader.open) this.$refs.reader.close();
@@ -387,6 +411,7 @@ Alpine.data('courseApp', () => ({
     if(location.hash !== address)history.replaceState(null,'',address);
   },
   toggleDesignPreview() {
+    if (!canEditCourse) return;
     const url = new URL(location.href);
     if (this.designPreview) url.searchParams.set('design', 'legacy');
     else url.searchParams.delete('design');
@@ -394,7 +419,6 @@ Alpine.data('courseApp', () => ({
     this.designPreview = usesCurrentDesign();
     this.previewOutlineOpen = this.designPreview && this.previewOutlineWide;
     this.rememberPreviewPage();
-    if (!this.designPreview) this.$nextTick(() => this.$refs.previewOutlineToggle?.focus({preventScroll:true}));
   },
   showLesson(id,pageId='case') {
     if(!COURSE_IDS.includes(id)) return;

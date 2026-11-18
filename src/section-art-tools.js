@@ -350,7 +350,7 @@ function vscodeSetupScene() {
     + folder(end[0]-63, end[1]-92, 125, 83, c.honey,
       page(38, -22, 67, 85, { angle: 7 }))
     + tag(end[0], end[1]-36, 104, 'README.md', { mono: true, size: 14 })
-    + tag(end[0], end[1]+52, 178, 'git-practice-clone', { mono: true, size: 14 }));
+    + tag(end[0], end[1]+52, 146, 'git-practice', { mono: true, size: 14 }));
 }
 
 function errorReportScene() {
@@ -383,7 +383,7 @@ function errorReportScene() {
 export const toolSectionScenes = {
   'tools-vscode-setup': {
     title:'VS Code 설치와 기본 설정',
-    description:'공식 Windows 다운로드에서 User Setup 설치 파일을 받고 옵션을 확인해 설치한 뒤, 앞에서 업데이트한 git-practice-clone 폴더를 열어 같은 README.md를 확인합니다.',
+    description:'공식 Windows 다운로드에서 User Setup 설치 파일을 받고 옵션을 확인해 설치한 뒤, 원래 작업 폴더인 git-practice를 열어 같은 README.md를 확인합니다.',
     svg:vscodeSetupScene(),
   },
   'terminal-example': {

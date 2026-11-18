@@ -1,6 +1,6 @@
 # 같은 카드의 데이터 위치 바꾸기
 
-하나의 강의 카드를 네 단계로 살펴봅니다. 이 폴더는 수업용 별도 예제입니다. 폴더를 통째로 복사해 사용하며, 예제의 시간은 실제 강의 시간표가 아닙니다.
+하나의 강의 카드를 네 단계로 살펴봅니다. 이 폴더는 수업용 준비 예제입니다. 기존 실습 프로젝트의 `git-practice/course-card/server-data`로 폴더를 통째로 복사해 사용하며, 예제의 시간은 실제 강의 시간표가 아닙니다. 기존에 같은 이름의 폴더가 있다면 내용을 확인하고 덮어쓰지 않습니다.
 
 1. **HTML 안 JSON:** HTML의 `<script type="application/json">`에 카드 데이터가 있습니다. 브라우저가 `JSON.parse`로 읽고 Alpine이 표시합니다.
 2. **Python 리스트·딕셔너리:** FastAPI가 Python 데이터를 `/api/dict`에서 JSON 응답으로 보내고, 브라우저의 `fetch`가 가져와 같은 카드를 표시합니다.
@@ -33,9 +33,11 @@ VS Code에서 `Ctrl+Shift+X`로 확장을 열고 게시자가 Microsoft인 **Pyt
 
 ### 2-2. 실습 폴더 확인
 
-강의노트 저장소에서 `public/examples/course-card/server-data` 폴더를 **통째로 별도의 연습 위치에 복사**하고, VS Code에서 복사한 `server-data` 폴더를 엽니다. VS Code 메뉴 **터미널 → 새 터미널**에서 PowerShell을 열고 다음을 실행합니다.
+강의노트 저장소에서 `public/examples/course-card/server-data` 폴더를 **원래 `git-practice/course-card/server-data`로 통째로 복사**합니다. 원본 `git-practice`를 VS Code에서 열고 **터미널 → 새 터미널**에서 PowerShell을 엽니다. 현재 위치가 `git-practice`인지 확인한 후 다음을 실행합니다.
 
 ```powershell
+pwd
+cd .\course-card\server-data
 pwd
 ls
 Test-Path .\.venv

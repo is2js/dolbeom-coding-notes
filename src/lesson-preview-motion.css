@@ -1,0 +1,37 @@
+.lesson-preview-switch {
+  min-height: 44px;
+  padding: 7px 11px;
+  border: 1px solid #c4b89f;
+  border-radius: 7px;
+  background: #faf4e6;
+  color: #435e51;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.lesson-preview-switch:hover,
+.lesson-preview-switch[aria-pressed='true'] {
+  border-color: #75988b;
+  background: #e3eddf;
+  color: #284f43;
+}
+
+/* The drawing is replaced on section changes. The surrounding grid, figure
+   and caption stay anchored while the new drawing settles into place. */
+@media (prefers-reduced-motion: no-preference) {
+  .is-design-preview :is(.lesson-visual-art, .presentation-illustration):not(.is-motion-paused) > .topic-art-svg {
+    animation: lesson-preview-art-arrive 360ms cubic-bezier(.22, .72, .32, 1);
+  }
+}
+
+@keyframes lesson-preview-art-arrive {
+  from {
+    translate: 0 calc(-1 * clamp(12px, 2.5vw, 26px));
+    opacity: .28;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}

@@ -46,6 +46,8 @@ import './art-viewer.css';
 import './case-image-viewer.css';
 import './workspace-rail.css';
 import './topic-navigation.css';
+import './lesson-preview-navigation.css';
+import './lesson-preview-motion.css';
 import './site-update.css';
 import './command-copy.css';
 import './prose.css';
@@ -65,6 +67,7 @@ const LAST_KEY = COURSE_STORAGE.last;
 const RECOVERY_KEY = COURSE_STORAGE.recovery;
 const clone = value => JSON.parse(JSON.stringify(value));
 const sameCourse = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+const designPreviewRequested = () => new URLSearchParams(location.search).get('design') === 'preview';
 let localSync = null;
 const paths = {
   chevron: '<path d="m9 5 7 7-7 7"/>', chevronLeft: '<path d="m15 5-7 7 7 7"/>',
@@ -118,6 +121,21 @@ Alpine.data('courseApp', () => ({
   loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
   siteUpdatedAt: __SITE_UPDATED_AT__, siteUpdatedLabel: formatSiteUpdatedAt(__SITE_UPDATED_AT__),
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,
+  designPreview: designPreviewRequested(),
+  previewPagesFor: buildLessonFlow,
+  revealPreviewSection(outline, outlineOpen) {
+    this.$nextTick(() => {
+      const current = outline.querySelector('[aria-current="step"]');
+      if (!current?.getClientRects().length) return;
+      const list = outline.querySelector('.lesson-preview-outline-topics');
+      const scroller = outlineOpen && getComputedStyle(list).overflowY === 'auto' ? list : outline;
+      if (scroller.scrollHeight <= scroller.clientHeight) return;
+      const viewport = scroller.getBoundingClientRect();
+      const item = current.getBoundingClientRect();
+      if (item.bottom + 8 > viewport.bottom) scroller.scrollTop += item.bottom + 8 - viewport.bottom;
+      else if (item.top - 8 < viewport.top) scroller.scrollTop += item.top - 8 - viewport.top;
+    });
+  },
   completed: [], drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
@@ -246,6 +264,7 @@ Alpine.data('courseApp', () => ({
     } catch (e) { this.error = e.message || '실행 서버와 강의 JSON을 확인해 주세요.'; this.loading=false; }
   },
   readRoute(initial=false) {
+    this.designPreview = designPreviewRequested();
     this.closeArtViewer({restoreFocus:false});
     if (this.readPresentationRoute(initial)) return;
     this.pausePresentationTimers(); this.rehearsalOpen=false; this.readerOpen=false;
@@ -273,6 +292,13 @@ Alpine.data('courseApp', () => ({
     safeWrite(localStorage,LAST_KEY,this.lessonId);
     const address=lessonAddress(this.lessonId,this.learningPageId);
     if(location.hash !== address)history.replaceState(null,'',address);
+  },
+  toggleDesignPreview() {
+    const url = new URL(location.href);
+    if (this.designPreview) url.searchParams.delete('design');
+    else url.searchParams.set('design', 'preview');
+    history.replaceState(history.state, '', url);
+    this.designPreview = designPreviewRequested();
   },
   showLesson(id,pageId='case') {
     if(!COURSE_IDS.includes(id)) return;

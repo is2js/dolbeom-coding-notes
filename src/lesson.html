@@ -5,6 +5,43 @@
 
   <div class="lesson-reading-layout">
 
+    <template x-if="designPreview">
+      <nav class="lesson-preview-outline" aria-label="강의 목차" x-data="{ expandedTopic: lessonId, outlineOpen: false }" x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (expandedTopic === lessonId && learningPageId) revealPreviewSection($el, outlineOpen)">
+        <button type="button" class="lesson-preview-outline-toggle" x-ref="outlineToggle" aria-controls="lesson-preview-outline-topics" :aria-expanded="outlineOpen" @click="outlineOpen = !outlineOpen">
+          <span aria-hidden="true" x-html="icon('files')"></span>
+          <span><strong x-text="lesson.shortTitle"></strong><small x-text="learningPageIndex + 1 + ' / ' + learningPages.length + ' · ' + learningTitle"></small></span>
+          <span class="lesson-preview-chevron" aria-hidden="true" x-html="icon('chevron')"></span>
+        </button>
+        <div class="lesson-preview-outline-topics" id="lesson-preview-outline-topics" :class="{'is-expanded': outlineOpen}">
+          <h2>강의 목차</h2>
+          <ol class="lesson-preview-folders">
+            <template x-for="(topic, index) in course.lessons" :key="topic.id">
+              <li>
+                <button type="button" class="lesson-preview-folder" :class="{'is-current-topic': topic.id === lessonId}" :aria-expanded="expandedTopic === topic.id" :aria-controls="'preview-folder-' + topic.id" @click="expandedTopic = expandedTopic === topic.id ? null : topic.id">
+                  <span aria-hidden="true" x-html="icon('files')"></span>
+                  <small aria-hidden="true" x-text="String(index + 1).padStart(2, '0')"></small>
+                  <strong x-text="topic.shortTitle"></strong>
+                  <span class="lesson-preview-chevron" aria-hidden="true" x-html="icon('chevron')"></span>
+                </button>
+                <div :id="'preview-folder-' + topic.id" x-show="expandedTopic === topic.id">
+                  <template x-if="expandedTopic === topic.id">
+                    <ol class="lesson-preview-sections">
+                      <template x-for="page in previewPagesFor(topic)" :key="page.id">
+                        <li><button type="button" :aria-current="topic.id === lessonId && page.id === learningPageId ? 'step' : null" @click="showLesson(topic.id, page.id); if (outlineOpen && $refs.outlineToggle.getClientRects().length) { outlineOpen = false; $refs.outlineToggle.focus({preventScroll: true}) }">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Zm0 0v6h7M8 13h8m-8 4h5"/></svg>
+                          <span x-text="navigationPageTitle(page)"></span>
+                        </button></li>
+                      </template>
+                    </ol>
+                  </template>
+                </div>
+              </li>
+            </template>
+          </ol>
+        </div>
+      </nav>
+    </template>
+
     <main id="lesson-main" class="lesson-visual-panel" tabindex="-1" x-ref="main" aria-label="현재 설명의 그림과 예제">
       <div class="lesson-visual-tabs" role="tablist" aria-label="현재 내용의 보기"><button type="button" role="tab" id="flow-art-tab" aria-controls="flow-art" :aria-selected="view === 'map'" @click="view='map'"><span x-html="icon('layers')"></span>설명 그림</button><button type="button" role="tab" id="flow-demo-tab" aria-controls="flow-demo" :aria-selected="view === 'demo'" @click="showLearningDemo()" x-show="learningExamples.length"><span x-html="icon('terminal')"></span>관련 예제 재현</button></div>
       <figure id="flow-art" role="tabpanel" aria-labelledby="flow-art-tab" class="lesson-visual-figure" x-show="view === 'map'"><div class="isometric-grid" aria-hidden="true"></div><div class="lesson-visual-art workbench-illustration" :class="'topic-' + learningIllustrationId + (illustrationMotionStopped ? ' is-motion-paused' : '')" :data-scene="learningIllustrationId" role="img" :aria-label="illustrationDescription(learningIllustrationId)" x-html="lessonIllustration(learningIllustrationId)"></div><figcaption><span class="status-dot" aria-hidden="true"></span><span x-text="illustrationCaption(learningIllustrationId)"></span></figcaption></figure>

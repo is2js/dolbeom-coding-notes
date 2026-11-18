@@ -1,15 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" role="img" aria-labelledby="document-title document-desc">
   <title id="document-title">HTML 문서의 head와 body</title>
   <desc id="document-desc">html 안에 문서 정보인 head와 화면 내용인 body가 있습니다. title은 브라우저 탭 제목이고 body의 article 안에는 화면 제목 h1, button, p가 놓입니다.</desc>
-  <rect x="2" y="2" width="756" height="546" rx="22" fill="#f2e6ce" stroke="#25334b" stroke-width="3"/>
-  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle"><text x="380" y="57" font-size="32" font-weight="700">문서 정보와 화면 내용을 나눕니다</text></g>
-  <rect x="235" y="86" width="290" height="61" rx="12" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
-  <text x="380" y="127" fill="#25334b" stroke="none" font-family="Consolas,IBM Plex Mono,monospace" font-size="32" text-anchor="middle">&lt;html lang="ko"&gt;</text>
-  <path d="M380 147v25H205v29m175-29h175v29" fill="none" stroke="#287d7b" stroke-width="3"/>
-  <g stroke="#25334b" stroke-width="3"><rect x="40" y="201" width="330" height="260" rx="15" fill="#dce8d6"/><rect x="390" y="201" width="330" height="260" rx="15" fill="#fffaf0"/></g>
-  <g fill="#25334b" stroke="none" text-anchor="middle" font-family="Consolas,IBM Plex Mono,monospace" font-size="32"><text x="205" y="244">&lt;head&gt;</text><text x="555" y="244">&lt;body&gt;</text></g>
-  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27"><text x="64" y="294">title → 탭 제목</text><text x="64" y="337">meta → 문자 정보</text><text x="64" y="380">link → CSS 연결</text><text x="64" y="423">script → JS 연결</text></g>
-  <rect x="415" y="267" width="280" height="173" rx="12" fill="#f0d6a4" stroke="#25334b" stroke-width="2.5"/>
-  <g fill="#25334b" stroke="none" font-family="Consolas,IBM Plex Mono,monospace" font-size="29"><text x="442" y="308">article.card</text><text x="466" y="348">h1 → Git</text><text x="466" y="385">button</text><text x="466" y="422">p → 설명</text></g>
-  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle" font-size="27"><text x="205" y="506">문서를 위한 정보</text><text x="555" y="506">페이지 안의 내용</text></g>
+  <defs><linearGradient id="desk" x2=".8" y2="1"><stop stop-color="#fbf3df"/><stop offset="1" stop-color="#efe2c7"/></linearGradient><pattern id="grid" x="380" y="255" width="84" height="48" patternUnits="userSpaceOnUse" viewBox="0 0 84 48"><path d="M0 0 84 48M0 48 84 0" fill="none" stroke="#baa783" stroke-width="1.05"/></pattern></defs><rect x="2" y="2" width="756" height="546" rx="20" fill="url(#desk)" stroke="#c5b798" stroke-width="2"/><rect x="14" y="14" width="732" height="522" rx="14" fill="url(#grid)" opacity=".38"/>
+  <text x="380" y="61" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="32" font-weight="750" text-anchor="middle">문서 정보와 화면 내용을 나눕니다</text><text x="380" y="98" fill="#536964" font-family="Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="550" text-anchor="middle">브라우저는 문서 설정을 읽고 화면에 본문을 표시합니다</text>
+  <polygon points="237,129 249,122.14 535,122.14 523,129" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="523,129 535,122.14 535,180.14 523,187" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="237" y="129" width="286" height="58" rx="7" fill="#fff8e7" stroke="#2e4050" stroke-width="2.2"/>
+  <text x="380" y="166" fill="#2e4050" font-family="Consolas,monospace" font-size="27" font-weight="600" text-anchor="middle">&lt;html lang="ko"&gt;</text>
+  <path d="M379 189 282 244.42857142857144m12 -1 -12 1 4 -10" fill="none" stroke="#316f68" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M381 189 478 244.42857142857144m-12 -1 12 1 -4 -10" fill="none" stroke="#97632e" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="41.36,407.08 207.26,501.88 207.26,509.88 41.36,415.08" fill="#c1ad8f" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="207.26,501.88 350.9,419.8 350.9,427.8 207.26,509.88" fill="#a8987d" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="185,325 350.9,419.8 207.26,501.88 41.36,407.08" fill="#dce9d4" stroke="#847e66" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="409.6,408.8 573.4,502.4 573.4,510.4 409.6,416.8" fill="#c1ad8f" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="573.4,502.4 707.8,425.6 707.8,433.6 573.4,510.4" fill="#a8987d" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="544,332 707.8,425.6 573.4,502.4 409.6,408.8" fill="#f4d9a4" stroke="#847e66" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="42,246 54,239.14 358,239.14 346,246" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="346,246 358,239.14 358,448.14 346,455" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="42" y="246" width="304" height="209" rx="7" fill="#dce9d4" stroke="#2e4050" stroke-width="2.2"/>
+  <polygon points="401,246 413,239.14 717,239.14 705,246" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="705,246 717,239.14 717,448.14 705,455" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="401" y="246" width="304" height="209" rx="7" fill="#fff8e7" stroke="#2e4050" stroke-width="2.2"/>
+  <text x="194" y="286" fill="#2e4050" font-family="Consolas,monospace" font-size="31" font-weight="600" text-anchor="middle">&lt;head&gt;</text>
+  <text x="553" y="286" fill="#2e4050" font-family="Consolas,monospace" font-size="31" font-weight="600" text-anchor="middle">&lt;body&gt;</text>
+  <text x="73" y="328" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="23" font-weight="600" text-anchor="start">title → 탭 제목</text>
+  <text x="73" y="360" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="23" font-weight="600" text-anchor="start">meta → 문자 정보</text>
+  <text x="73" y="392" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="23" font-weight="600" text-anchor="start">link → CSS 연결</text>
+  <text x="73" y="424" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="23" font-weight="600" text-anchor="start">script → JS 연결</text>
+  <rect x="421" y="302" width="264" height="133" rx="9" fill="#f4d9a4" stroke="#a98853" stroke-width="1.6"/>
+  <text x="448" y="330" fill="#2e4050" font-family="Consolas,monospace" font-size="22" font-weight="600" text-anchor="start">article.card</text>
+  <text x="467" y="359" fill="#2e4050" font-family="Consolas,monospace" font-size="22" font-weight="600" text-anchor="start">h1 → Git</text>
+  <text x="467" y="388" fill="#2e4050" font-family="Consolas,monospace" font-size="22" font-weight="600" text-anchor="start">button</text>
+  <text x="467" y="417" fill="#2e4050" font-family="Consolas,monospace" font-size="22" font-weight="600" text-anchor="start">p → 설명</text>
+  <text x="194" y="529" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="23" font-weight="700" text-anchor="middle">문서를 위한 정보</text>
+  <text x="553" y="529" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="23" font-weight="700" text-anchor="middle">페이지 안의 내용</text>
 </svg>

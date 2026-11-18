@@ -1,68 +1,93 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-markdown" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="topic-markdown-paper" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop stop-color="#fffaf0" />
-    <stop offset="1" stop-color="#eadcc0" />
-    </linearGradient>
-    <filter id="topic-markdown-shade" x="-30%" y="-200%" width="160%" height="500%">
-      <feGaussianBlur stdDeviation="9" />
-    </filter>
+    <linearGradient id="grid-markdown-cream" x2=".8" y2="1"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#f1e4c5"/></linearGradient>
+    <linearGradient id="grid-markdown-sage" x2=".8" y2="1"><stop stop-color="#e8efdb"/><stop offset="1" stop-color="#b8cdb4"/></linearGradient>
+    <linearGradient id="grid-markdown-amber" x2=".8" y2="1"><stop stop-color="#fff0c6"/><stop offset="1" stop-color="#edc783"/></linearGradient>
+    <linearGradient id="grid-markdown-rose" x2=".8" y2="1"><stop stop-color="#f8e3d5"/><stop offset="1" stop-color="#e8bea6"/></linearGradient>
+    <linearGradient id="grid-markdown-plum" x2=".8" y2="1"><stop stop-color="#f0e7f4"/><stop offset="1" stop-color="#d3c0d9"/></linearGradient>
+    <linearGradient id="grid-markdown-sky" x2=".8" y2="1"><stop stop-color="#ebf2df"/><stop offset="1" stop-color="#bfd5ca"/></linearGradient>
+    <linearGradient id="grid-markdown-night" x2=".8" y2="1"><stop stop-color="#557080"/><stop offset="1" stop-color="#293f50"/></linearGradient>
+    <filter id="grid-markdown-shadow" x="-.3" y="-.55" width="1.6" height="2.1"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="grid-markdown-contact" x="-.3" y="-.5" width="1.6" height="2"><feGaussianBlur stdDeviation="4"/></filter>
   </defs>
   <style>
-    .topic-art-markdown .lesson-signal { animation: markdown-topic-signal 4.8s linear var(--beat) infinite; }
-    .topic-art-markdown .lesson-ping { animation: markdown-topic-ping 4.8s ease-in-out var(--beat) infinite; }
-    @keyframes markdown-topic-signal {
-      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
-      65%,100%{stroke-dashoffset:-1;opacity:0}
+    .topic-art-markdown .topic-grid-packet { opacity: 0; stroke-dasharray: 4 96; animation: grid-markdown-transfer 5.4s linear infinite; }
+    .topic-art-markdown .topic-grid-glow { opacity: .66; animation: grid-markdown-glow 3.2s ease-in-out infinite; }
+    @keyframes grid-markdown-transfer {
+      0%, 5% { opacity: 0; stroke-dashoffset: 4; } 15%, 63% { opacity: .9; }
+      77%, 100% { opacity: 0; stroke-dashoffset: -96; }
     }
-    @keyframes markdown-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
-    @media(prefers-reduced-motion:reduce) { .topic-art-markdown .art-motion { animation:none!important; } }
+    @keyframes grid-markdown-glow { 0%, 100% { opacity: .3; } 45%, 61% { opacity: .88; } }
+    @media (prefers-reduced-motion: reduce) { .topic-art-markdown .art-motion { animation: none; } }
   </style>
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="396" cy="429" rx="252" ry="21" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-markdown-shade)" />
-    <g transform="translate(237 369)"><path d="M-134 -2L-9 50q9 4 18 0L134 -2v12L9 62q-9 4-18 0L-134 10Z" fill="#c5b397" stroke="#314347" stroke-width="2.5" />
-    <path d="M-131 -7 -9 -53q9-4 18 0L131 -7q6 3 0 7L9 50q-9 4-18 0L-131 0q-6-4 0-7Z" fill="url(#topic-markdown-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-124 -3 -9 -47q9-4 18 0L124 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 54v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+  <g font-family="Pretendard, Malgun Gothic, system-ui, sans-serif" stroke="#34434c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="212,160.08 383.36,258 254,331.92 82.64,234" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-markdown-shadow)"/>
+    <polygon points="380,243 254,315 254,327 380,255" fill="#86758e" stroke-width="2"/>
+    <polygon points="86,219 254,315 254,327 86,231" fill="#a492af" stroke-width="2"/>
+    <polygon points="212,147 380,243 254,315 86,219" fill="url(#grid-markdown-plum)" stroke-width="2"/>
+    <polyline points="90.2,218.7 212,149.1 375.8,242.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="248.54,173.82 133.46,239.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="290.54,197.82 175.46,263.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="332.54,221.82 217.46,287.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="175.46,173.82 332.54,263.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="133.46,197.82 290.54,287.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <g transform="translate(531 371)"><path d="M-139 -2L-9 56q9 4 18 0L139 -2v12L9 68q-9 4-18 0L-139 10Z" fill="#b4bd9f" stroke="#314347" stroke-width="2.5" />
-    <path d="M-136 -7 -9 -59q9-4 18 0L136 -7q6 3 0 7L9 56q-9 4-18 0L-136 0q-6-4 0-7Z" fill="url(#topic-markdown-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-129 -3 -9 -53q9-4 18 0L129 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 60v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    <ellipse cx="212" cy="154.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="365.72" cy="242.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="254" cy="306.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="100.28" cy="218.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <polygon points="464,304.08 635.36,402 506,475.92 334.64,378" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-markdown-shadow)"/>
+    <polygon points="632,387 506,459 506,471 632,399" fill="#7d9983" stroke-width="2"/>
+    <polygon points="338,363 506,459 506,471 338,375" fill="#9ab194" stroke-width="2"/>
+    <polygon points="464,291 632,387 506,459 338,363" fill="url(#grid-markdown-sage)" stroke-width="2"/>
+    <polyline points="342.2,362.7 464,293.1 627.8,386.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="500.54,317.82 385.46,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="542.54,341.82 427.46,407.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="584.54,365.82 469.46,431.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="427.46,317.82 584.54,407.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="385.46,341.82 542.54,431.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <path d="M285 276C340 237 373 220 443 239" fill="none" stroke="#899e83" stroke-width="3.6" />
-    <path d="M285 276C340 237 373 220 443 239" fill="none" stroke="#e4c47c" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.3s" stroke-dasharray=".12 1" />
-    <g transform="translate(445 239) rotate(16)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#456f6b" stroke-width="2.45" />
+    <ellipse cx="464" cy="298.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="617.72" cy="386.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="506" cy="450.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="352.28" cy="362.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <path d="M338,271L422,319" fill="none" stroke="#fff9e7" stroke-width="9"/>
+    <path d="M338,271L422,319" fill="none" stroke="#357b74" stroke-width="3"/>
+    <path d="M338,271L422,319" fill="none" class="art-motion topic-grid-packet" pathLength="100" stroke="#fffdf5" stroke-width="4.6" style="animation-delay:0s"/>
+    <polygon points="395.31770199487124,303.7529725684978 381.5498464554691,301.64438208048125 386.5112358390374,292.96195065923666" fill="#357b74" stroke="none"/>
+    <polygon points="210.32,158 352.7,239.36 239.72,303.92 97.34,222.56" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-markdown-contact)"/>
+    <polygon points="345.98,232.36 239.72,293.08 239.72,301.08 345.98,240.36" fill="#86758e" stroke-width="1.85"/>
+    <polygon points="104.06,215.56 239.72,293.08 239.72,301.08 104.06,223.56" fill="#a492af" stroke-width="1.85"/>
+    <polygon points="210.32,154.84 345.98,232.36 239.72,293.08 104.06,215.56" fill="url(#grid-markdown-plum)" stroke-width="1.85"/>
+    <polyline points="108.26,215.26 210.32,156.94 341.78,232.06" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 211.16 158.66)">
+    <rect x="0" y="0" width="151.5" height="118.49999999999999" fill="#fff9e8" rx="4" stroke="#b7aa8d" stroke-width="1.18"/><text x="8" y="17" fill="#7c687c" font-size="13" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600"># 목표</text><polyline points="8,26 114.47,26" fill="none" stroke="#ab8e7b" stroke-width="2"/>
+    <polyline points="8,33 85.80499999999999,33" fill="none" stroke="#ab8e7b" stroke-width="2"/><text x="8" y="49" fill="#357b74" font-size="11" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">- [ ] 실습</text><polyline points="8,59 106.28,59" fill="none" stroke="#86a395" stroke-width="2"/>
+    <polyline points="8,66 88.535,66" fill="none" stroke="#86a395" stroke-width="2"/><circle cx="145.5" cy="112.49999999999999" r="1.8" fill="#ac9161" stroke="none"/>
     </g>
-    <g transform="translate(143 195) rotate(-11)"><g transform="translate(0 0)"><path d="M5 2h98l18 18v122q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#ae9a74" stroke="#314347" stroke-width="2.1" transform="translate(5 5)" />
-    <path d="M5 2h98l18 18v122q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#fff9e9" stroke="#314347" stroke-width="2.2" />
-    <path d="M103 3v17h17" fill="#eee3cb" stroke="#314347" stroke-width="1.6" />
-    <path d="M18 47h60 M18 60h75 M18 73h72 M18 86h52" fill="none" stroke="#bac5a5" stroke-width="2" />
-    </g></g>
-    <g transform="translate(159 207) rotate(-5)"><g transform="translate(0 0)"><path d="M5 2h97l18 18v128q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#ae9a74" stroke="#314347" stroke-width="2.1" transform="translate(5 5)" />
-    <path d="M5 2h97l18 18v128q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#fbf2dd" stroke="#314347" stroke-width="2.2" />
-    <path d="M102 3v17h17" fill="#e4cb95" stroke="#314347" stroke-width="1.6" />
-    <text x="15" y="43" text-anchor="start" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="16" font-weight="650"># 계획</text><text x="15" y="71" text-anchor="start" fill="#314347" stroke="none" font-family="Consolas,monospace" font-size="14" font-weight="650">- 목표</text><text x="15" y="94" text-anchor="start" fill="#314347" stroke="none" font-family="Consolas,monospace" font-size="14" font-weight="650">- 확인</text><path d="M15 114h51 M15 123h75" fill="none" stroke="#b7bfa6" stroke-width="1.7" />
-    </g></g>
-    <g transform="translate(450 178) rotate(6)"><g transform="translate(0 0)"><path d="M5 2h128l18 18v149q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#ae9a74" stroke="#314347" stroke-width="2.1" transform="translate(5 5)" />
-    <path d="M5 2h128l18 18v149q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#fff9e9" stroke="#314347" stroke-width="2.2" />
-    <path d="M133 3v17h17" fill="#cfe2c5" stroke="#314347" stroke-width="1.6" />
-    <text x="16" y="49" text-anchor="start" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="650">계획</text><path d="M16 62h115" fill="none" stroke="#98a68d" stroke-width="1.4" />
-    <rect x="16" y="77" width="11" height="11" rx="2" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.45" />
-    <path d="M17 81l4 4 7-8" fill="none" stroke="#456f6b" stroke-width="2.15" />
-    <rect x="16" y="96" width="11" height="11" rx="2" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.45" />
-    <path d="M17 100l4 4 7-8" fill="none" stroke="#456f6b" stroke-width="2.15" />
-    <path d="M34 84h63 M34 103h72" fill="none" stroke="#456f6b" stroke-width="2.8" />
-    <rect x="15" y="118" width="118" height="30" rx="3" fill="#f3f2df" stroke="#456f6b" stroke-width="1.45" />
-    <path d="M15 128h118m-73-10v29" fill="none" stroke="#8baa89" stroke-width="1.1" />
-    <path d="M24 124h24m29 0h31m-84 11h19m33 0h37" fill="none" stroke="#768c7e" stroke-width="1.45" />
-    </g></g>
-    <circle cx="483" cy="263" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:2.2s" opacity=".42" />
-    <g transform="translate(179 376)"><rect x="1" y="2" width="112" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="112" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
-    <text x="56" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">Markdown 원문</text></g>
-    <g transform="translate(462 376)"><rect x="1" y="2" width="124" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="124" height="25" rx="7" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
-    <text x="62" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">미리 보는 계획</text></g>
+    <polygon points="464.42,302.24 608.9,384.8 495.08,449.84 350.6,367.28" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-markdown-contact)"/>
+    <polygon points="602.18,377.8 495.08,439 495.08,447 602.18,385.8" fill="#7d9983" stroke-width="1.85"/>
+    <polygon points="357.32,360.28 495.08,439 495.08,447 357.32,368.28" fill="#9ab194" stroke-width="1.85"/>
+    <polygon points="464.42,299.08 602.18,377.8 495.08,439 357.32,360.28" fill="url(#grid-markdown-sage)" stroke-width="1.85"/>
+    <polyline points="361.52,359.98 464.42,301.18 597.98,377.5" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 465.26 302.9)">
+    <rect x="0" y="0" width="154" height="119.49999999999999" fill="#fff9e8" rx="4" stroke="#b7aa8d" stroke-width="1.18"/><text x="8" y="18" fill="#34434c" font-size="14" stroke="none" font-weight="750">계획</text><polyline points="8,29 121.97999999999999,29" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,36 87.22999999999999,36" fill="none" stroke="#6c9277" stroke-width="2"/><path d="M8 48l3 3 5-6" fill="none" stroke="#4b7e70" stroke-width="2"/><polyline points="20,49 107.8,49" fill="none" stroke="#84a58c" stroke-width="2"/><polyline points="20,57 100.10000000000001,57" fill="none" stroke="#9fb098" stroke-width="1.7"/><circle cx="148" cy="113.49999999999999" r="1.8" fill="#ac9161" stroke="none"/>
+    </g>
+    <polygon points="299.94,174.25 293.64,177.85 293.64,262.85 299.94,259.25" fill="#86758e" stroke-width="1.45"/>
+    <polygon points="187.64,117.28 293.64,177.85 293.64,262.85 187.64,202.28" fill="#a492af" stroke-width="1.45"/>
+    <polygon points="193.94,113.68 299.94,174.25 293.64,177.85 187.64,117.28" fill="url(#grid-markdown-plum)" stroke-width="1.45"/>
+    <polyline points="191.84,116.98 193.94,115.78 295.74,173.95" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(1 0.5714285714285714 0 1 187.64 117.28)">
+    <rect x="0" y="0" width="106" height="85" fill="#fff8e8" rx="3" stroke="#9885a0" stroke-width="1.5"/><rect x="0" y="0" width="106" height="15" fill="#e8d8ea" rx="3" stroke="none"/><text x="9" y="10" fill="#7c687c" font-size="8" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">request.md</text><text x="11" y="32" fill="#34434c" font-size="13" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600"># 목표</text><text x="11" y="51" fill="#7c687c" font-size="11" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">**변경**</text><text x="11" y="70" fill="#357b74" font-size="11" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">- [ ] 확인</text><rect x="68" y="61" width="4" height="11" fill="#e1b87c" class="art-motion topic-grid-glow" stroke="none"/>
+    </g>
+    <polygon points="547.32,312.69 541.02,316.29 541.02,402.29 547.32,398.69" fill="#7d9983" stroke-width="1.45"/>
+    <polygon points="435.02,255.72 541.02,316.29 541.02,402.29 435.02,341.72" fill="#9ab194" stroke-width="1.45"/>
+    <polygon points="441.32,252.12 547.32,312.69 541.02,316.29 435.02,255.72" fill="url(#grid-markdown-sage)" stroke-width="1.45"/>
+    <polyline points="439.22,255.42 441.32,254.22 543.12,312.39" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(1 0.5714285714285714 0 1 435.02 255.72)">
+    <rect x="0" y="0" width="106" height="86" fill="#fcf9eb" rx="3" stroke="#7e9d84" stroke-width="1.65"/><rect x="0" y="0" width="106" height="15" fill="#dce9d5" rx="3" stroke="none"/><text x="9" y="10" fill="#567960" font-size="8" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">plan.md</text><text x="10" y="34" fill="#34434c" font-size="14" stroke="none" font-weight="760">계획</text><polyline points="10,43 70,43" fill="none" stroke="#7c9785" stroke-width="1.9"/>
+    <polyline points="10,50 82,50" fill="none" stroke="#7c9785" stroke-width="1.9"/><rect x="10" y="62" width="7" height="7" fill="none" rx="1" stroke="#748f78" stroke-width="1.3"/><polyline points="23,66 74,66" fill="none" stroke="#7c9785" stroke-width="1.8"/>
+    </g>
+    <g>
+    <rect x="83" y="121" width="130" height="26" fill="#f3ebf4" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="95" cy="134" r="2.8" fill="#7c687c" stroke="none"/><text x="151" y="139" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">Markdown 원문</text>
+    </g>
+    <g>
+    <rect x="532.5" y="287" width="127" height="26" fill="#eef4e9" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="544.5" cy="300" r="2.8" fill="#357b74" stroke="none"/><text x="599" y="305" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">미리 보는 계획</text>
+    </g>
   </g>
 </svg>

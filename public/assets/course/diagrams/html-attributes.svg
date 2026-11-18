@@ -1,18 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" role="img" aria-labelledby="attributes-title attributes-desc">
   <title id="attributes-title">HTML 속성의 이름과 값</title>
   <desc id="attributes-desc">button의 id와 type은 시작 태그에 적는 속성입니다. class card는 CSS 선택자 점 card와, id toggle은 JavaScript에서 쓰는 해시 toggle 선택자와 연결됩니다.</desc>
-  <rect x="2" y="2" width="756" height="546" rx="22" fill="#f2e6ce" stroke="#25334b" stroke-width="3"/>
-  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" text-anchor="middle"><text x="380" y="60" font-size="32" font-weight="700">속성은 시작 태그에 붙는 추가 정보</text></g>
-  <path d="M37 98h686v86l-9 9H46l-9-9Z" fill="#d7c6a7" stroke="#25334b" stroke-width="3"/>
-  <rect x="37" y="89" width="677" height="95" rx="12" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
-  <text x="375" y="149" fill="#25334b" font-family="Consolas,IBM Plex Mono,monospace" font-size="30" text-anchor="middle" stroke="none">&lt;button id="toggle" type="button"&gt;</text>
-  <g stroke="#25334b" stroke-width="3"><rect x="47" y="223" width="310" height="133" rx="13" fill="#dce8d6"/><rect x="403" y="223" width="310" height="133" rx="13" fill="#f0d6a4"/></g>
-  <g fill="#25334b" stroke="none" text-anchor="middle">
-    <g font-family="Consolas,IBM Plex Mono,monospace" font-size="32"><text x="202" y="273">id="toggle"</text><text x="558" y="273">type="button"</text></g>
-    <g font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27"><text x="202" y="321">id는 이름 · toggle은 값</text><text x="558" y="321">버튼 종류를 지정</text></g>
-  </g>
-  <g stroke="#287d7b" stroke-width="3" stroke-linecap="round" fill="none"><path d="M202 192v23m-6-7 6 7 6-7M558 192v23m-6-7 6 7 6-7"/></g>
-  <rect x="47" y="383" width="666" height="119" rx="13" fill="#fffaf0" stroke="#25334b" stroke-width="3"/>
-  <g font-family="Consolas,IBM Plex Mono,monospace" fill="#25334b" stroke="none" font-size="29"><text x="72" y="429">class="card"</text><text x="72" y="475">id="toggle"</text></g>
-  <g fill="#25334b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="27"><text x="340" y="429">→ CSS에서 .card 선택</text><text x="340" y="475">→ JS에서 #toggle 선택</text></g>
+  <defs><linearGradient id="desk" x2=".8" y2="1"><stop stop-color="#fbf3df"/><stop offset="1" stop-color="#efe2c7"/></linearGradient><pattern id="grid" x="380" y="255" width="84" height="48" patternUnits="userSpaceOnUse" viewBox="0 0 84 48"><path d="M0 0 84 48M0 48 84 0" fill="none" stroke="#baa783" stroke-width="1.05"/></pattern></defs><rect x="2" y="2" width="756" height="546" rx="20" fill="url(#desk)" stroke="#c5b798" stroke-width="2"/><rect x="14" y="14" width="732" height="522" rx="14" fill="url(#grid)" opacity=".38"/>
+  <text x="380" y="61" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="32" font-weight="750" text-anchor="middle">속성은 시작 태그에 붙는 추가 정보</text><text x="380" y="98" fill="#536964" font-family="Malgun Gothic,system-ui,sans-serif" font-size="20" font-weight="550" text-anchor="middle">속성은 보통 이름과 값으로 이루어집니다</text>
+  <polygon points="56,130 68,123.14 710,123.14 698,130" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="698,130 710,123.14 710,194.14 698,201" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="56" y="130" width="642" height="71" rx="7" fill="#fff8e7" stroke="#2e4050" stroke-width="2.2"/>
+  <text x="377" y="176" fill="#2e4050" font-family="Consolas,monospace" font-size="29" font-weight="600" text-anchor="middle">&lt;button id="toggle" type="button"&gt;</text>
+  <path d="M290 204 227 240m12 -1 -12 1 4 -10" fill="none" stroke="#316f68" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M473 204 536 240m-12 -1 12 1 -4 -10" fill="none" stroke="#97632e" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="63.4,315.2 202,394.4 202,402.4 63.4,323.2" fill="#c1ad8f" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="202,394.4 340.6,315.2 340.6,323.2 202,402.4" fill="#a8987d" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="202,236 340.6,315.2 202,394.4 63.4,315.2" fill="#dce9d4" stroke="#847e66" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="414.4,315.2 553,394.4 553,402.4 414.4,323.2" fill="#c1ad8f" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="553,394.4 691.6,315.2 691.6,323.2 553,402.4" fill="#a8987d" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="553,236 691.6,315.2 553,394.4 414.4,315.2" fill="#f4d9a4" stroke="#847e66" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="46,243 58,236.14 370,236.14 358,243" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="358,243 370,236.14 370,346.14 358,353" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="46" y="243" width="312" height="110" rx="7" fill="#dce9d4" stroke="#2e4050" stroke-width="2.2"/>
+  <text x="202" y="287" fill="#2e4050" font-family="Consolas,monospace" font-size="27" font-weight="600" text-anchor="middle">id="toggle"</text>
+  <text x="202" y="324" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="600" text-anchor="middle">이름은 id, 값은 toggle</text>
+  <polygon points="397,243 409,236.14 721,236.14 709,243" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="709,243 721,236.14 721,346.14 709,353" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="397" y="243" width="312" height="110" rx="7" fill="#f4d9a4" stroke="#2e4050" stroke-width="2.2"/>
+  <text x="553" y="287" fill="#2e4050" font-family="Consolas,monospace" font-size="27" font-weight="600" text-anchor="middle">type="button"</text>
+  <text x="553" y="324" fill="#2e4050" font-family="Malgun Gothic,system-ui,sans-serif" font-size="21" font-weight="600" text-anchor="middle">버튼 종류를 지정합니다</text>
+  <polygon points="64,408 76,401.14 698,401.14 686,408" fill="#fff8e9" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><polygon points="686,408 698,401.14 698,500.14 686,507" fill="#aab6a5" stroke="#2e4050" stroke-width="2.1" stroke-linejoin="round"/><rect x="64" y="408" width="622" height="99" rx="7" fill="#fff8e7" stroke="#2e4050" stroke-width="2.2"/>
+  <text x="111" y="447" fill="#2e4050" font-family="Consolas,monospace" font-size="25" font-weight="600" text-anchor="start">class="card"</text>
+  <text x="111" y="482" fill="#2e4050" font-family="Consolas,monospace" font-size="25" font-weight="600" text-anchor="start">id="toggle"</text>
+  <text x="340" y="447" fill="#316f68" font-family="Malgun Gothic,system-ui,sans-serif" font-size="24" font-weight="600" text-anchor="start">→ CSS에서 .card 선택</text>
+  <text x="340" y="482" fill="#316f68" font-family="Malgun Gothic,system-ui,sans-serif" font-size="24" font-weight="600" text-anchor="start">→ JavaScript에서 #toggle 선택</text>
 </svg>

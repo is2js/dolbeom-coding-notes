@@ -1,74 +1,77 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-ide" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="topic-ide-paper" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop stop-color="#fffaf0" />
-    <stop offset="1" stop-color="#eadcc0" />
-    </linearGradient>
-    <filter id="topic-ide-shade" x="-30%" y="-200%" width="160%" height="500%">
-      <feGaussianBlur stdDeviation="9" />
-    </filter>
+    <linearGradient id="grid-ide-cream" x2=".8" y2="1"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#f1e4c5"/></linearGradient>
+    <linearGradient id="grid-ide-sage" x2=".8" y2="1"><stop stop-color="#e8efdb"/><stop offset="1" stop-color="#b8cdb4"/></linearGradient>
+    <linearGradient id="grid-ide-amber" x2=".8" y2="1"><stop stop-color="#fff0c6"/><stop offset="1" stop-color="#edc783"/></linearGradient>
+    <linearGradient id="grid-ide-rose" x2=".8" y2="1"><stop stop-color="#f8e3d5"/><stop offset="1" stop-color="#e8bea6"/></linearGradient>
+    <linearGradient id="grid-ide-plum" x2=".8" y2="1"><stop stop-color="#f0e7f4"/><stop offset="1" stop-color="#d3c0d9"/></linearGradient>
+    <linearGradient id="grid-ide-sky" x2=".8" y2="1"><stop stop-color="#ebf2df"/><stop offset="1" stop-color="#bfd5ca"/></linearGradient>
+    <linearGradient id="grid-ide-night" x2=".8" y2="1"><stop stop-color="#557080"/><stop offset="1" stop-color="#293f50"/></linearGradient>
+    <filter id="grid-ide-shadow" x="-.3" y="-.55" width="1.6" height="2.1"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="grid-ide-contact" x="-.3" y="-.5" width="1.6" height="2"><feGaussianBlur stdDeviation="4"/></filter>
   </defs>
   <style>
-    .topic-art-ide .lesson-signal { animation: ide-topic-signal 4.8s linear var(--beat) infinite; }
-    .topic-art-ide .lesson-ping { animation: ide-topic-ping 4.8s ease-in-out var(--beat) infinite; }
-    @keyframes ide-topic-signal {
-      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
-      65%,100%{stroke-dashoffset:-1;opacity:0}
+    .topic-art-ide .topic-grid-packet { opacity: 0; stroke-dasharray: 4 96; animation: grid-ide-transfer 5.4s linear infinite; }
+    .topic-art-ide .topic-grid-glow { opacity: .66; animation: grid-ide-glow 3.2s ease-in-out infinite; }
+    @keyframes grid-ide-transfer {
+      0%, 5% { opacity: 0; stroke-dashoffset: 4; } 15%, 63% { opacity: .9; }
+      77%, 100% { opacity: 0; stroke-dashoffset: -96; }
     }
-    @keyframes ide-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
-    @media(prefers-reduced-motion:reduce) { .topic-art-ide .art-motion { animation:none!important; } }
+    @keyframes grid-ide-glow { 0%, 100% { opacity: .3; } 45%, 61% { opacity: .88; } }
+    @media (prefers-reduced-motion: reduce) { .topic-art-ide .art-motion { animation: none; } }
   </style>
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="389" cy="428" rx="256" ry="23" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-ide-shade)" />
-    <g transform="translate(343 365)"><path d="M-240 -2L-9 72q9 4 18 0L240 -2v12L9 84q-9 4-18 0L-240 10Z" fill="#b6b79b" stroke="#314347" stroke-width="2.5" />
-    <path d="M-237 -7 -9 -75q9-4 18 0L237 -7q6 3 0 7L9 72q-9 4-18 0L-237 0q-6-4 0-7Z" fill="url(#topic-ide-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-230 -3 -9 -69q9-4 18 0L230 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 76v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+  <g font-family="Pretendard, Malgun Gothic, system-ui, sans-serif" stroke="#34434c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="338,136.08 593.36,282 338,427.92 82.64,282" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-ide-shadow)"/>
+    <polygon points="590,267 338,411 338,423 590,279" fill="#749391" stroke-width="2"/>
+    <polygon points="86,267 338,411 338,423 86,279" fill="#8fafa8" stroke-width="2"/>
+    <polygon points="338,123 590,267 338,411 86,267" fill="url(#grid-ide-sky)" stroke-width="2"/>
+    <polyline points="90.2,266.7 338,125.1 585.8,266.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="374.54,149.82 133.46,287.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="416.54,173.82 175.46,311.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="458.54,197.82 217.46,335.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="500.54,221.82 259.46,359.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="542.54,245.82 301.46,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="301.46,149.82 542.54,287.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="259.46,173.82 500.54,311.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="217.46,197.82 458.54,335.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="175.46,221.82 416.54,359.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="133.46,245.82 374.54,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <g transform="translate(502 373)"><path d="M-138 -2L-9 46q9 4 18 0L138 -2v12L9 58q-9 4-18 0L-138 10Z" fill="#b3bfa4" stroke="#314347" stroke-width="2.5" />
-    <path d="M-135 -7 -9 -49q9-4 18 0L135 -7q6 3 0 7L9 46q-9 4-18 0L-135 0q-6-4 0-7Z" fill="url(#topic-ide-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-128 -3 -9 -43q9-4 18 0L128 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 50v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    <ellipse cx="338" cy="130.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="575.72" cy="266.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="338" cy="402.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="100.28" cy="266.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <polygon points="207.8,219.44 306.08,275.6 217.88,326 119.6,269.84" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-ide-contact)"/>
+    <polygon points="299.36,268.6 217.88,315.16 217.88,323.16 299.36,276.6" fill="#b09e77" stroke-width="1.85"/>
+    <polygon points="126.32,262.84 217.88,315.16 217.88,323.16 126.32,270.84" fill="#c9b88b" stroke-width="1.85"/>
+    <polygon points="207.8,216.28 299.36,268.6 217.88,315.16 126.32,262.84" fill="url(#grid-ide-cream)" stroke-width="1.85"/>
+    <polyline points="130.52,262.54 207.8,218.38 295.16,268.3" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 208.64 220.1)">
+    <rect x="0" y="0" width="99.00000000000001" height="89" fill="#fff9e8" rx="4" stroke="#b7aa8d" stroke-width="1.18"/><text x="8" y="18" fill="#357b74" font-size="13" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">README.md</text><polyline points="8,29 76.88000000000001,29" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,36 55.88,36" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,43 66.80000000000001,43" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,50 41.60000000000001,50" fill="none" stroke="#6c9277" stroke-width="2"/><circle cx="93.00000000000001" cy="83" r="1.8" fill="#ac9161" stroke="none"/>
     </g>
-    <g transform="translate(127 151)"><path d="M0 5 9-4q4-4 10-4h234q9 0 9 9v167l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
-    <rect x="0" y="0" width="249" height="176" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
-    <path d="M0 21h249" fill="none" stroke="#b3baac" stroke-width="1.4" />
-    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
-    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
-    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
-    <rect x="11" y="30" width="61" height="131" rx="4" fill="#e7ebd6" stroke="none" stroke-width="0" />
-    <rect x="14" y="57" width="55" height="20" rx="3" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
-    <path d="M23 68h8m6 0h26M25 46h25" fill="none" stroke="#456f6b" stroke-width="2.35" />
-    <path d="M26 88h31 M26 101h25 M26 114h20 M26 127h29" fill="none" stroke="#77907e" stroke-width="2" />
-    <text x="89" y="51" text-anchor="start" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="15" font-weight="650">README.md</text><path d="M86 65h145" fill="none" stroke="#bdc7b1" stroke-width="1" />
-    <path d="M89 82h67 M89 95h100 M89 108h115" fill="none" stroke="#456f6b" stroke-width="2.25" />
-    <path d="M89 130h94 M89 141h47 M89 152h111" fill="none" stroke="#a59a73" stroke-width="2.2" />
-    </g><g transform="translate(239.05 327)"><path d="M2 0H19l4 14 12 7v5h-49v-5L0 14Z" fill="#eee3cb" stroke="#314347" stroke-width="2.2" />
-    <path d="M-13 21h48" fill="none" stroke="#83765c" stroke-width="1.2" />
+    <polygon points="352.28,146.48 585.8,279.92 435.86,365.6 202.34,232.16" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-ide-contact)"/>
+    <polygon points="574.88,273.4 437.54,351.88 437.54,359.88 574.88,281.4" fill="#b09e77" stroke-width="1.6"/>
+    <polygon points="214.1,224.2 437.54,351.88 437.54,359.88 214.1,232.2" fill="#c9b88b" stroke-width="1.6"/>
+    <polygon points="351.44,145.72 574.88,273.4 437.54,351.88 214.1,224.2" fill="url(#grid-ide-cream)" stroke-width="1.6"/>
+    <polyline points="218.3,223.9 351.44,147.82 570.68,273.1" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <polygon points="533.85,148.08 526.29,152.4 526.29,295.4 533.85,291.08" fill="#b09e77" stroke-width="2.15"/>
+    <polygon points="312.93,30.48 526.29,152.4 526.29,295.4 312.93,173.48" fill="#c9b88b" stroke-width="2.15"/>
+    <polygon points="320.49,26.16 533.85,148.08 526.29,152.4 312.93,30.48" fill="url(#grid-ide-cream)" stroke-width="2.15"/>
+    <polyline points="317.13,30.18 320.49,28.26 529.65,147.78" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(1 0.5714285714285714 0 1 312.93 30.48)">
+    <rect x="8" y="10" width="199.36" height="118" fill="#24394b" rx="3" stroke="#24394b" stroke-width="1"/><rect x="9" y="11" width="197.36" height="14" fill="#3a5163" stroke="none"/><circle cx="16" cy="18" r="1.7" fill="#e7a084" stroke="none"/><circle cx="22" cy="18" r="1.7" fill="#dfbf72" stroke="none"/><circle cx="28" cy="18" r="1.7" fill="#a1b59b" stroke="none"/><rect x="9" y="26" width="47.8464" height="101" fill="#2c4355" stroke="none"/><rect x="11" y="46" width="43.8592" height="13" fill="#456579" stroke="none"/><text x="17" y="40" fill="#d6c39b" font-size="11" stroke="none">▱</text><text x="17" y="56" fill="#e2e9d9" font-size="8" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">README</text><polyline points="17,69 35,69" fill="none" stroke="#8bacaa" stroke-width="1.35"/>
+    <polyline points="17,77 32,77" fill="none" stroke="#8bacaa" stroke-width="1.35"/>
+    <polyline points="17,85 40,85" fill="none" stroke="#8bacaa" stroke-width="1.35"/><polyline points="56.8464,25 56.8464,127" fill="none" stroke="#557078" stroke-width="1.2"/><text x="65.82080000000002" y="43" fill="#f1e2ba" font-size="11" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">README.md</text><text x="65.82080000000002" y="65" fill="#b9d5c6" font-size="11" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600"># Git 연습 메모</text><polyline points="65.82080000000002,80 109.82080000000002,80" fill="none" stroke="#95b9ae" stroke-width="1.6"/>
+    <polyline points="65.82080000000002,89 131.82080000000002,89" fill="none" stroke="#95b9ae" stroke-width="1.6"/>
+    <polyline points="65.82080000000002,98 92.82080000000002,98" fill="none" stroke="#95b9ae" stroke-width="1.6"/>
+    <polyline points="65.82080000000002,107 113.82080000000002,107" fill="none" stroke="#95b9ae" stroke-width="1.6"/><rect x="130.82080000000002" y="70" width="4" height="9" fill="#e8c985" class="art-motion topic-grid-glow" stroke="none"/><rect x="129.584" y="52" width="73.7632" height="74" fill="#304a58" rx="2" stroke="#648779" stroke-width="1.05"/><text x="135.584" y="66" fill="#e7e5bf" font-size="9" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">Git Diff</text><rect x="133.584" y="75" width="63.79520000000001" height="13" fill="#704f51" rx="1" stroke="none"/><text x="136.584" y="85" fill="#f9d3c9" font-size="8" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">− 이전</text><rect x="133.584" y="92" width="63.79520000000001" height="13" fill="#4f7865" rx="1" stroke="none"/><text x="136.584" y="102" fill="#e6efd8" font-size="8" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">+ 변경</text>
     </g>
-    <path d="M360 264C397 250 408 247 440 247" fill="none" stroke="#a88676" stroke-width="3.4" />
-    <path d="M360 264C397 250 408 247 440 247" fill="none" stroke="#f6c893" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.35s" stroke-dasharray=".12 1" />
-    <g transform="translate(437 247) rotate(0)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#ae6856" stroke-width="2.45" />
+    <g transform="matrix(.84 .48 -.84 .48 283.4 195.8)">
+    <rect x="0" y="0" width="241" height="46.05" fill="#e5ead4" rx="2" stroke="#9aab9a" stroke-width="1.1"/><polyline points="4,4 237,4" fill="none" stroke="#9baa97" stroke-width="1.2" stroke-dasharray="3.5 3"/><polyline points="4,13.824 237,13.824" fill="none" stroke="#9baa97" stroke-width="1.2" stroke-dasharray="3.5 3"/><polyline points="4,23.648 237,23.648" fill="none" stroke="#9baa97" stroke-width="1.2" stroke-dasharray="3.5 3"/>
     </g>
-    <g transform="translate(431 206)"><path d="M0 5 9-4q4-4 10-4h165q9 0 9 9v107l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
-    <rect x="0" y="0" width="180" height="116" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
-    <path d="M0 21h180" fill="none" stroke="#b3baac" stroke-width="1.4" />
-    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
-    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
-    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
-    <rect x="13" y="31" width="154" height="25" rx="3" fill="#f0dace" stroke="none" stroke-width="0" />
-    <rect x="13" y="64" width="154" height="26" rx="3" fill="#cfe2c5" stroke="none" stroke-width="0" />
-    <path d="M22 44h10m-10 33h10m-5-5v10" fill="none" stroke="#ae6856" stroke-width="2" />
-    <path d="M43 43h89" fill="none" stroke="#ae6856" stroke-width="2.4" />
-    <path d="M43 77h105" fill="none" stroke="#456f6b" stroke-width="2.4" />
+    <g>
+    <rect x="196" y="101" width="110" height="26" fill="#edf5f1" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="208" cy="114" r="2.8" fill="#357b74" stroke="none"/><text x="254" y="119" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">파일 탐색</text>
     </g>
-    <circle cx="145" cy="217" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:0.1s" opacity=".42" />
-    <circle cx="453" cy="282" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:2.1s" opacity=".42" />
-    <g transform="translate(180 386)"><rect x="1" y="2" width="100" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="100" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
-    <text x="50" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">파일 편집</text></g>
-    <g transform="translate(455 356)"><rect x="1" y="2" width="99" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="99" height="25" rx="7" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
-    <text x="49.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">Git Diff</text></g>
+    <g>
+    <rect x="398.5" y="74" width="133" height="26" fill="#eef4e9" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="410.5" cy="87" r="2.8" fill="#357b74" stroke="none"/><text x="468" y="92" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">README 편집</text>
+    </g>
+    <g>
+    <rect x="527" y="205" width="96" height="26" fill="#fff0e5" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="539" cy="218" r="2.8" fill="#a36a36" stroke="none"/><text x="578" y="223" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">Git Diff</text>
+    </g>
   </g>
 </svg>

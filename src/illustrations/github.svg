@@ -1,84 +1,113 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-github" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="topic-github-paper" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop stop-color="#fffaf0" />
-    <stop offset="1" stop-color="#eadcc0" />
-    </linearGradient>
-    <filter id="topic-github-shade" x="-30%" y="-200%" width="160%" height="500%">
-      <feGaussianBlur stdDeviation="9" />
-    </filter>
+    <linearGradient id="grid-github-cream" x2=".8" y2="1"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#f1e4c5"/></linearGradient>
+    <linearGradient id="grid-github-sage" x2=".8" y2="1"><stop stop-color="#e8efdb"/><stop offset="1" stop-color="#b8cdb4"/></linearGradient>
+    <linearGradient id="grid-github-amber" x2=".8" y2="1"><stop stop-color="#fff0c6"/><stop offset="1" stop-color="#edc783"/></linearGradient>
+    <linearGradient id="grid-github-rose" x2=".8" y2="1"><stop stop-color="#f8e3d5"/><stop offset="1" stop-color="#e8bea6"/></linearGradient>
+    <linearGradient id="grid-github-plum" x2=".8" y2="1"><stop stop-color="#f0e7f4"/><stop offset="1" stop-color="#d3c0d9"/></linearGradient>
+    <linearGradient id="grid-github-sky" x2=".8" y2="1"><stop stop-color="#ebf2df"/><stop offset="1" stop-color="#bfd5ca"/></linearGradient>
+    <linearGradient id="grid-github-night" x2=".8" y2="1"><stop stop-color="#557080"/><stop offset="1" stop-color="#293f50"/></linearGradient>
+    <filter id="grid-github-shadow" x="-.3" y="-.55" width="1.6" height="2.1"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="grid-github-contact" x="-.3" y="-.5" width="1.6" height="2"><feGaussianBlur stdDeviation="4"/></filter>
   </defs>
   <style>
-    .topic-art-github .lesson-signal { animation: github-topic-signal 4.8s linear var(--beat) infinite; }
-    .topic-art-github .lesson-ping { animation: github-topic-ping 4.8s ease-in-out var(--beat) infinite; }
-    @keyframes github-topic-signal {
-      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
-      65%,100%{stroke-dashoffset:-1;opacity:0}
+    .topic-art-github .topic-grid-packet { opacity: 0; stroke-dasharray: 4 96; animation: grid-github-transfer 5.4s linear infinite; }
+    .topic-art-github .topic-grid-glow { opacity: .66; animation: grid-github-glow 3.2s ease-in-out infinite; }
+    @keyframes grid-github-transfer {
+      0%, 5% { opacity: 0; stroke-dashoffset: 4; } 15%, 63% { opacity: .9; }
+      77%, 100% { opacity: 0; stroke-dashoffset: -96; }
     }
-    @keyframes github-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
-    @media(prefers-reduced-motion:reduce) { .topic-art-github .art-motion { animation:none!important; } }
+    @keyframes grid-github-glow { 0%, 100% { opacity: .3; } 45%, 61% { opacity: .88; } }
+    @media (prefers-reduced-motion: reduce) { .topic-art-github .art-motion { animation: none; } }
   </style>
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="380" cy="429" rx="261" ry="19" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-github-shade)" />
-    <g transform="translate(240 351)"><path d="M-144 -2L-9 55q9 4 18 0L144 -2v12L9 67q-9 4-18 0L-144 10Z" fill="#c7b08a" stroke="#314347" stroke-width="2.5" />
-    <path d="M-141 -7 -9 -58q9-4 18 0L141 -7q6 3 0 7L9 55q-9 4-18 0L-141 0q-6-4 0-7Z" fill="url(#topic-github-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-134 -3 -9 -52q9-4 18 0L134 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 59v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+  <g font-family="Pretendard, Malgun Gothic, system-ui, sans-serif" stroke="#34434c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="254,136.08 425.36,234 296,307.92 124.64,210" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-github-shadow)"/>
+    <polygon points="422,219 296,291 296,303 422,231" fill="#b09e77" stroke-width="2"/>
+    <polygon points="128,195 296,291 296,303 128,207" fill="#c9b88b" stroke-width="2"/>
+    <polygon points="254,123 422,219 296,291 128,195" fill="url(#grid-github-cream)" stroke-width="2"/>
+    <polyline points="132.2,194.7 254,125.1 417.8,218.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="290.54,149.82 175.46,215.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="332.54,173.82 217.46,239.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="374.54,197.82 259.46,263.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="217.46,149.82 374.54,239.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="175.46,173.82 332.54,263.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <g transform="translate(568 353)"><path d="M-113 -2L-9 60q9 4 18 0L113 -2v12L9 72q-9 4-18 0L-113 10Z" fill="#aebfa0" stroke="#314347" stroke-width="2.5" />
-    <path d="M-110 -7 -9 -63q9-4 18 0L110 -7q6 3 0 7L9 60q-9 4-18 0L-110 0q-6-4 0-7Z" fill="url(#topic-github-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-103 -3 -9 -57q9-4 18 0L103 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 64v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    <ellipse cx="254" cy="130.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="407.72" cy="218.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="296" cy="282.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="142.28" cy="194.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <polygon points="548,304.08 635.36,354 506,427.92 418.64,378" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-github-shadow)"/>
+    <polygon points="632,339 506,411 506,423 632,351" fill="#7d9983" stroke-width="2"/>
+    <polygon points="422,363 506,411 506,423 422,375" fill="#9ab194" stroke-width="2"/>
+    <polygon points="548,291 632,339 506,411 422,363" fill="url(#grid-github-sage)" stroke-width="2"/>
+    <polyline points="426.2,362.7 548,293.1 627.8,338.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="584.54,317.82 469.46,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="511.46,317.82 584.54,359.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="469.46,341.82 542.54,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <path d="M300 238C345 205 416 200 475 235" fill="none" stroke="#a7733e" stroke-width="3.6" />
-    <path d="M300 238C345 205 416 200 475 235" fill="none" stroke="#ffdda4" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.25s" stroke-dasharray=".12 1" />
-    <g transform="translate(476 236) rotate(31)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
+    <ellipse cx="548" cy="298.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="617.72" cy="338.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="506" cy="402.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="436.28" cy="362.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <path d="M380,247L506,319" fill="none" stroke="#fff9e7" stroke-width="9"/>
+    <path d="M380,247L506,319" fill="none" stroke="#357b74" stroke-width="3"/>
+    <path d="M380,247L506,319" fill="none" class="art-motion topic-grid-packet" pathLength="100" stroke="#fffdf5" stroke-width="4.6" style="animation-delay:0s"/>
+    <polygon points="469.23770199487126,297.9929725684978 455.4698464554691,295.88438208048126 460.4312358390374,287.2019506592367" fill="#357b74" stroke="none"/>
+    <path d="M464,343L338,271" fill="none" stroke="#fff9e7" stroke-width="9"/>
+    <path d="M464,343L338,271" fill="none" stroke="#a36a36" stroke-width="3"/>
+    <path d="M464,343L338,271" fill="none" class="art-motion topic-grid-packet" pathLength="100" stroke="#fffdf5" stroke-width="4.6" style="animation-delay:2.05s"/>
+    <polygon points="374.76229800512874,292.0070274315022 388.5301535445309,294.11561791951874 383.5687641609626,302.7980493407633" fill="#a36a36" stroke="none"/>
+    <polygon points="246.44,150.32 373.28,222.8 291.8,269.36 164.96,196.88" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-github-contact)"/>
+    <polygon points="366.56,215.8 291.8,258.52 291.8,266.52 366.56,223.8" fill="#b09e77" stroke-width="1.85"/>
+    <polygon points="171.68,189.88 291.8,258.52 291.8,266.52 171.68,197.88" fill="#c9b88b" stroke-width="1.85"/>
+    <polygon points="246.44,147.16 366.56,215.8 291.8,258.52 171.68,189.88" fill="url(#grid-github-cream)" stroke-width="1.85"/>
+    <polyline points="175.88,189.58 246.44,149.26 362.36,215.5" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 247.28 150.98)">
+    <rect x="0" y="0" width="133" height="81" fill="#fff9e8" rx="4" stroke="#b7aa8d" stroke-width="1.18"/><text x="8" y="18" fill="#357b74" font-size="13" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">README.md</text><polyline points="8,29 104.75999999999999,29" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,36 75.25999999999999,36" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,43 90.6,43" fill="none" stroke="#6c9277" stroke-width="2"/>
+    <polyline points="8,50 55.2,50" fill="none" stroke="#6c9277" stroke-width="2"/><circle cx="127" cy="75" r="1.8" fill="#ac9161" stroke="none"/>
     </g>
-    <path d="M475 291C427 337 350 334 301 294" fill="none" stroke="#688c9e" stroke-width="3.5" />
-    <path d="M475 291C427 337 350 334 301 294" fill="none" stroke="#bed7db" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:2.15s" stroke-dasharray=".12 1" />
-    <g transform="translate(300 293) rotate(222)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#688c9e" stroke-width="2.45" />
+    <polygon points="312.36,118.51 306.9,121.63 306.9,186.63 312.36,183.51" fill="#a87a43" stroke-width="1.55"/>
+    <polygon points="188.9,54.2 306.9,121.63 306.9,186.63 188.9,119.2" fill="#bf9554" stroke-width="1.55"/>
+    <polygon points="194.36,51.08 312.36,118.51 306.9,121.63 188.9,54.2" fill="url(#grid-github-amber)" stroke-width="1.55"/>
+    <polyline points="193.1,53.9 194.36,53.18 308.16,118.21" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(1 0.5714285714285714 0 1 188.9 54.2)">
+    <rect x="0" y="0" width="118" height="65" fill="#e5cd97" rx="4" stroke-width="1.7"/><path d="M6 15H45L53 23H110V59H6Z" fill="#f4e6bc" stroke="#9d8052" stroke-width="1.6"/><text x="14" y="39" fill="#34434c" font-size="12" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">git-practice</text><text x="14" y="53" fill="#357b74" font-size="10" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">note.txt</text><circle cx="103" cy="30" r="2.5" fill="#96ad88" stroke="none"/><circle cx="103" cy="30" r="3.7" fill="#96ad88" class="art-motion topic-grid-glow" stroke="none"/>
     </g>
-    <g transform="translate(133 222)"><path d="M6 21V9q0-5 6-5h40l12 11h69q7 0 7 7v80H7Z" fill="#e7bb63" stroke="#314347" stroke-width="2.7" />
-    <g transform="translate(33 4)"><path d="M5 2h34l18 18v54q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#ae9a74" stroke="#314347" stroke-width="2.1" transform="translate(5 5)" />
-    <path d="M5 2h34l18 18v54q0 7-7 7H5q-5 0-5-5V7q0-5 5-5Z" fill="#fff9e9" stroke="#314347" stroke-width="2.2" />
-    <path d="M39 3v17h17" fill="#eee3cb" stroke="#314347" stroke-width="1.6" />
-    <path d="M12 41h28m-28 9h21" fill="none" stroke="#456f6b" stroke-width="2.1" />
-    </g><path d="M2 59h144l-11 50H14Z" fill="#eee3cb" stroke="#314347" stroke-width="2.7" />
-    <path d="M19 69h111" fill="none" stroke="#fff9e9" stroke-width="1.4" opacity=".6" />
+    <polygon points="542.12,286.16 636.62,340.16 509.78,412.64 415.28,358.64" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-github-contact)"/>
+    <polygon points="626.12,334.88 511.04,400.64 511.04,407.64 626.12,341.88" fill="#7d9983" stroke-width="1.7"/>
+    <polygon points="427.46,352.88 511.04,400.64 511.04,407.64 427.46,359.88" fill="#9ab194" stroke-width="1.7"/>
+    <polygon points="542.54,287.12 626.12,334.88 511.04,400.64 427.46,352.88" fill="url(#grid-github-sage)" stroke-width="1.7"/>
+    <polyline points="431.66,352.58 542.54,289.22 621.92,334.58" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <polygon points="613.94,252.64 510.62,311.68 510.62,393.68 613.94,334.64" fill="#7d9983" stroke-width="2.05"/>
+    <polygon points="439.64,271.12 510.62,311.68 510.62,393.68 439.64,353.12" fill="#9ab194" stroke-width="2.05"/>
+    <polygon points="542.96,212.08 613.94,252.64 510.62,311.68 439.64,271.12" fill="url(#grid-github-sage)" stroke-width="2.05"/>
+    <polyline points="443.84,270.82 542.96,214.18 609.74,252.34" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 543.8 218.5)">
+    <rect x="0" y="0" width="69.5" height="110.00000000000001" fill="#e2ead7" stroke="#8a9e8c" stroke-width="1.2" rx="2.5"/><polyline points="8,8 59.5,8" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,13 59.5,13" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,18 59.5,18" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,23 59.5,23" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,28 59.5,28" fill="none" stroke="#819589" stroke-width="1.32"/>
     </g>
-    <rect x="244" y="252" width="44" height="42" rx="5" fill="#cfe2c5" stroke="#314347" stroke-width="2" />
-    <path d="M254 279h24m-24-10h19" fill="none" stroke="#456f6b" stroke-width="2" />
-    <g transform="translate(501 258)"><path d="M2 1 16-11h116l-8 12v44l14-12V-11M2 1h124" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
-    <rect x="1" y="0" width="124" height="44" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
-    <rect x="11" y="10" width="73" height="23" rx="4" fill="#cfe2c5" stroke="#9eb898" stroke-width="1.4" />
-    <circle cx="106" cy="21" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    <g transform="matrix(1 0.5714285714285714 0 1 439.64 271.12)">
+    <rect x="6" y="13" width="58.980000000000004" height="17" fill="#405a60" rx="2.2" stroke="#44585a" stroke-width="1.1"/><polyline points="11,19 44.980000000000004,19" fill="none" stroke="#b2c5b9" stroke-width="1.5"/><polyline points="11,24 39.980000000000004,24" fill="none" stroke="#76968a" stroke-width="1.1"/><circle cx="58.980000000000004" cy="20" r="2.5" fill="#dfba71" stroke="none"/><circle cx="58.980000000000004" cy="20" r="3.7" fill="#dfba71" class="art-motion topic-grid-glow" stroke="none"/><rect x="6" y="35.33333333333333" width="58.980000000000004" height="17" fill="#405a60" rx="2.2" stroke="#44585a" stroke-width="1.1"/><polyline points="11,41.33333333333333 44.980000000000004,41.33333333333333" fill="none" stroke="#b2c5b9" stroke-width="1.5"/><polyline points="11,46.33333333333333 39.980000000000004,46.33333333333333" fill="none" stroke="#76968a" stroke-width="1.1"/><circle cx="58.980000000000004" cy="42.33333333333333" r="2.5" fill="#aeca9e" stroke="none"/><circle cx="58.980000000000004" cy="42.33333333333333" r="3.7" fill="#aeca9e" class="art-motion topic-grid-glow" stroke="none"/><rect x="6" y="57.666666666666664" width="58.980000000000004" height="17" fill="#405a60" rx="2.2" stroke="#44585a" stroke-width="1.1"/><polyline points="11,63.666666666666664 44.980000000000004,63.666666666666664" fill="none" stroke="#b2c5b9" stroke-width="1.5"/><polyline points="11,68.66666666666666 39.980000000000004,68.66666666666666" fill="none" stroke="#76968a" stroke-width="1.1"/><circle cx="58.980000000000004" cy="64.66666666666666" r="2.5" fill="#aeca9e" stroke="none"/><circle cx="58.980000000000004" cy="64.66666666666666" r="3.7" fill="#aeca9e" class="art-motion topic-grid-glow" stroke="none"/>
     </g>
-    <g transform="translate(501 220)"><path d="M2 1 16-11h116l-8 12v36l14-12V-11M2 1h124" fill="#cfe2c5" stroke="#314347" stroke-width="2.25" />
-    <rect x="1" y="0" width="124" height="36" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
-    <path d="M16 17h65" fill="none" stroke="#456f6b" stroke-width="2.4" />
-    <circle cx="106" cy="18" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    <g transform="matrix(1 -0.5714285714285714 0 1 510.62 311.68)">
+    <polyline points="9,22 39,22" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,32 39,32" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,42 39,42" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,52 39,52" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,62 39,62" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,72 39,72" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
     </g>
-    <g transform="translate(501 181)"><path d="M2 1 16-11h116l-8 12v36l14-12V-11M2 1h124" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
-    <rect x="1" y="0" width="124" height="36" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
-    <path d="M20 18h54" fill="none" stroke="#456f6b" stroke-width="2.4" />
-    <circle cx="106" cy="18" r="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
+    <g>
+    <rect x="97" y="134" width="110" height="26" fill="#fffbef" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="109" cy="147" r="2.8" fill="#357b74" stroke="none"/><text x="155" y="152" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">로컬 저장소</text>
     </g>
-    <circle cx="607" cy="199" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:1.3s" opacity=".42" />
-    <circle cx="263" cy="270" r="8" fill="none" stroke="#688c9e" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:2.8s" opacity=".42" />
-    <g transform="translate(350 184)"><rect x="1" y="2" width="59" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="59" height="25" rx="7" fill="#fff9e9" stroke="#a7733e" stroke-width="1.35" />
-    <text x="29.5" y="17" text-anchor="middle" fill="#a7733e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">push</text></g>
-    <g transform="translate(350 324)"><rect x="1" y="2" width="64" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="64" height="25" rx="7" fill="#fff9e9" stroke="#688c9e" stroke-width="1.35" />
-    <text x="32" y="17" text-anchor="middle" fill="#688c9e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">fetch</text></g>
-    <g transform="translate(343 254)"><rect x="1" y="2" width="78" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="78" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
-    <text x="39" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">origin</text></g>
-    <g transform="translate(166 370)"><rect x="1" y="2" width="103" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="103" height="25" rx="7" fill="#fff9e9" stroke="#314347" stroke-width="1.35" />
-    <text x="51.5" y="17" text-anchor="middle" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">로컬 저장소</text></g>
-    <g transform="translate(512 370)"><rect x="1" y="2" width="100" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="100" height="25" rx="7" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.35" />
-    <text x="50" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">GitHub</text></g>
+    <g>
+    <rect x="592" y="290" width="90" height="26" fill="#eef4e9" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="604" cy="303" r="2.8" fill="#357b74" stroke="none"/><text x="640" y="308" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">GitHub</text>
+    </g>
+    <g>
+    <rect x="388" y="224" width="82" height="26" fill="#edf5f1" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="400" cy="237" r="2.8" fill="#357b74" stroke="none"/><text x="432" y="242" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">origin</text>
+    </g>
+    <g>
+    <rect x="433" y="256" width="72" height="26" fill="#eef4e9" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="445" cy="269" r="2.8" fill="#357b74" stroke="none"/><text x="472" y="274" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">push</text>
+    </g>
+    <g>
+    <rect x="355.5" y="319" width="73" height="26" fill="#fff1d0" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="367.5" cy="332" r="2.8" fill="#a36a36" stroke="none"/><text x="395" y="337" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">fetch</text>
+    </g>
   </g>
 </svg>

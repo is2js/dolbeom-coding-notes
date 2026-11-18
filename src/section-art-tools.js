@@ -1,276 +1,384 @@
 import {
-  archive, at, box, colors as c, cursor, flow, glow, ink, key, label, line,
-  monitor, oval, page, platform, pocket, shadow, shape, spool, stage, tag, tick,
+  archive, at, box, colors as c, commit, cursor, deck, folder, glow, ink, key,
+  label, line, monitor, oval, page, point, route, shape, stage, tag, tick,
 } from './tool-art-props.js';
 
-const code = (x, y, value, color = ink, size = 16) => label(x, y, value, { color, size, mono: true, anchor: 'start', weight: 650 });
+const code = (x, y, value, color = ink, size = 15) => label(x, y, value, { color, size, mono: true, anchor: 'start', weight: 650 });
+const terminalInk = '#dfe9d5';
+const amberRail = { color: '#99723a', casing: '#ecd6a5', pulse: '#fffae7' };
+const blueRail = { color: '#5b7c8a', casing: '#c9d9d7', pulse: '#f2fcf2' };
 
 function locationScene() {
   const id = 'section-terminal-example';
-  const command = (y, short, long) => code(103, y, short, '#f0d58d', 18) + code(147, y, long, '#d7e5d3', 15);
-  const fileBrowser = box(513, 197, 138, 26, '#e2ead9', 5, 'none') + code(526, 216, 'C:\\Users', c.green)
-    + pocket(535, 232, 89, 57, '#e4bc77');
+  const command = (y, alias, name) => code(16, y, alias, '#f1d48c', 18) + code(63, y, name, terminalInk);
   return stage(id,
-    platform(id, 210, 357, 153, 51) + platform(id, 583, 352, 129, 52)
-    + flow(id, 'M340 207C394 178 452 181 492 208')
-    + flow(id, 'M516 345C463 391 374 390 330 342', { color: '#688897', pulse: '#97c3c1', delay: 1.35 })
-    + monitor(id, 75, 132, 262, 213, 'PowerShell', box(91, 174, 224, 28, '#596a56', 5, 'none')
-      + command(194, 'pwd', '= Get-Location') + code(103, 221, 'explorer.exe .', c.ivory)
-      + code(103, 245, 'cd .  ·  cd ..', '#d7e5d3', 15) + command(270, 'ls', '= Get-ChildItem')
-      + code(103, 295, 'mkdir → 빈 폴더 삭제', '#d7e5d3', 15)
-      + code(103, 320, '다시 mkdir → cd', '#d7e5d3', 15) + cursor(id, 256, 306), { dark: true, stand: true })
-    + monitor(id, 497, 156, 172, 147, '파일 탐색기', fileBrowser, { stand: true })
-    + tag(583, 124, 111, 'Win + R', { mono: true })
-    + tag(582, 365, 104, 'wt -d .', { color: c.sage, mono: true, textColor: c.green })
-    + tag(413, 176, 165, '같은 폴더 · 두 화면', { size: 15 }));
+    deck(id, -.4, 3.55, 1.48, 1.12, { fill: '#f1e9ce' })
+    + deck(id, 3.65, .02, 1.1, 1.16, { fill: '#e6ead5' })
+    + route(id, [[.45,3.55],[.45,2.1],[2.84,2.1],[2.84,.02]], { z: -4 })
+    + route(id, [[3.8,.9],[3.8,3.67],[.9,3.67]], { ...blueRail, delay: 1.45, z: -4 })
+    + monitor(id, -.4, 3.55, 251, 187, 'PowerShell',
+      box(10, 41, 224, 26, '#58685c', 4, 'none') + command(61, 'pwd', '= Get-Location')
+      + code(16, 83, 'explorer.exe .', c.ivory)
+      + code(16, 105, 'cd .  ·  cd ..', terminalInk)
+      + command(129, 'ls', '= Get-ChildItem')
+      + code(16, 153, 'mkdir → 빈 폴더 삭제', terminalInk)
+      + code(16, 174, '다시 mkdir → cd', terminalInk) + cursor(id, 183, 159), { dark: true, rise: 22 })
+    + monitor(id, 3.65, .02, 170, 128, '파일 탐색기',
+      box(11, 38, 147, 23, '#e6ebd9', 5, 'none') + code(21, 54, 'C:\\Users', c.green)
+      + folder(47, 62, 76, 55, c.honey), { rise: 24 })
+    + tag(538, 185, 94, 'Win + R', { mono: true })
+    + tag(408, 302, 138, '같은 폴더', { color: '#edf1de' })
+    + tag(484, 423, 99, 'wt -d .', { color: c.sage, mono: true, textColor: c.green }));
 }
 
 function guiCliScene() {
   const id = 'section-terminal-gui-cli';
   return stage(id,
-    platform(id, 168, 341, 107, 44) + platform(id, 593, 336, 102, 42)
-    + platform(id, 378, 305, 91, 55, '#efe4ca')
-    + flow(id, 'M260 237c32-5 49 3 67 20')
-    + flow(id, 'M436 255c21-19 37-24 55-19', { delay: 1 })
-    + flow(id, 'M548 375C452 436 296 431 198 375', { color: '#678896', pulse: '#9dc5c0', delay: 2.05 })
-    + monitor(id, 56, 153, 197, 162, 'PowerShell', code(76, 216, 'New-Item / ni', c.ivory)
-      + code(76, 248, 'Get-Content / cat', '#e6cf93', 15) + code(76, 278, 'note.txt', c.ivory) + cursor(id, 157, 265), { dark: true, stand: true })
-    + page(341, 193, 80, 108, { surface: c.ivory, angle: -11 })
-    + tag(379, 323, 119, 'note.txt', { mono: true, color: c.sage, textColor: c.green })
-    + monitor(id, 502, 150, 191, 156, '메모장', code(522, 216, 'Hello, Codex!', c.green, 16)
-      + line('M521 233h133', '#abae92', 1.5) + tag(596, 266, 111, 'Ctrl+S · 저장', { color: c.sage }), { stand: true }));
+    deck(id, -.1, 4, 1.19, .9, { fill: '#e8ead6' })
+    + deck(id, 2.35, 2.35, .8, .8, { fill: '#f4e6c2' })
+    + deck(id, 4, -.1, .96, 1.2, { fill: '#e9ebd6' })
+    + route(id, [[.62,4],[2.35,4],[2.35,3.08]], amberRail)
+    + route(id, [[2.35,1.62],[2.35,-.1],[3.2,-.1]], { ...blueRail, delay: 1.15 })
+    + monitor(id, -.1, 4, 169, 122, 'PowerShell',
+      code(15, 57, 'New-Item / ni', c.ivory, 14)
+      + code(15, 81, 'Get-Content / cat', '#f1d999', 13)
+      + code(15, 105, 'note.txt', terminalInk) + cursor(id, 91, 91), { dark: true })
+    + monitor(id, 4, -.1, 169, 122, '메모장',
+      code(15, 61, 'Hello, Codex!', c.green)
+      + line('M15 75h136', '#a6ac90', 1.15)
+      + tag(86, 96, 115, 'Ctrl+S · 저장', { color: c.sage, size: 13 }))
+    + page(338, 250, 80, 104, { angle: 4 })
+    + tag(382, 370, 103, 'note.txt', { color: '#f8e7c6', mono: true })
+    + label(378, 449, '한 파일을 만들고, 저장하고, 다시 읽습니다', { size: 15, color: c.green }));
 }
 
 function hostShellScene() {
   const id = 'section-terminal-host-shell';
-  const shells = [
-    { x: 124, y: 211, fill: '#e4ead8', name: 'PowerShell 7', executable: 'pwsh.exe', prompt: 'PS >' },
-    { x: 295, y: 214, fill: '#f2e4c6', name: 'PowerShell 5.1', executable: 'powershell.exe', prompt: 'PS >' },
-    { x: 466, y: 211, fill: '#eadde8', name: '명령 프롬프트', executable: 'cmd.exe', prompt: 'C:\\>' },
-  ];
+  const shell = (x, name, executable, prompt, fill, index) => at(x, 43,
+    box(0, 0, 142, 99, fill, 7, '#a79d83', 1.4)
+    + box(6, 6, 130, 46, c.dark, 5, 'none')
+    + code(16, 36, prompt, '#f2d98c', 17)
+    + cursor(id, 69, 22, 3, 14)
+    + glow(id, 5, 5, 132, 47, index * 1.2)
+    + label(71, 72, name, { size: 15, weight: 700 })
+    + label(71, 89, executable, { size: 12, mono: true, color: c.green }));
   return stage(id,
-    shadow(id, 381, 400, 270, 28)
-    + shape('M107 173h544l34 53v128l-33 35H106l-26-31V226Z', '#d1bd93')
-    + shape('M80 221l29-48h541l35 48-27 120H106Z', `url(#${id}-linen)`)
-    + box(107, 212, 547, 132, '#d2d2b5', 15, '#938e72', 2)
-    + tag(378, 172, 177, 'Windows Terminal', { color: c.sage, mono: true })
-    + shells.map(({ x, y, fill, name, executable, prompt }, index) => box(x + 4, y + 7, 157, 125, '#a7a086', 9)
-      + box(x, y, 157, 125, fill, 8)
-      + box(x + 10, y + 15, 137, 63, c.dark, 5, 'none')
-      + code(x + 22, y + 46, prompt, '#f3e1af', 22)
-      + cursor(id, x + 83, y + 29)
-      + label(x + 78, y + 100, name, { size: 16, weight: 720 })
-      + label(x + 78, y + 119, executable, { size: 12, mono: true, color: c.green })
-      + glow(id, x + 5, y + 10, 147, 73, index * 1.35)).join('')
-    + line('M98 359h573', '#eee6c9', 2)
-    + label(379, 375, '하나의 창 · 세 가지 셸', { size: 15, color: c.green, weight: 680 }));
+    deck(id, 2.3, 2.3, 3.8, 2.13, { fill: '#e9e8cd' })
+    + monitor(id, 1.8, 1.8, 475, 152, 'Windows Terminal',
+      shell(13, 'PowerShell 7', 'pwsh.exe', 'PS >', '#e7ebd6', 0)
+      + shell(166, 'PowerShell 5.1', 'powershell.exe', 'PS >', '#f1e2bf', 1)
+      + shell(319, '명령 프롬프트', 'cmd.exe', 'C:\\>', '#e4e7d9', 2))
+    + tag(380, 396, 250, 'Windows Terminal이 셸 탭을 엽니다', { color: '#f0efdb', size: 15 }));
 }
 
 function shortcutsScene() {
   const id = 'section-terminal-shortcuts';
+  const [keyboardX, keyboardY] = point(.75, 4.5);
   return stage(id,
-    platform(id, 189, 355, 133, 56) + platform(id, 557, 350, 143, 52)
-    + flow(id, 'M312 298C357 265 380 253 421 245', { delay: .6 })
-    + at(185, 285, shape('M-100-23h195l31 70-243 10Z', '#b6a07b')
-      + shape('M-100-33h195l31 65-243 10Z', `url(#${id}-linen)`)
-      + key(-82, -20, 52, 'Ctrl', true) + key(-21, -20, 43, ',')
-      + key(32, -20, 52, 'Alt') + box(-66, 18, 130, 16, '#f1e5cd', 5, '#a99879', 1.4))
-    + tag(185, 218, 131, '작업 설정', { size: 16 })
-    + monitor(id, 427, 143, 251, 180, '터미널 · 오른쪽 분할',
-      box(439, 187, 106, 108, '#344b46', 4, 'none')
-      + box(552, 187, 113, 108, '#3c5149', 4, 'none')
-      + code(452, 222, 'PS >', '#f7e1a2', 21)
-      + code(563, 222, 'PS >', '#e0e9d1', 21)
-      + cursor(id, 612, 206)
-      + glow(id, 549, 184, 119, 114, 1.2), { stand: true })
-    + tag(555, 373, 156, 'Ctrl + Shift + \\', { color: c.ivory, mono: true })
-    + tag(384, 410, 183, 'Ctrl+Alt+방향키 · 이동', { color: c.sage, size: 14 }));
+    deck(id, .55, 4.7, 1.35, 1.01, { fill: '#f3e5c3' })
+    + deck(id, 3.95, .13, 1.55, 1.43, { fill: '#e5ead4' })
+    + route(id, [[1.65,4.7],[3.95,4.7],[3.95,1.3]], { ...amberRail, delay: .45 })
+    + at(keyboardX - 91, keyboardY - 49,
+      box(-6, -8, 193, 60, '#dac49a', 9, ink, 1.7)
+      + key(2, 4, 52, 'Ctrl', true) + key(63, 4, 61, 'Shift', true)
+      + key(135, 4, 37, '\\', true))
+    + tag(219, 284, 148, '설정 → 작업', { color: '#fbefd4' })
+    + monitor(id, 3.95, .13, 238, 154, 'Windows Terminal',
+      box(11, 43, 98, 98, '#405750', 5, 'none')
+      + box(115, 43, 112, 98, '#334944', 5, 'none')
+      + code(22, 75, 'PS >', terminalInk, 18) + code(126, 75, 'PS >', '#f0d58a', 18)
+      + cursor(id, 180, 60) + glow(id, 114, 42, 115, 100, .7), { dark: true })
+    + tag(550, 408, 164, 'Ctrl + Shift + \\', { mono: true, color: '#e9eed9' })
+    + tag(376, 476, 195, 'Ctrl+Alt+방향키 · 이동', { color: '#e9eed9', size: 14 }));
 }
 
 function diffScene() {
   const id = 'section-git-example';
   return stage(id,
-    platform(id, 376, 338, 229, 84)
-    + shape('M194 203l21-31h90l26 22h212l17 142-359 9Z', '#cfad73')
-    + page(232, 173, 105, 137, { surface: c.ivory, angle: -16 })
-    + page(395, 166, 105, 131, { surface: c.sage, angle: 11 })
-    + shape('M185 254q5-15 19-15h347q14 0 18 16l-33 96q-4 8-13 8H217q-13 0-17-10Z', '#d6a45e')
-    + shape('M188 254l373 1-23 70q-4 10-17 11H216q-17 0-20-12Z', '#e9bf7d')
-    + line('M205 260h339', '#fff0c4', 2.5)
-    + tag(377, 294, 132, 'git-practice/', { mono: true, color: '#f3daa0' })
-    + tag(282, 218, 109, 'note.txt', { mono: true })
-    + tag(451, 207, 70, '.git', { mono: true, color: c.sage, textColor: c.green })
-    + glow(id, 408, 186, 86, 45)
-    + tag(270, 417, 171, 'git init -b main', { mono: true })
-    + tag(490, 417, 137, 'ls -Force', { mono: true }));
+    deck(id, 2, 2, 2.7, 2.06)
+    + folder(253, 218, 249, 128, '#e7bc75',
+      page(32, -38, 95, 124, { angle: -6 })
+      + page(130, -47, 81, 120, { fill: '#d9e6d1', angle: 8 }))
+    + tag(337, 222, 90, 'note.txt', { mono: true })
+    + tag(434, 213, 62, '.git', { mono: true, color: c.sage, textColor: c.green })
+    + glow(id, 400, 195, 69, 33)
+    + tag(378, 300, 141, 'git-practice/', { mono: true, color: '#f8e5b5' })
+    + tag(284, 441, 171, 'git init -b main', { mono: true })
+    + tag(476, 441, 133, 'ls -Force', { mono: true }));
 }
 
 function versionFlowScene() {
   const id = 'section-git-why';
+  const [firstX, firstY] = point(.2, 4.45);
+  const [midX, midY] = point(1.1, 1);
+  const [lastX, lastY] = point(4.7, .65);
   return stage(id,
-    platform(id, 137, 308, 100, 50) + platform(id, 379, 307, 107, 52) + platform(id, 619, 306, 99, 47)
-    + flow(id, 'M220 253C248 240 265 246 291 259')
-    + flow(id, 'M471 258c23-13 47-15 65-5', { delay: 1.4 })
-    + page(98, 172, 79, 116, { surface: c.ivory, angle: -12 })
-    + tag(138, 302, 104, 'note.txt', { mono: true })
-    + at(379, 256, shape('M-65-1l29-22h115l-25 22Z', '#f9efd4')
-      + shape('M-65-1v41H54l25-21v-42L54-1Z', '#9aab91')
-      + box(-65, -1, 119, 41, c.sage, 6) + box(-45, 11, 77, 11, '#708d76', 4, 'none'))
-    + page(355, 168, 64, 103, { surface: '#dfe9d5', angle: 9 })
-    + tick(430, 268)
-    + spool(617, 249, 43, c.sage) + spool(617, 230, 43, c.sage)
-    + tag(617, 308, 115, 'version 1', { color: c.sage, mono: true })
-    + label(138, 393, '작업 파일', { weight: 720 })
-    + label(379, 393, '스테이징', { weight: 720 })
-    + label(619, 393, '커밋 기록', { weight: 720 })
-    + tag(254, 318, 151, 'git add note.txt', { mono: true, size: 13 })
-    + tag(511, 321, 119, 'git commit', { mono: true, size: 13 }));
+    deck(id, .2, 4.45, .94, .95)
+    + deck(id, 1.1, 1, 1.2, .92, { fill: '#e6ead2' })
+    + deck(id, 4.7, .65, 1.05, 1.02, { fill: '#e6ead2' })
+    + route(id, [[.2,3.58],[.2,1],[.34,1]], amberRail)
+    + route(id, [[2.18,1],[4.7,1],[4.7,.88]], { delay: 1.25 })
+    + page(firstX - 43, firstY - 121, 79, 106, { angle: -4 })
+    + tag(firstX, firstY - 64, 92, 'note.txt', { mono: true })
+    + folder(midX - 62, midY - 87, 118, 77, '#c5d7ba',
+      page(33, -22, 55, 70, { angle: 6 }))
+    + tick(midX+36, midY-36)
+    + commit(lastX, lastY-12, 39, c.sage, true)
+    + commit(lastX, lastY-33, 39, c.sage, true)
+    + tag(lastX, lastY-107, 107, 'version 1', { color: c.sage, mono: true })
+    + label(firstX, 447, '작업 파일', { weight: 700 })
+    + label(midX, 381, '스테이징', { weight: 700 })
+    + label(lastX, 467, '커밋 기록', { weight: 700 })
+    + tag(283, 351, 142, 'git add note.txt', { mono: true, size: 13 })
+    + tag(495, 319, 111, 'git commit', { mono: true, size: 13 }));
 }
 
 function twoVersionsScene() {
   const id = 'section-git-diff';
   return stage(id,
-    platform(id, 220, 329, 148, 66) + platform(id, 550, 327, 134, 54)
-    + flow(id, 'M340 236C369 210 391 216 423 234')
-    + page(112, 185, 117, 157, { surface: c.ivory, mark: c.rose, angle: -18 })
-    + page(205, 153, 126, 163, { surface: '#e4edd9', angle: 15 })
-    + tag(155, 277, 75, '버전 1', { color: c.blush })
-    + tag(272, 248, 76, '버전 2', { color: c.sage })
-    + monitor(id, 439, 164, 210, 145, 'diff',
-      box(455, 204, 177, 33, '#f0d5c6', 4, 'none') + code(468, 226, '− 버전 1', c.rose)
-      + box(455, 248, 177, 33, '#dae8d3', 4, 'none') + code(468, 270, '+ 버전 2', c.green)
-      + glow(id, 453, 246, 182, 37, 1.3), { stand: true })
-    + flow(id, 'M268 403c55 15 128 15 193 0', { color: '#799682', delay: 2 })
-    + spool(251, 396, 17, c.honey) + spool(480, 395, 17, c.sage)
-    + label(251, 444, '첫 커밋', { size: 15 }) + label(480, 444, '두 번째 커밋', { size: 15 }));
+    deck(id, .25, 3.95, 1.45, 1.35)
+    + deck(id, 4, .12, 1.51, 1.24, { fill: '#e7ead4' })
+    + deck(id, 3.6, 3.65, 1.65, .77, { fill: '#f1e5c8' })
+    + route(id, [[.25,2.76],[.25,1.54],[3.1,1.54],[3.1,.12]], { ...amberRail, delay: .3 })
+    + route(id, [[2.9,3.65],[4.45,3.65]], { delay: 1.3 })
+    + page(118, 230, 82, 105, { mark: c.rose, angle: -9 })
+    + page(211, 207, 93, 116, { fill: '#dce8d0', angle: 7 })
+    + tag(159, 287, 69, '버전 1', { color: c.blush })
+    + tag(256, 269, 69, '버전 2', { color: c.sage })
+    + monitor(id, 4, .12, 203, 128, 'diff',
+      box(12, 42, 180, 32, '#f1d5c6', 5, 'none') + code(24, 63, '− 버전 1', c.rose)
+      + box(12, 83, 180, 32, '#e0ead4', 5, 'none') + code(24, 104, '+ 버전 2', c.green)
+      + glow(id, 11, 81, 182, 36, 1), { rise: 27 })
+    + commit(...point(2.56,3.65), 19, c.honey) + commit(...point(4.54,3.65), 20, c.sage, true)
+    + label(305, 468, '첫 커밋', { size: 14 })
+    + label(427, 511, '두 번째 커밋', { size: 14 }));
 }
 
 function promptScene() {
   const id = 'section-git-prompt';
+  const earlier = point(-.2, 1.65);
+  const latest = point(4, 1.65);
   return stage(id,
-    platform(id, 383, 324, 282, 85, '#f3e7c9')
-    + line('M186 283c68 42 310 42 382 0', '#93a58e', 4)
-    + flow(id, 'M211 245C307 173 457 177 544 245', { color: '#6c9385', delay: .5 })
-    + spool(182, 280, 48, c.honey) + spool(575, 280, 48, c.sage)
-    + line('M182 248v-48M575 248v-48', ink, 2.4)
-    + tag(182, 183, 89, 'HEAD', { color: '#eed6a1', mono: true })
-    + tag(575, 183, 89, 'main', { color: c.sage, mono: true })
-    + label(185, 348, '버전 1 커밋', { size: 16 })
-    + label(575, 348, '버전 2 커밋', { size: 16 })
-    + tag(383, 438, 176, 'git switch main', { color: c.ivory, mono: true }));
+    deck(id, 1.9, 1.65, 3.02, 1.4, { fill: '#f0e5c8' })
+    + route(id, [[-.2,1.65],[4,1.65]], { delay: 1.1 })
+    + route(id, [[4,1.65],[4,2.45],[-.2,2.45],[-.2,1.65]], { ...amberRail, delay: .5 })
+    + commit(...earlier, 39, c.honey)
+    + commit(...latest, 44, c.sage, true)
+    + line('M302 253v-25M479 351v-33', '#718277', 1.5)
+    + tag(302, 214, 82, 'HEAD', { mono: true, color: '#f3dfac' })
+    + tag(479, 304, 82, 'main', { mono: true, color: c.sage })
+    + tag(260, 321, 106, '버전 1 커밋', { size: 15 })
+    + tag(541, 413, 112, '버전 2 커밋', { size: 15 })
+    + tag(379, 462, 176, 'git switch main', { color: '#eef2e3', mono: true }));
 }
 
 function branchMergeScene() {
-  const id = 'section-git-branch';
-  return stage(id,
-    platform(id, 379, 304, 301, 115, '#f1e5c7')
-    + line('M198 291c125 9 256 2 371-8', '#dcd0ac', 12)
-    + line('M201 294c56 22 115 63 173 62 59 0 130-37 192-72', '#ddd0af', 12)
-    + flow(id, 'M215 291c122 9 239 2 326-6', { color: '#779682', pulse: '#c5ce9c' })
-    + flow(id, 'M216 304c44 21 85 44 130 50', { color: '#819883', delay: .55 })
-    + flow(id, 'M402 353c48-8 91-35 138-58', { color: '#819883', delay: 1.5 })
-    + spool(190, 287, 30, c.honey) + spool(374, 351, 27, c.sage) + spool(568, 279, 37, '#a4c3a7')
-    + label(185, 253, '기존 커밋', { size: 15 })
-    + label(567, 241, '병합 커밋', { size: 16, weight: 720 })
-    + line('M568 226v-17', ink, 2) + tag(568, 196, 81, 'main', { mono: true, color: c.sage })
-    + tag(367, 390, 170, 'branch-note.txt 커밋', { size: 14, mono: true })
-    + tag(371, 324, 147, 'practice-branch', { mono: true, size: 14 })
-    + tag(381, 471, 187, 'git merge --no-ff', { mono: true, color: '#dfedda' }));
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg section-art-svg section-git-branch git-grid-candidate" aria-hidden="true" focusable="false">
+  <title id="ggc-title">격자 방향에 맞춘 Git 병합</title>
+  <desc id="ggc-description">기존 커밋에서 main과 practice-branch 경로가 나뉩니다. 병합 커밋에는 기존 커밋과 branch-note.txt 커밋에서 들어오는 두 연결이 있습니다. 받침과 경로가 바닥 격자 두 방향에 평행합니다.</desc>
+  <defs>
+    <linearGradient id="ggc-deck" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#fffaf0"/>
+      <stop offset="1" stop-color="#f4e8cd"/>
+    </linearGradient>
+    <linearGradient id="ggc-sage" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#e9efd8"/>
+      <stop offset="1" stop-color="#b8d0b4"/>
+    </linearGradient>
+    <linearGradient id="ggc-amber" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#fbedc5"/>
+      <stop offset="1" stop-color="#e8bd70"/>
+    </linearGradient>
+    <linearGradient id="ggc-merge" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#c6e1cd"/>
+      <stop offset="1" stop-color="#8cb99f"/>
+    </linearGradient>
+    <filter id="ggc-shadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <path id="ggc-main-rail" d="M338 231L506 327" pathLength="100"/>
+    <path id="ggc-branch-rail" d="M338 231L254 279L422 375L506 327" pathLength="100"/>
+  </defs>
+  <style>
+    .git-grid-candidate .ggc-pulse { opacity: 0; stroke-dasharray: 5 95; stroke-dashoffset: 4; animation: ggc-travel 5s linear infinite; }
+    .git-grid-candidate .ggc-pulse-main { animation-duration: 5s; animation-delay: 1.05s; }
+    @keyframes ggc-travel {
+      0%, 4% { opacity: 0; stroke-dashoffset: 3; }
+      16% { opacity: .96; }
+      68% { opacity: .96; }
+      78%, 100% { opacity: 0; stroke-dashoffset: -95; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .git-grid-candidate .ggc-pulse { animation: none; }
+    }
+  </style>
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M340 210L585 350L421 444L176 304Z" fill="#7c632f" opacity=".13" filter="url(#ggc-shadow)"/>
+    <path d="M170 279L422 423L590 327V340L422 436L170 292Z" fill="#dfc58e" stroke="#434c58" stroke-width="2"/>
+    <path d="M422 423L590 327V340L422 436Z" fill="#d5bc85" stroke="#434c58" stroke-width="2"/>
+    <path d="M338 183L590 327L422 423L170 279Z" fill="url(#ggc-deck)" fill-opacity=".86" stroke="#404a59" stroke-width="2.3"/>
+    <path d="M338 193L573 327L422 413L187 279Z" fill="none" stroke="#fffaf0" stroke-width="1.6"/>
+    <path d="M212 303L380 207M254 327L422 231M296 351L464 255M338 375L506 279M380 399L548 303M296 207L548 351M254 231L506 375M212 255L464 399" fill="none" stroke="#9d977e" stroke-width="1" opacity=".24"/>
+
+    <g fill="none">
+      <use href="#ggc-main-rail" stroke="#c2d4bc" stroke-width="17"/>
+      <use href="#ggc-branch-rail" stroke="#efdfb3" stroke-width="17"/>
+      <use href="#ggc-main-rail" stroke="#527a65" stroke-width="3"/>
+      <use href="#ggc-branch-rail" stroke="#9f7436" stroke-width="3"/>
+      <use href="#ggc-main-rail" class="art-motion ggc-pulse ggc-pulse-main" stroke="#f7fff1" stroke-width="6"/>
+      <use href="#ggc-branch-rail" class="art-motion ggc-pulse" stroke="#fff8df" stroke-width="6"/>
+      <path d="M418 268L431 284L411 282" stroke="#527a65" stroke-width="3"/>
+      <path d="M276 286L289 300L269 299M439 355L455 356L447 370" stroke="#9f7436" stroke-width="3"/>
+    </g>
+
+    <g>
+      <ellipse cx="338" cy="234" rx="44" ry="24" fill="#6d5836" opacity=".10"/>
+      <path d="M305 214V231C305 243 320 252 338 252S371 243 371 231V214Z" fill="#caa36c" stroke="#354254" stroke-width="2"/>
+      <ellipse cx="338" cy="214" rx="33" ry="19" fill="url(#ggc-amber)" stroke="#354254" stroke-width="2"/>
+      <ellipse cx="338" cy="214" rx="23" ry="12.5" fill="none" stroke="#a67b41" stroke-width="1.2"/>
+      <ellipse cx="338" cy="214" rx="5.7" ry="3.2" fill="#987142"/>
+      <path d="M311 231Q320 243 338 243" fill="none" stroke="#eed8aa" stroke-width="1.3"/>
+    </g>
+
+    <g>
+      <ellipse cx="338" cy="330" rx="44" ry="24" fill="#6d5836" opacity=".10"/>
+      <path d="M305 310V327C305 339 320 348 338 348S371 339 371 327V310Z" fill="#89a88c" stroke="#354254" stroke-width="2"/>
+      <ellipse cx="338" cy="310" rx="33" ry="19" fill="url(#ggc-sage)" stroke="#354254" stroke-width="2"/>
+      <ellipse cx="338" cy="310" rx="23" ry="12.5" fill="none" stroke="#74917b" stroke-width="1.2"/>
+      <path d="M327 312L335 316L349 308" fill="none" stroke="#456c58" stroke-width="2.5"/>
+      <path d="M311 327Q320 339 338 339" fill="none" stroke="#c9ddbe" stroke-width="1.3"/>
+    </g>
+
+    <g>
+      <ellipse cx="506" cy="332" rx="48" ry="26" fill="#45584a" opacity=".14"/>
+      <path d="M470 309V327C470 340 486 350 506 350S542 340 542 327V309Z" fill="#709d87" stroke="#354254" stroke-width="2"/>
+      <ellipse cx="506" cy="309" rx="36" ry="20.5" fill="url(#ggc-merge)" stroke="#354254" stroke-width="2"/>
+      <ellipse cx="506" cy="309" rx="25" ry="13.5" fill="none" stroke="#5e8d74" stroke-width="1.3"/>
+      <path d="M495 304L505 310L517 303M495 314L505 310" fill="none" stroke="#365d4c" stroke-width="2.6"/>
+      <path d="M476 328Q485 341 506 341" fill="none" stroke="#bcdbc4" stroke-width="1.3"/>
+    </g>
+
+    <path d="M338 197V174M506 291V265M305 331L277 347V353M541 331L583 355" fill="none" stroke="#687a6d" stroke-width="1.4"/>
+    <rect x="288" y="147" width="100" height="28" rx="9" fill="#fff8e8" stroke="#a08860" stroke-width="1"/>
+    <rect x="469" y="237" width="74" height="29" rx="10" fill="#dfecdc" stroke="#6b927e" stroke-width="1.2"/>
+    <rect x="204" y="353" width="148" height="29" rx="9" fill="#fff8e8" stroke="#aa8a51" stroke-width="1"/>
+    <rect x="567" y="353" width="94" height="28" rx="9" fill="#eaf3e3" stroke="#6b927e" stroke-width="1"/>
+    <rect x="295" y="449" width="170" height="29" rx="10" fill="#eef2e5" stroke="#a0b3a0" stroke-width="1"/>
+  </g>
+  <g fill="#354254" stroke="none" text-anchor="middle" font-size="17" font-weight="600" font-family="Pretendard, Malgun Gothic, system-ui, sans-serif">
+    <text x="338" y="166">기존 커밋</text>
+    <text x="278" y="373" font-family="Consolas, monospace" font-size="15">practice-branch</text>
+    <text x="506" y="257" font-family="Consolas, monospace">main</text>
+    <text x="614" y="372" font-size="16">병합 커밋</text>
+    <text x="380" y="469" font-family="Consolas, monospace" font-size="15">git merge --no-ff</text>
+  </g>
+</svg>`;
 }
 
 function cloneScene() {
   const id = 'section-github-clone';
   return stage(id,
-    platform(id, 184, 328, 135, 61) + platform(id, 572, 332, 128, 59)
-    + label(178, 132, '내 컴퓨터 · 로컬 저장소', { size: 16, weight: 690 })
-    + monitor(id, 87, 161, 188, 131, 'git-practice', pocket(122, 216, 116, 53, '#e6bc74')
-      + tag(181, 244, 80, 'note.txt', { size: 13, mono: true }), { stand: true })
-    + tag(180, 384, 198, 'origin = 원격 주소 별칭', { size: 14, color: c.sage })
-    + flow(id, 'M296 226C361 200 408 200 475 227')
-    + label(388, 195, 'push', { size: 16, mono: true, color: c.green, weight: 720 })
-    + flow(id, 'M470 282C409 311 356 311 299 284', { color: '#658b98', pulse: '#98c9cb', delay: 1.35 })
-    + label(384, 331, 'fetch', { size: 16, mono: true, color: '#597c88', weight: 720 })
-    + label(571, 130, 'GitHub · 원격 저장소', { size: 16, weight: 690 })
-    + archive(id, 497, 172)
-    + spool(560, 209, 24, c.sage)
-    + tag(569, 384, 130, '커밋 기록', { color: c.ivory }));
+    label(186, 152, '내 컴퓨터 · 로컬 저장소', { size: 16, weight: 720 })
+    + deck(id, -.15, 4.45, 1.37, 1.14, { fill: '#f0e4c5' })
+    + deck(id, 4.4, -.34, 1.31, 1.2, { fill: '#e0e7cc' })
+    + route(id, [[.87,4.45],[2.44,4.45],[2.44,-.34],[3.62,-.34]], { delay: .3, z: -7 })
+    + route(id, [[4.43,.66],[4.43,4.91],[.79,4.91],[.79,4.68]], { ...blueRail, delay: 1.4, z: -6 })
+    + monitor(id, -.15, 4.45, 171, 133, 'git-practice',
+      folder(37, 44, 94, 76) + tag(86, 90, 75, 'note.txt', { mono: true, size: 13 }))
+    + label(566, 181, 'GitHub · 원격 저장소', { size: 16, weight: 720 })
+    + archive(id, 4.4, -.34)
+    + commit(...point(4.52,-.25,103), 27, c.sage, true)
+    + tag(308, 380, 66, 'push', { mono: true, color: '#e8edd6', textColor: c.green })
+    + tag(461, 454, 71, 'fetch', { mono: true, color: '#e3ece4', textColor: '#496977' })
+    + tag(381, 523, 205, 'origin = 원격 주소 별칭', { size: 14, color: c.sage }));
 }
 
 function remoteRolesScene() {
   const id = 'section-github-roles';
   return stage(id,
-    label(184, 149, 'GitHub · 원격 저장소', { size: 17, weight: 700 })
-    + archive(id, 107, 191, '#aec7ac')
-    + flow(id, 'M286 259C345 220 392 226 451 256', { delay: .45 })
-    + tag(371, 215, 110, 'git clone', { mono: true, color: c.sage })
-    + label(554, 144, '내 컴퓨터 · 사용자 홈', { size: 17, weight: 700 })
-    + platform(id, 552, 338, 151, 64)
-    + pocket(510, 196, 115, 93, '#cfc0a0') + label(566, 267, '원래 폴더', { size: 14 })
-    + pocket(463, 251, 172, 95, '#e6ba72', page(70, -15, 64, 79, { surface: c.ivory, angle: -9 }))
-    + tag(548, 317, 83, 'note.txt', { mono: true, size: 13 })
-    + tag(552, 395, 210, '~/git-practice-clone', { mono: true, size: 15 })
-    + label(552, 428, 'origin = 원격 주소 별칭', { size: 14, color: c.green }));
+    label(219, 165, 'GitHub · 원격 저장소', { size: 17, weight: 700 })
+    + deck(id, -.52, 3.4, 1.25, 1.13, { fill: '#e5ead3' })
+    + deck(id, 4.15, .1, 1.9, 1.18, { fill: '#f4e8ca' })
+    + route(id, [[.47,3.4],[3.12,3.4],[3.12,1.38]], { delay: .5 })
+    + archive(id, -.52, 3.4)
+    + tag(341, 382, 103, 'git clone', { mono: true, color: c.sage })
+    + label(543, 187, '내 컴퓨터 · 사용자 홈', { size: 17, weight: 700 })
+    + folder(529, 220, 109, 79, '#cbb795')
+    + label(600, 273, '원래 폴더', { size: 13 })
+    + folder(466, 275, 135, 78, c.honey,
+      page(44, -18, 62, 76, { angle: -5, fill: c.ivory }))
+    + tag(530, 324, 90, 'note.txt', { mono: true, size: 14 })
+    + tag(547, 425, 199, '~/git-practice-clone', { mono: true, size: 14 })
+    + label(547, 460, 'origin = 원격 주소 별칭', { size: 14, color: c.green }));
 }
 
 function pipeScene() {
   const id = 'section-terminal-bonus';
   return stage(id,
-    tag(380, 129, 407, 'Get-ChildItem -File | Select-Object Name', { color: c.sage, mono: true })
-    + platform(id, 168, 329, 100, 43) + platform(id, 590, 328, 116, 45)
-    + shadow(id, 376, 339, 100, 17)
-    + shape('M244 265h67q64 0 64 42h124v32H374q-28 0-32-21-3-19-32-19h-66Z', '#d4a65d')
-    + line('M248 270h64q62 0 62 45h121', '#f5d798', 3.5)
-    + flow(id, 'M257 283h56q43 0 45 29 4 13 21 13h109', { color: '#657e65', delay: .4 })
-    + page(117, 189, 80, 112, { angle: -18 })
-    + page(145, 207, 81, 117, { angle: 12, surface: '#dce7d3' })
-    + tag(171, 352, 119, 'ls · 파일 목록', { size: 15 })
-    + box(518, 232, 149, 37, c.ivory, 7, '#9c9b7e', 1.5)
-    + box(518, 278, 149, 37, c.ivory, 7, '#9c9b7e', 1.5)
-    + label(592, 256, 'note.txt', { mono: true, size: 16 })
-    + label(592, 302, 'README.md', { mono: true, size: 16 })
-    + tag(592, 352, 135, 'select · 이름만', { color: c.sage, size: 15 }));
+    deck(id, .25, 4.15, .99, .98)
+    + deck(id, 4.05, -.1, 1.27, 1.14, { fill: '#e5ead4' })
+    + route(id, [[1.05,4.15],[2.4,4.15],[2.4,-.1],[3.23,-.1]], { ...amberRail, z: -7 })
+    + page(155, 227, 83, 108, { angle: -7 })
+    + page(187, 248, 82, 102, { angle: 7, fill: '#e3ecd5' })
+    + tag(221, 398, 124, 'ls · 파일 목록', { size: 15 })
+    + tag(475, 158, 378, 'Get-ChildItem -File | Select-Object Name', { color: '#e4ebd4', mono: true, size: 14 })
+    + archive(id, 4.05, -.1, '파일 이름')
+    + tag(553, 305, 101, 'note.txt', { mono: true, size: 14 })
+    + tag(553, 335, 103, 'README.md', { mono: true, size: 14 })
+    + tag(555, 409, 142, 'select · 이름만', { color: c.sage }));
 }
 
 function vscodeSetupScene() {
   const id = 'section-tools-vscode-setup';
+  const download = point(.35, 4.65);
+  const end = point(4.95, .6);
   return stage(id,
-    platform(id, 125, 315, 85, 42) + platform(id, 379, 328, 119, 50) + platform(id, 627, 312, 94, 42)
-    + flow(id, 'M201 241c23-18 49-20 77-10')
-    + flow(id, 'M484 242c30-13 57-12 81 0', { delay: 1.6 })
-    + page(86, 193, 77, 116, { surface: c.ivory, angle: -9 })
-    + line('M124 185v-23m-12 13 12 12 12-12', c.green, 4)
-    + label(126, 367, '공식 다운로드', { size: 16, weight: 680 })
-    + monitor(id, 286, 174, 188, 133, 'Windows', box(306, 220, 147, 42, '#e2ead7', 5, 'none')
-      + tick(328, 242, .85) + label(392, 248, 'User Setup 설치', { size: 15, weight: 700 })
-      + glow(id, 302, 216, 156, 51, 1), { stand: true })
-    + pocket(569, 220, 116, 91, '#dfb672', page(47, -19, 62, 87, { surface: c.ivory, angle: 10 }))
-    + tag(628, 273, 95, 'README.md', { mono: true, size: 13 })
-    + label(628, 364, 'git-practice-clone', { mono: true, size: 14, weight: 680 }));
+    deck(id, .35, 4.65, 1.04, .94)
+    + deck(id, .85, .82, 1.28, 1.16, { fill: '#e7ead3' })
+    + deck(id, 4.95, .6, 1.22, 1.13)
+    + route(id, [[.35,3.69],[.35,1.76],[.85,1.76]], blueRail)
+    + route(id, [[1.85,.82],[3.9,.82]], { ...amberRail, delay: 1.2 })
+    + page(download[0]-35, download[1]-101, 70, 94, { angle: -6 })
+    + at(download[0], download[1]-72, oval(0, 0, 21, 19, '#e3ecd4', '#77947b', 1.5)
+      + line('M0-10v18m-7-7L0 8 7 1', c.green, 2.8))
+    + label(download[0], 450, '공식 다운로드', { size: 16, weight: 690 })
+    + monitor(id, .85, .82, 197, 129, 'Windows',
+      box(13, 48, 170, 40, '#e3ead4', 5, 'none') + tick(32, 67, .8)
+      + label(110, 73, 'User Setup 설치', { size: 15, weight: 700 })
+      + glow(id, 12, 47, 172, 42, .5)
+      + line('M19 106h63m8 0h43', '#8fa08a', 2.5), { rise: 22 })
+    + folder(end[0]-63, end[1]-92, 125, 83, c.honey,
+      page(38, -22, 67, 85, { angle: 7 }))
+    + tag(end[0], end[1]-36, 104, 'README.md', { mono: true, size: 14 })
+    + tag(end[0], end[1]+52, 178, 'git-practice-clone', { mono: true, size: 14 }));
 }
 
 function errorReportScene() {
   const id = 'section-git-bonus';
   const rows = [['폴더', 'git-practice'], ['브랜치', 'main'], ['명령', 'git push'], ['오류', '오류 원문 함께 보기'], ['내 수정', 'note.txt 보존']];
   return stage(id,
-    platform(id, 407, 376, 239, 88, '#f1e0ba')
-    + at(221, 146, box(5, 8, 277, 241, '#aa9872', 13)
-      + box(0, 0, 277, 241, '#d4b685', 13)
-      + box(12, 13, 254, 215, c.ivory, 8)
-      + box(77, -11, 122, 27, '#aebca4', 6)
-      + label(138, 7, '동기화 오류 보고', { size: 14, weight: 720 })
+    deck(id, 1.84, 1.8, 2.7, 1.65)
+    + deck(id, 4.75, 1.44, .89, .95, { fill: '#e6ead4' })
+    + route(id, [[2.9,1.8],[4.75,1.8],[4.75,1.44]], { delay: 1.5 })
+    + at(203, 128, box(7, 4, 264, 228, '#bba77e', 10, ink, 1.9)
+      + box(0, 0, 264, 227, '#d6c091', 10)
+      + box(10, 12, 244, 204, c.ivory, 6, '#968568', 1.6)
+      + box(72, -9, 120, 29, '#c0d2b7', 6, ink, 1.9)
+      + label(132, 10, '동기화 오류 보고', { size: 14, weight: 730 })
       + rows.map(([heading, example], index) => {
-        const y = 57 + index * 35;
-        return box(27, y - 11, 11, 11, c.sage, 2, '#8fa08c', 1.2) + label(49, y, heading, { size: 14, anchor: 'start', color: c.green, weight: 660 })
-          + label(137, y, example, { size: 14, anchor: 'start', mono: index < 3 });
-      }).join(''))
-    + glow(id, 242, 296, 229, 31)
-    + at(581, 325, shape('M0-55 43-30v45Q39 46 0 64-40 46-43 15v-45Z', '#91a88d')
-      + shape('M0-59 37-38v47Q32 32 0 50-33 32-37 9v-47Z', '#d9e7d1')
-      + box(-12, -5, 24, 18, c.honey, 4) + line('M-7-5v-6a7 7 0 0 1 14 0v6', ink, 2.3)
-      + oval(0, 4, 2, 2, ink, 'none'))
-    + tag(568, 403, 168, '비밀번호 · 토큰 제외', { color: c.sage, size: 14 }));
+        const y = 53 + index * 34;
+        return box(26, y - 11, 12, 12, c.sage, 2, '#8fa08c', 1.15) + tick(32, y-5, .38)
+          + label(46, y, heading, { size: 14, anchor: 'start', color: c.green, weight: 690 })
+          + label(107, y, example, { size: 14, anchor: 'start', mono: index < 3 });
+      }).join('')
+      + glow(id, 20, 135, 219, 30))
+    + at(529, 356,
+      shape('M-35-34 0-55 42-38v42Q39 27 2 47L0 54q-34-12-35-37Z', '#9bae94')
+      + shape('M-39-34-4-53 33-36V8Q30 31-4 51-36 32-39 9Z', '#e0ead4')
+      + box(-15, -7, 23, 18, c.honey, 4) + line('M-10-7v-5a6 6 0 0 1 12 0v5', ink, 2.3)
+      + oval(-4, 2, 2, 2, ink, 'none'))
+    + tag(525, 463, 171, '비밀번호 · 토큰 제외', { color: c.sage, size: 14 }));
 }
-
 
 export const toolSectionScenes = {
   'tools-vscode-setup': {

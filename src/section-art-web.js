@@ -1,4 +1,6 @@
 import { brandIconPaths } from './brand-icon-paths.js';
+import { project, unproject } from './illustration-plane.js';
+import { webGridCandidate } from './web-grid-candidate-illustration.js';
 
 const color = {
   ink: '#263747', muted: '#4a5c60', edge: '#978e79', wire: '#90a497',
@@ -18,18 +20,36 @@ const box = (x, y, w, h, fill = color.paper, r = 8, stroke = color.ink, width = 
   `<rect x='${x}' y='${y}' width='${w}' height='${h}' rx='${r}' fill='${fill}' stroke='${stroke}' stroke-width='${width}'/>`;
 const dot = (x, y, r = 5, fill = color.sage, stroke = color.ink, width = 1.6) =>
   `<circle cx='${x}' cy='${y}' r='${r}' fill='${fill}' stroke='${stroke}' stroke-width='${width}'/>`;
-const shadow = (x, y, rx, ry) =>
-  `<ellipse cx='${x}' cy='${y}' rx='${rx + 5}' ry='${ry + 4}' fill='#493c29' opacity='.045'/><ellipse cx='${x}' cy='${y}' rx='${rx}' ry='${ry}' fill='#493c29' opacity='.085'/>`;
 const bars = (x, y, widths, fill = color.sage, gap = 14, h = 4) =>
   widths.map((w, i) => box(x, y + i * gap, w, h, fill, h / 2, 'none', 0)).join('');
 const tick = (x, y, fill = color.teal) => shape(`M${x} ${y}l5 5 10-12`, 'none', fill, 2.8);
 
-function plinth(x, y, w, tone = color.light, side = color.shade) {
-  const dx = 40, h = 30, r = x + w;
-  return shadow(x + w / 2, y + h + 12, w / 2 + 21, 15)
-    + shape(`M${x + 9} ${y + 1}H${r - dx}l${dx + 2} ${h - 9}q6 5 6 10v11q0 6-8 6H${x + dx}q-10 0-16-5L${x + 1} ${y + 16}q-8-8 8-15Z`, side)
-    + shape(`M${x + 7} ${y}H${r - dx - 5}q5 0 11 4l${dx - 2} 18q9 6-2 8H${x + dx + 4}q-9 0-15-4L${x - 2} ${y + 11}q-10-7 9-11Z`, tone)
-    + shape(`M${x + dx + 11} ${y + 24}H${r - 14}`, 'none', color.paper, 1.5);
+const axis = (project(1, 0)[1] - project(0, 0)[1]) / (project(1, 0)[0] - project(0, 0)[0]);
+const figure = (corners, fill, stroke = color.ink, width = 2) =>
+  shape(`M${corners.map(point => point.join(' ')).join('L')}Z`, fill, stroke, width);
+
+function plinth(cx, cy, width, depth, { tone = color.light, side = color.shade, thickness = 8, direction = 1 } = {}) {
+  const [u, v] = unproject(cx, cy, thickness);
+  const long = width / 84, short = depth / 84;
+  const du = direction === 1 ? long : short, dv = direction === 1 ? short : long;
+  const outline = z => [[u - du, v - dv], [u + du, v - dv], [u + du, v + dv], [u - du, v + dv]]
+    .map(([offsetU, offsetV]) => project(offsetU, offsetV, z));
+  const top = outline(thickness), ground = outline(0);
+  const [north, east, south, west] = top;
+  const [, eastBase, southBase, westBase] = ground;
+  const highlight = ([x, y]) => [cx + (x - cx) * .91, cy + (y - cy) * .91];
+  const shadow = ground.map(([x, y]) => [cx + (x - cx) * 1.08, cy + (y - cy) * 1.08 + 8]);
+  return `<g opacity='.15'>${figure(shadow, '#655743', 'none')}</g>`
+    + figure([east, south, southBase, eastBase], color.edge, color.ink, 1.8)
+    + figure([west, south, southBase, westBase], side, color.ink, 1.8)
+    + figure(top, tone, color.ink, 1.8)
+    + shape(`M${highlight(west).join(' ')}L${highlight(north).join(' ')}L${highlight(east).join(' ')}`, 'none', color.paper, 1.25);
+}
+
+// A standing face sits on one of the worktop axes. Keep its verticals upright.
+function depthFace(cx, cy, body, { direction = 1, scale = 1 } = {}) {
+  const skew = direction * axis * scale;
+  return svgGroup(body, `matrix(${scale} ${skew} 0 ${scale} ${cx * (1 - scale)} ${cy * (1 - scale) - skew * cx})`);
 }
 
 function captionChip(x, y, label, w, fill = color.paper) {
@@ -37,49 +57,63 @@ function captionChip(x, y, label, w, fill = color.paper) {
     + center(x, y, label, 15);
 }
 
-function flow(prefix, x1, y1, x2, y2, { second = false, delay = 0 } = {}) {
+function flow(prefix, x1, y1, x2, y2, { second = false, delay = 0, turn = 1 } = {}) {
   const tint = second ? color.gold : color.teal;
-  return `<path d='M${x1} ${y1}L${x2} ${y2}' fill='none' stroke='${tint}' stroke-width='2.2' stroke-linecap='round' marker-end='url(#${prefix}-${second ? 'return' : 'forward'})'/>
-    <g class='art-motion ${prefix}-packet' style='--art-dx:${x2 - x1}px;--art-dy:${y2 - y1}px;animation-delay:${delay}s'>${dot(x1, y1, 4.7, tint, color.paper, 1.5)}</g>`;
+  const [u1, v1] = unproject(x1, y1), [u2, v2] = unproject(x2, y2);
+  const [mx, my] = turn === 1 ? project(u2, v1) : project(u1, v2);
+  const route = `M${x1} ${y1}L${mx} ${my}L${x2} ${y2}`;
+  return `${shape(route, 'none', color.paper, 6)}
+    <path d='${route}' fill='none' stroke='${tint}' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' marker-end='url(#${prefix}-${second ? 'return' : 'forward'})'/>
+    <circle class='art-motion ${prefix}-packet' r='4.5' opacity='0' fill='${tint}' stroke='${color.paper}' stroke-width='1.5' style='offset-path:path("${route}");animation-delay:${delay}s'/>`;
 }
 const pulse = (prefix, body, delay = 0) => `<g class='art-motion ${prefix}-pulse' style='animation-delay:${delay}s'>${body}</g>`;
 
-function standingWindow(x, y, w, h, { tone = color.mint, title = '', body = '', stand = true } = {}) {
-  const standX = x + w / 2;
-  return (stand
-    ? shadow(standX, y + h + 37, w / 2 - 2, 12)
-      + shape(`M${standX - 13} ${y + h - 1}h26l9 24h-44Z`, color.shade)
-      + shape(`M${standX - 23} ${y + h + 24}h46l22 12h-90Z`, color.light)
-      + shape(`M${standX - 45} ${y + h + 36}h90v4h-90Z`, color.shade)
-    : shadow(standX, y + h + 8, w / 2, 10))
-    + shape(`M${x + 8} ${y}l11-8h${w - 19}q10 0 10 9v${h - 8}l-10 9Z`, color.cream)
+function standingWindow(x, y, w, h, { tone = color.mint, title = '', body = '', direction = 1, base = color.light } = {}) {
+  const cx = x + w / 2, cy = y + h / 2;
+  const scale = w > 330 ? .82 : .92;
+  const bottom = cy + scale * (y + h - cy);
+  const sideX = 14 * direction;
+  const frontEdge = direction === 1 ? x + w : x;
+  const bevel = 2 * sideX * axis * direction;
+  const face = shape(`M${frontEdge} ${y + 4}l${sideX} -${bevel}v${h - 10}l${-sideX} ${bevel}Z`, color.shade)
+    + shape(`M${x + 4} ${y}l${sideX} -${bevel}h${w - 8}l${-sideX} ${bevel}Z`, color.light)
     + box(x, y, w, h, color.paper, 11)
     + shape(`M${x + 11} ${y + 1}h${w - 22}q10 0 10 10v16H${x + 1}V${y + 11}q0-10 10-10Z`, tone, color.ink, 1.2)
-    + dot(x + 13, y + 14, 2.7, color.teal, 'none') + dot(x + 24, y + 14, 2.7, color.edge, 'none')
+    + dot(x + 13, y + 14, 2.7, color.teal, 'none') + dot(x + 24, y + 14, 2.7, color.gold, 'none')
     + (title ? text(x + 35, y + 19, title, { size: 14, fill: color.ink }) : '')
+    + shape(`M${x + 11} ${y + h - 7}h${w - 22}`, 'none', color.cream, 1.35)
     + body;
+  return plinth(cx, bottom + 29, Math.min(w * .67 + 25, 230), 54, { tone: base, direction })
+    + depthFace(cx, bottom, shape(`M${cx - 12} ${bottom - 10}h24l8 31h-40Z`, color.shade)
+      + shape(`M${cx - 6} ${bottom + 2}v12`, 'none', color.paper, 1.3), { direction })
+    + depthFace(cx, cy, face, { direction, scale });
 }
 
-function documentPage(x, y, w, h, { tone = color.paper, label = '', body = '' } = {}) {
-  const fold = 19, r = x + w, bottom = y + h;
-  return shadow(x + w / 2, bottom + 12, w / 2 - 3, 12)
-    + shape(`M${x + 7} ${y + 11}H${r - fold + 7}l${fold} ${fold}V${bottom + 11}H${x + 7}Z`, color.shade)
+function documentPage(x, y, w, h, { tone = color.paper, label = '', body = '', direction = 1, deck = true } = {}) {
+  const fold = 19, r = x + w, bottom = y + h, cx = x + w / 2;
+  const layer = 7 * direction, offset = Math.abs(layer) * axis * 2;
+  const face = shape(`M${x + layer} ${y - offset}H${r - fold + layer}l${fold} ${fold}V${bottom - offset}H${x + layer}Z`, color.cream)
     + shape(`M${x} ${y}H${r - fold}l${fold} ${fold}V${bottom}H${x}Z`, tone)
     + shape(`M${r - fold} ${y}v${fold}h${fold}Z`, color.cream, color.ink, 1.65)
+    + shape(`M${x + 5} ${y + 7}v${h - 12}h${w - 11}`, 'none', color.paper, 1.25)
     + (label ? text(x + 13, y + 26, label, { fill: color.ink, size: 15 }) : '')
     + body;
+  return (deck ? plinth(cx + 1, bottom + 8, w + 12, 31, { direction }) : '')
+    + depthFace(cx, y + h / 2, face, { direction, scale: .92 });
 }
 
 function folder(x, y, w, h, tone = color.ochre) {
-  return shape(`M${x} ${y + 15}v-9q0-6 6-6h${w * .38}l14 13h${w * .62 - 20}q6 0 6 6v${h - 19}H${x}Z`, tone)
-    + shape(`M${x} ${y + h}l13-${h - 34}q2-5 7-5h${w - 11}q6 0 5 5l-12 ${h - 34}Z`, color.light)
-    + shape(`M${x + 21} ${y + 41}h${w - 23}`, 'none', color.paper, 1.4);
+  const bottom = y + h, middle = x + w / 2;
+  return plinth(middle + 6, bottom + 8, w + 10, 40)
+    + depthFace(middle, bottom, shape(`M${x} ${y + 15}v-9q0-6 6-6h${w * .38}l14 13h${w * .62 - 20}q6 0 6 6v${h - 19}H${x}Z`, tone)
+      + shape(`M${x} ${bottom}l13-${h - 34}q2-5 7-5h${w - 11}q6 0 5 5l-12 ${h - 34}Z`, color.light)
+      + shape(`M${x + 21} ${y + 41}h${w - 23}`, 'none', color.paper, 1.4));
 }
 
 function cylinder(x, y, w = 106, h = 155, tone = color.mint) {
   const cx = x + w / 2;
   const body = shape(`M${x} ${y}v${h}c0 24 ${w} 24 ${w} 0V${y}`, tone);
-  return shadow(cx, y + h + 28, w / 2 + 12, 12) + body
+  return plinth(cx, y + h + 16, w * .74, w * .74, { tone: color.cream }) + body
     + [h * .32, h * .65].map(n => shape(`M${x} ${y + n}c0 24 ${w} 24 ${w} 0`, 'none', color.ink, 1.5)).join('')
     + `<ellipse cx='${cx}' cy='${y}' rx='${w / 2}' ry='17' fill='${color.paper}' stroke='${color.ink}' stroke-width='2.15'/>`
     + shape(`M${x + 14} ${y + 32}v${h - 37}`, 'none', color.paper, 2)
@@ -87,17 +121,20 @@ function cylinder(x, y, w = 106, h = 155, tone = color.mint) {
 }
 
 function rack(x, y, w = 123, h = 148, body = color.light) {
-  const right = x + w;
-  return shadow(x + w / 2 + 9, y + h + 15, w / 2 + 2, 13)
-    + shape(`M${x} ${y}l17-12h${w}l-17 12Z`, color.paper)
-    + shape(`M${right} ${y}l17-12v${h}l-17 12Z`, color.shade)
+  const right = x + w, cx = x + w / 2;
+  const side = Math.min(w * .46, 57), extent = 2 * side * axis;
+  const face = shape(`M${x} ${y}l${side} -${extent}h${w}l-${side} ${extent}Z`, color.paper)
+    + shape(`M${right} ${y}l${side} -${extent}v${h}l-${side} ${extent}Z`, color.shade)
     + box(x, y, w, h, body, 7)
+    + [0, 1, 2, 3].map(i => shape(`M${right + 8} ${y + 38 + i * 10 - 16 * axis}l${side - 17} -${(side - 17) * 2 * axis}`, 'none', color.edge, 1.25)).join('')
     + [0, 1, 2].map(i => {
       const yy = y + 12 + i * ((h - 19) / 3);
       return box(x + 10, yy, w - 20, (h - 41) / 3, color.paper, 5, color.edge, 1.2)
         + dot(x + 23, yy + (h - 41) / 6, 3, i === 1 ? color.gold : color.teal, 'none')
         + shape(`M${x + 37} ${yy + (h - 41) / 6}h${w - 56}`, 'none', color.shade, 2.4);
     }).join('');
+  return plinth(cx + side / 2, y + h - side * axis / 2 + 4, w + 23, side + 20, { tone: body })
+    + depthFace(cx, y + h, face);
 }
 
 function card(x, y, w, h, { title = 'Git', button = '설명 보기', open = false, tone = color.mint } = {}) {
@@ -114,16 +151,21 @@ function keycap(x, y, w, label, tone = color.paper) {
     + center(x + w / 2, y + 23, label, 15, color.ink);
 }
 
+function controlKey(x, y, w, label, tone, direction = 1) {
+  const mid = x + w / 2;
+  return plinth(mid, y + 40, w + 12, 32, { direction })
+    + depthFace(mid, y + 20, keycap(x, y, w, label, tone), { direction });
+}
+
 function keyboard(x, y, groups) {
   const caps = groups.map(([label, w, tone], i) => {
     const offset = groups.slice(0, i).reduce((sum, [, width]) => sum + width + 8, 0);
     return keycap(x + 16 + offset, y + 13, w, label, tone);
   }).join('');
   const w = groups.reduce((sum, [, width]) => sum + width + 8, 0) + 24;
-  return shadow(x + w / 2, y + 66, w / 2 + 4, 11)
-    + shape(`M${x} ${y + 53}h${w}l16 10H${x + 14}Z`, color.shade)
-    + box(x, y, w, 55, color.light, 11)
-    + caps;
+  const cx = x + w / 2, cy = y + 32;
+  return plinth(cx, cy + 8, w + 13, 69, { tone: color.cream })
+    + svgGroup(caps, `matrix(1 ${axis} -.59 ${.59 * axis} ${cy * .59} ${(1 - .59 * axis) * cy - axis * cx - 6})`);
 }
 
 function cursor(x, y, fill = color.ochre) {
@@ -144,7 +186,7 @@ function frame(prefix, heading, body, caption, context = '') {
     <desc>${esc([heading, context, caption].filter(Boolean).join(' · '))}</desc>
     <defs>${markers}</defs>
     <style>
-      @keyframes ${prefix}-packet{0%,12%{transform:translate(0,0);opacity:0}20%,72%{opacity:1}96%,100%{transform:translate(var(--art-dx),var(--art-dy));opacity:0}}
+      @keyframes ${prefix}-packet{0%,12%{offset-distance:0%;opacity:0}20%,72%{opacity:1}96%,100%{offset-distance:100%;opacity:0}}
       @keyframes ${prefix}-pulse{0%,100%{opacity:.34}45%,65%{opacity:1}}
       .${prefix}-packet{animation:${prefix}-packet 4.9s ease-in-out infinite}
       .${prefix}-pulse{animation:${prefix}-pulse 4.9s ease-in-out infinite}
@@ -184,25 +226,23 @@ function structuredPrompt() {
     label: '읽는 화면',
     body: text(476, 211, '계획', { size: 20, fill: color.ink }) + bars(476, 229, [146], color.shade)
       + dot(482, 267, 3, color.teal, 'none') + text(495, 272, '문서 작성')
-      + text(476, 312, '중요', { fill: color.ink, weight: 800 }),
+      + text(476, 312, '중요', { fill: color.ink, weight: 800 })
+      + pulse(p, shape('M473 320h50', 'none', color.gold, 2.8), 1.25),
   });
   return frame(p, 'Codex 계획문으로 문법 연습', `
-    ${plinth(84, 346, 584)}
-    ${svgGroup(source, 'rotate(-7 202 253)')}
-    ${svgGroup(rendered, 'rotate(6 555 251)')}
+    ${source}
+    ${rendered}
     ${flow(p, 330, 258, 428, 248)}
-    ${pulse(p, shape('M473 320h50', 'none', color.gold, 2.8), 1.25)}
   `, '원문을 써 보고 읽는 화면과 비교합니다');
 }
 
 function typoraImageFlow() {
   const p = 'sa-markdown-typora-images';
   return frame(p, '이미지와 문서를 함께 공유하기', `
-    ${plinth(69, 343, 604)}
-    ${documentPage(84, 185, 126, 143, {tone: color.blue, body: picture(95, 205, 103, 87)})}
-    ${keycap(102, 321, 87, 'Ctrl + V', color.mint)}
+    ${documentPage(84, 174, 126, 143, {tone: color.blue, body: picture(95, 194, 103, 87)})}
+    ${controlKey(102, 331, 87, 'Ctrl + V', color.mint, -1)}
     ${folder(274, 238, 169, 109)}
-    ${documentPage(302, 131, 135, 173, {label: 'README.md', body: bars(316, 188, [100, 64], color.sage)})}
+    ${documentPage(302, 131, 135, 173, {label: 'README.md', body: bars(316, 188, [100, 64], color.sage), deck: false})}
     ${captionChip(354, 388, 'assets/', 100, color.ochre)}
     ${standingWindow(519, 170, 151, 143, {title: 'GitHub', body: picture(542, 210, 103, 78)})}
     ${flow(p, 220, 250, 284, 221)}
@@ -213,54 +253,52 @@ function typoraImageFlow() {
 function readmeSections() {
   const p = 'sa-tools-markdown';
   const chapter = (x, y, number, label, tone) => documentPage(x, y, 154, 89, {
-    tone,
+    tone, direction: -1, deck: false,
     body: dot(x + 21, y + 25, 10, color.paper, color.edge, 1.3)
       + center(x + 21, y + 30, number, 11, color.ink)
       + text(x + 37, y + 30, label, { size: 14, fill: color.ink })
       + bars(x + 14, y + 50, [114, 88], color.shade),
   });
   return frame(p, 'README에 프로젝트를 소개합니다', `
-    ${plinth(83, 391, 598)}
-    ${svgGroup(documentPage(112, 146, 220, 241, {
+    ${documentPage(112, 146, 220, 241, {
       label: 'README.md',
       body: code(133, 219, '# Git 연습 메모', 18, color.ink)
         + code(133, 255, '## 소개') + code(133, 286, '## 준비') + code(133, 318, '## 확인 방법'),
-    }), 'rotate(-7 222 267)')}
-    ${chapter(487, 115, '1', '프로젝트 소개', color.mint)}
-    ${chapter(469, 220, '2', '준비할 것', color.ochre)}
-    ${chapter(451, 325, '3', '확인 방법', color.blue)}
-    ${flow(p, 350, 250, 451, 250)}
+    })}
+    ${plinth(546, 405, 177, 55, {tone: color.mint, direction: -1})}
+    ${chapter(474, 109, '1', '프로젝트 소개', color.mint)}
+    ${chapter(474, 203, '2', '준비할 것', color.ochre)}
+    ${chapter(474, 297, '3', '확인 방법', color.blue)}
+    ${flow(p, 346, 240, 463, 237, {turn: -1})}
   `, '소개와 준비, 확인 방법을 한 문서에 담습니다', '제목 · 목록 · 링크 · 표');
 }
 
 function readmeToGithub() {
   const p = 'sa-markdown-readme-push';
   return frame(p, 'README를 작성해 GitHub에서 보기', `
-    ${plinth(72, 350, 603)}
     ${folder(84, 245, 176, 111)}
-    ${documentPage(118, 150, 132, 151, {label: 'README.md', body: bars(131, 205, [95, 72, 85], color.sage)})}
+    ${documentPage(118, 150, 132, 151, {label: 'README.md', body: bars(131, 205, [95, 72, 85], color.sage), deck: false})}
     ${captionChip(170, 397, 'git-practice', 138)}
-    ${shape('M326 282l48-45 49 45-49 46Z', color.ochre)}
-    ${shape('M326 282v11l48 44 49-44v-11l-49 46Z', color.shade)}
-    ${center(374, 288, 'commit', 15, color.ink)}
-    ${standingWindow(500, 157, 172, 164, {title: 'GitHub 저장소', body: code(517, 217, 'README.md') + bars(517, 235, [123, 107, 114], color.sage)})}
+    ${plinth(374, 282, 58, 53, {tone: color.ochre, thickness: 13})}
+    ${dot(374, 281, 14, color.gold, color.paper)}
+    ${center(374, 334, 'commit', 15, color.ink)}
+    ${standingWindow(500, 157, 172, 164, { title: 'GitHub 저장소', body: code(517, 217, 'README.md')
+      + bars(517, 235, [123, 107, 114], color.sage) + pulse(p, tick(635, 289), 1.9) })}
     ${flow(p, 267, 273, 318, 282)}
     ${flow(p, 430, 278, 490, 241, {second: true, delay: .95})}
     ${center(460, 298, 'push', 14, color.gold)}
-    ${pulse(p, tick(635, 289), 1.9)}
   `, '저장소에서 README 화면 확인', '원래 작업 폴더 · Git 기록');
 }
 
 function readmeFetchAndPull() {
   const p = 'sa-markdown-readme-fetch';
   return frame(p, '원격의 새 기록을 다른 복제본에서 확인', `
-    ${plinth(68, 361, 607)}
     ${rack(88, 182, 99, 140, color.blue)}
-    ${center(139, 373, 'GitHub · 원격', 15)}
+    ${captionChip(139, 415, 'GitHub · 원격', 120, color.blue)}
     ${documentPage(322, 180, 131, 162, {label: 'origin/main', tone: color.mint, body: bars(336, 242, [89, 70], color.wire)})}
-    ${center(388, 382, '파일은 그대로', 15)}
+    ${captionChip(388, 430, '파일은 그대로', 127, color.mint)}
     ${folder(532, 245, 132, 105, color.ochre)}
-    ${documentPage(559, 169, 100, 138, {body: code(570, 198, 'README.md', 13) + bars(571, 219, [65, 50], color.sage)})}
+    ${documentPage(559, 169, 100, 138, {body: code(570, 198, 'README.md', 13) + bars(571, 219, [65, 50], color.sage), deck: false})}
     ${flow(p, 219, 240, 308, 242)}
     ${center(262, 219, '① fetch', 15, color.teal)}
     ${flow(p, 465, 249, 548, 237, {second: true, delay: 1.15})}
@@ -271,7 +309,6 @@ function readmeFetchAndPull() {
 function markdownBranches() {
   const p = 'sa-markdown-code';
   return frame(p, '같은 문법, 다른 편집 경험', `
-    ${plinth(78, 350, 601)}
     ${standingWindow(87, 170, 169, 145, {
       title: 'Notion',
       body: box(104, 216, 136, 23, color.mint, 4, color.edge, 1.2)
@@ -292,7 +329,6 @@ function markdownBranches() {
 function reviewDiff() {
   const p = 'sa-tools-map';
   return frame(p, '변경한 코드에서 세 가지 확인', `
-    ${plinth(139, 387, 474)}
     ${standingWindow(187, 106, 378, 253, {
       title: 'PyCharm · 변경 비교',
       body: shape('M376 150v184', 'none', color.edge, 1.5)
@@ -300,12 +336,12 @@ function reviewDiff() {
         + box(208, 201, 148, 30, color.rose, 5, 'none', 0) + code(218, 221, '− 제목: 터미널', 15, color.rust)
         + box(392, 201, 151, 30, color.mint, 5, 'none', 0) + code(402, 221, '+ 윈도우 터미널', 15)
         + code(216, 268, 'id: terminal', 15, color.muted) + code(397, 268, 'id: terminal', 15, color.muted)
-        + bars(215, 297, [113, 95], color.shade) + bars(400, 297, [123, 90], color.shade),
+        + bars(215, 297, [113, 95], color.shade) + bars(400, 297, [123, 90], color.shade)
+        + pulse(p, cursor(514, 228), 1),
     })}
-    ${pulse(p, svgGroup(cursor(514, 228), 'rotate(-8 514 228)'), 1)}
-    ${captionChip(259, 441, '경로', 65)}
-    ${captionChip(376, 441, '차이', 65, color.mint)}
-    ${captionChip(493, 441, '실행', 65)}
+    ${captionChip(259, 460, '경로', 65)}
+    ${captionChip(376, 460, '차이', 65, color.mint)}
+    ${captionChip(493, 460, '실행', 65)}
   `, '바뀐 줄을 읽고, 유지할 ID와 실행 결과도 확인합니다');
 }
 
@@ -314,14 +350,13 @@ function vscodeFinding() {
   const controls = [['Ctrl + P', 143, color.mint], ['Ctrl + Shift + F', 166, color.blue], ['Ctrl + Shift + P', 166, color.ochre]];
   const results = [['README.md', color.mint], ['프로젝트 내용', color.blue], ['명령 팔레트', color.ochre]];
   return frame(p, '단축키는 찾을 대상에 맞게', `
-    ${plinth(76, 374, 589)}
-    ${controls.map(([key, w, tone], i) => keycap(115 + i * 8, 164 + i * 77, w, key, tone)).join('')}
+    ${controls.map(([key, w, tone], i) => controlKey(115 + i * 8, 139 + i * 88, w, key, tone, -1)).join('')}
     ${standingWindow(398, 128, 262, 232, {
       title: 'VS Code',
       body: results.map(([label, tone], i) => box(422, 171 + i * 57, 210, 34, tone, 6, color.edge, 1.05)
         + text(434, 193 + i * 57, label, { size: 15, fill: color.ink })).join(''),
     })}
-    ${controls.map(([,w], i) => flow(p, 129 + i * 8 + w, 182 + i * 77, 397, 186 + i * 57, {delay: i * .8, second: i === 2})).join('')}
+    ${controls.map(([,w], i) => flow(p, 123 + i * 8 + w, 151 + i * 96, 400, 128 + i * 57, {delay: i * .8, second: i === 2})).join('')}
   `, '파일 이름 · 내용 · 명령을 구별하면 찾기가 빨라집니다');
 }
 
@@ -329,24 +364,22 @@ function sharedShortcutPractice() {
   const p = 'sa-tools-shortcuts-practice';
   const outcomes = [['찾기 · 이동', color.mint], ['편집 · 저장', color.blue], ['화면 · 터미널', color.ochre]];
   return frame(p, '손으로 익히는 편집기 단축키', `
-    ${plinth(64, 353, 627)}
-    ${svgGroup(keyboard(104, 257, [['Ctrl', 44, color.mint], ['Shift', 53, color.paper], ['P', 33, color.ochre]]), 'rotate(-8 194 293)')}
+    ${keyboard(104, 257, [['Ctrl', 44, color.mint], ['Shift', 53, color.paper], ['P', 33, color.ochre]])}
     ${center(200, 205, '단축키를 눌러 보기', 16)}
     ${standingWindow(429, 139, 248, 211, {
       tone: color.lilac,
       title: '편집기에서 결과 확인',
       body: outcomes.map(([label, tone], i) => box(449, 186 + i * 47, 201, 32, tone, 6, color.edge, 1.1)
-        + text(461, 207 + i * 47, label, { size: 15 }) + tick(626, 199 + i * 47)).join(''),
+        + text(461, 207 + i * 47, label, { size: 15 }) + tick(626, 199 + i * 47)).join('')
+        + pulse(p, cursor(599, 259), 1.1),
     })}
     ${flow(p, 307, 273, 418, 251)}
-    ${pulse(p, cursor(599, 259), 1.1)}
   `, 'VS Code에서 눌러 보고 PyCharm의 키맵도 비교합니다');
 }
 
 function pycharmEnvironment() {
   const p = 'sa-tools-pycharm';
   return frame(p, '실행 환경과 단축키 설정 구별하기', `
-    ${plinth(67, 354, 624)}
     ${rack(103, 211, 107, 126, color.mint)}
     ${captionChip(160, 391, 'Python 실행 환경', 148)}
     ${standingWindow(280, 128, 195, 158, {
@@ -368,49 +401,46 @@ function integratedWorkbench() {
     + box(455, 149, 171, 94, color.mint, 4, color.edge, 1.4)
     + text(466, 172, 'Markdown 미리보기', { size: 13 }) + bars(467, 190, [131, 109], color.sage)
     + box(272, 251, 173, 40, color.ink, 5, 'none', 0) + code(282, 276, '> git diff', 14, color.mint)
-    + box(455, 251, 171, 40, color.blue, 5, 'none', 0) + text(466, 276, 'Git 변경 비교', { size: 14 });
+    + box(455, 251, 171, 40, color.blue, 5, 'none', 0) + text(466, 276, 'Git 변경 비교', { size: 14 })
+    + pulse(p, dot(614, 267, 4, color.gold, color.paper, 1.1), 1.1);
   return frame(p, 'README 한 줄로 도구 연결하기', `
-    ${plinth(72, 366, 608)}
     ${documentPage(87, 170, 124, 164, { label: 'README.md', tone: color.blue, body: bars(103, 220, [86, 64, 76], color.wire) })}
     ${standingWindow(250, 102, 398, 209, { title: 'VS Code 작업대', body: screen })}
-    ${flow(p, 218, 248, 246, 248)}
-    ${pulse(p, dot(614, 267, 4, color.gold, color.paper, 1.1), 1.1)}
-    ${rack(546, 337, 72, 82, color.light)}
-    ${captionChip(450, 413, 'GitHub 원격', 118)}
+    ${flow(p, 218, 247, 267, 235, {turn:-1})}
+    ${rack(558, 365, 72, 70, color.blue)}
+    ${captionChip(469, 438, 'GitHub 원격', 118)}
   `, '원격 파일은 저장만으론 그대로입니다', 'README 수정 · 저장 · 통합 터미널');
 }
 
 function htmlCardPractice() {
   const p = 'sa-tools-html';
   return frame(p, 'HTML · 구조와 화면을 연결하기', `
-    ${plinth(76, 379, 602)}
-    ${documentPage(86, 112, 309, 252, {
+    ${documentPage(86, 114, 272, 244, {
       label: 'VS Code · index.html',
       body: code(110, 177, '<article>', 16, color.muted)
         + code(126, 212, '<h1>Git</h1>', 16, color.teal)
-        + code(126, 251, '<button>설명 보기</button>', 15, color.teal)
+        + code(126, 251, '<button>설명 보기</button>', 14, color.teal)
         + code(126, 287, '<p>변경을 확인하고', 16, color.teal)
         + code(126, 311, '기록합니다.</p>', 16, color.teal)
         + code(110, 338, '</article>', 16, color.muted),
     })}
-    ${standingWindow(468, 141, 193, 202, {title: '브라우저', body: card(486, 184, 159, 133, {open: true})})}
-    ${flow(p, 403, 248, 461, 242)}
-    ${pulse(p, shape('M503 294h106', 'none', color.gold, 2), 1.35)}
+    ${standingWindow(468, 141, 193, 202, {title: '브라우저', body: card(486, 184, 159, 133, {open: true})
+      + pulse(p, shape('M503 284h105', 'none', color.gold, 2), 1.35)})}
+    ${flow(p, 369, 252, 464, 234, {turn:-1})}
   `, '제목 · 버튼 · 설명이 같은 순서로 화면에 놓입니다');
 }
 
 function cssCardPractice() {
   const p = 'sa-tools-css';
   return frame(p, 'CSS · 내용에 모양 더하기', `
-    ${plinth(74, 366, 612)}
     ${documentPage(97, 149, 236, 203, {
-      label: 'style.css',
+      label: 'style.css', tone: color.blue,
       body: code(118, 212, '.card {', 17, color.ink) + code(131, 248, 'padding: 24px;', 17)
         + code(131, 282, 'border-radius: 12px;', 16) + code(118, 319, '}', 17, color.ink),
     })}
-    ${standingWindow(444, 119, 211, 229, {title: '같은 Git 카드', body: card(461, 169, 172, 145, {open: true})})}
+    ${standingWindow(444, 119, 211, 229, {title: '같은 Git 카드', body: card(461, 169, 172, 145, {open: true})
+      + pulse(p, shape('M462 241h12m-12-5v10m12-10v10', 'none', color.gold, 2.2), 1.1)})}
     ${flow(p, 351, 257, 435, 257)}
-    ${pulse(p, shape('M462 241h12m-12-5v10m12-10v10', 'none', color.gold, 2.2), 1.1)}
     ${captionChip(543, 416, '24px 안쪽 여백', 158, color.ochre)}
   `, '같은 구조에서 색 · 여백 · 모서리가 달라집니다');
 }
@@ -418,184 +448,163 @@ function cssCardPractice() {
 function javascriptCardPractice() {
   const p = 'sa-tools-javascript';
   return frame(p, 'JavaScript · 클릭하면 상태가 바뀝니다', `
-    ${plinth(71, 370, 616)}
     ${documentPage(99, 151, 245, 187, {
-      label: 'script.js',
+      label: 'script.js', tone: color.ochre,
       body: code(119, 220, 'click → hidden 변경', 17, color.ink)
         + code(119, 256, 'detail.hidden = !isHidden;', 13) + bars(120, 285, [172, 128], color.shade),
     })}
     ${standingWindow(415, 123, 253, 217, {
       title: '브라우저',
-      body: card(433, 169, 101, 139, {tone: color.light}) + card(549, 169, 101, 139, {open: true}),
+      body: card(433, 169, 101, 139, {tone: color.light}) + card(549, 169, 101, 139, {open: true})
+        + center(483, 330, '접힘', 13) + center(599, 330, '펼침', 13) + pulse(p, cursor(490, 231), .65),
     })}
     ${flow(p, 362, 247, 406, 231)}
-    ${center(483, 330, '접힘', 13)}${center(599, 330, '펼침', 13)}
-    ${pulse(p, cursor(490, 231), .65)}
   `, '버튼을 다시 누르면 설명을 숨깁니다');
 }
 
 
 function localAndRemote() {
   const p = 'sa-web-map';
-  const layer = (x, y, label, front, top) => shape(`M${x} ${y}h134l27 15-134 0Z`, top)
-    + shape(`M${x} ${y}l27 15h134v20H${x + 27}l-27-15Z`, front)
-    + text(x + 38, y + 29, label, { size: 13.5, fill: color.ink });
+  const layer = (cx, y, label, tone) => plinth(cx, y, 147, 64, { tone, side: tone, thickness: 19 })
+    + depthFace(cx, y, center(cx - 32, y + 24, label, 14, color.ink));
   return frame(p, '프론트엔드 · 브라우저 화면', `
-    ${plinth(72, 365, 615)}
-    ${layer(112, 271, 'JavaScript · 동작', color.ochre, color.paper)}
-    ${layer(106, 224, 'CSS · 모양', color.blue, color.paper)}
-    ${layer(100, 177, 'HTML · 내용', color.mint, color.paper)}
-    ${brandTile(114, 323, 'react', 'React')}${brandTile(210, 323, 'vue', 'Vue')}
-    ${standingWindow(436, 115, 234, 217, {title: '브라우저', body: card(459, 162, 188, 143, {title:'Git 강의 카드', open:true})})}
-    ${flow(p, 280, 223, 429, 225)}
-    ${pulse(p, cursor(534, 232), 1.45)}
+    ${layer(217, 319, 'JavaScript · 동작', color.ochre)}
+    ${layer(217, 253, 'CSS · 모양', color.blue)}
+    ${layer(217, 187, 'HTML · 내용', color.mint)}
+    ${brandTile(121, 405, 'react', 'React')}${brandTile(213, 405, 'vue', 'Vue')}
+    ${standingWindow(436, 115, 234, 217, {title: '브라우저', body: card(459, 162, 188, 143, {title:'Git 강의 카드', open:true})
+      + pulse(p, cursor(534, 232), 1.45)})}
+    ${flow(p, 332, 254, 425, 239, {turn: -1})}
     ${logoCredit()}
   `, '화면의 구조 · 모양 · 동작을 만듭니다');
 }
 
 function webResponsibilities() {
   const p = 'sa-web-http';
-  const monitor = (x, y, label, tone) => standingWindow(x, y, 228, 191, {
+  const monitor = (x, y, label, tone, direction, mark) => standingWindow(x, y, 228, 191, {
     title: label,
     tone,
-    body: card(x + 17, y + 44, 196, 124, {title: 'Git 강의 카드', open: true}),
+    direction,
+    body: card(x + 17, y + 44, 196, 124, {title: 'Git 강의 카드', open: true}) + mark,
   });
   return frame(p, '같은 카드, 두 가지 실행 방법', `
-    ${plinth(62, 367, 297)}${plinth(399, 367, 291, color.light)}
-    ${monitor(83, 136, 'Live Server · VS Code', color.mint)}
-    ${monitor(419, 136, 'Vite · 개발 도구', color.lilac)}
+    ${monitor(83, 136, 'Live Server · VS Code', color.mint, 1, pulse(p, tick(286, 151)))}
+    ${monitor(419, 136, 'Vite · 개발 도구', color.lilac, -1, pulse(p, cursor(600, 246), 1.2))}
     ${captionChip(195, 425, '저장하면 화면 갱신', 188, color.mint)}
     ${captionChip(537, 425, 'npm run dev', 157, color.lilac)}
-    ${pulse(p, tick(293, 154))}
-    ${pulse(p, cursor(600, 246), 1.2)}
     ${center(376, 215, '=', 21, color.wire)}
   `, '이번 카드 실습: Live Server · Vite 실행 명령 읽어보기');
 }
 
 function serverToBrowser() {
-  const p = 'sa-web-html';
-  return frame(p, '프론트엔드와 백엔드의 역할', `
-    ${plinth(67, 346, 623)}
-    ${standingWindow(90, 134, 219, 189, {
-      title: '프론트엔드 · 브라우저',
-      body: card(105, 174, 189, 130, { title: 'Git 강의 카드', open: true }),
-    })}
-    ${rack(499, 146, 133, 153, color.blue)}
-    ${captionChip(567, 329, '백엔드 · 서버', 130, color.blue)}
-    ${flow(p, 328, 198, 484, 198)}
-    ${center(407, 182, '요청', 15, color.teal)}
-    ${flow(p, 485, 251, 324, 251, {second: true, delay: 1.5})}
-    ${center(406, 277, '응답', 15, color.gold)}
-    ${brandTile(101, 399, 'react', 'React')}${brandTile(197, 399, 'vue', 'Vue')}
-    ${center(455, 370, 'Python', 13.5)}${center(648, 370, 'Java', 13.5)}
-    ${brandTile(325, 388, 'fastapi', 'FastAPI')}${brandTile(414, 388, 'flask', 'Flask')}
-    ${brandTile(503, 388, 'django', 'Django')}${brandTile(606, 388, 'spring', 'Spring')}
+  const footer = `<g font-family='Pretendard Variable,Pretendard,Malgun Gothic,system-ui,sans-serif'>
+    ${center(127, 461, '프론트엔드', 13.5)}${center(422, 461, '백엔드 · Python', 13.5)}${center(633, 461, 'Java', 13.5)}
+    ${brandTile(40, 471, 'react', 'React')}${brandTile(131, 471, 'vue', 'Vue')}
+    ${brandTile(290, 471, 'fastapi', 'FastAPI')}${brandTile(381, 471, 'flask', 'Flask')}
+    ${brandTile(472, 471, 'django', 'Django')}${brandTile(591, 471, 'spring', 'Spring')}
     ${logoCredit()}
-  `, '브라우저는 화면을 그리고 서버는 요청을 처리합니다', 'Live Server는 화면 파일 확인 도구');
+  </g>`;
+  return webGridCandidate
+    .replace('</desc>', ' 프론트엔드: React, Vue. 백엔드: Python, FastAPI, Flask, Django, Java, Spring. Live Server는 화면 파일 확인 도구입니다.</desc>')
+    .replace(/<\/svg>\s*$/, `${footer}</svg>`);
 }
 
 function htmlJsonCard() {
   const p = 'sa-backend-html-json';
   return frame(p, 'HTML 안의 JSON으로 카드 채우기', `
-    ${plinth(91, 370, 581)}
-    ${svgGroup(documentPage(103, 155, 200, 190, {
+    ${documentPage(103, 155, 200, 190, {
       label: 'HTML',
       body: code(120, 211, '{ "title": "Git" }', 17)
         + box(121, 239, 162, 48, color.lilac, 7, color.edge, 1.3)
         + code(133, 270, 'JSON.parse(...)', 15, color.ink),
-    }), 'rotate(-5 203 250)')}
-    ${standingWindow(429, 118, 222, 222, {title: '브라우저 · 카드', body: card(452, 167, 177, 140, {open: true})})}
-    ${flow(p, 322, 248, 421, 249)}
-    ${pulse(p, shape('M462 199h28', 'none', color.gold, 2.8), 1.05)}
+    })}
+    ${standingWindow(429, 118, 222, 222, {title: '브라우저 · 카드', body: card(452, 167, 177, 140, {open: true})
+      + pulse(p, shape('M462 199h28', 'none', color.gold, 2.8), 1.05)})}
+    ${flow(p, 322, 248, 421, 249, {turn:-1})}
   `, 'HTML 안에 둔 데이터를 브라우저에서 읽습니다');
 }
 
 function pythonDictionaryApi() {
   const p = 'sa-backend-python';
   return frame(p, 'Python 딕셔너리와 JSON 응답', `
-    ${plinth(72, 364, 617)}
-    ${rack(100, 161, 111, 148)}
-    ${captionChip(151, 354, 'FastAPI · :8000', 150, color.ochre)}
-    ${documentPage(255, 163, 146, 164, {
+    ${rack(78, 150, 97, 145, color.mint)}
+    ${captionChip(134, 397, 'FastAPI · :8000', 150, color.ochre)}
+    ${documentPage(285, 167, 146, 158, {
       label: '/api/dict',
       tone: color.mint,
-      body: code(267, 245, '"title": "Git"', 13, color.ink) + bars(269, 268, [78, 99], color.sage),
+      body: code(297, 245, '"title": "Git"', 13, color.ink) + bars(299, 268, [78, 99], color.sage)
+        + pulse(p, dot(408, 294, 4, color.teal, color.paper, 1.4), .65),
     })}
-    ${standingWindow(491, 142, 175, 178, {title: '브라우저 · :8000', body: card(507, 187, 143, 111, {open: true})})}
-    ${flow(p, 230, 242, 249, 242)}
-    ${flow(p, 412, 244, 484, 233, {delay: 1.15})}
-    ${pulse(p, dot(202, 192, 4, color.teal, color.paper, 1.4), .65)}
+    ${standingWindow(511, 145, 175, 178, {title: '브라우저 · :8000', body: card(527, 190, 143, 111, {open: true})})}
+    ${flow(p, 230, 241, 276, 223, {turn:-1})}
+    ${flow(p, 440, 251, 504, 233, {delay: 1.15, turn:-1})}
   `, '화면과 API 모두 FastAPI 주소에서 제공됩니다');
 }
 
 function sqliteApi() {
   const p = 'sa-backend-sqlite';
   return frame(p, 'SQLite에서 카드 데이터를 가져오기', `
-    ${plinth(68, 363, 627)}
     ${cylinder(91, 166, 109, 150, color.lilac)}
-    ${center(144, 155, 'SQLite', 16, color.ink)}
+    ${captionChip(144, 135, 'SQLite', 79, color.lilac)}
     ${rack(306, 164, 117, 159, color.mint)}
     ${captionChip(365, 360, '/api/sqlite', 104, color.mint)}
     ${standingWindow(528, 156, 145, 165, {title: '브라우저', body: card(540, 195, 120, 111, {open: true})})}
     ${flow(p, 212, 242, 299, 242)}
-    ${flow(p, 449, 244, 519, 236, {second: true, delay: 1.15})}
+    ${flow(p, 479, 242, 519, 236, {second: true, delay: 1.15})}
     ${center(253, 222, '조회', 14)}
-    ${center(483, 222, 'JSON', 14)}
+    ${center(502, 210, 'JSON', 14)}
   `, 'DB의 행을 조회해 같은 카드 화면에 보여 줍니다');
 }
 
 function templateEngines() {
   const p = 'sa-web-jinja';
   return frame(p, '서버 템플릿에 데이터 넣기', `
-    ${plinth(72, 363, 623)}
     ${cylinder(106, 195, 93, 115, color.blue)}
-    ${center(152, 176, 'DB', 18, color.ink)}
+    ${captionChip(152, 162, 'DB', 52, color.blue)}
     ${documentPage(295, 137, 174, 185, {
       label: 'Jinja2',
       tone: color.lilac,
       body: code(310, 217, '{{ lesson.title }}', 14)
         + box(310, 251, 130, 34, color.paper, 6, color.edge, 1.3)
-        + center(375, 273, 'HTML 생성', 14),
+        + center(375, 273, 'HTML 생성', 14) + pulse(p, tick(428, 304), .8),
     })}
     ${standingWindow(543, 160, 133, 161, {title: '브라우저', body: card(554, 200, 108, 107, {open: true})})}
     ${flow(p, 213, 246, 287, 245)}
     ${flow(p, 482, 246, 534, 245, {second: true, delay: 1.2})}
-    ${pulse(p, tick(428, 304), .8)}
   `, 'FastAPI 주소에서 HTML 제공 · 브라우저가 화면을 그립니다');
 }
 
 function cardLayers() {
   const p = 'sa-frontend-css';
   return frame(p, '같은 CSS를 다른 방식으로 표현', `
-    ${plinth(65, 374, 631)}
-    ${svgGroup(documentPage(87, 131, 242, 89, {
-      label: 'CSS 속성', tone: color.blue,
+    ${documentPage(87, 118, 242, 99, {
+      label: 'CSS 속성', tone: color.blue, direction: -1,
       body: code(103, 190, 'padding: 24px;', 17),
-    }), 'rotate(-5 208 176)')}
-    ${svgGroup(documentPage(88, 270, 241, 91, {
-      label: 'Tailwind 클래스', tone: color.mint,
-      body: code(105, 329, 'p-6  rounded-xl', 17),
-    }), 'rotate(4 208 314)')}
-    ${standingWindow(465, 141, 197, 204, {title: '같은 Git 카드',body: card(479, 180, 166, 142, {open:true})})}
-    ${flow(p, 344, 185, 457, 222)}
-    ${flow(p, 347, 308, 457, 270, {second: true, delay: 1.45})}
-    ${captionChip(559, 414, '여백 · 모서리', 142, color.ochre)}
-    ${pulse(p, shape('M480 218h13m-13-5v10m13-10v10', 'none', color.gold, 2.2), 1.15)}
+    })}
+    ${documentPage(88, 299, 241, 91, {
+      label: 'Tailwind 클래스', tone: color.mint, direction: -1,
+      body: code(105, 358, 'p-6  rounded-xl', 17),
+    })}
+    ${standingWindow(465, 141, 197, 204, {title: '같은 Git 카드',body: card(479, 180, 166, 142, {open:true})
+      + pulse(p, shape('M480 218h13m-13-5v10m13-10v10', 'none', color.gold, 2.2), 1.15)})}
+    ${flow(p, 338, 151, 457, 222)}
+    ${flow(p, 338, 331, 457, 270, {second: true, delay: 1.45, turn:-1})}
+    ${captionChip(559, 442, '여백 · 모서리', 142, color.ochre)}
   `, '기본 CSS와 유틸리티 클래스의 결과를 비교합니다');
 }
 
 function alpineStateGraph() {
   const p = 'sa-frontend-alpine';
   return frame(p, '클릭 → 상태 → 화면 표시', `
-    ${plinth(74, 363, 616)}
-    ${keycap(97, 248, 112, '@click', color.ochre)}
-    ${pulse(p, cursor(178, 266), .15)}
-    ${shadow(375, 258, 77, 12)}
-    ${box(303, 146, 141, 74, color.mint, 37)}
-    ${box(309, 151, 129, 63, color.sage, 31, color.edge, 1.35)}
-    ${dot(402, 183, 23, color.paper, color.teal, 2.2)}
-    ${center(374, 126, 'x-data', 17, color.ink)}
-    ${center(374, 285, 'open · true / false', 15)}
+    ${controlKey(97, 248, 112, '@click', color.ochre)}
+    ${pulse(p, cursor(178, 270), .15)}
+    ${plinth(374, 222, 147, 43, {tone: color.mint})}
+    ${depthFace(374, 185, box(303, 146, 141, 74, color.mint, 37)
+      + box(309, 151, 129, 63, color.sage, 31, color.edge, 1.35)
+      + dot(402, 183, 23, color.paper, color.teal, 2.2)
+      + pulse(p, dot(402, 183, 11, color.sage, 'none'), 1.2), {direction:-1})}
+    ${captionChip(374, 112, 'x-data', 87, color.mint)}
+    ${center(374, 317, 'open · true / false', 15)}
     ${standingWindow(509, 214, 158, 137, {title: 'x-show', body: card(522, 248, 132, 93, {open: true})})}
     ${flow(p, 217, 259, 294, 201)}
     ${flow(p, 450, 202, 503, 254, {second: true, delay: 1.1})}
@@ -608,11 +617,10 @@ function reusablePrompt() {
   const notesFor = (x, y) => notes.map(([label,tone], index) => box(x, y + index * 33, 162, 22, tone, 4, color.edge, 1.1)
     + text(x + 9, y + 16 + index * 33, label, {size: 13, fill: color.ink}) + bars(x + 49, y + 9 + index * 33, [89], color.shade)).join('');
   return frame(p, '다음 작업에 다시 쓰는 요청 카드', `
-    ${plinth(83, 366, 601)}
-    ${svgGroup(documentPage(104, 137, 209, 212, {label: '요청 카드', body: notesFor(123, 185)}), 'rotate(-6 207 238)')}
-    ${standingWindow(439, 126, 219, 215, {title: '다음 요청', tone: color.lilac, body: notesFor(463, 181)})}
+    ${documentPage(104, 137, 209, 212, {label: '요청 카드', body: notesFor(123, 185)})}
+    ${standingWindow(439, 126, 219, 215, {title: '다음 요청', tone: color.lilac, body: notesFor(463, 181)
+      + pulse(p, cursor(582, 239), 1.25)})}
     ${flow(p, 326, 246, 427, 233)}
-    ${pulse(p, cursor(582, 239), 1.25)}
   `, '비어 있는 구획을 다음 작업의 실제 정보로 채웁니다');
 }
 
@@ -622,7 +630,6 @@ function environmentParity() {
   const display = (x, y) => hints.map(([label, tone], i) => box(x, y + i * 42, 183, 26, tone, 4, color.edge, 1.1)
     + text(x + 11, y + 18 + i * 42, label, {size: 14,fill: color.ink})).join('');
   return frame(p, '실행 버튼과 터미널의 기준 맞추기', `
-    ${plinth(78, 374, 602)}
     ${standingWindow(93, 139, 221, 202, {title: 'PyCharm 실행 설정', body: display(111, 190)})}
     ${standingWindow(447, 139, 221, 202, {title: 'PowerShell', tone: color.blue, body: display(465, 190)})}
     ${hints.map((_,i)=>flow(p, 329, 201 + i * 42, 436, 201 + i * 42, { delay: i * .65, second: i === 1 })).join('')}
@@ -633,7 +640,6 @@ function environmentParity() {
 function addressAndBuild() {
   const p = 'sa-web-bonus';
   return frame(p, '주소의 경로와 브라우저 해시 구별', `
-    ${plinth(85, 361, 591)}
     ${box(129, 123, 498, 57, color.paper, 16, color.edge, 1.65)}
     ${dot(153, 153, 4, color.sage, 'none')}
     ${code(174, 158, '/notes/', 20)}
@@ -650,22 +656,20 @@ function addressAndBuild() {
 function completeClassNames() {
   const p = 'sa-frontend-bonus';
   return frame(p, 'Tailwind 3 · 완전한 클래스 문자열', `
-    ${plinth(77, 373, 606)}
-    ${svgGroup(documentPage(106, 150, 217, 175, {
+    ${documentPage(106, 150, 217, 175, {
       label: '조립 문자열',
       tone: color.light,
       body: code(119, 222, 'bg-$' + '{color}-500', 19, color.rust)
         + shape('M118 230h169', 'none', color.rust, 1.9)
         + bars(119, 258, [134, 105], color.shade),
-    }), 'rotate(-5 215 237)')}
+    })}
     ${documentPage(446, 131, 207, 211, {
       label: '완전한 문자열',
       tone: color.mint,
       body: code(462, 202, 'bg-teal-500', 18) + code(462, 239, 'bg-slate-500', 18)
-        + code(462, 289, './templates/**/*.html', 13, color.ink),
+        + code(462, 289, './templates/**/*.html', 13, color.ink) + pulse(p, tick(618, 225), 1.1),
     })}
     ${flow(p, 337, 239, 436, 237)}
-    ${pulse(p, tick(618, 225), 1.1)}
     ${captionChip(539, 413, 'content 경로', 130)}
   `, '실제 템플릿 경로와 완전한 클래스가 빌드 대상에 있어야 합니다');
 }

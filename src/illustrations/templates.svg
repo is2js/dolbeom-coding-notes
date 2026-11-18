@@ -1,94 +1,150 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-templates" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="topic-templates-paper" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop stop-color="#fffaf0" />
-    <stop offset="1" stop-color="#eadcc0" />
-    </linearGradient>
-    <filter id="topic-templates-shade" x="-30%" y="-200%" width="160%" height="500%">
-      <feGaussianBlur stdDeviation="9" />
-    </filter>
+    <linearGradient id="grid-templates-cream" x2=".8" y2="1"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#f1e4c5"/></linearGradient>
+    <linearGradient id="grid-templates-sage" x2=".8" y2="1"><stop stop-color="#e8efdb"/><stop offset="1" stop-color="#b8cdb4"/></linearGradient>
+    <linearGradient id="grid-templates-amber" x2=".8" y2="1"><stop stop-color="#fff0c6"/><stop offset="1" stop-color="#edc783"/></linearGradient>
+    <linearGradient id="grid-templates-rose" x2=".8" y2="1"><stop stop-color="#f8e3d5"/><stop offset="1" stop-color="#e8bea6"/></linearGradient>
+    <linearGradient id="grid-templates-plum" x2=".8" y2="1"><stop stop-color="#f0e7f4"/><stop offset="1" stop-color="#d3c0d9"/></linearGradient>
+    <linearGradient id="grid-templates-sky" x2=".8" y2="1"><stop stop-color="#ebf2df"/><stop offset="1" stop-color="#bfd5ca"/></linearGradient>
+    <linearGradient id="grid-templates-night" x2=".8" y2="1"><stop stop-color="#557080"/><stop offset="1" stop-color="#293f50"/></linearGradient>
+    <filter id="grid-templates-shadow" x="-.3" y="-.55" width="1.6" height="2.1"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="grid-templates-contact" x="-.3" y="-.5" width="1.6" height="2"><feGaussianBlur stdDeviation="4"/></filter>
   </defs>
   <style>
-    .topic-art-templates .lesson-signal { animation: templates-topic-signal 4.8s linear var(--beat) infinite; }
-    .topic-art-templates .lesson-ping { animation: templates-topic-ping 4.8s ease-in-out var(--beat) infinite; }
-    @keyframes templates-topic-signal {
-      0%{stroke-dashoffset:.14;opacity:0} 8%,55%{opacity:1}
-      65%,100%{stroke-dashoffset:-1;opacity:0}
+    .topic-art-templates .topic-grid-packet { opacity: 0; stroke-dasharray: 4 96; animation: grid-templates-transfer 5.4s linear infinite; }
+    .topic-art-templates .topic-grid-glow { opacity: .66; animation: grid-templates-glow 3.2s ease-in-out infinite; }
+    @keyframes grid-templates-transfer {
+      0%, 5% { opacity: 0; stroke-dashoffset: 4; } 15%, 63% { opacity: .9; }
+      77%, 100% { opacity: 0; stroke-dashoffset: -96; }
     }
-    @keyframes templates-topic-ping { 0%,100%{opacity:.32} 22%,45%{opacity:.96} 63%{opacity:.32} }
-    @media(prefers-reduced-motion:reduce) { .topic-art-templates .art-motion { animation:none!important; } }
+    @keyframes grid-templates-glow { 0%, 100% { opacity: .3; } 45%, 61% { opacity: .88; } }
+    @media (prefers-reduced-motion: reduce) { .topic-art-templates .art-motion { animation: none; } }
   </style>
-  <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="383" cy="427" rx="259" ry="24" fill="#765f3c" stroke="none" stroke-width="0" opacity=".19" filter="url(#topic-templates-shade)" />
-    <g transform="translate(211 365)"><path d="M-122 -2L-9 52q9 4 18 0L122 -2v12L9 64q-9 4-18 0L-122 10Z" fill="#c5b491" stroke="#314347" stroke-width="2.5" />
-    <path d="M-119 -7 -9 -55q9-4 18 0L119 -7q6 3 0 7L9 52q-9 4-18 0L-119 0q-6-4 0-7Z" fill="url(#topic-templates-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-112 -3 -9 -49q9-4 18 0L112 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 56v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+  <g font-family="Pretendard, Malgun Gothic, system-ui, sans-serif" stroke="#34434c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="212,208.08 341.36,282 170,379.92 40.64,306" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-templates-shadow)"/>
+    <polygon points="338,267 170,363 170,375 338,279" fill="#86758e" stroke-width="2"/>
+    <polygon points="44,291 170,363 170,375 44,303" fill="#a492af" stroke-width="2"/>
+    <polygon points="212,195 338,267 170,363 44,291" fill="url(#grid-templates-plum)" stroke-width="2"/>
+    <polyline points="48.2,290.7 212,197.1 333.8,266.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="248.54,221.82 91.46,311.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="290.54,245.82 133.46,335.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="175.46,221.82 290.54,287.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="133.46,245.82 248.54,311.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="91.46,269.82 206.54,335.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <g transform="translate(380 362)"><path d="M-101 -2L-9 52q9 4 18 0L101 -2v12L9 64q-9 4-18 0L-101 10Z" fill="#aeba9f" stroke="#314347" stroke-width="2.5" />
-    <path d="M-98 -7 -9 -55q9-4 18 0L98 -7q6 3 0 7L9 52q-9 4-18 0L-98 0q-6-4 0-7Z" fill="url(#topic-templates-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-91 -3 -9 -49q9-4 18 0L91 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 56v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    <ellipse cx="212" cy="202.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="323.72" cy="266.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="170" cy="354.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="58.28" cy="290.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <polygon points="422,280.08 509.36,330 338,427.92 250.64,378" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-templates-shadow)"/>
+    <polygon points="506,315 338,411 338,423 506,327" fill="#b09e77" stroke-width="2"/>
+    <polygon points="254,363 338,411 338,423 254,375" fill="#c9b88b" stroke-width="2"/>
+    <polygon points="422,267 506,315 338,411 254,363" fill="url(#grid-templates-cream)" stroke-width="2"/>
+    <polyline points="258.2,362.7 422,269.1 501.8,314.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="458.54,293.82 301.46,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="385.46,293.82 458.54,335.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="343.46,317.82 416.54,359.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="301.46,341.82 374.54,383.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <g transform="translate(571 364)"><path d="M-104 -2L-9 54q9 4 18 0L104 -2v12L9 66q-9 4-18 0L-104 10Z" fill="#bcb799" stroke="#314347" stroke-width="2.5" />
-    <path d="M-101 -7 -9 -57q9-4 18 0L101 -7q6 3 0 7L9 54q-9 4-18 0L-101 0q-6-4 0-7Z" fill="url(#topic-templates-paper)" stroke="#314347" stroke-width="2.5" />
-    <path d="M-94 -3 -9 -51q9-4 18 0L94 -3" fill="none" stroke="#ffffff" stroke-width="1.2" opacity=".69" />
-    <path d="M0 58v11" fill="none" stroke="#314347" stroke-width="1.4" opacity=".35" />
+    <ellipse cx="422" cy="274.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="491.72" cy="314.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="338" cy="402.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="268.28" cy="362.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <polygon points="506,136.08 635.36,210 506,283.92 376.64,210" fill="#6e5f41" stroke="none" opacity=".19" filter="url(#grid-templates-shadow)"/>
+    <polygon points="632,195 506,267 506,279 632,207" fill="#7d9983" stroke-width="2"/>
+    <polygon points="380,195 506,267 506,279 380,207" fill="#9ab194" stroke-width="2"/>
+    <polygon points="506,123 632,195 506,267 380,195" fill="url(#grid-templates-sage)" stroke-width="2"/>
+    <polyline points="384.2,194.7 506,125.1 627.8,194.7" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g opacity=".2">
+    <polyline points="542.54,149.82 427.46,215.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="584.54,173.82 469.46,239.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="469.46,149.82 584.54,215.58" fill="none" stroke="#807c65" stroke-width="0.92"/><polyline points="427.46,173.82 542.54,239.58" fill="none" stroke="#807c65" stroke-width="0.92"/>
     </g>
-    <path d="M241 241C263 233 282 244 312 264" fill="none" stroke="#a7733e" stroke-width="3.3" />
-    <path d="M241 241C263 233 282 244 312 264" fill="none" stroke="#ffdfa1" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:0.35s" stroke-dasharray=".12 1" />
-    <g transform="translate(313 264) rotate(30)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#a7733e" stroke-width="2.45" />
+    <ellipse cx="506" cy="130.36" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="617.72" cy="194.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="506" cy="258.04" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <ellipse cx="394.28" cy="194.2" rx="2.2" ry="1.32" fill="#867556" stroke="none" opacity=".48"/>
+    <path d="M296,295L338,319" fill="none" stroke="#fff9e7" stroke-width="9"/>
+    <path d="M296,295L338,319" fill="none" stroke="#7c687c" stroke-width="3"/>
+    <path d="M296,295L338,319" fill="none" class="art-motion topic-grid-packet" pathLength="100" stroke="#fffdf5" stroke-width="4.6" style="animation-delay:0s"/>
+    <polygon points="323.91770199487127,310.95297256849784 310.1498464554691,308.8443820804813 315.1112358390374,300.1619506592367" fill="#7c687c" stroke="none"/>
+    <path d="M422,271L464,247" fill="none" stroke="#fff9e7" stroke-width="9"/>
+    <path d="M422,271L464,247" fill="none" stroke="#357b74" stroke-width="3"/>
+    <path d="M422,271L464,247" fill="none" class="art-motion topic-grid-packet" pathLength="100" stroke="#fffdf5" stroke-width="4.6" style="animation-delay:1.55s"/>
+    <polygon points="450.3377019948712,254.80702743150215 441.5312358390374,265.5980493407633 436.5698464554691,256.9156179195187" fill="#357b74" stroke="none"/>
+    <polygon points="133.04,249.68 241.4,311.6 172.94,350.72 64.58,288.8" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-templates-contact)"/>
+    <polygon points="234.68,304.6 172.94,339.88 172.94,347.88 234.68,312.6" fill="#86758e" stroke-width="1.85"/>
+    <polygon points="71.3,281.8 172.94,339.88 172.94,347.88 71.3,289.8" fill="#a492af" stroke-width="1.85"/>
+    <polygon points="133.04,246.52 234.68,304.6 172.94,339.88 71.3,281.8" fill="url(#grid-templates-plum)" stroke-width="1.85"/>
+    <polyline points="75.5,281.5 133.04,248.62 230.48,304.3" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 133.88 250.34)">
+    <rect x="0" y="0" width="111" height="65.5" fill="#fff9e8" rx="4" stroke="#b7aa8d" stroke-width="1.18"/><text x="8" y="19" fill="#7c687c" font-size="12" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">{ 데이터 }</text><polyline points="8,31 75.19999999999999,31" fill="none" stroke="#9e83a3" stroke-width="2"/>
+    <polyline points="8,39 63.67999999999999,39" fill="none" stroke="#9e83a3" stroke-width="2"/>
+    <polyline points="8,47 82.88,47" fill="none" stroke="#9e83a3" stroke-width="2"/><circle cx="105" cy="59.5" r="1.8" fill="#ac9161" stroke="none"/>
     </g>
-    <path d="M241 325C268 334 292 319 312 300" fill="none" stroke="#8b7395" stroke-width="3.3" />
-    <path d="M241 325C268 334 292 319 312 300" fill="none" stroke="#e6dbea" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:1.3s" stroke-dasharray=".12 1" />
-    <g transform="translate(313 299) rotate(-37)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#8b7395" stroke-width="2.45" />
+    <path d="M197.32 205.96v30a34 19.43 0 0 0 68 0v-30Z" fill="#86758e" stroke-width="1.65"/>
+    <path d="M200.32 234.96a31 17.43 0 0 0 62 0" fill="none" stroke="#a492af" stroke-width="1.65"/>
+    <ellipse cx="231.32" cy="205.96" rx="34" ry="19.43" fill="url(#grid-templates-plum)" stroke-width="1.7"/>
+    <ellipse cx="231.32" cy="205.96" rx="28" ry="16.43" fill="none" stroke="#f9f2da" stroke-width="1.1" opacity=".82"/>
+    <ellipse cx="231.32" cy="205.96" rx="4" ry="2.25" fill="#927955" stroke="none"/>
+    <path d="M197.32 184.96v18a34 19.43 0 0 0 68 0v-18Z" fill="#86758e" stroke-width="1.65"/>
+    <path d="M200.32 201.96a31 17.43 0 0 0 62 0" fill="none" stroke="#a492af" stroke-width="1.65"/>
+    <ellipse cx="231.32" cy="184.96" rx="34" ry="19.43" fill="url(#grid-templates-plum)" stroke-width="1.7"/>
+    <ellipse cx="231.32" cy="184.96" rx="28" ry="16.43" fill="none" stroke="#f9f2da" stroke-width="1.1" opacity=".82"/>
+    <text x="231.32" y="188.96" fill="#34434c" font-size="15" stroke="none" text-anchor="middle" font-weight="740">DB</text>
+    <polygon points="417.38,261.92 511.04,315.44 420.32,367.28 326.66,313.76" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-templates-contact)"/>
+    <polygon points="500.54,310.16 421.58,355.28 421.58,362.28 500.54,317.16" fill="#7d9983" stroke-width="1.7"/>
+    <polygon points="338.84,308 421.58,355.28 421.58,362.28 338.84,315" fill="#9ab194" stroke-width="1.7"/>
+    <polygon points="417.8,262.88 500.54,310.16 421.58,355.28 338.84,308" fill="url(#grid-templates-sage)" stroke-width="1.7"/>
+    <polyline points="343.04,307.7 417.8,264.98 496.34,309.86" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <polygon points="488.36,243.92 421.16,282.32 421.16,348.32 488.36,309.92" fill="#7d9983" stroke-width="2.05"/>
+    <polygon points="351.02,242.24 421.16,282.32 421.16,348.32 351.02,308.24" fill="#9ab194" stroke-width="2.05"/>
+    <polygon points="418.22,203.84 488.36,243.92 421.16,282.32 351.02,242.24" fill="url(#grid-templates-sage)" stroke-width="2.05"/>
+    <polyline points="355.22,241.94 418.22,205.94 484.16,243.62" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 419.06 210.26)">
+    <rect x="0" y="0" width="68.5" height="67" fill="#e2ead7" stroke="#8a9e8c" stroke-width="1.2" rx="2.5"/><polyline points="8,8 58.5,8" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,13 58.5,13" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,18 58.5,18" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,23 58.5,23" fill="none" stroke="#819589" stroke-width="1.32"/><polyline points="8,28 58.5,28" fill="none" stroke="#819589" stroke-width="1.32"/>
     </g>
-    <path d="M442 281C476 270 490 268 525 275" fill="none" stroke="#456f6b" stroke-width="3.6" />
-    <path d="M442 281C476 270 490 268 525 275" fill="none" stroke="#d8e9ba" stroke-width="4.2" pathLength="1" class="art-motion lesson-signal" style="--beat:2.4s" stroke-dasharray=".12 1" />
-    <g transform="translate(526 275) rotate(11)"><path d="M-8-4 0 0-8 4" fill="none" stroke="#456f6b" stroke-width="2.45" />
+    <g transform="matrix(1 0.5714285714285714 0 1 351.02 242.24)">
+    <rect x="6" y="13" width="58.14" height="17" fill="#405a60" rx="2.2" stroke="#44585a" stroke-width="1.1"/><polyline points="11,19 44.14,19" fill="none" stroke="#b2c5b9" stroke-width="1.5"/><polyline points="11,24 39.14,24" fill="none" stroke="#76968a" stroke-width="1.1"/><circle cx="58.14" cy="20" r="2.5" fill="#dfba71" stroke="none"/><circle cx="58.14" cy="20" r="3.7" fill="#dfba71" class="art-motion topic-grid-glow" stroke="none"/><rect x="6" y="38.5" width="58.14" height="17" fill="#405a60" rx="2.2" stroke="#44585a" stroke-width="1.1"/><polyline points="11,44.5 44.14,44.5" fill="none" stroke="#b2c5b9" stroke-width="1.5"/><polyline points="11,49.5 39.14,49.5" fill="none" stroke="#76968a" stroke-width="1.1"/><circle cx="58.14" cy="45.5" r="2.5" fill="#aeca9e" stroke="none"/><circle cx="58.14" cy="45.5" r="3.7" fill="#aeca9e" class="art-motion topic-grid-glow" stroke="none"/>
     </g>
-    <g transform="translate(176 188)"><path d="M0 15v55c0 24 69 24 69 0V15" fill="#e6c37e" stroke="#314347" stroke-width="2.45" />
-    <ellipse cx="34.5" cy="15" rx="34.5" ry="14" fill="#f5e1a9" stroke="#314347" stroke-width="2.3" />
-    <path d="M0 33c0 22 69 22 69 0M0 51c0 22 69 22 69 0" fill="none" stroke="#9c7b46" stroke-width="1.35" />
-    <ellipse cx="34.5" cy="12" rx="20" ry="5" fill="#fff4d2" stroke="none" stroke-width="2" />
+    <g transform="matrix(1 -0.5714285714285714 0 1 421.16 282.32)">
+    <polyline points="9,22 39,22" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,32 39,32" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,42 39,42" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,52 39,52" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,62 39,62" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
+    <polyline points="9,72 39,72" fill="none" stroke="#527a72" stroke-width="1.35" opacity=".72"/>
     </g>
-    <g transform="translate(158 289) rotate(6)"><rect x="4" y="5" width="84" height="45" rx="6" fill="#b59fbe" stroke="#314347" stroke-width="2" />
-    <rect x="0" y="0" width="84" height="45" rx="6" fill="#e3d4e7" stroke="#314347" stroke-width="2.2" />
-    <text x="42" y="29" text-anchor="middle" fill="#8b7395" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">{{ title }}</text></g>
-    <g transform="translate(318 270)"><path d="M2 1 16-11h111l-8 12v46l14-12V-11M2 1h119" fill="#cfe2c5" stroke="#314347" stroke-width="2.25" />
-    <rect x="1" y="0" width="119" height="46" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
-    <path d="M17 22h51m10 0h13" fill="none" stroke="#456f6b" stroke-width="2.2" />
-    <circle cx="102" cy="22" r="3.5" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    <polygon points="344.3,316.64 416.96,358.16 342.62,400.64 269.96,359.12" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-templates-contact)"/>
+    <polygon points="410.24,351.16 342.62,389.8 342.62,397.8 410.24,359.16" fill="#b09e77" stroke-width="1.85"/>
+    <polygon points="276.68,352.12 342.62,389.8 342.62,397.8 276.68,360.12" fill="#c9b88b" stroke-width="1.85"/>
+    <polygon points="344.3,313.48 410.24,351.16 342.62,389.8 276.68,352.12" fill="url(#grid-templates-cream)" stroke-width="1.85"/>
+    <polyline points="280.88,351.82 344.3,315.58 406.04,350.86" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(.84 .48 -.84 .48 345.14 317.3)">
+    <rect x="0" y="0" width="68.5" height="72.5" fill="#fff9e8" rx="4" stroke="#b7aa8d" stroke-width="1.18"/><text x="8" y="19" fill="#357b74" font-size="12" stroke="none" font-family="Consolas, IBM Plex Mono, monospace" font-weight="600">{{ title }}</text><polyline points="8,32 47.589999999999996,32" fill="none" stroke="#7f9c8a" stroke-width="2"/>
+    <polyline points="8,40 40.635,40" fill="none" stroke="#7f9c8a" stroke-width="2"/>
+    <polyline points="8,48 45.985,48" fill="none" stroke="#7f9c8a" stroke-width="2"/><circle cx="62.5" cy="66.5" r="1.8" fill="#ac9161" stroke="none"/>
     </g>
-    <g transform="translate(318 213)"><path d="M2 1 16-11h111l-8 12v45l14-12V-11M2 1h119" fill="#9dbb99" stroke="#314347" stroke-width="2.25" />
-    <rect x="1" y="0" width="119" height="45" rx="5" fill="#fff9e9" stroke="#314347" stroke-width="2.25" />
-    <path d="M17 21h49m10 0h16" fill="none" stroke="#456f6b" stroke-width="2.2" />
-    <circle cx="102" cy="21" r="3.5" fill="#e7bb63" stroke="#314347" stroke-width="1.3" />
+    <polygon points="503.06,128.96 618.98,195.2 506,259.76 390.08,193.52" fill="#4d4a34" stroke="none" opacity=".24" filter="url(#grid-templates-contact)"/>
+    <polygon points="612.26,190.2 506,250.92 506,256.92 612.26,196.2" fill="#7d9983" stroke-width="1.55"/>
+    <polygon points="396.8,188.52 506,250.92 506,256.92 396.8,194.52" fill="#9ab194" stroke-width="1.55"/>
+    <polygon points="503.06,127.8 612.26,190.2 506,250.92 396.8,188.52" fill="url(#grid-templates-sage)" stroke-width="1.55"/>
+    <polyline points="401,188.22 503.06,129.9 608.06,189.9" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <polygon points="587.48,107.6 579.92,111.92 579.92,202.92 587.48,198.6" fill="#b09e77" stroke-width="1.65"/>
+    <polygon points="480.8,55.28 579.92,111.92 579.92,202.92 480.8,146.28" fill="#c9b88b" stroke-width="1.65"/>
+    <polygon points="488.36,50.96 587.48,107.6 579.92,111.92 480.8,55.28" fill="url(#grid-templates-cream)" stroke-width="1.65"/>
+    <polyline points="485,54.98 488.36,53.06 583.28,107.3" fill="none" stroke="#fffdf4" stroke-width="1.25" opacity=".72"/>
+    <g transform="matrix(1 0.5714285714285714 0 1 480.8 55.28)">
+    <rect x="5" y="8" width="89.12000000000002" height="74" fill="#ebf0df" rx="4" stroke="#a3b49a" stroke-width="1.4"/><text x="11" y="29" fill="#34434c" font-size="12.48" stroke="none" font-weight="760">Git 강의 카드</text><polyline points="11,42 67.64000000000001,42" fill="none" stroke="#809b87" stroke-width="1.9"/>
+    <polyline points="11,51 77.08000000000001,51" fill="none" stroke="#809b87" stroke-width="1.9"/><rect x="11" y="62" width="57" height="12" fill="#72a086" rx="3" stroke="none"/><circle cx="16" cy="68" r="2.1" fill="#ffefbd" class="art-motion topic-grid-glow" stroke="none"/>
     </g>
-    <circle cx="420" cy="291" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:1.5s" opacity=".42" />
-    <g transform="translate(530 197)"><path d="M0 5 9-4q4-4 10-4h117q9 0 9 9v123l-9 9V12Z" fill="#b2bdae" stroke="#314347" stroke-width="2.5" />
-    <rect x="0" y="0" width="132" height="132" rx="9" fill="#fff9e9" stroke="#314347" stroke-width="2.5" />
-    <path d="M0 21h132" fill="none" stroke="#b3baac" stroke-width="1.4" />
-    <circle cx="12" cy="11" r="2.6" fill="#e7bb63" stroke="none" stroke-width="2" />
-    <circle cx="21" cy="11" r="2.6" fill="#cfe2c5" stroke="none" stroke-width="2" />
-    <circle cx="30" cy="11" r="2.6" fill="#e3ac8f" stroke="none" stroke-width="2" />
-    <rect x="12" y="40" width="107" height="71" rx="5" fill="#cfe2c5" stroke="#456f6b" stroke-width="1.7" />
-    <text x="22" y="63" text-anchor="start" fill="#314347" stroke="none" font-family="Pretendard,Malgun Gothic,system-ui,sans-serif" font-size="13" font-weight="650">Git 강의 카드</text><rect x="21" y="73" width="52" height="18" rx="4" fill="#e7bb63" stroke="#314347" stroke-width="1.5" />
-    <path d="M29 82h36" fill="none" stroke="#314347" stroke-width="1.5" />
-    <path d="M23 101h69" fill="none" stroke="#456f6b" stroke-width="2.2" />
+    <g>
+    <rect x="123.5" y="198" width="87" height="26" fill="#f3ebf4" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="135.5" cy="211" r="2.8" fill="#7c687c" stroke="none"/><text x="170" y="216" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">SQLite</text>
     </g>
-    <circle cx="597" cy="259" r="8" fill="none" stroke="#456f6b" stroke-width="2.4" class="art-motion lesson-ping" style="--beat:3.1s" opacity=".42" />
-    <g transform="translate(167 134)"><rect x="1" y="2" width="87" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="87" height="25" rx="7" fill="#fff9e9" stroke="#a7733e" stroke-width="1.35" />
-    <text x="43.5" y="17" text-anchor="middle" fill="#a7733e" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">SQLite</text></g>
-    <g transform="translate(160 359)"><rect x="1" y="2" width="89" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="89" height="25" rx="7" fill="#fff9e9" stroke="#8b7395" stroke-width="1.35" />
-    <text x="44.5" y="17" text-anchor="middle" fill="#8b7395" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">Jinja2</text></g>
-    <g transform="translate(335 356)"><rect x="1" y="2" width="87" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="87" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
-    <text x="43.5" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">FastAPI</text></g>
-    <g transform="translate(549 362)"><rect x="1" y="2" width="80" height="25" rx="7" fill="#ae9a74" stroke="none" stroke-width="0" opacity=".16" />
-    <rect x="0" y="0" width="80" height="25" rx="7" fill="#fff9e9" stroke="#456f6b" stroke-width="1.35" />
-    <text x="40" y="17" text-anchor="middle" fill="#456f6b" stroke="none" font-family="Consolas,monospace" font-size="13" font-weight="650">HTML</text></g>
+    <g>
+    <rect x="76.5" y="267" width="105" height="26" fill="#f3ebf4" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="88.5" cy="280" r="2.8" fill="#7c687c" stroke="none"/><text x="132" y="285" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">딕셔너리</text>
+    </g>
+    <g>
+    <rect x="359" y="188" width="90" height="26" fill="#eef4e9" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="371" cy="201" r="2.8" fill="#357b74" stroke="none"/><text x="407" y="206" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">FastAPI</text>
+    </g>
+    <g>
+    <rect x="276" y="350" width="84" height="26" fill="#fff1d0" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="288" cy="363" r="2.8" fill="#a36a36" stroke="none"/><text x="321" y="368" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">Jinja2</text>
+    </g>
+    <g>
+    <rect x="566.5" y="113" width="79" height="26" fill="#eef4e9" rx="7" stroke="#b5af95" stroke-width="1.1"/><circle cx="578.5" cy="126" r="2.8" fill="#357b74" stroke="none"/><text x="609" y="131" fill="#34434c" font-size="14" stroke="none" text-anchor="middle" font-weight="720">HTML</text>
+    </g>
   </g>
 </svg>

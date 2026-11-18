@@ -29,6 +29,8 @@ py -3 --version
 
 Python이 없거나 버전이 낮다면 [Python 공식 다운로드](https://www.python.org/downloads/windows/)에서 Windows용 Python을 설치한 뒤 터미널을 새로 열고 버전을 다시 확인합니다. 설치 화면과 명령 등록 방법은 설치 방식에 따라 달라질 수 있습니다. [Windows에서 Python 사용하기](https://docs.python.org/3/using/windows.html)
 
+VS Code에서 `Ctrl+Shift+X`로 확장을 열고 게시자가 Microsoft인 **Python** 확장을 설치합니다. 가상환경을 만든 다음 `Ctrl+Shift+P`에서 **Python: Select Interpreter**를 선택하고 `.venv`를 고릅니다. [VS Code Python 안내](https://code.visualstudio.com/docs/languages/python/)
+
 ### 2-2. 실습 폴더 확인
 
 강의노트 저장소에서 `public/examples/course-card/server-data` 폴더를 **통째로 별도의 연습 위치에 복사**하고, VS Code에서 복사한 `server-data` 폴더를 엽니다. VS Code 메뉴 **터미널 → 새 터미널**에서 PowerShell을 열고 다음을 실행합니다.
@@ -76,7 +78,7 @@ python -m pip install -r requirements.txt
 VS Code에서 이 복사본 안에 새 파일 `practice.py`를 만들고 [강의 본문의 첫 번째 서버 코드](https://is2js.github.io/dolbeom-coding-notes/#/lesson/templates/section-backend-python)를 입력해 저장합니다. 이미 `practice.py`가 있다면 덮어쓰지 말고 새 연습 폴더에서 시작합니다. 첫 코드는 `FastAPI()`로 앱을 만들고, `/static`에 HTML 폴더를 연결하며, `/api/dict` 요청에 `sample_data.py`의 Python 데이터를 반환합니다.
 
 ```powershell
-python -m uvicorn practice:app --host 127.0.0.1 --port 8000
+python -m uvicorn practice:app
 ```
 
 `practice:app`은 **`practice.py` 안의 `app`**을 뜻하며 `127.0.0.1`은 내 컴퓨터를 가리킵니다. 시작 메시지가 나온 뒤에는 이 터미널을 열어 둡니다. 가상환경을 활성화하지 않았다면 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다.
@@ -98,7 +100,7 @@ pwd
 
 같은 폴더의 `courses.sqlite3`는 DB 파일입니다. `lessons` 표에 데이터가 없을 때만 카드 행을 넣고, 이미 행이 있으면 덮어쓰거나 중복하지 않습니다. Python의 `sqlite3`는 표준 라이브러리라 별도 DB 서버가 필요하지 않습니다. [SQLite 공식 안내](https://docs.python.org/3/library/sqlite3.html)
 
-[강의의 두 번째 코드](https://is2js.github.io/dolbeom-coding-notes/#/lesson/templates/section-backend-sqlite)를 `practice.py` **맨 아래에 추가**해 DB를 읽는 함수와 `/api/sqlite` 경로를 만듭니다. 파일을 저장하고 서버 터미널에서 `Ctrl+C`로 중지한 뒤 `python -m uvicorn practice:app --host 127.0.0.1 --port 8000`으로 다시 켭니다. 활성화하지 않은 터미널에서는 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다.
+[강의의 두 번째 코드](https://is2js.github.io/dolbeom-coding-notes/#/lesson/templates/section-backend-sqlite)를 `practice.py` **맨 아래에 추가**해 DB를 읽는 함수와 `/api/sqlite` 경로를 만듭니다. 파일을 저장하고 서버 터미널에서 `Ctrl+C`로 중지한 뒤 `python -m uvicorn practice:app`으로 다시 켭니다. 활성화하지 않은 터미널에서는 `python` 대신 `.\.venv\Scripts\python.exe`를 사용합니다.
 
 [SQLite 데이터 카드](http://127.0.0.1:8000/static/03-sqlite-api.html)를 열면 같은 HTML 카드가 이번에는 `/api/sqlite`에서 DB 행을 JSON으로 받아 표시합니다. DB를 만들기 전이라면 준비 상태를 확인하라는 문구가 표시됩니다. 행을 추가한 뒤 새로고침합니다.
 

@@ -42,7 +42,7 @@
       <div class="preview-outline-backdrop" x-show="previewOutlineOverlay" aria-hidden="true" @click="closePreviewOutline(true)"></div>
       <template x-if="previewOutlineActive">
         <nav id="preview-outline-panel" class="lesson-preview-outline" aria-labelledby="preview-outline-title" x-show="previewOutlineOpen" x-data="{ expandedTopic: lessonId }"
-          x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (route === 'learn' && previewOutlineOpen && expandedTopic === lessonId && learningPageId) revealPreviewSection($el)" @keydown.escape.stop="closePreviewOutline(true)">
+          x-init="$watch('lessonId', id => { expandedTopic = id })" x-effect="if (route === 'learn' && previewOutlineOpen && expandedTopic === lessonId && learningPageId) revealPreviewSection($el)" @keydown.escape.window="if (previewOutlineActive && previewOutlineOpen && !$event.defaultPrevented && !document.querySelector('dialog[open]') && !topicNavigationOpen && !drawer) closePreviewOutline(true)">
           <div class="lesson-preview-outline-heading">
             <div>
               <h2 id="preview-outline-title">메뉴</h2>

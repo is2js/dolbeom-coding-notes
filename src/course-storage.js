@@ -14,7 +14,7 @@ export const COURSE_STORAGE = {
   draft: 'dolbeom.course.v4', recovery: 'dolbeom.working.v5',
   // Reset must not silently resurrect the older seven-topic browser draft.
   previousDismissed: 'dolbeom.eight-topic-dismissed.v1',
-  progress: 'dolbeom.progress.v1', last: 'dolbeom.last.v1',
+  progress: 'dolbeom.progress.v1', previewVisits: 'dolbeom.preview-visits.v1', last: 'dolbeom.last.v1',
 };
 const EIGHT_DRAFT = 'dolbeom.course.v3';
 const EIGHT_RECOVERY = 'dolbeom.working.v4';

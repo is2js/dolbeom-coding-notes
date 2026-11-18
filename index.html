@@ -90,14 +90,22 @@
               </template>
             </ol>
           </div>
-          <details class="lesson-preview-progress">
+          <details class="lesson-preview-progress" open>
             <summary><strong class="lesson-preview-progress-title">진행</strong><span class="lesson-preview-progress-total" aria-live="polite" x-text="previewProgressCompleted + ' / ' + course.lessons.length + ' 주제 완료'"></span></summary>
             <div class="lesson-preview-progress-detail">
-              <p class="lesson-preview-progress-meta"><span>전체 진행률</span><strong x-text="previewProgressPercent + '%'"></strong></p>
+              <div class="lesson-preview-progress-meter">
+                <p class="lesson-preview-progress-meta"><span>전체 주제 완료율</span><strong x-text="previewProgressPercent + '%'"></strong></p>
+                <progress :value="previewProgressCompleted" :max="course.lessons.length" aria-label="전체 주제 완료율"></progress>
+              </div>
               <p class="lesson-preview-progress-meta" x-show="route === 'learn'"><span>현재 주제 내 위치</span><strong x-text="(learningPageIndex + 1) + ' / ' + learningPages.length"></strong></p>
-              <ol class="lesson-preview-progress-lessons">
-                <template x-for="topic in course.lessons" :key="topic.id">
-                  <li><span x-text="topic.shortTitle"></span><span class="lesson-preview-progress-status" :class="{ 'is-done': completed.includes(topic.id) }" x-text="completed.includes(topic.id) ? '완료' : '미완료'"></span></li>
+              <p class="lesson-preview-progress-caption">주제별로 열어 본 절</p>
+              <ol class="lesson-preview-progress-lessons" aria-label="주제별 열어 본 절 수" tabindex="0">
+                <template x-for="topic in previewTopicProgress" :key="topic.id">
+                  <li>
+                    <span class="lesson-preview-topic-gauge" :class="{ 'is-done': topic.complete }" aria-hidden="true"><span :style="{ blockSize: topic.percent + '%' }"></span></span>
+                    <span class="lesson-preview-progress-topic" x-text="topic.title"></span>
+                    <span class="lesson-preview-progress-status" :class="{ 'is-done': topic.complete }" x-text="topic.complete ? '완료' : topic.count + ' / ' + topic.total"></span>
+                  </li>
                 </template>
               </ol>
             </div>

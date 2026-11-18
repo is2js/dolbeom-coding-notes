@@ -34,8 +34,7 @@
 .lesson-preview-progress-total { font-size: 11px; font-variant-numeric: tabular-nums; }
 .lesson-preview-progress-detail { padding: 0 13px 9px; }
 
-.lesson-preview-progress-meta,
-.lesson-preview-progress-lessons li {
+.lesson-preview-progress-meta {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -47,16 +46,75 @@
 }
 
 .lesson-preview-progress-meta strong { font-variant-numeric: tabular-nums; }
+.lesson-preview-progress-meter { margin-block-end: 3px; }
+.lesson-preview-progress-meter progress {
+  display: block;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  margin: 2px 0 5px;
+  overflow: hidden;
+  border: 1px solid #a59772;
+  border-radius: 6px;
+  background: #fffbf0;
+  color: #a8bd8c;
+}
+.lesson-preview-progress-meter progress::-webkit-progress-bar { background: transparent; }
+.lesson-preview-progress-meter progress::-webkit-progress-value { background: #a8bd8c; }
+.lesson-preview-progress-meter progress::-moz-progress-bar { background: #a8bd8c; }
+
+.lesson-preview-progress-caption {
+  margin: 5px 0 3px;
+  padding-top: 6px;
+  border-top: 1px solid #ddd8c7;
+  color: #5d6758;
+  font-size: 10px;
+  font-weight: 650;
+}
+
 .lesson-preview-outline .lesson-preview-progress-lessons {
-  max-height: min(24dvh, 160px);
-  margin-top: 4px;
-  padding: 5px 3px 0 0;
+  max-height: min(29dvh, 215px);
+  padding-right: 3px;
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
-  border-top: 1px solid #ddd8c7;
 }
-
-.lesson-preview-progress-lessons li > span:first-child { color: #46544b; overflow-wrap: anywhere; }
-.lesson-preview-progress-status { flex: none; color: #5d6758; }
+.lesson-preview-progress-lessons:focus-visible { outline: 2px solid #795b32; outline-offset: 1px; }
+.lesson-preview-progress-lessons li {
+  display: grid;
+  grid-template-columns: 13px minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 7px;
+  padding: 3px 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.lesson-preview-topic-gauge {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 13px;
+  height: 13px;
+  margin-top: 1px;
+  overflow: hidden;
+  border: 1px solid #a68c48;
+  border-radius: 2px;
+  background: #f8edc5;
+}
+.lesson-preview-topic-gauge > span {
+  width: 100%;
+  background: #d8ac48;
+}
+.lesson-preview-topic-gauge.is-done::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 4px;
+  inset: 3px 0 0 2px;
+  transform: rotate(-45deg);
+  border: solid #554116;
+  border-width: 0 0 1.5px 1.5px;
+}
+.lesson-preview-progress-topic { color: #46544b; overflow-wrap: anywhere; }
+.lesson-preview-progress-status { color: #5d6758; font-variant-numeric: tabular-nums; }
 .lesson-preview-progress-status.is-done { color: #355f48; font-weight: 750; }

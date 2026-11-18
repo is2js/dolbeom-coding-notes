@@ -2,14 +2,41 @@
   --preview-outline-width: clamp(244px, 21vw, 288px);
 }
 
-/* A rail panel takes the place of the in-page selectors during the preview. */
-.is-design-preview .lesson-flow-workspace > .section-navigation,
+/* Topic folders live in the rail while the short section strip stays in view. */
 .is-design-preview .lesson-flow-workspace .topic-picker-anchor {
   display: none;
 }
 
 .is-design-preview .lesson-flow-workspace .topic-navigation-actions {
   margin-inline-start: auto;
+}
+
+.is-design-preview .lesson-flow-workspace .section-slide {
+  min-height: 68px;
+  padding: 6px 9px;
+}
+
+.is-design-preview .lesson-flow-workspace .section-slide.is-current {
+  padding: 5px 8px;
+}
+
+.is-design-preview .lesson-flow-workspace .section-slide-art {
+  flex-basis: 52px;
+  width: 52px;
+  height: 38px;
+}
+
+.is-design-preview .lesson-flow-workspace .section-slide-art svg {
+  width: 52px;
+  height: 38px;
+}
+
+.is-design-preview .lesson-flow-workspace .section-slide-copy small {
+  margin-bottom: 3px;
+}
+
+.is-design-preview .lesson-flow-workspace .section-slide-controls button {
+  min-height: 64px;
 }
 
 .is-design-preview > .rail {
@@ -292,6 +319,10 @@
 
 @media (max-width: 720px) {
   .rail-preview-toggle { margin-top: 5px; }
+  .is-design-preview .lesson-flow-workspace .section-slide { min-height: 66px; padding-inline: 7px; }
+  .is-design-preview .lesson-flow-workspace .section-slide.is-current { padding-inline: 6px; }
+  .is-design-preview .lesson-flow-workspace .section-slide-art { flex-basis: 40px; width: 40px; height: 34px; }
+  .is-design-preview .lesson-flow-workspace .section-slide-art svg { width: 40px; height: 34px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

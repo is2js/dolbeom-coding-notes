@@ -72,6 +72,11 @@ const clone = value => JSON.parse(JSON.stringify(value));
 const sameCourse = (a,b) => JSON.stringify(a) === JSON.stringify(b);
 const designPreviewRequested = () => new URLSearchParams(location.search).get('design') === 'preview';
 const widePreviewOutline = () => window.matchMedia('(min-width: 1120px)').matches;
+function readPreviewVisits() {
+  const visits = safeRead(localStorage, COURSE_STORAGE.previewVisits, {});
+  return visits && typeof visits === 'object' && !Array.isArray(visits) ? visits : {};
+}
+const visitedPageIds = (visits, id) => Array.isArray(visits[id]) ? visits[id] : [];
 let localSync = null;
 const paths = {
   chevron: '<path d="m9 5 7 7-7 7"/>', chevronLeft: '<path d="m15 5-7 7 7 7"/>',
@@ -183,13 +188,38 @@ Alpine.data('courseApp', () => ({
       else if (item.top - 8 < viewport.top) scroller.scrollTop += item.top - 8 - viewport.top;
     });
   },
-  completed: [], drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
+  completed: [], previewVisits: {}, drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
   get previewProgressCompleted() {
     return this.course?.lessons.filter(lesson => this.completed.includes(lesson.id)).length ?? 0;
   },
   get previewProgressPercent() {
     const total = this.course?.lessons.length ?? 0;
     return total ? Math.round(this.previewProgressCompleted / total * 100) : 0;
+  },
+  get previewTopicProgress() {
+    return (this.course?.lessons || []).map(topic => {
+      const pages = buildLessonFlow(topic);
+      const opened = new Set(visitedPageIds(this.previewVisits, topic.id));
+      const complete = this.completed.includes(topic.id);
+      const count = pages.filter(page => opened.has(page.id)).length;
+      return {
+        id: topic.id,
+        title: topic.shortTitle,
+        complete,
+        count,
+        total: pages.length,
+        percent: complete ? 100 : Math.round(count / pages.length * 100),
+      };
+    });
+  },
+  rememberPreviewPage() {
+    if (!this.designPreview || this.route !== 'learn') return;
+    const { lessonId, learningPageId } = this;
+    const stored = readPreviewVisits();
+    const previous = visitedPageIds(stored, lessonId);
+    const current = [...new Set([...previous, ...visitedPageIds(this.previewVisits, lessonId), learningPageId])];
+    this.previewVisits = {...this.previewVisits, ...stored, [lessonId]: current};
+    if (current.length !== previous.length) safeWrite(localStorage, COURSE_STORAGE.previewVisits, this.previewVisits);
   },
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
@@ -263,6 +293,7 @@ Alpine.data('courseApp', () => ({
       if (stored) { try { this.course = validateCourse(stored); this.hasDraft = true; } catch { this.notify('저장된 편집본 형식이 달라 기본 콘텐츠로 열었습니다.'); } }
       const saved = safeRead(localStorage, PROGRESS_KEY, []);
       this.completed = Array.isArray(saved) ? [...new Set(saved.filter(id=>COURSE_IDS.includes(id)))] : [];
+      this.previewVisits = readPreviewVisits();
       this.editor = createEditor({
         getCourse:()=>clone(this.course), onApply:(data,meta)=>this.applyCourse(data,meta),
         onReset:()=>this.resetCourse(), toast:message=>this.notify(message), renderMarkdown:markdown,
@@ -342,6 +373,7 @@ Alpine.data('courseApp', () => ({
     const learning = parseLessonRoute(location.hash,this.course,last) || {lessonId:COURSE_IDS.includes(last)?last:first,pageId:'case'};
     this.selectLearningLocation(learning.lessonId,learning.pageId);
     this.route='learn'; this.infoTab='case'; this.readerOpen=false;
+    this.rememberPreviewPage();
     document.title=`${this.lesson.shortTitle} · 돌범이 풀어주는 Ai 구독 전 코딩 필수 노하우`;
     safeWrite(localStorage,LAST_KEY,this.lessonId);
     const address=lessonAddress(this.lessonId,this.learningPageId);
@@ -354,6 +386,7 @@ Alpine.data('courseApp', () => ({
     history.replaceState(history.state, '', url);
     this.designPreview = designPreviewRequested();
     this.previewOutlineOpen = this.designPreview && this.previewOutlineWide;
+    this.rememberPreviewPage();
     if (!this.designPreview) this.$nextTick(() => this.$refs.previewOutlineToggle?.focus({preventScroll:true}));
   },
   showLesson(id,pageId='case') {

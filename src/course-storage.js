@@ -8,6 +8,7 @@ import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
 import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.js';
 import { previousViteVisualDefault } from './previous-vite-visual-default.js';
+import { previousViteLiveDefault } from './previous-vite-live-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
@@ -227,7 +228,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     // any release update without replacing the author's edited fields.
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
-    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault);
+    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault);
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);
     if (id === 'templates') baselines.push(previousFastapiRoutesDefault);

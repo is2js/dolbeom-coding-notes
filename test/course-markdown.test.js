@@ -24,6 +24,15 @@ test('course images must be bundled static raster files in the course asset dire
   }
 });
 
+test('the supplied animated case is allowed by exact path and remains a GIF', () => {
+  const source = './assets/course/frontend-vite-terminal.gif';
+  assert.equal(isCourseImageSource(source), true);
+  assert.equal(isCourseImageSource('./assets/course/another.gif'), false);
+  assert.equal(isCourseImageSource(source + '?other'), false);
+  const content = readFileSync(new URL('../public/assets/course/frontend-vite-terminal.gif', import.meta.url));
+  assert.match(content.subarray(0, 6).toString('ascii'), /^GIF8[79]a$/);
+});
+
 test('only the five authored, self-contained SVG diagrams can be embedded', () => {
   for (const name of ['html-element', 'html-attributes', 'html-document', 'css-declaration', 'javascript-flow']) {
     const source = `./assets/course/diagrams/${name}.svg`;

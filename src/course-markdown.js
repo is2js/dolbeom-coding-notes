@@ -3,18 +3,19 @@ import { courseMarked } from './course-markdown-engine.js';
 import { createCommandRenderer } from './command-code.js';
 
 const renderer = createCommandRenderer();
-// These authored diagrams are self-contained SVG images. Keep this an exact
-// allowlist: course editors cannot turn arbitrary SVG files into trusted media.
-const courseDiagramSources = new Set([
+// Authored SVG diagrams and the supplied animated case use exact paths.
+// Course editors cannot turn arbitrary SVG or GIF files into trusted media.
+const authoredMediaSources = new Set([
   './assets/course/diagrams/html-element.svg',
   './assets/course/diagrams/html-attributes.svg',
   './assets/course/diagrams/html-document.svg',
   './assets/course/diagrams/css-declaration.svg',
   './assets/course/diagrams/javascript-flow.svg',
+  './assets/course/frontend-vite-terminal.gif',
 ]);
 // Course media is bundled with the app; remote sources and path traversal are not allowed.
 export function isCourseImageSource(src) {
-  return typeof src === 'string' && (courseDiagramSources.has(src) || /^\.\/assets\/course\/(?:[a-z0-9][a-z0-9_-]*\/)*[a-z0-9][a-z0-9_-]*\.(?:png|jpe?g|webp)$/i.test(src));
+  return typeof src === 'string' && (authoredMediaSources.has(src) || /^\.\/assets\/course\/(?:[a-z0-9][a-z0-9_-]*\/)*[a-z0-9][a-z0-9_-]*\.(?:png|jpe?g|webp)$/i.test(src));
 }
 
 // Keep lesson/editor hash navigation in the same tab; examples, local server

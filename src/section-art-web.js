@@ -509,7 +509,8 @@ function serverToBrowser() {
     .replace(/<\/svg>\s*$/, `${footer}</svg>`);
 }
 
-function htmlJsonCard(p = 'sa-backend-html-json') {
+function htmlJsonCard() {
+  const p = 'sa-backend-html-json';
   return frame(p, 'HTML 안의 JSON으로 카드 채우기', `
     ${documentPage(103, 155, 200, 190, {
       label: 'HTML',
@@ -521,6 +522,32 @@ function htmlJsonCard(p = 'sa-backend-html-json') {
       + pulse(p, shape('M462 199h28', 'none', color.gold, 2.8), 1.05)})}
     ${flow(p, 322, 248, 421, 249, {turn:-1})}
   `, 'HTML 안에 둔 데이터를 브라우저에서 읽습니다');
+}
+
+function frontendJsonCards() {
+  const p = 'sa-web-json-card';
+  return frame(p, 'JSON을 읽어 강의 카드로 표시하기', `
+    ${center(380, 66, 'JSON을 읽어 강의 카드로 표시하기', 25, color.ink)}
+    ${documentPage(68, 175, 193, 172, {
+      label: 'HTML 안의 JSON',
+      body: box(80, 222, 167, 37, color.ochre, 6, color.edge, 1.2)
+        + code(90, 245, '"윈도우 터미널"', 15, color.ink)
+        + box(80, 269, 167, 37, color.mint, 6, color.edge, 1.2)
+        + code(90, 292, '"Git"', 15, color.ink),
+    })}
+    ${flow(p, 268, 258, 308, 258, {turn:-1})}
+    ${box(311, 226, 139, 74, color.shade, 10, color.edge, 1.4)}
+    ${box(306, 218, 139, 74, color.lilac, 10)}
+    ${center(375, 247, 'Alpine.js', 19, color.ink)}
+    ${code(326, 272, 'JSON.parse()', 14, color.ink)}
+    ${flow(p, 452, 258, 489, 258, {turn:-1, delay:1.2})}
+    ${standingWindow(491, 133, 198, 243, {
+      title: '브라우저',
+      body: card(508, 174, 164, 84, {title:'윈도우 터미널', tone: color.ochre})
+        + card(508, 271, 164, 84, {title:'Git'})
+        + pulse(p, shape('M520 295h25', 'none', color.teal, 2.4), 1.9),
+    })}
+  `, 'JSON 데이터 두 개가 브라우저의 카드 두 장으로 표시됩니다');
 }
 
 function futureBackendSteps() {
@@ -720,7 +747,7 @@ export const webSectionScenes = {
   'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'같은 강의 카드를 두 화면에 나란히 보여 줍니다. 실습에서는 VS Code Live Server를 사용하며 Vite는 명령만 읽어 보는 별도 선택지입니다.',svg:webResponsibilities()},
   'web-html': {title:'브라우저와 서버: 프론트엔드와 백엔드 비교',description:'프론트엔드의 React와 Vue, 백엔드의 Python FastAPI·Flask·Django와 Java Spring을 선택지로 구분하며 브라우저 요청과 서버 응답을 비교합니다.',svg:serverToBrowser()},
   'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
-  'web-json-card': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 Alpine.js가 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard('sa-web-json-card')},
+  'web-json-card': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'왼쪽 HTML에 담긴 윈도우 터미널과 Git 데이터 두 개를 Alpine.js가 JSON.parse로 읽습니다. 오른쪽 브라우저에 각 데이터가 별도 카드로 표시됩니다.',svg:frontendJsonCards()},
   'web-future-backend': {title:'다음 강의 미리보기: 백엔드와 데이터',description:'이번 강의의 HTML 안 JSON과 Alpine.js 카드에서 출발해, 후속 강의에서 Python 딕셔너리와 SQLite 데이터베이스로 데이터 보관 방식을 단계별로 바꾸는 학습 순서입니다.',svg:futureBackendSteps()},
   'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'같은 FastAPI 주소에서 정적 화면과 API를 제공하고 Python 딕셔너리 목록을 JSON으로 보내 브라우저가 fetch로 읽습니다.',svg:pythonDictionaryApi()},
   'backend-sqlite': {title:'SQLite 데이터베이스의 카드 가져오기',description:'FastAPI가 SQLite 데이터베이스의 행을 조회해 JSON으로 응답하고 브라우저가 카드에 표시합니다.',svg:sqliteApi()},

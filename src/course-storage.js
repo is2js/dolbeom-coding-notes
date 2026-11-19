@@ -13,6 +13,7 @@ import { previousPracticeFlowDefault } from './previous-practice-flow-default.js
 import { previousJsonCardSection } from './previous-json-card-default.js';
 import { previousJsonPythonSections } from './previous-json-python-defaults.js';
 import { previousBackendPreview } from './previous-backend-preview-default.js';
+import { previousLessonNoteBodies } from './previous-lesson-note-bodies.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -212,6 +213,32 @@ function updateAuthoredTailwindCdn(lesson, latest) {
   target._cdnExamples202611 = true;
 }
 
+// Apply shorter published notes only when the saved body is an exact match.
+// Match by ID so edits, removed sections and custom ordering stay intact.
+function updatePublishedNoteBodies(course, baseCourse) {
+  let changed = false;
+  const lessons = course.lessons.map(lesson => {
+    const previous = previousLessonNoteBodies[lesson.id];
+    const latest = baseCourse.lessons.find(item => item.id === lesson.id);
+    if (!previous || !latest || !Array.isArray(lesson.sections)) return lesson;
+    let next = lesson;
+    if (typeof previous.caseBody === 'string' && lesson.case?.body === previous.caseBody
+        && typeof latest.case?.body === 'string' && lesson.case.body !== latest.case.body) {
+      next = { ...next, case: { ...lesson.case, body: latest.case.body } };
+    }
+    const sections = lesson.sections.map(section => {
+      const oldBody = previous.sections[section.id];
+      if (typeof oldBody !== 'string' || section.body !== oldBody) return section;
+      const newBody = latest.sections?.find(item => item.id === section.id)?.body;
+      return typeof newBody === 'string' && section.body !== newBody ? { ...section, body: newBody } : section;
+    });
+    if (sections.some((section, index) => section !== lesson.sections[index])) next = { ...next, sections };
+    changed ||= next !== lesson;
+    return next;
+  });
+  return changed ? { ...course, lessons } : course;
+}
+
 // Keep nine-topic browser edits and ordering while adopting updated explanations
 // only where a field still matches the previous published default.
 export function upgradeNineDefaults(value, baseCourse) {
@@ -267,7 +294,7 @@ export function upgradeNineDefaults(value, baseCourse) {
       updated.lessons[index] = merged;
     }
   }
-  return updated || value;
+  return updatePublishedNoteBodies(updated || value, baseCourse);
 }
 
 export function migrateEightCourse(value, baseCourse) {

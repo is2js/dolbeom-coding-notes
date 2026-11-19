@@ -156,123 +156,60 @@ function twoVersionsScene() {
 
 function promptScene() {
   const id = 'section-git-prompt';
-  const earlier = point(-.2, 1.65);
-  const latest = point(4, 1.65);
+  const down = (x, from, to, color) => line(`M${x} ${from}V${to}m-4-4 4 4 4-4`, color, 2.4);
+  const panel = (x, heading, detached) => {
+    const previous = x + 72;
+    const latest = x + 213;
+    const head = detached ? previous : latest;
+    const headRow = detached ? 285 : 249;
+    return box(x + 8, 193, 282, 216, '#d8c7a3', 13)
+      + box(x, 184, 282, 216, c.ivory, 13)
+      + label(x + 141, 219, heading, { size: 22, weight: 720 })
+      + tag(head, headRow, 66, 'HEAD', { color: '#f5e3b4', size: 17, mono: true })
+      + down(head, headRow + 12, detached ? 319 : 267, '#946a29')
+      + tag(latest, 285, 66, 'main', { color: c.sage, size: 17, mono: true })
+      + down(latest, 297, 319, c.green)
+      + line(`M${latest - 25} 343H${previous + 27}m10-5-10 5 10 5`, c.green, 3)
+      + commit(previous, 347, 21, '#e8c584')
+      + commit(latest, 347, 21, c.sage)
+      + label(previous, 375, '버전 1', { size: 17 })
+      + label(latest, 375, '버전 2', { size: 17 });
+  };
   return stage(id,
-    deck(id, 1.9, 1.65, 3.02, 1.4, { fill: '#f0e5c8' })
-    + route(id, [[-.2,1.65],[4,1.65]], { delay: 1.1 })
-    + route(id, [[4,1.65],[4,2.45],[-.2,2.45],[-.2,1.65]], { ...amberRail, delay: .5 })
-    + commit(...earlier, 39, c.honey)
-    + commit(...latest, 44, c.sage, true)
-    + line('M302 253v-25M479 351v-33', '#718277', 1.5)
-    + tag(302, 214, 82, 'HEAD', { mono: true, color: '#f3dfac' })
-    + tag(479, 304, 82, 'main', { mono: true, color: c.sage })
-    + tag(260, 321, 106, '버전 1 커밋', { size: 15 })
-    + tag(541, 413, 112, '버전 2 커밋', { size: 15 })
-    + tag(379, 462, 176, 'git switch main', { color: '#eef2e3', mono: true }));
+    label(380, 99, '이전 기록에 다녀오기', { size: 29, weight: 720 })
+    + tag(380, 148, 173, 'git switch main', { color: c.sage, size: 17, mono: true })
+    + panel(69, '이전 버전 보기', true)
+    + panel(409, 'main으로 돌아온 뒤', false)
+    + line('M367 343h26m-8-6 8 6-8 6', c.green, 3.5)
+    + glow(id, 586, 233, 72, 27, 1.2)
+    + label(380, 466, 'main이 가리키는 버전 2는 두 화면에 모두 남아 있습니다', { size: 20 }));
 }
 
 function branchMergeScene() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg section-art-svg section-git-branch git-grid-candidate" aria-hidden="true" focusable="false">
-  <title id="ggc-title">격자 방향에 맞춘 Git 병합</title>
-  <desc id="ggc-description">기존 커밋에서 main과 practice-branch 경로가 나뉩니다. 병합 커밋에는 기존 커밋과 branch-note.txt 커밋에서 들어오는 두 연결이 있습니다. 받침과 경로가 바닥 격자 두 방향에 평행합니다.</desc>
-  <defs>
-    <linearGradient id="ggc-deck" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
-      <stop stop-color="#fffaf0"/>
-      <stop offset="1" stop-color="#f4e8cd"/>
-    </linearGradient>
-    <linearGradient id="ggc-sage" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop stop-color="#e9efd8"/>
-      <stop offset="1" stop-color="#b8d0b4"/>
-    </linearGradient>
-    <linearGradient id="ggc-amber" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop stop-color="#fbedc5"/>
-      <stop offset="1" stop-color="#e8bd70"/>
-    </linearGradient>
-    <linearGradient id="ggc-merge" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop stop-color="#c6e1cd"/>
-      <stop offset="1" stop-color="#8cb99f"/>
-    </linearGradient>
-    <filter id="ggc-shadow" x="-20%" y="-25%" width="140%" height="160%">
-      <feGaussianBlur stdDeviation="10"/>
-    </filter>
-    <path id="ggc-main-rail" d="M338 231L506 327" pathLength="100"/>
-    <path id="ggc-branch-rail" d="M338 231L254 279L422 375L506 327" pathLength="100"/>
-  </defs>
-  <style>
-    .git-grid-candidate .ggc-pulse { opacity: 0; stroke-dasharray: 5 95; stroke-dashoffset: 4; animation: ggc-travel 5s linear infinite; }
-    .git-grid-candidate .ggc-pulse-main { animation-duration: 5s; animation-delay: 1.05s; }
-    @keyframes ggc-travel {
-      0%, 4% { opacity: 0; stroke-dashoffset: 3; }
-      16% { opacity: .96; }
-      68% { opacity: .96; }
-      78%, 100% { opacity: 0; stroke-dashoffset: -95; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .git-grid-candidate .ggc-pulse { animation: none; }
-    }
-  </style>
-  <g stroke-linejoin="round" stroke-linecap="round">
-    <path d="M340 210L585 350L421 444L176 304Z" fill="#7c632f" opacity=".13" filter="url(#ggc-shadow)"/>
-    <path d="M170 279L422 423L590 327V340L422 436L170 292Z" fill="#dfc58e" stroke="#434c58" stroke-width="2"/>
-    <path d="M422 423L590 327V340L422 436Z" fill="#d5bc85" stroke="#434c58" stroke-width="2"/>
-    <path d="M338 183L590 327L422 423L170 279Z" fill="url(#ggc-deck)" fill-opacity=".86" stroke="#404a59" stroke-width="2.3"/>
-    <path d="M338 193L573 327L422 413L187 279Z" fill="none" stroke="#fffaf0" stroke-width="1.6"/>
-    <path d="M212 303L380 207M254 327L422 231M296 351L464 255M338 375L506 279M380 399L548 303M296 207L548 351M254 231L506 375M212 255L464 399" fill="none" stroke="#9d977e" stroke-width="1" opacity=".24"/>
-
-    <g fill="none">
-      <use href="#ggc-main-rail" stroke="#c2d4bc" stroke-width="17"/>
-      <use href="#ggc-branch-rail" stroke="#efdfb3" stroke-width="17"/>
-      <use href="#ggc-main-rail" stroke="#527a65" stroke-width="3"/>
-      <use href="#ggc-branch-rail" stroke="#9f7436" stroke-width="3"/>
-      <use href="#ggc-main-rail" class="art-motion ggc-pulse ggc-pulse-main" stroke="#f7fff1" stroke-width="6"/>
-      <use href="#ggc-branch-rail" class="art-motion ggc-pulse" stroke="#fff8df" stroke-width="6"/>
-      <path d="M418 268L431 284L411 282" stroke="#527a65" stroke-width="3"/>
-      <path d="M276 286L289 300L269 299M439 355L455 356L447 370" stroke="#9f7436" stroke-width="3"/>
-    </g>
-
-    <g>
-      <ellipse cx="338" cy="234" rx="44" ry="24" fill="#6d5836" opacity=".10"/>
-      <path d="M305 214V231C305 243 320 252 338 252S371 243 371 231V214Z" fill="#caa36c" stroke="#354254" stroke-width="2"/>
-      <ellipse cx="338" cy="214" rx="33" ry="19" fill="url(#ggc-amber)" stroke="#354254" stroke-width="2"/>
-      <ellipse cx="338" cy="214" rx="23" ry="12.5" fill="none" stroke="#a67b41" stroke-width="1.2"/>
-      <ellipse cx="338" cy="214" rx="5.7" ry="3.2" fill="#987142"/>
-      <path d="M311 231Q320 243 338 243" fill="none" stroke="#eed8aa" stroke-width="1.3"/>
-    </g>
-
-    <g>
-      <ellipse cx="338" cy="330" rx="44" ry="24" fill="#6d5836" opacity=".10"/>
-      <path d="M305 310V327C305 339 320 348 338 348S371 339 371 327V310Z" fill="#89a88c" stroke="#354254" stroke-width="2"/>
-      <ellipse cx="338" cy="310" rx="33" ry="19" fill="url(#ggc-sage)" stroke="#354254" stroke-width="2"/>
-      <ellipse cx="338" cy="310" rx="23" ry="12.5" fill="none" stroke="#74917b" stroke-width="1.2"/>
-      <path d="M327 312L335 316L349 308" fill="none" stroke="#456c58" stroke-width="2.5"/>
-      <path d="M311 327Q320 339 338 339" fill="none" stroke="#c9ddbe" stroke-width="1.3"/>
-    </g>
-
-    <g>
-      <ellipse cx="506" cy="332" rx="48" ry="26" fill="#45584a" opacity=".14"/>
-      <path d="M470 309V327C470 340 486 350 506 350S542 340 542 327V309Z" fill="#709d87" stroke="#354254" stroke-width="2"/>
-      <ellipse cx="506" cy="309" rx="36" ry="20.5" fill="url(#ggc-merge)" stroke="#354254" stroke-width="2"/>
-      <ellipse cx="506" cy="309" rx="25" ry="13.5" fill="none" stroke="#5e8d74" stroke-width="1.3"/>
-      <path d="M495 304L505 310L517 303M495 314L505 310" fill="none" stroke="#365d4c" stroke-width="2.6"/>
-      <path d="M476 328Q485 341 506 341" fill="none" stroke="#bcdbc4" stroke-width="1.3"/>
-    </g>
-
-    <path d="M338 197V174M506 291V265M305 331L277 347V353M541 331L583 355" fill="none" stroke="#687a6d" stroke-width="1.4"/>
-    <rect x="288" y="147" width="100" height="28" rx="9" fill="#fff8e8" stroke="#a08860" stroke-width="1"/>
-    <rect x="469" y="237" width="74" height="29" rx="10" fill="#dfecdc" stroke="#6b927e" stroke-width="1.2"/>
-    <rect x="204" y="353" width="148" height="29" rx="9" fill="#fff8e8" stroke="#aa8a51" stroke-width="1"/>
-    <rect x="567" y="353" width="94" height="28" rx="9" fill="#eaf3e3" stroke="#6b927e" stroke-width="1"/>
-    <rect x="295" y="449" width="170" height="29" rx="10" fill="#eef2e5" stroke="#a0b3a0" stroke-width="1"/>
-  </g>
-  <g fill="#354254" stroke="none" text-anchor="middle" font-size="17" font-weight="600" font-family="Pretendard, Malgun Gothic, system-ui, sans-serif">
-    <text x="338" y="166">기존 커밋</text>
-    <text x="278" y="373" font-family="Consolas, monospace" font-size="15">practice-branch</text>
-    <text x="506" y="257" font-family="Consolas, monospace">main</text>
-    <text x="614" y="372" font-size="16">병합 커밋</text>
-    <text x="380" y="469" font-family="Consolas, monospace" font-size="15">git merge --no-ff</text>
-  </g>
-</svg>`;
+  const id = 'section-git-branch';
+  const mainPath = 'M146 229H600';
+  const branchPath = 'M146 229L301 318H445L600 229';
+  const rail = (d, casing, tint, pulse, delay) => line(d, casing, 16)
+    + line(d, tint, 3.6)
+    + line(d, pulse, 5, `class="art-motion ${id}-flow" pathLength="100" stroke-dasharray="6 94" opacity="0" style="animation-delay:${delay}s"`);
+  return stage(id,
+    label(380, 88, '브랜치에서 작업하고 main에 합치기', { size: 28, weight: 720 })
+    + box(74, 136, 632, 277, '#d8c7a3', 15)
+    + box(65, 127, 632, 277, c.ivory, 15)
+    + rail(mainPath, '#d9e6d5', '#4d7a65', '#fcfff3', 1.15)
+    + rail(branchPath, '#f0dfb5', '#9b7137', '#fff9e6', .35)
+    + line('M458 221l13 8-13 8', '#4d7a65', 3.6)
+    + line('M258 282l10 17-20-2M501 276l20-2-9 17', '#9b7137', 3.6)
+    + commit(146, 229, 34, '#e8c584')
+    + commit(373, 318, 35, '#edca8d')
+    + commit(600, 229, 36, c.sage, true)
+    + label(146, 170, '기존 커밋', { size: 20 })
+    + tag(373, 198, 68, 'main', { color: c.sage, mono: true, size: 18 })
+    + label(600, 170, '병합 커밋', { size: 20 })
+    + tag(373, 264, 173, 'practice-branch', { color: '#f5e5ba', mono: true, size: 17 })
+    + label(373, 374, 'branch-note.txt 커밋', { mono: true, size: 18 })
+    + tag(380, 453, 193, 'git merge --no-ff', { color: c.sage, mono: true, size: 17 })
+    + label(380, 499, 'main에서 두 갈래의 작업을 하나로 합칩니다', { size: 20 }));
 }
 
 function cloneScene() {

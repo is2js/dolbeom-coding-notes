@@ -1,5 +1,9 @@
-import { blue, branch, clay, cream, disk, folder, gold, keybed, link, miniature, platform, rack, sage, screen, sheet, tile } from './illustration-miniatures.js';
+import { blue, clay, cream, disk, folder, gold, keybed, link, miniature, platform, rack, sage, screen, sheet, tile } from './illustration-miniatures.js';
 import { topicThumbnail } from './topic-thumbnails.js';
+
+const gitGraph = (paths, nodes) => paths
+  .map(([d, stroke]) => `<path d="${d}" stroke="${stroke}" stroke-width="3"/>`).join('')
+  + nodes.map(([x, y, fill]) => `<circle cx="${x}" cy="${y}" r="6" fill="${fill}" stroke-width="1.6"/>`).join('');
 
 // Stable IDs keep each miniature attached when a lecturer edits a title.
 const scenes = {
@@ -11,8 +15,10 @@ const scenes = {
   'git-example': folder(22, 43, 45) + sheet(57, 31, 'TXT') + tile(104, 53, '.git', sage, 28),
   'git-why': sheet(21, 28, 'TXT') + link(57, 49, 26) + tile(92, 40, 'v1', sage) + tile(111, 62, 'v2', gold),
   'git-diff': screen(20, 27, 71, 43, 'diff') + tile(101, 39, '−', clay) + tile(116, 60, '+', sage),
-  'git-prompt': sheet(23, 29, 'v1', cream) + link(60, 50, 26) + sheet(98, 41, 'v2', gold) + tile(70, 76, '↶', blue),
-  'git-branch': branch(28, 45) + tile(89, 26, 'main', sage, 30) + tile(47, 74, '↳', gold),
+  'git-prompt': gitGraph([['M42 54L109 70', '#45706a']], [[42,54,gold], [109,70,sage]])
+    + tile(26, 22, 'HEAD', gold, 32) + tile(102, 34, 'main', sage, 32),
+  'git-branch': gitGraph([['M33 43L129 56', '#45706a'], ['M33 43L71 77L92 80L129 56', '#af7740']],
+    [[33,43,cream], [80,78,gold], [129,56,sage]]),
   'github-clone': rack(27, 25) + link(61, 48, 35) + folder(102, 55, 31),
   'github-roles': folder(18, 40, 36) + link(59, 49, 32) + rack(105, 25) + tile(75, 75, '↔', gold),
   'git-bonus': sheet(25, 30, 'TXT') + screen(79, 30, 54, 47, 'terminal'),
@@ -37,7 +43,10 @@ const scenes = {
   'web-http': screen(14, 30, 51, 43, 'card', sage) + screen(88, 31, 51, 43, 'card', blue) + tile(68, 61, '≠', gold),
   'web-html': screen(13, 31, 44, 44) + rack(117, 25) + link(64, 45, 41) + link(105, 62, -41, '#ad723b'),
   'backend-html-json': sheet(22, 27, '{}', clay) + link(60, 49, 27) + screen(92, 38, 46, 39),
-  'web-json-card': sheet(22, 27, '{}', clay) + link(60, 49, 27) + screen(92, 38, 46, 39),
+  'web-json-card': sheet(16, 32, '{}', clay) + link(51, 55, 29)
+    + `<path d="M88 31l48 10v42l-48 -10Z" fill="${cream}" stroke-width="1.8"/>
+       <path d="M93 41l37 8v10l-37 -8Z" fill="${gold}"/>
+       <path d="M93 57l37 8v10l-37 -8Z" fill="${sage}"/>`,
   'web-future-backend': sheet(15, 31, '{}', clay) + link(48, 48, 16) + tile(70, 43, '{}', sage) + link(92, 48, 16) + disk(120, 39),
   'backend-python': rack(23, 26, blue) + tile(62, 40, '{}', sage) + screen(97, 36, 43, 41),
   'backend-sqlite': disk(28, 39) + rack(64, 24) + screen(100, 41, 41, 39),

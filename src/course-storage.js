@@ -10,6 +10,7 @@ import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.
 import { previousViteVisualDefault } from './previous-vite-visual-default.js';
 import { previousViteLiveDefault } from './previous-vite-live-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
+import { previousJsonCardSection } from './previous-json-card-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -233,6 +234,13 @@ export function upgradeNineDefaults(value, baseCourse) {
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);
     if (id === 'templates') baselines.push(previousFastapiRoutesDefault);
     const merged = baselines.reduce((lesson, baseline) => mergeLesson(lesson, baseline, latest), current);
+    if (id === 'templates') {
+      const sectionIndex = merged.sections.findIndex(item => item.id === previousJsonCardSection.id);
+      const latestSection = latest.sections.find(item => item.id === previousJsonCardSection.id);
+      if (sectionIndex >= 0 && latestSection) {
+        merged.sections[sectionIndex] = mergeUnchanged(merged.sections[sectionIndex], previousJsonCardSection, latestSection);
+      }
+    }
     if (id === 'web-tools') {
       const priorCss = current.sections.find(item => item.id === 'frontend-css');
       const mergedCss = merged.sections.find(item => item.id === 'frontend-css');

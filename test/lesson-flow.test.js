@@ -8,7 +8,7 @@ const course = () => structuredClone(source);
 const findLesson = (id, value = source) => value.lessons.find(lesson => lesson.id === id);
 const stepIds = values => values.map(({ step }) => step.id);
 
-test('all 31 core sections appear once in case, authored section order, recap flows', () => {
+test('all 33 core sections appear once in case, authored section order, recap flows', () => {
   let total = 0;
   for (const lesson of source.lessons) {
     const before = JSON.stringify(lesson);
@@ -25,7 +25,7 @@ test('all 31 core sections appear once in case, authored section order, recap fl
     assert.equal(JSON.stringify(lesson), before, 'building a flow must not mutate source content');
     total += core.length;
   }
-  assert.equal(total, 31);
+  assert.equal(total, 33);
 });
 
 test('IDE practice follows essential shortcuts and precedes the integrated workflow', () => {
@@ -78,6 +78,8 @@ test('terminal, README, VS Code and template pages select examples for their own
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-css')), ['css-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-coding'), 'section-tools-javascript')), ['javascript-practice']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-html')), ['web-ssr-handler']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-json-card')), ['web-json-practice']);
+  assert.deepEqual(stepIds(getRelatedSteps(findLesson('web'), 'section-web-future-backend')), ['web-ssr-handler']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('templates'), 'section-web-jinja')), ['backend-template']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-tools'), 'section-frontend-css')), ['frontend-02', 'frontend-03']);
   assert.deepEqual(stepIds(getRelatedSteps(findLesson('web-tools'), 'section-frontend-alpine')), ['frontend-06', 'frontend-08']);

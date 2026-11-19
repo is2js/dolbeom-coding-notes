@@ -49,7 +49,9 @@ test('nine-topic default upgrade retains authored body, added sections, order an
   const updated = upgradeNineDefaults(old, next);
   assert.equal(JSON.stringify(old), original);
   assert.equal(section(updated, 'web', 'web-http').body, '수강생이 쓴 내용');
-  assert.deepEqual(find(updated, 'web').sections.map(s => s.id), web.sections.map(s => s.id));
+  assert.deepEqual(find(updated, 'web').sections.filter(s => web.sections.some(old => old.id === s.id)).map(s => s.id), web.sections.map(s => s.id));
+  assert.ok(find(updated, 'web').sections.some(s => s.id === 'web-json-card'));
+  assert.ok(find(updated, 'web').sections.some(s => s.id === 'web-future-backend'));
   assert.equal(section(updated, 'web', 'custom-section').body, '내 추가 설명');
   assert.equal(find(updated, 'web').durationMinutes, 77);
   assert.equal(section(updated, 'templates', 'backend-python').body, '새 FastAPI 안내');

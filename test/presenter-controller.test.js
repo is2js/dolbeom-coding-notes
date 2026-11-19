@@ -117,6 +117,17 @@ function harness(t, { hash = '#/present/terminal/case', session, blockedStorage 
   };
 }
 
+test('후속 강의 발표 URL은 안내를 표시하고 앞 강의 정리로 한 번만 이동한다', t => {
+  const h = harness(t, { hash: '#/present/templates/case' });
+  h.course.lessons.push({ id: 'web', shortTitle: '웹', case: { title: '웹 사례' }, sections: [{ id: 'sample', title: '웹', optional: false }] });
+  h.course.lessons.push({ id: 'templates', shortTitle: '백엔드', case: { title: '백엔드 사례' }, sections: [{ id: 'sample', title: '백엔드', optional: false }] });
+  assert.equal(h.flushRoute(), true);
+  assert.equal(h.app.lessonId, 'web');
+  assert.equal(h.app.presentationPageId, 'recap');
+  assert.deepEqual(h.calls.history, ['#/present/web/recap']);
+  assert.match(h.calls.notify[0], /다음 강의/);
+});
+
 test('초기 일반 화면의 타이머 정지는 저장된 발표 위치를 기본 terminal/case로 덮지 않는다', t => {
   const h = harness(t, {
     hash: '#/lesson/git',

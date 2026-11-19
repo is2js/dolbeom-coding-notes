@@ -78,7 +78,7 @@
           </div>
         </div></template>
 
-        <template x-if="presentationPage?.kind === 'recap'"><div class="presentation-recap"><p class="presentation-return-summary" x-html="markdownInline(presentationData.returnSummary)"></p><ul><template x-for="(item,index) in lesson.checklist.slice(0,3)" :key="lesson.id + '-recap-' + index"><li><span x-html="icon('check')"></span><span x-html="markdownInline(item)"></span></li></template></ul><p class="presentation-next-topic" x-text="course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1] ? '다음 연결 · ' + course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1].shortTitle : course.lessons.length + '개 주제를 하나의 개발 흐름으로 연결했습니다.'"></p></div></template>
+        <template x-if="presentationPage?.kind === 'recap'"><div class="presentation-recap"><p class="presentation-return-summary" x-html="markdownInline(presentationData.returnSummary)"></p><ul><template x-for="(item,index) in lesson.checklist.slice(0,3)" :key="lesson.id + '-recap-' + index"><li><span x-html="icon('check')"></span><span x-html="markdownInline(item)"></span></li></template></ul><p class="presentation-next-topic" x-text="lessonId === 'web' ? '본 강의 마무리 · 데이터와 백엔드는 후속 강의 준비 중' : course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1] ? '다음 연결 · ' + course.lessons[course.lessons.findIndex(item=>item.id===lessonId)+1].shortTitle : availableLessonCount + '개 주제를 하나의 개발 흐름으로 연결했습니다.'"></p></div></template>
       </section>
     </div>
   </main>

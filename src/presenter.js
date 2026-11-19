@@ -3,6 +3,7 @@ import {
   createDemoTimer, elapsedDemoMs, startDemoTimer, pauseDemoTimer, resetDemoTimer,
 } from './presentation.js';
 import { getRelatedSteps } from './lesson-flow.js';
+import { isUpcomingLesson, UPCOMING_MESSAGE } from './upcoming-lesson.js';
 
 let sessionStore = null;
 const phaseNames = { intro: '강의 목표', case: '시작 사례', section: '핵심 개념', demo: '실전 예고', live: '실전 진행', recap: '복귀 정리' };
@@ -44,8 +45,12 @@ export const presenterMethods = {
     }));
   },
   readPresentationRoute(initial = false) {
-    const destination = parsePresentationRoute(location.hash, this.course);
+    let destination = parsePresentationRoute(location.hash, this.course);
     if (!destination) return false;
+    if (isUpcomingLesson(destination.lessonId)) {
+      this.notify(UPCOMING_MESSAGE);
+      destination = { lessonId: 'web', pageId: 'recap' };
+    }
     const moving = this.route !== 'present' || this.lessonId !== destination.lessonId || this.presentationPageId !== destination.pageId;
     const restoreLive = initial && this.presentationResume?.lessonId === destination.lessonId && this.presentationResume?.pageId === 'live';
     this.pausePresentationTimers(destination.pageId === 'live' ? destination.lessonId : null);
@@ -66,6 +71,7 @@ export const presenterMethods = {
   },
   openPresentation(id = this.lessonId, pageId = null) {
     if (!this.course.lessons.some(lesson => lesson.id === id)) return;
+    if (isUpcomingLesson(id)) { this.notify(UPCOMING_MESSAGE); return; }
     const resumed = this.presentationResume?.lessonId === id ? this.presentationResume.pageId : id === 'terminal' ? 'intro' : 'case';
     const requestedPage = pageId || resumed;
     const lesson = this.course.lessons.find(item => item.id === id);

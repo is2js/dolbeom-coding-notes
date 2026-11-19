@@ -509,8 +509,7 @@ function serverToBrowser() {
     .replace(/<\/svg>\s*$/, `${footer}</svg>`);
 }
 
-function htmlJsonCard() {
-  const p = 'sa-backend-html-json';
+function htmlJsonCard(p = 'sa-backend-html-json') {
   return frame(p, 'HTML 안의 JSON으로 카드 채우기', `
     ${documentPage(103, 155, 200, 190, {
       label: 'HTML',
@@ -522,6 +521,34 @@ function htmlJsonCard() {
       + pulse(p, shape('M462 199h28', 'none', color.gold, 2.8), 1.05)})}
     ${flow(p, 322, 248, 421, 249, {turn:-1})}
   `, 'HTML 안에 둔 데이터를 브라우저에서 읽습니다');
+}
+
+function futureBackendSteps() {
+  const p = 'sa-web-future-backend';
+  return frame(p, '같은 카드, 다음에 배울 데이터', `
+    ${captionChip(161, 115, '이번 강의', 112, color.mint)}
+    ${captionChip(489, 115, '후속 강의 · 준비 중', 185, color.ochre)}
+    ${documentPage(74, 160, 152, 172, {
+      label: 'HTML · JSON',
+      tone: color.paper,
+      body: code(91, 220, '{ "title": "Git" }', 13, color.ink)
+        + box(89, 245, 120, 40, color.mint, 6, color.edge, 1.2)
+        + center(149, 270, 'Alpine.js', 14, color.ink),
+    })}
+    ${documentPage(307, 160, 148, 172, {
+      label: 'Python',
+      tone: color.mint,
+      body: code(321, 220, '{ "title": "Git" }', 13, color.ink)
+        + center(381, 270, '딕셔너리', 15, color.ink),
+    })}
+    ${cylinder(561, 185, 105, 135, color.lilac)}
+    ${center(615, 224, 'SQLite', 16, color.ink)}
+    ${flow(p, 235, 235, 301, 235, {turn:-1})}
+    ${flow(p, 465, 235, 550, 235, {second:true, delay:1.15, turn:-1})}
+    ${center(152, 429, 'HTML 안의 데이터', 15)}
+    ${center(381, 429, '서버의 데이터', 15)}
+    ${center(614, 429, 'DB에 저장', 15)}
+  `, '후속 강의에서 데이터의 보관 방식을 단계별로 바꿔 봅니다');
 }
 
 function pythonDictionaryApi() {
@@ -693,6 +720,8 @@ export const webSectionScenes = {
   'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'같은 강의 카드를 두 화면에 나란히 보여 줍니다. 실습에서는 VS Code Live Server를 사용하며 Vite는 명령만 읽어 보는 별도 선택지입니다.',svg:webResponsibilities()},
   'web-html': {title:'브라우저와 서버: 프론트엔드와 백엔드 비교',description:'프론트엔드의 React와 Vue, 백엔드의 Python FastAPI·Flask·Django와 Java Spring을 선택지로 구분하며 브라우저 요청과 서버 응답을 비교합니다.',svg:serverToBrowser()},
   'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
+  'web-json-card': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 Alpine.js가 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard('sa-web-json-card')},
+  'web-future-backend': {title:'다음 강의 미리보기: 백엔드와 데이터',description:'이번 강의의 HTML 안 JSON과 Alpine.js 카드에서 출발해, 후속 강의에서 Python 딕셔너리와 SQLite 데이터베이스로 데이터 보관 방식을 단계별로 바꾸는 학습 순서입니다.',svg:futureBackendSteps()},
   'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'같은 FastAPI 주소에서 정적 화면과 API를 제공하고 Python 딕셔너리 목록을 JSON으로 보내 브라우저가 fetch로 읽습니다.',svg:pythonDictionaryApi()},
   'backend-sqlite': {title:'SQLite 데이터베이스의 카드 가져오기',description:'FastAPI가 SQLite 데이터베이스의 행을 조회해 JSON으로 응답하고 브라우저가 카드에 표시합니다.',svg:sqliteApi()},
   'web-jinja': {title:'Jinja2 템플릿에 DB 데이터 넣기',description:'FastAPI가 DB 데이터와 Jinja2 템플릿을 서버에서 결합해 같은 서버 주소로 HTML을 제공하고 브라우저가 화면으로 표시합니다.',svg:templateEngines()},

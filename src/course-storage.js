@@ -12,6 +12,7 @@ import { previousViteLiveDefault } from './previous-vite-live-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
 import { previousJsonCardSection } from './previous-json-card-default.js';
 import { previousJsonPythonSections } from './previous-json-python-defaults.js';
+import { previousBackendPreview } from './previous-backend-preview-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -231,6 +232,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault);
+    if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);
     if (id === 'templates') baselines.push(previousFastapiRoutesDefault);

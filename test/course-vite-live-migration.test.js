@@ -58,7 +58,9 @@ test('author edits, custom ordering, and custom steps remain while untouched fie
   assert.equal(web(result).case.body, '새 실행 사례');
   assert.equal(section(result, 'web-http').body, '강사가 작성한 Vite 실습');
   assert.equal(step(result, 'web-02').code, '강사가 작성한 실행 방법');
-  assert.deepEqual(web(result).sections.map(item => item.id), web(old).sections.map(item => item.id));
+  assert.deepEqual(web(result).sections.filter(item => web(old).sections.some(previous => previous.id === item.id)).map(item => item.id), web(old).sections.map(item => item.id));
+  assert.ok(web(result).sections.some(item => item.id === 'web-json-card'));
+  assert.ok(web(result).sections.some(item => item.id === 'web-future-backend'));
 });
 
 test('an older visual baseline also upgrades directly to the newest Vite demo', () => {

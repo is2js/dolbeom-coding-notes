@@ -26,6 +26,9 @@
 .topic-navigation-list > li { min-width: 0; }
 .topic-option { display: flex; align-items: center; width: 100%; min-height: 56px; gap: 11px; padding: 7px 9px; border: 1px solid transparent; border-radius: 8px; text-align: left; color: #20314b; background: transparent; transition: background .12s ease; }
 .topic-option:hover { background: #f0eada; }
+.topic-option.is-upcoming { color: #626b63; }
+.topic-option.is-upcoming .topic-option-art { filter: grayscale(.75); opacity: .65; }
+.topic-option.is-upcoming .topic-option-status { color: #626b63; }
 .topic-option[aria-checked='true'] { background: #dfeade; border-color: #c0d2c0; }
 .topic-option-art { display: grid; place-items: center; width: 43px; height: 42px; flex: 0 0 43px; border: 1px solid #d2c5ac; border-radius: 7px; background: #f8f1e1; }
 .topic-option-art svg { width: 42px; height: 34px; display: block; }

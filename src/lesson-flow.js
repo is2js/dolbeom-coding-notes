@@ -54,6 +54,8 @@ const relatedStepIds = {
     'web-map': ['web-01', 'web-server-process'],
     'web-http': ['web-02', 'web-05', 'web-09', 'web-10', 'web-04'],
     'web-html': ['web-ssr-handler', 'web-ssr-template', 'web-08', 'web-11'],
+    'web-json-card': ['web-json-practice'],
+    'web-future-backend': ['web-ssr-handler'],
   },
   templates: {
     'backend-html-json': ['backend-html-json'],

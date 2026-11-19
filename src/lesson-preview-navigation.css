@@ -216,6 +216,8 @@
   font: 10px var(--mono);
 }
 .lesson-preview-folder-label strong { display: block; font-weight: 720; }
+.lesson-preview-folder.is-upcoming { color: #646b61; }
+.lesson-preview-folder.is-upcoming .lesson-preview-folder-icon { filter: grayscale(.75); opacity: .65; }
 .lesson-preview-folder:hover, .lesson-preview-folder[aria-expanded='true'] { background: var(--folder-paper); }
 .lesson-preview-folder.is-current-topic {
   background: var(--folder-paper);

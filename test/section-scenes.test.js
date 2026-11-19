@@ -4,13 +4,13 @@ import { sectionScenes, sectionArtwork, sectionDescriptions } from '../src/secti
 import { brandIconPaths } from '../src/brand-icon-paths.js';
 
 test('the authored section scenes have stable keys and matching artwork and accessible descriptions',()=>{
-  assert.equal(Object.keys(sectionScenes).length,41);
+  assert.equal(Object.keys(sectionScenes).length,43);
   for(const [id,scene] of Object.entries(sectionScenes)){
     assert.ok(scene.title.trim());assert.ok(scene.description.trim());
     assert.equal(sectionArtwork[`section-${id}`],scene.svg);
     assert.equal(sectionDescriptions[`section-${id}`],scene.description);
   }
-  assert.equal(new Set(Object.values(sectionArtwork)).size,41);
+  assert.equal(new Set(Object.values(sectionArtwork)).size,43);
   for (const id of ['tools-html', 'tools-css', 'tools-javascript']) {
     assert.ok(sectionScenes[id], `missing practice artwork ${id}`);
   }
@@ -28,6 +28,14 @@ test('data lessons distinguish JSON in HTML, FastAPI dictionary, SQLite and serv
   assert.match(sqlite.svg,/\/api\/sqlite/);
   assert.match(jinja.svg,/Jinja2/);
   assert.match(jinja.svg,/HTML 생성/);
+});
+
+test('future lesson illustration separates current HTML JSON practice and planned data sources',()=>{
+  const current = sectionScenes['web-json-card'];
+  const future = sectionScenes['web-future-backend'];
+  assert.match(current.svg, /JSON\.parse/);
+  for (const phrase of ['이번 강의', '후속 강의 · 준비 중', 'HTML · JSON', 'Alpine.js', 'Python', '딕셔너리', 'SQLite']) assert.ok(future.svg.includes(phrase), phrase);
+  assert.match(future.description, /후속 강의.*Python.*SQLite/);
 });
 
 test('frontend and backend illustrations distinguish the server used in each step',()=>{

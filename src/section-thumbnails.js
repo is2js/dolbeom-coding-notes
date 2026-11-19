@@ -37,6 +37,8 @@ const scenes = {
   'web-http': screen(14, 30, 51, 43, 'card', sage) + screen(88, 31, 51, 43, 'card', blue) + tile(68, 61, '≠', gold),
   'web-html': screen(13, 31, 44, 44) + rack(117, 25) + link(64, 45, 41) + link(105, 62, -41, '#ad723b'),
   'backend-html-json': sheet(22, 27, '{}', clay) + link(60, 49, 27) + screen(92, 38, 46, 39),
+  'web-json-card': sheet(22, 27, '{}', clay) + link(60, 49, 27) + screen(92, 38, 46, 39),
+  'web-future-backend': sheet(15, 31, '{}', clay) + link(48, 48, 16) + tile(70, 43, '{}', sage) + link(92, 48, 16) + disk(120, 39),
   'backend-python': rack(23, 26, blue) + tile(62, 40, '{}', sage) + screen(97, 36, 43, 41),
   'backend-sqlite': disk(28, 39) + rack(64, 24) + screen(100, 41, 41, 39),
   'web-bonus': screen(24, 23, 69, 42, 'editor') + tile(100, 40, '/', blue) + tile(113, 62, '#', gold),

@@ -42,6 +42,8 @@ test('authored frontend text and order survive updated defaults', () => {
   web(old).durationMinutes = 99;
   const result = upgradeNineDefaults(old, latest);
   assert.equal(section(result, id).body, '강사가 직접 작성한 프론트엔드 설명');
-  assert.deepEqual(web(result).sections.map(item => item.id), web(old).sections.map(item => item.id));
+  assert.deepEqual(web(result).sections.filter(item => web(old).sections.some(previous => previous.id === item.id)).map(item => item.id), web(old).sections.map(item => item.id));
+  assert.ok(web(result).sections.some(item => item.id === 'web-json-card'));
+  assert.ok(web(result).sections.some(item => item.id === 'web-future-backend'));
   assert.equal(web(result).durationMinutes, 99);
 });

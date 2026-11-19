@@ -59,7 +59,9 @@ test('updated defaults do not overwrite authored web fields or ordering', () => 
   assert.equal(step(updated).description, step(web(latest)).description);
   assert.equal(updated.presentation.demo, '직접 작성한 발표 메모');
   assert.deepEqual(updated.checklist, web(latest).checklist);
-  assert.deepEqual(updated.sections.map(item => item.id), lesson.sections.map(item => item.id));
+  assert.deepEqual(updated.sections.filter(item => lesson.sections.some(oldItem => oldItem.id === item.id)).map(item => item.id), lesson.sections.map(item => item.id));
+  assert.ok(updated.sections.some(item => item.id === 'web-json-card'));
+  assert.ok(updated.sections.some(item => item.id === 'web-future-backend'));
   assert.equal(updated.sections.find(item => item.id === 'custom-section').body, '추가한 강의 내용');
   assert.equal(updated.durationMinutes, 77);
 });

@@ -21,6 +21,7 @@ import { topicThumbnail } from './topic-thumbnails.js';
 import { sectionThumbnail } from './section-thumbnails.js';
 import { workspaceIcon } from './workspace-icons.js';
 import { topicNavigationState, topicNavigationMethods } from './topic-navigation.js';
+import { isUpcomingLesson, availableLessons, UPCOMING_MESSAGE } from './upcoming-lesson.js';
 import { artViewerState, artViewerMethods } from './art-viewer.js';
 import { caseImageViewerState, caseImageViewerMethods } from './case-image-viewer.js';
 import { formatSiteUpdatedAt } from './site-update.js';
@@ -193,11 +194,13 @@ Alpine.data('courseApp', () => ({
     });
   },
   completed: [], previewVisits: {}, drawer: false, readerOpen: false, toast: '', toastTimer: null, hasDraft: false,
+  isUpcomingLesson,
+  get availableLessonCount() { return availableLessons(this.course).length; },
   get previewProgressCompleted() {
-    return this.course?.lessons.filter(lesson => this.completed.includes(lesson.id)).length ?? 0;
+    return availableLessons(this.course).filter(lesson => this.completed.includes(lesson.id)).length;
   },
   get previewProgressPercent() {
-    const total = this.course?.lessons.length ?? 0;
+    const total = this.availableLessonCount;
     return total ? Math.round(this.previewProgressCompleted / total * 100) : 0;
   },
   get hasLearningProgress() {
@@ -218,7 +221,7 @@ Alpine.data('courseApp', () => ({
     this.$nextTick(() => document.querySelector('.lesson-preview-progress > summary')?.focus({preventScroll:true}));
   },
   get previewTopicProgress() {
-    return (this.course?.lessons || []).map(topic => {
+    return availableLessons(this.course).map(topic => {
       const pages = buildLessonFlow(topic);
       const opened = new Set(visitedPageIds(this.previewVisits, topic.id));
       const complete = this.completed.includes(topic.id);
@@ -256,7 +259,7 @@ Alpine.data('courseApp', () => ({
   },
   get step() { return this.lesson?.steps[Math.min(this.stepIndex, this.lesson.steps.length - 1)]; },
   get lessonDuration() { return this.lesson ? lessonMinutes(this.lesson) : 0; },
-  get totalMinutes() { return this.course ? courseMinutes(this.course) : 0; },
+  get totalMinutes() { return this.course ? courseMinutes({ ...this.course, lessons: availableLessons(this.course) }) : 0; },
   get isComplete() { return this.completed.includes(this.lessonId); },
   get learningPages() { return buildLessonFlow(this.lesson); },
   get learningPageIndex() { return Math.max(0,this.learningPages.findIndex(page=>page.id === this.learningPageId)); },
@@ -267,7 +270,7 @@ Alpine.data('courseApp', () => ({
   get learningPhase() { return ({case:'시작 사례',section:'본문 설명',recap:'핵심 정리'})[this.learningPage?.kind] || ''; },
   get learningTitle() { return this.learningPage?.kind === 'case' ? this.lesson.case.title : this.learningPage?.title; },
   get learningCue() { return ({case:'먼저 이 사례를 소개하고, 다음 설명으로 이어가세요.',section:'지금은 이 본문을 설명하세요. 현재 순서와 그림도 같은 절을 가리킵니다.',recap:'핵심을 정리하고 다음 주제로 이어가세요.'})[this.learningPage?.kind] || ''; },
-  get learningNextTitle() { return this.learningPages[this.learningPageIndex+1]?.title || this.course.lessons[this.course.lessons.findIndex(item=>item.id === this.lessonId)+1]?.shortTitle || '전체 강의를 마쳤습니다.'; },
+  get learningNextTitle() { return this.learningPages[this.learningPageIndex+1]?.title || (this.lessonId === 'web' ? '본 강의를 마쳤습니다 · 후속 강의 준비 중' : this.course.lessons[this.course.lessons.findIndex(item=>item.id === this.lessonId)+1]?.shortTitle) || '전체 강의를 마쳤습니다.'; },
   get presentationPages() { return this.lesson ? buildPresentationPages(this.lesson) : []; },
   get presentationPageIndex() { return Math.max(0, this.presentationPages.findIndex(page => page.id === this.presentationPageId)); },
   get presentationPage() { return this.presentationPages[this.presentationPageIndex]; },
@@ -399,9 +402,13 @@ Alpine.data('courseApp', () => ({
     }
     const first = this.course.lessons[0].id;
     const last = initial ? resolveLessonAlias(safeRead(localStorage,LAST_KEY,first)) : first;
-    const learning = editing
+    let learning = editing
       ? {lessonId:editing.lessonId,pageId:editing.itemId === 'case' ? 'case' : 'section-' + editing.itemId}
       : parseLessonRoute(location.hash,this.course,last) || {lessonId:COURSE_IDS.includes(last)?last:first,pageId:'case'};
+    if (isUpcomingLesson(learning.lessonId)) {
+      learning = {lessonId:'web',pageId:'recap'};
+      this.notify(UPCOMING_MESSAGE);
+    }
     this.selectLearningLocation(learning.lessonId,learning.pageId);
     this.route='learn'; this.infoTab='case'; this.readerOpen=false;
     this.rememberPreviewPage();
@@ -422,6 +429,7 @@ Alpine.data('courseApp', () => ({
   },
   showLesson(id,pageId='case') {
     if(!COURSE_IDS.includes(id)) return;
+    if(isUpcomingLesson(id)) { this.notify(UPCOMING_MESSAGE); return; }
     const changedTopic=this.lessonId !== id;
     this.selectLearningLocation(id,pageId); this.route='learn'; this.infoTab='case'; this.readerOpen=false;
     const address=lessonAddress(this.lessonId,this.learningPageId);

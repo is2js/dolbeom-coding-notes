@@ -11,6 +11,7 @@ import { previousViteVisualDefault } from './previous-vite-visual-default.js';
 import { previousViteLiveDefault } from './previous-vite-live-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
 import { previousJsonCardSection } from './previous-json-card-default.js';
+import { previousJsonPythonSections } from './previous-json-python-defaults.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -239,6 +240,11 @@ export function upgradeNineDefaults(value, baseCourse) {
       const latestSection = latest.sections.find(item => item.id === previousJsonCardSection.id);
       if (sectionIndex >= 0 && latestSection) {
         merged.sections[sectionIndex] = mergeUnchanged(merged.sections[sectionIndex], previousJsonCardSection, latestSection);
+      }
+      for (const oldSection of previousJsonPythonSections) {
+        const index = merged.sections.findIndex(item => item.id === oldSection.id);
+        const nextSection = latest.sections.find(item => item.id === oldSection.id);
+        if (index >= 0 && nextSection) merged.sections[index] = mergeUnchanged(merged.sections[index], oldSection, nextSection);
       }
     }
     if (id === 'web-tools') {

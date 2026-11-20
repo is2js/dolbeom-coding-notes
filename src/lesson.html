@@ -15,7 +15,7 @@
       <div class="lesson-art-tools" x-show="view === 'map'"><button type="button" class="art-expand-button" @click="openArtViewer($event)"><span x-html="icon('expand')"></span>그림 크게 보기</button><button type="button" @click="illustrationPaused=!illustrationPaused" :disabled="prefersReducedMotion" :aria-pressed="illustrationPaused || prefersReducedMotion" x-text="prefersReducedMotion ? '정지 화면' : illustrationPaused ? '그림 움직임 재생' : '그림 움직임 멈춤'"></button></div>
     </main>
 
-    <article class="lesson-current-note" aria-labelledby="learning-current-title"><header><span class="lesson-current-label" x-text="learningPage.kind === 'case' ? '먼저 소개할 사례' : learningPage.kind === 'recap' ? '이 주제의 마무리' : '지금 설명할 본문'"></span></header><h2 id="learning-current-title" x-text="learningTitle"></h2><p class="lesson-current-cue" x-text="learningCue"></p>
+    <article class="lesson-current-note" aria-labelledby="learning-current-title"><header><span class="lesson-current-label" x-text="learningPage.kind === 'case' ? '먼저 소개할 사례' : learningPage.kind === 'recap' ? '이 주제의 마무리' : '지금 설명할 본문'"></span></header><h2 id="learning-current-title" x-text="learningTitle"></h2><p class="lesson-current-cue" x-show="learningCue" x-text="learningCue"></p>
       <template x-if="lessonId === 'markdown' && learningPage.kind === 'section' && learningPage.section.id === 'markdown-map'">
         <!-- MARKDOWN_PRACTICE -->
       </template>

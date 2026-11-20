@@ -14,6 +14,7 @@ import { previousJsonCardSection } from './previous-json-card-default.js';
 import { previousJsonPythonSections } from './previous-json-python-defaults.js';
 import { previousBackendPreview } from './previous-backend-preview-default.js';
 import { previousLessonNoteBodies } from './previous-lesson-note-bodies.js';
+import { previousTerminalHighlightsDefault } from './previous-terminal-highlights-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -247,11 +248,12 @@ export function upgradeNineDefaults(value, baseCourse) {
   // markers alone would make it look like a locally edited course on reload.
   if (equal(value, baseCourse)) return value;
   let updated = null;
-  for (const id of ['git', 'ide', 'web-coding', 'web-tools', 'web', 'templates']) {
+  for (const id of ['terminal', 'git', 'ide', 'web-coding', 'web-tools', 'web', 'templates']) {
     const index = value.lessons.findIndex(item => item?.id === id);
     const current = value.lessons[index];
     const latest = baseCourse.lessons.find(item => item?.id === id);
-    const previous = previousNineDefault[id] || previousIdeToolsDefault[id] || previousPracticeFlowDefault[id];
+    const previous = id === 'terminal' ? previousTerminalHighlightsDefault
+      : previousNineDefault[id] || previousIdeToolsDefault[id] || previousPracticeFlowDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;
     // Apply each published baseline independently so untouched fields from

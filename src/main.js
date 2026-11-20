@@ -1,6 +1,6 @@
 import Alpine from 'alpinejs';
 import { renderCourseMarkdown as markdown, renderCourseInline as markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown } from './course-markdown.js';
-import { presentationCommandGroups, presentationDemoCommands, showPresentationPoints } from './presentation-commands.js';
+import { presentationCommandGroups, presentationDemoCommands, useCompactPresentationPoints } from './presentation-commands.js';
 import { validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite, COURSE_IDS } from './course.js';
 import { createEditor } from './editor.js';
 import { createLocalCourseSync } from './local-sync.js';
@@ -251,7 +251,7 @@ Alpine.data('courseApp', () => ({
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown, presentationCommandGroups, presentationDemoCommands, showPresentationPoints, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown, presentationCommandGroups, presentationDemoCommands, useCompactPresentationPoints, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
   get brandTitle() {
     const title = (this.course?.title || 'Ai 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, '');
@@ -269,7 +269,16 @@ Alpine.data('courseApp', () => ({
   get learningIllustrationId() { return sectionIllustrationId(this.learningPage?.section,this.lesson.id); },
   get learningPhase() { return ({case:'시작 사례',section:'본문 설명',recap:'핵심 정리'})[this.learningPage?.kind] || ''; },
   get learningTitle() { return this.learningPage?.kind === 'case' ? this.lesson.case.title : this.learningPage?.title; },
-  get learningCue() { return ({case:'먼저 이 사례를 소개하고, 다음 설명으로 이어가세요.',section:'지금은 이 본문을 설명하세요. 현재 순서와 그림도 같은 절을 가리킵니다.',recap:'핵심을 정리하고 다음 주제로 이어가세요.'})[this.learningPage?.kind] || ''; },
+  get learningCue() {
+    const page = this.learningPage;
+    if (page?.section?.id === 'terminal-example') return 'PowerShell과 Windows Terminal 설치가 먼저 필요합니다.';
+    if (page?.section?.id === 'terminal-gui-cli') return '';
+    return {
+      case: '먼저 이 사례를 소개하고, 다음 설명으로 이어가세요.',
+      section: '지금은 이 본문을 설명하세요. 현재 순서와 그림도 같은 절을 가리킵니다.',
+      recap: '핵심을 정리하고 다음 주제로 이어가세요.',
+    }[page?.kind] || '';
+  },
   get learningNextTitle() { return this.learningPages[this.learningPageIndex+1]?.title || (this.lessonId === 'web' ? '본 강의를 마쳤습니다 · 후속 강의 준비 중' : this.course.lessons[this.course.lessons.findIndex(item=>item.id === this.lessonId)+1]?.shortTitle) || '전체 강의를 마쳤습니다.'; },
   get presentationPages() { return this.lesson ? buildPresentationPages(this.lesson) : []; },
   get presentationPageIndex() { return Math.max(0, this.presentationPages.findIndex(page => page.id === this.presentationPageId)); },

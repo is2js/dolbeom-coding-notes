@@ -27,11 +27,10 @@ export function presentationCommandGroups(body) {
   return groups;
 }
 
-// Terminal slides prioritize their copyable examples. Keep edited points for
-// every other lesson and for terminal sections that have no command boxes.
-export function showPresentationPoints(lessonId, page) {
-  if (!page?.points?.length) return false;
-  return lessonId !== 'terminal' || presentationCommandGroups(page.section?.body).length === 0;
+// Leave room for the copyable commands while keeping the terminal notes visible.
+export function useCompactPresentationPoints(lessonId, page) {
+  return lessonId === 'terminal' && !!page?.points?.length
+    && presentationCommandGroups(page.section?.body).length > 0;
 }
 
 // Demo text also contains UI directions. Only recognisable standalone commands

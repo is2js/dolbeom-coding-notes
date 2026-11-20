@@ -50,9 +50,9 @@
 
         <template x-if="presentationPage?.kind === 'section'"><div>
           <template x-if="lessonId === 'markdown' && presentationPage.section.id === 'markdown-map'"><details class="presentation-markdown-practice" @toggle="if ($el.open) $nextTick(() => $el.scrollIntoView({block:'start'}))"><summary>마크다운 실시간 연습 열기</summary><!-- MARKDOWN_PRACTICE --></details></template>
-          <ol class="presentation-points" x-show="showPresentationPoints(lessonId, presentationPage)"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-html="markdownInline(point)"></p></li></template></ol>
+          <ol class="presentation-points" :class="{ 'is-compact': useCompactPresentationPoints(lessonId, presentationPage) }" x-show="presentationPage.points?.length"><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-' + index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-html="markdownInline(point)"></p></li></template></ol>
           <div class="presentation-prose" x-show="!presentationPage.points?.length" x-html="markdown(presentationPage.section.body)"></div>
-          <section class="presentation-command-examples" :class="{ 'is-first': lessonId === 'terminal' }" aria-label="이 절의 명령어와 설명" x-show="presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length">
+          <section class="presentation-command-examples" :class="{ 'is-compact': lessonId === 'terminal' }" aria-label="이 절의 명령어와 설명" x-show="presentationPage.points?.length && presentationCommandGroups(presentationPage.section.body).length">
             <h2>이 절의 명령어</h2>
             <p class="presentation-command-hint">실행 전 명령 설명을 확인하세요.</p>
             <template x-for="(group,index) in presentationCommandGroups(presentationPage.section.body)" :key="presentationPage.id + '-command-' + index"><div>
@@ -60,7 +60,6 @@
               <div class="markdown-body presentation-command-prose" x-html="markdown(group.code)"></div>
             </div></template>
           </section>
-          <details class="presentation-terminal-summary" x-show="presentationPage.points?.length && !showPresentationPoints(lessonId, presentationPage)"><summary>핵심 설명 보기</summary><ul><template x-for="(point,index) in (presentationPage.points || [])" :key="presentationPage.id + '-summary-' + index"><li x-html="markdownInline(point)"></li></template></ul></details>
         </div></template>
 
         <template x-if="['demo','live'].includes(presentationPage?.kind)"><div class="presentation-demo-content">

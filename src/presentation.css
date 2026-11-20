@@ -67,17 +67,17 @@
 .presentation-points li:last-child { padding-bottom: 0; }
 .presentation-points li > span { color: #7a9787; font: 12px var(--mono); padding-top: 12px; flex-shrink: 0; }
 .presentation-points p { margin: 0; color: #405950; font-size: clamp(24px,1.85vw,32px); line-height: 1.65; letter-spacing: -.035em; word-break: keep-all; overflow-wrap: anywhere; }
+.presentation-points.is-compact li { gap: 9px; padding: 5px 0; border: 0; }
+.presentation-points.is-compact li > span { padding-top: .3em; }
+.presentation-points.is-compact p { font-size: clamp(15px,1.2vw,18px); line-height: 1.65; letter-spacing: 0; }
 .presentation-command-examples { margin-top: 30px; }
-.presentation-command-examples.is-first { margin-top: 0; }
+.presentation-command-examples.is-compact { margin-top: 16px; }
 .presentation-command-examples h2 { margin: 0 0 12px; color: #405950; font-size: 16px; }
 .presentation-command-hint { color: #788576; font-size: 13px; margin: 0 0 10px; }
 .presentation-command-context summary { color: #47756d; font-size: 14px; min-height: 44px; padding: 12px 0; box-sizing: border-box; cursor: pointer; }
 .presentation-command-context[open] .presentation-command-prose { margin-bottom: 10px; }
 .presentation-command-prose { font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
 .presentation-command-prose .copyable-code pre { font-size: 14px; }
-.presentation-terminal-summary { margin: 20px 0; color: #405950; font-size: 15px; line-height: 1.6; }
-.presentation-terminal-summary summary { padding: 10px 0; color: #47756d; cursor: pointer; }
-.presentation-terminal-summary ul { margin: 8px 0; padding-left: 1.3em; }
 .presentation-goals li { padding: 8px 0; gap: 14px; }
 .presentation-goals li > span { padding-top: 5px; }
 .presentation-goals p { font-size: clamp(16px,1.25vw,22px); line-height: 1.45; }

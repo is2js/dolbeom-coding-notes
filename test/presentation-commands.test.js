@@ -12,7 +12,10 @@ test('terminal presentation keeps compact key points alongside copyable commands
   assert.equal(useCompactPresentationPoints('terminal', page), true);
   assert.ok(presentationCommandGroups(section.body).length);
   assert.deepEqual(section.presentationPoints, originalPoints);
-  assert.equal(useCompactPresentationPoints('git', page), false);
+  const git = course.lessons.find(lesson => lesson.id === 'git');
+  const history = git.sections.find(item => item.id === 'git-prompt');
+  assert.equal(useCompactPresentationPoints('git', { points: history.presentationPoints, section: history }), true);
+  assert.equal(useCompactPresentationPoints('github', page), false);
   assert.equal(useCompactPresentationPoints('terminal', { points: ['단축키를 연습합니다.'], section: { body: '단축키 설명' } }), false);
   assert.equal(useCompactPresentationPoints('terminal', { points: null, section }), false);
   assert.match(section.body, /Microsoft Store[\s\S]*?PowerShell[\s\S]*?Windows Terminal[\s\S]*?Get-Location/);

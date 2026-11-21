@@ -27,9 +27,9 @@ export function presentationCommandGroups(body) {
   return groups;
 }
 
-// Leave room for the copyable commands while keeping the terminal notes visible.
+// Leave room for copyable commands in the terminal and Git lessons.
 export function useCompactPresentationPoints(lessonId, page) {
-  return lessonId === 'terminal' && !!page?.points?.length
+  return (lessonId === 'terminal' || lessonId === 'git') && !!page?.points?.length
     && presentationCommandGroups(page.section?.body).length > 0;
 }
 

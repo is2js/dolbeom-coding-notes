@@ -16,6 +16,7 @@ import { previousBackendPreview } from './previous-backend-preview-default.js';
 import { previousLessonNoteBodies } from './previous-lesson-note-bodies.js';
 import { previousTerminalHighlightsDefault } from './previous-terminal-highlights-default.js';
 import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.js';
+import { previousGitHighlightsDefault } from './previous-git-highlights-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -261,6 +262,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     // any release update without replacing the author's edited fields.
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
+    if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);

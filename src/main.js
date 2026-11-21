@@ -272,10 +272,11 @@ Alpine.data('courseApp', () => ({
   get learningCue() {
     const page = this.learningPage;
     if (page?.section?.id === 'terminal-example') return 'PowerShell과 Windows Terminal 설치가 먼저 필요합니다.';
-    if (page?.section?.id === 'terminal-gui-cli') return '';
+    if (page?.kind === 'case' && this.lessonId === 'git') {
+      return 'Git은 파일의 변경 기록을 남기는 도구입니다. 무엇이 바뀌었는지 비교하고 예전 버전도 다시 볼 수 있습니다.';
+    }
     return {
       case: '먼저 이 사례를 소개하고, 다음 설명으로 이어가세요.',
-      section: '지금은 이 본문을 설명하세요. 현재 순서와 그림도 같은 절을 가리킵니다.',
       recap: '핵심을 정리하고 다음 주제로 이어가세요.',
     }[page?.kind] || '';
   },

@@ -412,7 +412,7 @@
       "case": {
         "kind": "real",
         "title": "Git 기록에서 바뀐 파일과 내용을 찾아보기",
-        "body": "### 실제 개발 기록을 다시 살펴보기\n\n제가 PyCharm에서 **‘RPG: 계정 캐릭터 관리 개선’ 커밋**을 살펴본 화면입니다.\n\n![PyCharm에서 Git 커밋 기록을 선택하고 관련 파일과 두 버전의 차이를 나란히 살펴보는 실제 프로젝트 화면](./assets/course/git-commit-diff-screenshot.png)\n\n1. **왼쪽 아래**에서 작업 기록을 고릅니다.\n2. **오른쪽**에서 그때 바뀐 파일을 고릅니다.\n3. **위쪽 Diff**에서 두 버전의 줄을 나란히 비교합니다.\n\n이처럼 **커밋**으로 작업 단위를 남겨 두면 나중에 무엇을 바꿨는지 찾을 수 있습니다. 같은 과정을 `note.txt` 한 파일로 연습합니다.",
+        "body": "### 실제 개발 기록을 다시 살펴보기\n\n제가 PyCharm에서 **‘RPG: 계정 캐릭터 관리 개선’ 커밋**을 살펴본 화면입니다.\n\n![PyCharm에서 Git 커밋 기록을 선택하고 관련 파일과 두 버전의 차이를 나란히 살펴보는 실제 프로젝트 화면](./assets/course/git-commit-diff-screenshot.png)\n\n1. **왼쪽 아래**에서 작업 기록을 고릅니다.\n2. **오른쪽**에서 그때 바뀐 파일을 고릅니다.\n3. **위쪽 Diff**에서 두 버전의 줄을 나란히 비교합니다.\n\n이처럼 **커밋**으로 작업 단위를 남겨 두면 나중에 무엇을 바꿨는지 찾을 수 있습니다. 같은 과정을 `note.txt` 한 파일로 연습합니다.\n\n### Codex 작업에서 바뀐 파일 확인하기\n\n![Codex의 파일 변경 요약에서 파일별 추가·삭제 줄 수와 전체 변경 파일 11개를 확인하는 화면](./assets/course/git-codex-changes-screenshot.png)\n\nGit 저장소 안에서 Codex로 작업한 실제 화면입니다. 아래의 <mark>**11개 파일 변경됨**</mark>을 열면 파일별로 바뀐 줄 수가 나옵니다. 예를 들어 `layout.v1.json`의 **+8 / −7**은 이 작업에서 추가된 8줄과 삭제된 7줄입니다.\n\n<mark>변경 요약을 본 뒤 Git 상태를 확인합니다.</mark> 이 숫자는 작업 중 바뀐 내용을 보여 주며, 커밋으로 기록했는지는 별도로 확인합니다. Git에서는 `git status`로 현재 상태를, `git diff`로 이미 추적 중인 파일의 아직 스테이징하지 않은 변경을 확인할 수 있습니다. [Codex의 변경 검토 안내](https://learn.chatgpt.com/docs/code-review)",
         "question": "나중에 특정 작업을 다시 살펴보려면 어떤 단위로 기록하고, 바뀐 파일과 내용을 어떻게 확인하면 좋을까요?"
       },
       "objectives": [
@@ -1006,7 +1006,7 @@
       ],
       "closing": "메모의 두 버전을 기록하고 이전 기록을 확인했습니다. 별도 브랜치에서 만든 파일을 main에 합친 뒤, 다음 GitHub 강의에서 이 저장소를 원격에 올리고 다른 폴더에 복제합니다.",
       "presentation": {
-        "caseSummary": "실제 개발 기록에서 커밋·변경 파일·Diff를 살펴봅니다. 이어서 Git을 처음 사용하는 상황으로 돌아가 메모 파일 하나의 두 기록을 직접 만듭니다.",
+        "caseSummary": "PyCharm에서 커밋에 남긴 변경을 살펴봅니다. 이어 Codex 화면에서 <mark>11개 변경 파일과 추가·삭제 줄 수</mark>를 읽습니다. 작업 중 변경과 커밋으로 남긴 기록을 구분한 뒤 메모 파일로 연습합니다.",
         "demo": {
           "program": "Windows Terminal · PowerShell · 메모장",
           "file": "터미널 강의의 git-practice 폴더 · 같은 note.txt와 새 branch-note.txt",

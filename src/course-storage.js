@@ -15,6 +15,7 @@ import { previousJsonPythonSections } from './previous-json-python-defaults.js';
 import { previousBackendPreview } from './previous-backend-preview-default.js';
 import { previousLessonNoteBodies } from './previous-lesson-note-bodies.js';
 import { previousTerminalHighlightsDefault } from './previous-terminal-highlights-default.js';
+import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -266,6 +267,13 @@ export function upgradeNineDefaults(value, baseCourse) {
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);
     if (id === 'templates') baselines.push(previousFastapiRoutesDefault);
     const merged = baselines.reduce((lesson, baseline) => mergeLesson(lesson, baseline, latest), current);
+    if (id === 'git') {
+      const { case: previousCase, presentation: previousPresentation } = previousGitCodexCaseDefault;
+      merged.case = mergeUnchanged(merged.case, previousCase, latest.case);
+      if (merged.presentation) {
+        merged.presentation = mergeUnchanged(merged.presentation, previousPresentation, latest.presentation);
+      }
+    }
     if (id === 'templates') {
       const sectionIndex = merged.sections.findIndex(item => item.id === previousJsonCardSection.id);
       const latestSection = latest.sections.find(item => item.id === previousJsonCardSection.id);

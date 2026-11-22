@@ -56,6 +56,7 @@
 .lesson-current-label { font-size: 11px; font-weight: 700; color: #4e8270; }
 .lesson-current-note > h2 { font-size: 22px; line-height: 1.55; color: #315448; font-weight: 750; letter-spacing: -.045em; margin: 0 0 14px; word-break: keep-all; overflow-wrap: anywhere; }
 .lesson-current-cue { font-size: 11px; line-height: 1.8; background: #edf0df; color: #71886d; padding: 10px 12px; border-radius: 4px; margin: 0 0 17px; }
+.case-repository-link { display: block; min-height: 44px; color: #355d4c; font-weight: 700; text-decoration: underline; text-underline-offset: .22em; overflow-wrap: anywhere; }
 .lesson-current-prose { max-height: min(64vh,690px); min-height: 230px; overflow: auto; scrollbar-width: thin; scrollbar-color: #a8b89e #eee9da; padding-right: 8px; }
 .lesson-current-prose .markdown-body { font-size: 14px; line-height: 1.95; }
 .lesson-current-prose .markdown-body h3 { font-size: 17px; }

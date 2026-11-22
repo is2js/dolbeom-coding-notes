@@ -19,6 +19,10 @@ const scenes = {
     + tile(26, 22, 'HEAD', gold, 32) + tile(102, 34, 'main', sage, 32),
   'git-branch': gitGraph([['M33 43L129 56', '#45706a'], ['M33 43L71 77L92 80L129 56', '#af7740']],
     [[33,43,cream], [80,78,gold], [129,56,sage]]),
+  'github-case': screen(23, 25, 44, 43, 'editor', blue)
+    + `<circle cx="21" cy="29" r="12" fill="#34434c"/>
+       <path transform="translate(13 21) scale(.69)" d="M8 21c-5 1-5-3-7-3m14 5v-4c0-1-.1-2-1-3 4 0 7-2 7-6 0-2-.5-3-2-4 .5-1 .5-3 0-4-2 0-3 1-4 2-2-.5-4-.5-6 0-1-1-2-2-4-2-.5 1-.5 3 0 4-1.5 1-2 2-2 4 0 4 3 6 7 6-1 1-1 2-1 3v4" stroke="#fff6df" stroke-width="1.7"/>`
+    + link(67, 49, 25) + screen(96, 30, 41, 39) + folder(103, 57, 27),
   'github-clone': rack(27, 25) + link(61, 48, 35) + folder(102, 55, 31),
   'github-roles': folder(18, 40, 36) + link(59, 49, 32) + rack(105, 25) + tile(75, 75, '↔', gold),
   'git-bonus': sheet(25, 30, 'TXT') + screen(79, 30, 54, 47, 'terminal'),

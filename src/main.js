@@ -5,7 +5,7 @@ import { validateCourse, courseMinutes, lessonMinutes, safeRead, safeWrite, COUR
 import { createEditor } from './editor.js';
 import { createLocalCourseSync } from './local-sync.js';
 import { COURSE_STORAGE, readCourseDrafts, resolveLessonAlias } from './course-storage.js';
-import { lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId } from './illustrations.js';
+import { lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, caseIllustrationId } from './illustrations.js';
 import { buildPresentationPages, getPresentation, createDemoTimer, formatDemoTime } from './presentation.js';
 import { presenterState, presenterMethods, currentDemoElapsed } from './presenter.js';
 import { editorAddress, parseEditorRoute, selectEditorLesson } from './editing-route.js';
@@ -266,12 +266,16 @@ Alpine.data('courseApp', () => ({
   get learningPage() { return this.learningPages[this.learningPageIndex]; },
   get learningExamples() { return getRelatedSteps(this.lesson,this.learningPage); },
   get learningExampleIndex() { return Math.max(0,this.learningExamples.findIndex(example=>example.index === this.stepIndex)); },
-  get learningIllustrationId() { return sectionIllustrationId(this.learningPage?.section,this.lesson.id); },
+  get learningIllustrationId() {
+    return this.learningPage?.kind === 'case' ? caseIllustrationId(this.lesson.id) : sectionIllustrationId(this.learningPage?.section, this.lesson.id);
+  },
   get learningPhase() { return ({case:'시작 사례',section:'본문 설명',recap:'핵심 정리'})[this.learningPage?.kind] || ''; },
   get learningTitle() { return this.learningPage?.kind === 'case' ? this.lesson.case.title : this.learningPage?.title; },
+  get caseRepositoryUrl() { return this.lessonId === 'github' ? 'https://github.com/is2js/course-card-vite-example' : ''; },
   get learningCue() {
     const page = this.learningPage;
     if (page?.section?.id === 'terminal-example') return 'PowerShell과 Windows Terminal 설치가 먼저 필요합니다.';
+    if (page?.kind === 'case' && this.caseRepositoryUrl) return '';
     if (page?.kind === 'case' && this.lessonId === 'git') {
       return 'Git은 파일의 변경 기록을 남기는 도구입니다. 무엇이 바뀌었는지 비교하고 예전 버전도 다시 볼 수 있습니다.';
     }
@@ -284,7 +288,9 @@ Alpine.data('courseApp', () => ({
   get presentationPages() { return this.lesson ? buildPresentationPages(this.lesson) : []; },
   get presentationPageIndex() { return Math.max(0, this.presentationPages.findIndex(page => page.id === this.presentationPageId)); },
   get presentationPage() { return this.presentationPages[this.presentationPageIndex]; },
-  get presentationIllustrationId() { return sectionIllustrationId(this.presentationPage?.section, this.lesson.id); },
+  get presentationIllustrationId() {
+    return this.presentationPage?.kind === 'case' ? caseIllustrationId(this.lesson.id) : sectionIllustrationId(this.presentationPage?.section, this.lesson.id);
+  },
   get presentationData() { return this.lesson ? getPresentation(this.lesson) : null; },
   get presentationTimer() { return this.demoTimers[this.lessonId] || createDemoTimer(); },
   get presentationElapsed() { return formatDemoTime(currentDemoElapsed(this.demoTimers, this.lessonId, this.presentationNow)); },

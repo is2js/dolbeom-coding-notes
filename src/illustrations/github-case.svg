@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 550" class="topic-art-svg topic-art-github-case" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="github-case-cream" x2=".85" y2="1"><stop stop-color="#fff8e9"/><stop offset="1" stop-color="#ecddbb"/></linearGradient>
+    <linearGradient id="github-case-sage" x2=".85" y2="1"><stop stop-color="#e7efd9"/><stop offset="1" stop-color="#afc8b1"/></linearGradient>
+    <linearGradient id="github-case-night" x2="1" y2="1"><stop stop-color="#435866"/><stop offset="1" stop-color="#293b49"/></linearGradient>
+    <linearGradient id="github-case-folder" x2=".65" y2="1"><stop stop-color="#ffe5a6"/><stop offset="1" stop-color="#e9b96b"/></linearGradient>
+    <filter id="github-case-shadow" x="-.2" y="-.3" width="1.4" height="1.6"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+  <style>
+    .topic-art-github-case .clone-packet { opacity: 0; stroke-dasharray: 11 89; animation: github-case-transfer 4.8s ease-in-out infinite; }
+    @keyframes github-case-transfer {
+      0%, 10% { opacity: 0; stroke-dashoffset: 11; }
+      25%, 58% { opacity: .9; }
+      73%, 100% { opacity: 0; stroke-dashoffset: -89; }
+    }
+    @media (prefers-reduced-motion: reduce) { .topic-art-github-case .clone-packet { animation: none; } }
+  </style>
+
+  <!-- Repository and computer sit on separate, parallel grid planes. -->
+  <g fill="none" stroke="#34434c" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m162 249 187 107-100 57L62 306Z M538 300l177 101-100 57-177-101Z" fill="#645238" opacity=".2" stroke="none" filter="url(#github-case-shadow)"/>
+    <path d="m62 297 187 107 100-57v12l-100 57L62 309Z" fill="#c6b28d"/>
+    <path d="m249 404 100-57v12l-100 57Z" fill="#aa9677"/>
+    <path d="m162 240 187 107-100 57L62 297Z" fill="url(#github-case-cream)"/>
+    <path d="m438 348 177 101 100-57v12l-100 57-177-101Z" fill="#a1b69c"/>
+    <path d="m615 449 100-57v12l-100 57Z" fill="#819b83"/>
+    <path d="m538 291 177 101-100 57-177-101Z" fill="url(#github-case-sage)"/>
+    <path d="m66 297 96-55 183 105m97 1 96-55 173 99" stroke="#fffdf1" stroke-width="1.5"/>
+    <path d="m95 278 187 107m-154-126 187 107m-91-90-100 57m163-21-100 57m284-40 177 101m-143-120 177 101m-85-86-100 57m159-24-100 57" stroke="#7c8d77" stroke-width="1.1" opacity=".23"/>
+
+    <!-- A single arrow shows the direction of clone, with an always-visible arrowhead. -->
+    <path d="m319 287 122 70" stroke="#fff8e9" stroke-width="25"/>
+    <path d="m319 287 122 70" stroke="#367c74" stroke-width="17"/>
+    <path d="m319 287 122 70" pathLength="100" class="art-motion clone-packet" stroke="#e1f0bf" stroke-width="8"/>
+    <path d="m436 337 19 28-34-4Z" fill="#367c74" stroke="#fff8e9" stroke-width="2"/>
+    <rect x="327" y="246" width="130" height="39" rx="10" fill="#fff7e4" stroke="#a7b69c" stroke-width="1.5"/>
+    <text x="392" y="273" text-anchor="middle" fill="#205e57" stroke="none" font-family="Consolas, monospace" font-size="23" font-weight="700">git clone</text>
+
+    <!-- Public project window, with GitHub badge, files, and commit dots. -->
+    <g transform="translate(108 110)">
+      <path d="m0 0 16-9 190 109-16 9Z" fill="#eeddb8"/>
+      <path d="m190 109 16-9v154l-16 9Z" fill="#9fb7a3"/>
+      <g transform="matrix(1 .571 0 1 0 0)">
+        <rect width="190" height="154" rx="9" fill="#fffaf0"/>
+        <path d="M9 0h172q9 0 9 9v31H0V9q0-9 9-9Z" fill="url(#github-case-night)"/>
+        <text x="61" y="27" fill="#fffaf0" stroke="none" font-family="system-ui, sans-serif" font-size="21" font-weight="700">GitHub</text>
+        <circle cx="166" cy="20" r="3.2" fill="#aecab3" stroke="none"/>
+        <rect x="15" y="53" width="160" height="22" rx="4" fill="#e2ebd8" stroke="#a4b9a6" stroke-width="1.4"/>
+        <rect x="15" y="81" width="160" height="22" rx="4" fill="#f8efd9" stroke="#c8b994" stroke-width="1.4"/>
+        <path d="M24 58h8l4 4v8H24Z M24 86h8l4 4v8H24Z" fill="#fffaf0" stroke="#709487" stroke-width="1.3"/>
+        <g fill="#34434c" stroke="none" font-family="Consolas, monospace" font-size="16">
+          <text x="43" y="70">index.html</text><text x="43" y="98">package.json</text>
+        </g>
+        <path d="M25 125h53m14 0h53" stroke="#719789" stroke-width="2"/>
+        <circle cx="26" cy="125" r="5.7" fill="#e0b66f"/><circle cx="58" cy="125" r="5.7" fill="#d1dfbd"/><circle cx="90" cy="125" r="5.7" fill="#91b6a1"/>
+      </g>
+      <g transform="translate(16 22)">
+        <circle r="29" fill="#293b49" stroke="#fff5de" stroke-width="2.4"/>
+        <path transform="translate(-16 -16) scale(1.38)" d="M8 21c-5 1-5-3-7-3m14 5v-4c0-1-.1-2-1-3 4 0 7-2 7-6 0-2-.5-3-2-4 .5-1 .5-3 0-4-2 0-3 1-4 2-2-.5-4-.5-6 0-1-1-2-2-4-2-.5 1-.5 3 0 4-1.5 1-2 2-2 4 0 4 3 6 7 6-1 1-1 2-1 3v4" stroke="#fff7e4" stroke-width="1.7"/>
+      </g>
+    </g>
+
+    <!-- A local laptop displays the newly cloned project folder. -->
+    <g transform="translate(499 171)">
+      <path d="m0 139 161 92-55 32-161-92v-7l55-32Z" fill="#a4b6a1"/>
+      <path d="m0 132 161 92-55 32-161-92Z" fill="#dae5ce"/>
+      <path d="m0 0 11-6 161 92-11 6Z" fill="#809794"/>
+      <path d="m161 92 11-6v132l-11 6Z" fill="#4d676b"/>
+      <g transform="matrix(1 .571 0 1 0 0)">
+        <rect width="161" height="132" rx="8" fill="url(#github-case-night)"/>
+        <rect x="10" y="12" width="141" height="106" rx="5" fill="#e7efdd" stroke="#6e928a" stroke-width="1.7"/>
+        <path d="M20 25h121" stroke="#afc3b0" stroke-width="1.4"/>
+        <circle cx="19" cy="19" r="2" fill="#91af9d" stroke="none"/>
+        <circle cx="27" cy="19" r="2" fill="#dbc275" stroke="none"/>
+        <path d="M27 92V44h31l8 9h66v39Z" fill="#d8ad67" stroke="#8a6b3f" stroke-width="1.7"/>
+        <path d="M27 92l8-32h105l-8 32Z" fill="url(#github-case-folder)" stroke="#8a6b3f" stroke-width="1.7"/>
+        <path d="M47 75h52m-52 5h30" stroke="#9b753b" stroke-width="1.6"/>
+        <path d="M36 103h82" stroke="#a4bba5" stroke-width="2"/>
+      </g>
+      <path d="m-14 147 139 79m-149-74 139 80m-150-74 139 79m-96-78-10 6m33 7-10 6m33 7-10 6m33 7-10 6" stroke="#93a99a" stroke-width="1.8"/>
+      <path d="m30 201 29 17-8 5-29-17Z" fill="#eff3df" stroke="#a1b3a1" stroke-width="1.3"/>
+    </g>
+  </g>
+
+  <g text-anchor="middle" fill="#34434c" font-family="Pretendard, Malgun Gothic, system-ui, sans-serif">
+    <g font-size="26" font-weight="750">
+      <text x="193" y="452">GitHub 저장소</text>
+      <text x="592" y="488">내 컴퓨터</text>
+    </g>
+    <g font-size="19" fill="#526b5d">
+      <text x="193" y="481">다른 사람이 올린 프로젝트</text>
+      <text x="592" y="517">복제된 프로젝트 폴더</text>
+    </g>
+  </g>
+</svg>

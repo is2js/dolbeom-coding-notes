@@ -17,6 +17,7 @@ import { previousLessonNoteBodies } from './previous-lesson-note-bodies.js';
 import { previousTerminalHighlightsDefault } from './previous-terminal-highlights-default.js';
 import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.js';
 import { previousGitHighlightsDefault } from './previous-git-highlights-default.js';
+import { previousGithubHighlightsDefault } from './previous-github-highlights-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -250,11 +251,12 @@ export function upgradeNineDefaults(value, baseCourse) {
   // markers alone would make it look like a locally edited course on reload.
   if (equal(value, baseCourse)) return value;
   let updated = null;
-  for (const id of ['terminal', 'git', 'ide', 'web-coding', 'web-tools', 'web', 'templates']) {
+  for (const id of ['terminal', 'git', 'github', 'ide', 'web-coding', 'web-tools', 'web', 'templates']) {
     const index = value.lessons.findIndex(item => item?.id === id);
     const current = value.lessons[index];
     const latest = baseCourse.lessons.find(item => item?.id === id);
     const previous = id === 'terminal' ? previousTerminalHighlightsDefault
+      : id === 'github' ? previousGithubHighlightsDefault
       : previousNineDefault[id] || previousIdeToolsDefault[id] || previousPracticeFlowDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;

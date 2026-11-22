@@ -62,5 +62,6 @@ test('GitHub clones directly into a new folder under the home directory', () => 
   assert.ok(positions.every(position => position >= 0));
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.doesNotMatch(code, /github-clone-practice|mkdir/);
-  assert.match(section.body, /이미 이전 강의대로.*실제 경로/s);
+  assert.doesNotMatch(section.body, /github-clone-practice/);
+  assert.match(code, /cd \.\\git-practice-clone\s+pwd\s+ls\s+explorer\.exe \./);
 });

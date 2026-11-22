@@ -18,6 +18,7 @@ import { previousTerminalHighlightsDefault } from './previous-terminal-highlight
 import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.js';
 import { previousGitHighlightsDefault } from './previous-git-highlights-default.js';
 import { previousGithubHighlightsDefault } from './previous-github-highlights-default.js';
+import { previousGithubFirstPushDefault, previousGithubClonePathDefault } from './previous-github-first-push-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -251,12 +252,13 @@ export function upgradeNineDefaults(value, baseCourse) {
   // markers alone would make it look like a locally edited course on reload.
   if (equal(value, baseCourse)) return value;
   let updated = null;
-  for (const id of ['terminal', 'git', 'github', 'ide', 'web-coding', 'web-tools', 'web', 'templates']) {
+  for (const id of ['terminal', 'git', 'github', 'markdown', 'ide', 'web-coding', 'web-tools', 'web', 'templates']) {
     const index = value.lessons.findIndex(item => item?.id === id);
     const current = value.lessons[index];
     const latest = baseCourse.lessons.find(item => item?.id === id);
     const previous = id === 'terminal' ? previousTerminalHighlightsDefault
       : id === 'github' ? previousGithubHighlightsDefault
+      : id === 'markdown' ? previousGithubClonePathDefault
       : previousNineDefault[id] || previousIdeToolsDefault[id] || previousPracticeFlowDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;
@@ -265,6 +267,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
+    if (id === 'github') baselines.push(previousGithubFirstPushDefault);
     if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);

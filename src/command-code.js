@@ -16,7 +16,7 @@ export function renderCopyableCode(text, language = '') {
   const units = commandUnits(text, language), lines = text.split(/\r\n|\r|\n/);
   const code = source => `<pre><code${language ? ` class="language-${escape(language.split(/\s+/)[0])}"` : ''}>${highlightCourseCode(source, language)}</code></pre>`;
   if (!units.length) {
-    if (isShellLanguage(language) || !text.trim()) return code(text);
+    if (language === 'output' || isShellLanguage(language) || !text.trim()) return code(text);
     return `<div class="copyable-code code-block-whole"><div class="code-block-toolbar"><span>${escape(language || '코드')}</span>${copyButton(text,{whole:true})}</div>${code(text)}</div>`;
   }
   let next = 0, rows = '';

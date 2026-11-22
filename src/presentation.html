@@ -46,6 +46,7 @@
           <a class="lesson-current-cue case-repository-link" x-show="caseRepositoryUrl" :href="caseRepositoryUrl" target="_blank" rel="noopener noreferrer">클론할 프로젝트 · course-card-vite-example <span aria-hidden="true">↗</span></a>
           <p class="presentation-case-summary" x-show="presentationData.caseSummary" x-html="markdownInline(presentationData.caseSummary)"></p>
           <div class="presentation-prose" x-show="!presentationData.caseSummary" x-html="markdown(lesson.case.body)"></div>
+          <template x-if="lessonId === 'markdown' && presentationData.caseSummary && practiceSeed(lesson.case.body)"><details class="presentation-command-context"><summary>계획문 마크다운 원문 보기</summary><div class="markdown-body presentation-command-prose"><pre><code x-text="practiceSeed(lesson.case.body)"></code></pre></div></details></template>
           <div class="presentation-question"><span x-html="icon('bulb')"></span><p x-html="markdownInline(lesson.case.question)"></p></div>
         </div></template>
 

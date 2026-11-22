@@ -75,29 +75,24 @@ test('selects the first authored Markdown example without truncating its nested 
   assert.equal(practiceSeed('```powershell\npwd\n```'), '');
 });
 
-test('practice edits and reset are isolated, and preview and copy use the current text', async () => {
+test('practice edits and reset are isolated, and preview uses the current text', () => {
   const body = '```markdown\n# 계획\n```';
-  let copied = '';
-  const copy = async text => { copied = text; return true; };
   const render = text => `preview:${text}`;
-  const first = markdownPractice(body, {render, copy});
-  const second = markdownPractice(body, {render, copy});
+  const first = markdownPractice(body, {render});
+  const second = markdownPractice(body, {render});
   first.source = '**수정**';
   assert.equal(first.preview, 'preview:**수정**');
   assert.equal(second.source, '# 계획');
-  await first.copySource();
-  assert.equal(copied, '**수정**');
   first.reset();
   assert.equal(first.source, '# 계획');
   assert.equal(body, '```markdown\n# 계획\n```');
 });
 
-test('the missing-example state remains editable and clipboard failure is reported', async () => {
-  const practice = markdownPractice('', {render: text => text, copy: async () => false});
+test('the missing-example state remains editable', () => {
+  const practice = markdownPractice('', {render: text => text});
   assert.equal(practice.original, '');
   practice.source = '연습';
-  await practice.copySource();
-  assert.match(practice.message, /복사하지 못했습니다/);
+  assert.equal(practice.preview, '연습');
 });
 
 test('toolbar formatting respects selected Korean text and the remembered cursor', () => {
@@ -126,12 +121,11 @@ test('table and nested code insertion create independent valid blocks at the cur
   assert.ok(withImage.source.endsWith('| c | d |\n\n![화면](https://example.com/image.png)'));
 });
 
-test('images remain scoped to one practice instance and reset and destruction revoke their URLs', async () => {
+test('images remain scoped to one practice instance and reset and destruction revoke their URLs', () => {
   let sequence = 0;
   const revoked = [], rendered = [];
   const practice = markdownPractice('', {
     render: (text, options) => { rendered.push(options.allowedImageSources.slice()); return text; },
-    copy: async () => true,
     createImageUrl: () => `blob:practice-${++sequence}`,
     revokeImageUrl: url => revoked.push(url),
   });
@@ -142,7 +136,6 @@ test('images remain scoped to one practice instance and reset and destruction re
   practice.insertImageFile({type:'image/png', size:120, name:'화면.png'});
   assert.match(practice.preview, /!\[화면.png\]\(blob:practice-1\)/);
   assert.deepEqual(rendered.at(-1), ['blob:practice-1']);
-  await practice.copySource();
   assert.match(practice.message, /이 창에서만/);
   practice.reset();
   assert.deepEqual(revoked, ['blob:practice-1']);

@@ -27,11 +27,13 @@ test('README publication follows writing and ends with commit, push, and browser
   assert.deepEqual(ids, ['markdown-map', 'tools-markdown', 'markdown-readme-push', 'markdown-readme-fetch']);
   const section = markdown.sections.find(item => item.id === 'markdown-readme-push');
   const codes = courseMarked.lexer(section.body).filter(token => token.type === 'code').map(token => token.text).join('\n');
-  const positions = ['git status --short', 'git add README.md', 'git diff --cached', 'git commit -m', 'git push -u origin main'].map(value => codes.indexOf(value));
+  const positions = ['git status --short', 'git add .', 'git diff --cached --name-only', 'git diff --cached\n', 'git commit -m', 'git push -u origin main'].map(value => (codes + '\n').indexOf(value));
   assert.ok(positions.every(position => position >= 0));
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.match(section.body, /GitHub.*새로고침/s);
   assert.match(section.body, /원래 `git-practice` 폴더/);
+  assert.match(section.body, /`git add README\.md`/);
+  assert.match(section.body, /현재 폴더와 그 아래의 새 파일, 수정, 삭제/);
 });
 
 test('the existing clone receives the README after the original repository pushes it', () => {
@@ -39,6 +41,7 @@ test('the existing clone receives the README after the original repository pushe
   const fetch = markdown.sections.find(item => item.id === 'markdown-readme-fetch');
   const write = markdown.sections.find(item => item.id === 'tools-markdown');
   assert.match(write.body, /cd ~\/git-practice/);
+  assert.match(write.body, /notepad README\.md[\s\S]*https:\/\/typora\.io\/#download[\s\S]*explorer\.exe \.[\s\S]*연결 프로그램 → Typora/);
   assert.match(push.body, /원래 `git-practice` 폴더/);
   assert.doesNotMatch(push.body, /git clone https:\/\//);
   assert.doesNotMatch(JSON.stringify(markdown), /git-practice-receiver/);
@@ -50,7 +53,10 @@ test('the existing clone receives the README after the original repository pushe
   assert.deepEqual(positions, [...positions].sort((a, b) => a - b));
   assert.match(fetch.body, /현재 브랜치나 작업 파일을 자동으로 바꾸지 않습니다/);
   assert.match(fetch.body, /평소에는 pull만 해도 됩니다/);
-  assert.match(fetch.body, /fetch.*먼저 살펴본 뒤.*pull.*반영/);
+  assert.match(fetch.body, /fetch로 새 커밋과 파일을 살펴본 뒤 pull로 반영/);
+  assert.match(fetch.body, /`-s`는 `--short`, `-b`는 `--branch`/);
+  assert.match(fetch.body, /일반 `git status`도 같은 상태/);
+  assert.match(fetch.body, /Fast-forward[\s\S]*A → B[\s\S]*`C`\(내 메모 수정\)/);
 });
 
 

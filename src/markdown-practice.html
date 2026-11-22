@@ -1,7 +1,12 @@
 <div x-data="markdownPractice(PRACTICE_BODY)" x-id="['practice-dialog', 'practice-source', 'practice-preview', 'practice-link-label', 'practice-link-url', 'practice-image-label', 'practice-image-url', 'practice-image-file', 'practice-table-rows', 'practice-table-columns']">
 <dialog class="markdown-practice" :class="{ 'is-expanded': expanded }" :id="$id('practice-dialog')" :role="expanded ? 'dialog' : 'region'" :aria-modal="expanded ? 'true' : null" aria-label="마크다운 실시간 연습" x-ref="practiceDialog" @cancel.prevent="closeExpanded()" @keydown="handleExpandedKey($event)">
-  <header class="markdown-practice-header"><div><h3>마크다운 실시간 연습</h3><p>원문을 바꾸면 미리보기가 바로 달라집니다.</p></div><div class="markdown-practice-actions"><button type="button" @click="reset()" :disabled="!original">처음 원문</button><button type="button" @click="copySource()" :disabled="!source">원문 복사</button><button type="button" class="markdown-practice-expand" x-ref="expandButton" @click="toggleExpanded()" :aria-expanded="expanded" :aria-controls="$id('practice-dialog')" x-text="expanded ? '크게 보기 닫기' : '연습 크게 보기'"></button></div></header>
-  <p class="markdown-practice-notice">연습 내용은 이 창에서만 유지되며 강의 원본에 저장되지 않습니다. 기본 Markdown과 GitHub 스타일의 표·체크리스트·취소선을 연습할 수 있습니다.</p>
+  <header class="markdown-practice-header">
+    <h3>마크다운 실시간 연습</h3>
+    <div class="markdown-practice-actions">
+      <button type="button" @click="reset()" :disabled="!original">처음 원문</button>
+      <button type="button" class="markdown-practice-expand" x-ref="expandButton" @click="toggleExpanded()" :aria-expanded="expanded" :aria-controls="$id('practice-dialog')" x-text="expanded ? '크게 보기 닫기' : '연습 크게 보기'"></button>
+    </div>
+  </header>
   <div class="markdown-practice-toolbar" role="group" aria-label="마크다운 삽입 도구">
     <select aria-label="제목 삽입" @change="if ($event.target.value) apply($event.target.value); $event.target.value = ''"><option value="">제목</option><option value="heading1">제목 1 · #</option><option value="heading2">제목 2 · ##</option><option value="heading3">제목 3 · ###</option><option value="heading4">제목 4 · ####</option><option value="heading5">제목 5 · #####</option><option value="heading6">제목 6 · ######</option></select>
     <button type="button" @click="apply('bold')"><strong>굵게</strong></button><button type="button" @click="apply('italic')"><em>기울임</em></button><button type="button" @click="apply('strike')"><s>취소선</s></button>

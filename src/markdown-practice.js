@@ -1,6 +1,5 @@
 import { courseMarked } from './course-markdown-engine.js';
 import { renderPracticeMarkdown } from './markdown-practice-renderer.js';
-import { writeClipboard } from './clipboard.js';
 
 // The authored Markdown example remains the source of truth. The editor owns
 // only a temporary in-memory copy; it never writes to course data or storage.
@@ -128,7 +127,7 @@ export function editMarkdown(source, start, end, action, options = {}) {
 
 export const supportedImageTypes = new Set(['image/png', 'image/jpeg', 'image/gif', 'image/webp']);
 
-export function markdownPractice(body, { render = renderPracticeMarkdown, copy = writeClipboard, createImageUrl = file => URL.createObjectURL(file), revokeImageUrl = url => URL.revokeObjectURL(url) } = {}) {
+export function markdownPractice(body, { render = renderPracticeMarkdown, createImageUrl = file => URL.createObjectURL(file), revokeImageUrl = url => URL.revokeObjectURL(url) } = {}) {
   const original = practiceSeed(body);
   return {
     original,
@@ -230,9 +229,5 @@ export function markdownPractice(body, { render = renderPracticeMarkdown, copy =
     releaseImages() { for (const url of this.imageSources) revokeImageUrl(url); this.imageSources = []; },
     reset() { this.releaseImages(); this.source = this.original; this.selectionStart = this.selectionEnd = this.original.length; this.insertPanel = ''; this.message = '연습 원문을 처음 상태로 되돌렸습니다.'; },
     destroy() { this.releaseImages(); },
-    async copySource() {
-      const ok = await copy(this.source);
-      this.message = ok ? '연습 원문을 복사했습니다.' + (this.imageSources.length ? ' 로컬 이미지 링크는 이 창에서만 사용할 수 있습니다.' : '') : '복사하지 못했습니다. 원문을 선택해 복사해 주세요.';
-    },
   };
 }

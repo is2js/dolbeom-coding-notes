@@ -27,7 +27,7 @@ import { caseImageViewerState, caseImageViewerMethods } from './case-image-viewe
 import { formatSiteUpdatedAt } from './site-update.js';
 import { commandUnits } from './command-copy-units.js';
 import { writeClipboard } from './clipboard.js';
-import { markdownPractice } from './markdown-practice.js';
+import { markdownPractice, practiceSeed } from './markdown-practice.js';
 import markdownPracticeHtml from './markdown-practice.html?raw';
 import topicNavigationHtml from './topic-navigation.html?raw';
 import artViewerHtml from './art-viewer.html?raw';
@@ -251,7 +251,7 @@ Alpine.data('courseApp', () => ({
   illustrationPaused: false, prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, artPageVisible: !document.hidden,
   syncState: { mode: import.meta.env.DEV ? 'local' : 'browser', status: 'connecting', conflict: false, message: '' },
   infoTabs: [{id:'case',label:'사례'},{id:'concept',label:'핵심 개념'},{id:'mistakes',label:'실수'},{id:'summary',label:'정리'}],
-  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown, presentationCommandGroups, presentationDemoCommands, useCompactPresentationPoints, coreMinutes: lessonMinutes,
+  icon, workspaceIcon, lessonObject, lessonIllustration, illustrationDescription, illustrationCaption, sectionIllustrationId, topicThumbnail, sectionThumbnail, markdown, markdownInline, renderCourseMarkdownImages, renderCourseCaseMarkdown, practiceSeed, presentationCommandGroups, presentationDemoCommands, useCompactPresentationPoints, coreMinutes: lessonMinutes,
   get lesson() { return this.course?.lessons.find(l => l.id === this.lessonId) || this.course?.lessons[0]; },
   get brandTitle() {
     const title = (this.course?.title || 'Ai 구독 전 코딩 필수 노하우').replace(/^돌범이 풀어주는\s*/, '');
@@ -275,7 +275,7 @@ Alpine.data('courseApp', () => ({
   get learningCue() {
     const page = this.learningPage;
     if (page?.section?.id === 'terminal-example') return 'PowerShell과 Windows Terminal 설치가 먼저 필요합니다.';
-    if (page?.kind === 'case' && this.caseRepositoryUrl) return '';
+    if (page?.kind === 'case' && (this.caseRepositoryUrl || this.lessonId === 'markdown')) return '';
     if (page?.kind === 'recap' && this.lessonId === 'github') return '';
     if (page?.kind === 'case' && this.lessonId === 'git') {
       return 'Git은 파일의 변경 기록을 남기는 도구입니다. 무엇이 바뀌었는지 비교하고 예전 버전도 다시 볼 수 있습니다.';

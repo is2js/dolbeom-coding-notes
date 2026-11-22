@@ -7,6 +7,7 @@ import { practiceSeed } from '../src/markdown-practice.js';
 import { isPracticeImageSource } from '../src/markdown-practice-renderer.js';
 import { previousMarkdownPlanCaseDefault as previous } from '../src/previous-markdown-plan-case-default.js';
 import { previousMarkdownPracticeDefault } from '../src/previous-markdown-practice-default.js';
+import { previousMarkdownWalkthroughDefault } from '../src/previous-markdown-walkthrough-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const markdown = source => source.lessons.find(lesson => lesson.id === 'markdown');
@@ -29,6 +30,30 @@ test('the Markdown case shows both Plan mode captures in order and links to prac
   assert.ok(lesson.case.body.includes('#/lesson/markdown/section-markdown-map'));
   assert.ok(lesson.presentation.caseSummary.includes('#/lesson/markdown/section-markdown-map'));
   assert.doesNotMatch(lesson.case.body, /모바일 주제 탐색과 강의 그림 디자인 개선/);
+  const source = practiceSeed(lesson.case.body);
+  assert.match(source, /^# PVP RPG `\/intro` 리뉴얼 계획/m);
+  assert.match(source, /^- 먼저 `\/intro`를 완성하고 기존 `\/`를 유지한다\./m);
+  assert.equal(courseMarked.lexer(source).find(token => token.type === 'table').rows.length, 3);
+  assert.doesNotMatch(lesson.case.body, /내가 보내는 요청도 마크다운으로 쓰기|인라인 코드로 표시해 본문에서/);
+});
+
+test('older Markdown walkthrough defaults refresh while preserving custom lesson fields', () => {
+  const draft = structuredClone(course);
+  const lesson = markdown(draft);
+  const snapshot = previousMarkdownWalkthroughDefault;
+  Object.assign(lesson.case, snapshot.case);
+  for (const section of lesson.sections) Object.assign(section, snapshot.sections.find(item => item.id === section.id));
+  lesson.sections.find(item => item.id === 'markdown-map').body = '강사가 수정한 연습 예제';
+  lesson.closing = snapshot.closing;
+  Object.assign(lesson.presentation.demo, snapshot.presentation.demo);
+
+  const updated = markdown(upgradeNineDefaults(draft, course));
+  assert.equal(updated.case.body, markdown(course).case.body);
+  assert.equal(updated.closing, markdown(course).closing);
+  assert.equal(updated.presentation.demo.program, markdown(course).presentation.demo.program);
+  assert.match(updated.sections.find(item => item.id === 'tools-markdown').body, /Typora 공식 다운로드/);
+  assert.match(updated.sections.find(item => item.id === 'markdown-readme-push').body, /`git add \.`/);
+  assert.equal(updated.sections.find(item => item.id === 'markdown-map').body, '강사가 수정한 연습 예제');
 });
 
 test('the new Markdown case updates published defaults and preserves authored edits', () => {

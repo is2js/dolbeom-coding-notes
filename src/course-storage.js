@@ -20,6 +20,7 @@ import { previousGitHighlightsDefault } from './previous-git-highlights-default.
 import { previousGithubHighlightsDefault } from './previous-github-highlights-default.js';
 import { previousGithubFirstPushDefault, previousGithubClonePathDefault } from './previous-github-first-push-default.js';
 import { previousMarkdownPlanCaseDefault } from './previous-markdown-plan-case-default.js';
+import { previousMarkdownPracticeDefault } from './previous-markdown-practice-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -269,6 +270,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'github') baselines.push(previousGithubFirstPushDefault);
+    if (id === 'markdown') baselines.push(previousMarkdownPracticeDefault);
     if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);

@@ -19,6 +19,7 @@ import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.j
 import { previousGitHighlightsDefault } from './previous-git-highlights-default.js';
 import { previousGithubHighlightsDefault } from './previous-github-highlights-default.js';
 import { previousGithubFirstPushDefault, previousGithubClonePathDefault } from './previous-github-first-push-default.js';
+import { previousMarkdownPlanCaseDefault } from './previous-markdown-plan-case-default.js';
 
 // New topic identities use separate keys so the old six-lesson draft stays recoverable.
 export const COURSE_STORAGE = {
@@ -258,7 +259,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     const latest = baseCourse.lessons.find(item => item?.id === id);
     const previous = id === 'terminal' ? previousTerminalHighlightsDefault
       : id === 'github' ? previousGithubHighlightsDefault
-      : id === 'markdown' ? previousGithubClonePathDefault
+      : id === 'markdown' ? { ...previousGithubClonePathDefault, ...previousMarkdownPlanCaseDefault }
       : previousNineDefault[id] || previousIdeToolsDefault[id] || previousPracticeFlowDefault[id];
     if (index < 0 || !latest || !previous || !Array.isArray(current.sections) || !Array.isArray(current.steps)
         || !Array.isArray(latest.sections) || !Array.isArray(latest.steps)) continue;

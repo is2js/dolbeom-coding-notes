@@ -20,7 +20,7 @@ import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.j
 import { previousGitHighlightsDefault } from './previous-git-highlights-default.js';
 import { previousGithubHighlightsDefault } from './previous-github-highlights-default.js';
 import { previousGithubFirstPushDefault, previousGithubClonePathDefault } from './previous-github-first-push-default.js';
-import { previousMarkdownPlanCaseDefault } from './previous-markdown-plan-case-default.js';
+import { previousMarkdownPlanCaseDefault, previousMarkdownPromptCaseDefault } from './previous-markdown-plan-case-default.js';
 import { previousMarkdownPracticeDefault } from './previous-markdown-practice-default.js';
 import { previousMarkdownWalkthroughDefault } from './previous-markdown-walkthrough-default.js';
 
@@ -273,7 +273,11 @@ export function upgradeNineDefaults(value, baseCourse) {
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'ide') baselines.push(previousIdeSetupScreenshotsDefault);
     if (id === 'github') baselines.push(previousGithubFirstPushDefault);
-    if (id === 'markdown') baselines.push(previousMarkdownPracticeDefault, previousMarkdownWalkthroughDefault);
+    if (id === 'markdown') baselines.push(
+      previousMarkdownPracticeDefault,
+      previousMarkdownWalkthroughDefault,
+      { ...previousGithubClonePathDefault, ...previousMarkdownPromptCaseDefault },
+    );
     if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);

@@ -5,21 +5,23 @@ import { courseMarked } from '../src/course-markdown-engine.js';
 import { upgradeNineDefaults } from '../src/course-storage.js';
 import { practiceSeed } from '../src/markdown-practice.js';
 import { isPracticeImageSource } from '../src/markdown-practice-renderer.js';
-import { previousMarkdownPlanCaseDefault as previous } from '../src/previous-markdown-plan-case-default.js';
+import { previousMarkdownPlanCaseDefault as previous, previousMarkdownPromptCaseDefault } from '../src/previous-markdown-plan-case-default.js';
 import { previousMarkdownPracticeDefault } from '../src/previous-markdown-practice-default.js';
 import { previousMarkdownWalkthroughDefault } from '../src/previous-markdown-walkthrough-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const markdown = source => source.lessons.find(lesson => lesson.id === 'markdown');
 
-test('the Markdown case shows both Plan mode captures in order and links to practice', () => {
+test('the Markdown case starts with the nested prompt before both Plan mode captures', () => {
   const lesson = markdown(course);
   const images = [];
   courseMarked.walkTokens(courseMarked.lexer(lesson.case.body), token => {
     if (token.type === 'image') images.push(token.href);
   });
   assert.equal(lesson.case.kind, 'real');
+  assert.equal(courseMarked.lexer(lesson.case.body)[0].tokens[0].type, 'image');
   assert.deepEqual(images, [
+    './assets/course/markdown-codex-prompt-nested-list.png',
     './assets/course/markdown-codex-plan-conversation.png',
     './assets/course/markdown-codex-plan-document.png',
   ]);
@@ -29,12 +31,27 @@ test('the Markdown case shows both Plan mode captures in order and links to prac
   }
   assert.ok(lesson.case.body.includes('#/lesson/markdown/section-markdown-map'));
   assert.ok(lesson.presentation.caseSummary.includes('#/lesson/markdown/section-markdown-map'));
+  assert.match(lesson.presentation.caseSummary, /번호 목록.*들여쓴 하위 목록/);
   assert.doesNotMatch(lesson.case.body, /모바일 주제 탐색과 강의 그림 디자인 개선/);
   const source = practiceSeed(lesson.case.body);
   assert.match(source, /^# PVP RPG `\/intro` 리뉴얼 계획/m);
   assert.match(source, /^- 먼저 `\/intro`를 완성하고 기존 `\/`를 유지한다\./m);
   assert.equal(courseMarked.lexer(source).find(token => token.type === 'table').rows.length, 3);
   assert.doesNotMatch(lesson.case.body, /내가 보내는 요청도 마크다운으로 쓰기|인라인 코드로 표시해 본문에서/);
+});
+
+test('the new first image reaches unchanged case fields and keeps an edited case body', () => {
+  const draft = structuredClone(course);
+  const lesson = markdown(draft);
+  lesson.case.body = previousMarkdownPromptCaseDefault.case.body;
+  lesson.presentation.caseSummary = previousMarkdownPromptCaseDefault.presentation.caseSummary;
+  let updated = markdown(upgradeNineDefaults(draft, course));
+  assert.equal(updated.case.body, markdown(course).case.body);
+  assert.equal(updated.presentation.caseSummary, markdown(course).presentation.caseSummary);
+
+  lesson.case.body = '강사가 편집한 시작 사례';
+  updated = markdown(upgradeNineDefaults(draft, course));
+  assert.equal(updated.case.body, lesson.case.body);
 });
 
 test('older Markdown walkthrough defaults refresh while preserving custom lesson fields', () => {

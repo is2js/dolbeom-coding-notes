@@ -3,7 +3,11 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { courseMarked } from '../src/course-markdown-engine.js';
 import { upgradeNineDefaults } from '../src/course-storage.js';
-import { previousIdeSetupScreenshotsDefault as previous, previousIdePreviewBindingsDefault } from '../src/previous-ide-setup-screenshots-default.js';
+import {
+  previousIdeSetupScreenshotsDefault as previous,
+  previousIdePreviewBindingsDefault,
+  previousIdePreviewFallbackDefault,
+} from '../src/previous-ide-setup-screenshots-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const lesson = course.lessons.find(item => item.id === 'ide');
@@ -73,4 +77,41 @@ test('IDE lessons keep the enhanced Markdown preview optional and teach the buil
   ide.sections.find(section => section.id === keys.id).body = previousIdePreviewBindingsDefault.sections.find(section => section.id === keys.id).body;
   const updated = upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide');
   assert.equal(updated.sections.find(section => section.id === keys.id).body, keys.body);
+});
+
+test('the IDE walkthrough teaches both local settings and preserves earlier saved edits', () => {
+  const keys = lesson.sections.find(section => section.id === 'tools-vscode');
+  assert.match(keys.body, /기본 키가 잘 작동하면 이 설정은 건너뜁니다/);
+  assert.match(keys.body, /바로 가기 키 열기\(JSON\).*keybindings\.json/);
+  const example = courseMarked.lexer(keys.body).find(token => token.type === 'code' && token.lang === 'json');
+  assert.deepEqual(JSON.parse(example.text), [
+    {
+      key: 'ctrl+k v',
+      command: 'markdown.showPreviewToSide',
+      when: 'editorLangId == markdown && !notebookEditorFocused && !editorHasSelection',
+    },
+    {
+      key: 'ctrl+shift+v',
+      command: 'markdown.showPreview',
+      when: 'editorLangId == markdown && !notebookEditorFocused',
+    },
+  ]);
+  const terminal = keys.body.slice(keys.body.indexOf('**Ctrl + 백틱 키**'));
+  assert.match(terminal, /통합 터미널에서 PowerShell 7 열기[\s\S]*기본 프로필 선택[\s\S]*새 터미널/);
+  assert.deepEqual(courseMarked.lexer(terminal).filter(token => token.type === 'code').map(token => token.text), [
+    '$PSVersionTable.PSVersion',
+    'pwd',
+  ]);
+
+  const draft = structuredClone(course);
+  const saved = draft.lessons.find(item => item.id === 'ide').sections.find(section => section.id === keys.id);
+  Object.assign(saved, previousIdePreviewFallbackDefault.sections.find(section => section.id === keys.id));
+  const migrated = () => upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide').sections.find(section => section.id === keys.id);
+  assert.deepEqual(migrated(), keys);
+  saved.body += '\n\n나만의 단축키 메모';
+  assert.equal(migrated().body, saved.body);
+  assert.deepEqual(migrated().presentationPoints, keys.presentationPoints);
+  const previousSteps = draft.lessons.find(item => item.id === 'ide').steps;
+  const removedStep = previousSteps.pop();
+  assert.equal(upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide').steps.some(step => step.id === removedStep.id), false);
 });

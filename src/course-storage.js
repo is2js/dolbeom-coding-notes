@@ -4,7 +4,11 @@ import { previousEightDefault, previousEightCourseMetadata } from './previous-ei
 import { previousNineDefault } from './previous-nine-default.js';
 import { previousLiveWebDefault } from './previous-live-web-default.js';
 import { previousIdeToolsDefault } from './previous-ide-tools-default.js';
-import { previousIdeSetupScreenshotsDefault, previousIdePreviewBindingsDefault } from './previous-ide-setup-screenshots-default.js';
+import {
+  previousIdeSetupScreenshotsDefault,
+  previousIdePreviewBindingsDefault,
+  previousIdePreviewFallbackDefault,
+} from './previous-ide-setup-screenshots-default.js';
 import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
 import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.js';
@@ -271,7 +275,11 @@ export function upgradeNineDefaults(value, baseCourse) {
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
-    if (id === 'ide') baselines.push(previousIdeSetupScreenshotsDefault, previousIdePreviewBindingsDefault);
+    if (id === 'ide') baselines.push(
+      previousIdeSetupScreenshotsDefault,
+      previousIdePreviewBindingsDefault,
+      previousIdePreviewFallbackDefault,
+    );
     if (id === 'github') baselines.push(previousGithubFirstPushDefault);
     if (id === 'markdown') baselines.push(
       previousMarkdownPracticeDefault,

@@ -135,3 +135,57 @@ export const previousIdePreviewBindingsDefault = {
     }
   }
 };
+
+// Published IDE preview instructions before adding the instructor keybindings walkthrough.
+export const previousIdePreviewFallbackDefault = {
+  "id": "ide",
+  "sections": [
+    {
+      "id": "tools-vscode-setup"
+    },
+    {
+      "id": "tools-vscode",
+      "body": "원본 git-practice에서 **파일 이름, 문서 내용, 기능 이름**을 하나씩 찾아봅니다.\n\n| 알고 있는 것 | Windows 기본 키 | 이 실습에서 찾을 것 |\n| --- | --- | --- |\n| 파일 이름 | `Ctrl+P` | `README.md` |\n| 문서 안의 문구 | `Ctrl+Shift+F` | `확인 방법` |\n| 실행할 기능의 이름 | `Ctrl+Shift+P` | `Markdown: Open Preview to the Side` |\n\n### README 원문과 미리보기\n\n**`Ctrl+K`를 눌렀다 떼고 `V`**를 누르면 옆에 미리보기를 엽니다. `Ctrl+Shift+V`는 현재 편집 그룹에서 엽니다. `README.md`의 원문 편집 영역에 커서를 두고 실행합니다.\n\n#### 단축키에서 `command not found`가 나오면\n\n`command 'markdown-preview-enhanced.openPreview' not found` 같은 메시지는 **Markdown Preview Enhanced** 쪽 명령을 호출했지만 현재 창에서 실행할 수 없다는 뜻입니다. 확장이 설치돼 있어도 활성화에 실패하면 나타날 수 있습니다.\n\n1. <mark>`README.md`를 연 상태에서 `Ctrl+Shift+P` → **Markdown: Open Preview to the Side**를 선택합니다.</mark> 한국어 화면에서는 **Markdown: 측면에서 미리 보기 열기**로 표시될 수 있습니다. 현재 편집 그룹에서 보려면 **Markdown: Open Preview**를 선택합니다.\n2. 단축키도 내장 기능에 연결하고 싶다면 `Ctrl+Shift+X`에서 **Markdown Preview Enhanced**를 찾아 톱니바퀴로 현재 작업 영역에서 사용 안 함을 선택합니다. 그래도 같은 명령이 호출되면 **파일 → 기본 설정 → 바로 가기 키**에서 두 단축키에 연결된 명령을 확인합니다. Enhanced에 직접 지정한 키가 있다면 해당 연결을 제거하고 내장 명령의 단축키를 확인합니다. [확장 관리 안내](https://code.visualstudio.com/docs/configure/extensions/extension-marketplace#_manage-extensions) · [단축키 충돌 확인](https://code.visualstudio.com/docs/configure/keybindings#_detecting-keyboard-shortcut-conflicts)\n\n```markdown\n# Git 연습 메모\n\n## 확인 방법\n- note.txt에서 version 2를 확인합니다.\n```\n\n제목을 `나의 Git 연습 메모`로 바꿔 미리보기에서 확인하고 `Ctrl+S`로 저장합니다. 미리보기는 VS Code의 기본 기능입니다. [VS Code Markdown 공식 안내](https://code.visualstudio.com/docs/languages/markdown)\n\n**Ctrl + 백틱 키**로 통합 터미널도 열어 봅니다. 명령을 실행할 때는 먼저 현재 폴더를 확인합니다.",
+      "presentationPoints": [
+        "VS Code는 무료 코드 편집기이며 여러 개발 기능을 연결합니다.",
+        "Ctrl+P는 파일명, Ctrl+Shift+F는 내용, Ctrl+Shift+P는 명령입니다.",
+        "README 미리보기는 내장 명령으로 엽니다. 단축키 오류가 나면 명령 팔레트를 사용합니다."
+      ]
+    },
+    {
+      "id": "tools-shortcuts-practice"
+    },
+    {
+      "id": "codex-context"
+    },
+    {
+      "id": "tools-bonus"
+    }
+  ],
+  "steps": [
+    {
+      "id": "ide-vscode-setup"
+    },
+    {
+      "id": "ide-vscode-code"
+    },
+    {
+      "id": "ide-vscode-extensions"
+    },
+    {
+      "id": "tools-01"
+    },
+    {
+      "id": "tools-02"
+    },
+    {
+      "id": "tools-03"
+    },
+    {
+      "id": "ide-shortcut-practice"
+    },
+    {
+      "id": "tools-05"
+    }
+  ]
+};

@@ -7,6 +7,7 @@ import {
   previousIdeSetupScreenshotsDefault as previous,
   previousIdePreviewBindingsDefault,
   previousIdePreviewFallbackDefault,
+  previousIdeExternalTerminalDefault,
 } from '../src/previous-ide-setup-screenshots-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
@@ -98,15 +99,24 @@ test('the IDE walkthrough teaches both local settings and preserves earlier save
   ]);
   const terminal = keys.body.slice(keys.body.indexOf('**Ctrl + 백틱 키**'));
   assert.match(terminal, /통합 터미널에서 PowerShell 7 열기[\s\S]*기본 프로필 선택[\s\S]*새 터미널/);
-  assert.deepEqual(courseMarked.lexer(terminal).filter(token => token.type === 'code').map(token => token.text), [
+  const blocks = courseMarked.lexer(terminal);
+  assert.deepEqual(blocks.filter(token => token.type === 'code').map(token => token.text), [
     '$PSVersionTable.PSVersion',
     'pwd',
+    'where.exe wt.exe',
   ]);
+  const images = [];
+  courseMarked.walkTokens(blocks, token => { if (token.type === 'image') images.push(token.href); });
+  assert.deepEqual(images, ['./assets/course/ide-vscode-external-windows-terminal.png']);
+  const screenshot = readFileSync(new URL('../public/' + images[0].slice(2), import.meta.url));
+  assert.deepEqual([...screenshot.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
 
   const draft = structuredClone(course);
   const saved = draft.lessons.find(item => item.id === 'ide').sections.find(section => section.id === keys.id);
   Object.assign(saved, previousIdePreviewFallbackDefault.sections.find(section => section.id === keys.id));
   const migrated = () => upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide').sections.find(section => section.id === keys.id);
+  assert.deepEqual(migrated(), keys);
+  Object.assign(saved, previousIdeExternalTerminalDefault.sections.find(section => section.id === keys.id));
   assert.deepEqual(migrated(), keys);
   saved.body += '\n\n나만의 단축키 메모';
   assert.equal(migrated().body, saved.body);

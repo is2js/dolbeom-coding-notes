@@ -9,6 +9,7 @@ import {
   previousIdePreviewFallbackDefault,
   previousIdeExternalTerminalDefault,
   previousIdeGitUiDefault,
+  previousIdeHighlightsVscodeDefault,
 } from '../src/previous-ide-setup-screenshots-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
@@ -30,7 +31,7 @@ test('IDE case presents the supplied README screenshot before the subsequent dif
 
 test('README source control walkthrough updates untouched saved text and keeps authored edits', () => {
   const section = lesson.sections.find(item => item.id === 'codex-context');
-  assert.match(section.body, /git diff README\.md[\s\S]*스테이징하고 커밋·전송하기[\s\S]*GitHub에서 방금 올린 내용 보기/);
+  assert.match(section.body, /한 줄 바꾸고 변경 비교[\s\S]*스테이징하고 커밋·전송하기[\s\S]*GitHub에서 방금 올린 내용 보기/);
   assert.match(section.body, /동기화는 원격 변경을 먼저 가져온 뒤 내 커밋을 push/);
   const asset = readFileSync(new URL('../public/assets/course/ide-vscode-readme-stage-commit-sync.png', import.meta.url));
   assert.deepEqual([...asset.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
@@ -46,6 +47,28 @@ test('README source control walkthrough updates untouched saved text and keeps a
   assert.equal(migrate().sections.find(item => item.id === section.id).body, savedSection.body);
   const removedStep = saved.steps.pop();
   assert.equal(migrate().steps.some(item => item.id === removedStep.id), false);
+});
+
+test('IDE emphasis and source control updates migrate prior defaults without replacing edited notes', () => {
+  const keys = lesson.sections.find(item => item.id === 'tools-vscode');
+  const flow = lesson.sections.find(item => item.id === 'codex-context');
+  assert.match(keys.body, /<mark>\*\*파일 이름, 문서 내용, 기능 이름\*\*[\s\S]*<mark>\*\*Ctrl \+ 백틱 키\*\*/);
+  const comparison = flow.body.split('### 2. 한 줄 바꾸고 변경 비교')[1].split('### 3.')[0];
+  assert.doesNotMatch(comparison, /git diff|git status|```/);
+  assert.match(comparison, /소스 제어/);
+  const draft = structuredClone(course);
+  const saved = draft.lessons.find(item => item.id === 'ide');
+  for (const oldSection of previousIdeHighlightsVscodeDefault.sections) {
+    Object.assign(saved.sections.find(item => item.id === oldSection.id), oldSection);
+  }
+  saved.checklist = structuredClone(previousIdeHighlightsVscodeDefault.checklist);
+  saved.closing = previousIdeHighlightsVscodeDefault.closing;
+  const migrated = () => upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide');
+  assert.equal(migrated().closing, lesson.closing);
+  assert.deepEqual(migrated().checklist, lesson.checklist);
+  assert.equal(migrated().sections.find(item => item.id === flow.id).body, flow.body);
+  saved.sections.find(item => item.id === flow.id).body += '\n\n강사의 실습 메모';
+  assert.match(migrated().sections.find(item => item.id === flow.id).body, /강사의 실습 메모/);
 });
 
 test('the VS Code installation walkthrough includes four extension images and Prettier settings in order', () => {

@@ -347,17 +347,31 @@ function reviewDiff() {
 
 function vscodeFinding() {
   const p = 'sa-tools-vscode';
-  const controls = [['Ctrl + P', 143, color.mint], ['Ctrl + Shift + F', 166, color.blue], ['Ctrl + Shift + P', 166, color.ochre]];
-  const results = [['README.md', color.mint], ['프로젝트 내용', color.blue], ['명령 팔레트', color.ochre]];
-  return frame(p, '단축키는 찾을 대상에 맞게', `
-    ${controls.map(([key, w, tone], i) => controlKey(115 + i * 8, 139 + i * 88, w, key, tone, -1)).join('')}
-    ${standingWindow(398, 128, 262, 232, {
-      title: 'VS Code',
-      body: results.map(([label, tone], i) => box(422, 171 + i * 57, 210, 34, tone, 6, color.edge, 1.05)
-        + text(434, 193 + i * 57, label, { size: 15, fill: color.ink })).join(''),
-    })}
-    ${controls.map(([,w], i) => flow(p, 123 + i * 8 + w, 151 + i * 96, 400, 128 + i * 57, {delay: i * .8, second: i === 2})).join('')}
-  `, '파일 이름 · 내용 · 명령을 구별하면 찾기가 빨라집니다');
+  const rows = [
+    { key: 'Ctrl + P', target: '파일 이름', example: 'README.md', tone: color.mint },
+    { key: 'Ctrl + Shift + F', target: '문서 내용', example: '확인 방법', tone: color.blue },
+    { key: 'Ctrl + Shift + P', target: '기능 이름', example: '미리보기', tone: color.ochre },
+  ];
+  return frame(p, '찾고 싶은 것에 맞는 단축키', `
+    ${plinth(380, 409, 265, 100, { tone: color.cream })}
+    ${box(101, 114, 558, 300, color.shade, 17, color.ink, 2.1)}
+    ${box(94, 106, 558, 300, color.paper, 17, color.ink, 2.3)}
+    ${box(95, 107, 556, 48, color.mint, 15, color.ink, 1.4)}
+    ${dot(113, 130, 4, color.teal, 'none')}
+    ${dot(127, 130, 4, color.gold, 'none')}
+    ${text(145, 136, 'VS Code', { size: 20, fill: color.ink })}
+    ${text(127, 184, '단축키', { size: 16, fill: color.muted })}
+    ${text(388, 184, '찾을 대상', { size: 16, fill: color.muted })}
+    ${rows.map(({key, target, example, tone}, index) => {
+      const y = 197 + index * 65;
+      return box(113, y, 520, 53, tone, 9, color.edge, 1.5)
+        + box(127, y + 9, 222, 35, color.paper, 6, color.ink, 1.6)
+        + center(238, y + 32, key, 16, color.ink)
+        + text(382, y + 24, target, { size: 17, fill: color.ink, weight: 720 })
+        + text(382, y + 42, example, { size: 14, fill: color.muted });
+    }).join('')}
+    ${pulse(p, cursor(593, 332, color.paper), 0.8)}
+  `, '파일 이름 · 문서 내용 · 기능 이름을 차례로 찾아봅니다');
 }
 
 function sharedShortcutPractice() {
@@ -736,7 +750,7 @@ export const webSectionScenes = {
   'markdown-readme-fetch': {title:'다른 clone 폴더에서 원격 변경 가져오기',description:'GitHub 원격 저장소의 새 README 커밋을 fetch로 원격 추적 기록에 가져와 확인하고, 이미 복제해 둔 git-practice-clone 폴더에서 pull로 작업 파일에 반영합니다. clone은 새 폴더를 처음 만드는 명령입니다.',svg:readmeFetchAndPull()},
   'markdown-code': {title:'공통 핵심 문법을 배우고 Notion·Obsidian의 차이 확인하기',description:'하나의 Markdown 문서에서 Notion의 블록 편집과 Obsidian의 노트 연결로 갈라지는 구조로 공통 문법과 앱별 확장을 설명합니다.',svg:markdownBranches()},
   'tools-map': {title:'Codex 변경을 PyCharm에서 확인하는 세 가지 질문',description:'변경 전후 문서의 제목 차이와 그대로인 ID를 비교하고 경로·차이·실행의 세 확인 지점을 짚습니다.',svg:reviewDiff()},
-  'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'입체 키캡의 파일 이름 검색과 프로젝트 내용 검색을 서로 다른 결과에 연결하고 명령 팔레트의 기능 검색을 구분합니다.',svg:vscodeFinding()},
+  'tools-vscode': {title:'무료 VS Code에서 필수 단축키로 찾아보기',description:'세 가지 단축키를 파일 이름, 문서 내용, 기능 이름의 검색 대상과 한 줄씩 짝지어 표시합니다.',svg:vscodeFinding()},
   'tools-shortcuts-practice': {title:'편집기 단축키를 직접 연습하기',description:'키보드의 조작이 편집기의 찾기와 이동, 편집과 저장, 화면과 터미널의 변화로 이어지는 과정을 확인합니다. VS Code에서 실습하고 PyCharm 키맵과 비교합니다.',svg:sharedShortcutPractice()},
   'tools-pycharm': {title:'Python용 PyCharm과 VS Code 키맵의 역할',description:'PyCharm에서 실행할 Python과 작업 폴더를 고르는 설정, 익숙한 단축키를 연결하는 키맵을 두 갈래로 분리합니다.',svg:pycharmEnvironment()},
   'codex-context': {title:'README 한 줄 수정으로 VS Code·Git·GitHub 연결하기',description:'같은 README를 수정하고 Markdown 미리보기와 통합 터미널, Git 변경 비교를 확인한 뒤 마지막으로 push된 GitHub 원격 문서와 비교합니다.',svg:integratedWorkbench()},

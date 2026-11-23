@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { courseMarked } from '../src/course-markdown-engine.js';
 import { upgradeNineDefaults } from '../src/course-storage.js';
-import { previousIdeSetupScreenshotsDefault as previous } from '../src/previous-ide-setup-screenshots-default.js';
+import { previousIdeSetupScreenshotsDefault as previous, previousIdePreviewBindingsDefault } from '../src/previous-ide-setup-screenshots-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const lesson = course.lessons.find(item => item.id === 'ide');
@@ -56,4 +56,21 @@ test('saved IDE defaults adopt new instructions and preserve instructor edits', 
   assert.equal(updated.case.body, lesson.case.body);
   assert.equal(updated.sections.find(section => section.id === setup.id).body, setup.body);
   assert.deepEqual(updated.sections.find(section => section.id === setup.id).presentationPoints, lesson.sections.find(section => section.id === setup.id).presentationPoints);
+});
+
+test('IDE lessons keep the enhanced Markdown preview optional and teach the built-in fallback', () => {
+  const setup = lesson.sections.find(section => section.id === 'tools-vscode-setup');
+  const keys = lesson.sections.find(section => section.id === 'tools-vscode');
+  const practice = lesson.sections.find(section => section.id === 'tools-shortcuts-practice');
+  assert.match(setup.body, /Markdown Preview Enhanced \(선택 확장\)/);
+  assert.match(setup.body, /@id:shd101wyy\.markdown-preview-enhanced/);
+  assert.match(keys.body, /markdown-preview-enhanced\.openPreview.*not found/);
+  assert.match(keys.body, /Ctrl\+Shift\+P.*Markdown: Open Preview to the Side.*측면에서 미리 보기 열기/);
+  assert.match(practice.body, /미리보기 단축키 오류 해결/);
+
+  const draft = structuredClone(course);
+  const ide = draft.lessons.find(item => item.id === 'ide');
+  ide.sections.find(section => section.id === keys.id).body = previousIdePreviewBindingsDefault.sections.find(section => section.id === keys.id).body;
+  const updated = upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide');
+  assert.equal(updated.sections.find(section => section.id === keys.id).body, keys.body);
 });

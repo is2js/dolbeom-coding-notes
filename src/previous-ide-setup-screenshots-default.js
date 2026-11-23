@@ -243,3 +243,60 @@ export const previousIdeExternalTerminalDefault = {
     }
   ]
 };
+
+// Published IDE defaults before the README source-control workflow update.
+export const previousIdeGitUiDefault = {
+  "id": "ide",
+  "sections": [
+    {
+      "id": "tools-vscode-setup"
+    },
+    {
+      "id": "tools-vscode"
+    },
+    {
+      "id": "tools-shortcuts-practice"
+    },
+    {
+      "id": "codex-context",
+      "body": "원본 README 한 줄을 고치고 **미리보기 → 소스 제어 → 터미널 → GitHub**에서 비교합니다.\n\n### 1. 원본 폴더와 저장소 확인\n\nREADME를 push했던 `git-practice` 폴더를 열고 **보기 → 터미널**을 선택합니다.\n\n```powershell\npwd\ngit status --short\ngit remote -v\n```\n\n위치가 `~/git-practice`이고 `origin`이 내 GitHub 저장소인지 확인합니다. `pwd`는 Windows PowerShell의 `Get-Location` 기본 별칭이며, cmd는 인수 없는 `cd`, macOS/Linux는 `pwd`를 사용합니다. 연습할 변경이 이미 있다면 그 내용을 그대로 확인해도 됩니다.\n\n### 2. 한 줄 바꾸고 변경 비교\n\n`README.md`에 **“이 문서는 Git 연습을 소개합니다.”**를 추가해 `Ctrl+S`로 저장합니다. `Ctrl+Shift+V`로 미리보기를 열고, 왼쪽 **소스 제어**에서 `README.md`를 클릭해 추가된 줄을 찾습니다.\n\n```powershell\ngit status --short\ngit diff README.md\n```\n\n`git status --short`는 바뀐 파일, `git diff README.md`는 스테이징하기 전의 줄별 차이를 보여 줍니다. 이미 스테이징했다면 소스 제어의 스테이징 목록에서 비교합니다.\n\n### 3. GitHub에서 마지막으로 올린 내용 보기\n\n원격 저장소의 README를 새로고침하고 방금 바꾼 문장이 어느 화면에 보이는지 비교합니다.\n\n**저장**은 파일에 쓰기, **커밋**은 Git 기록에 남기기, **push**는 그 기록을 GitHub에 보내기입니다. 다음 주제에서는 같은 폴더에 웹 카드를 만듭니다.",
+      "presentationPoints": [
+        "같은 복제본을 확인하고 README 한 줄을 저장해 Markdown 미리보기를 봅니다.",
+        "소스 제어 Diff와 터미널 git status·git diff에서 같은 변경을 확인합니다.",
+        "GitHub에는 원격에 올라간 내용이 보이며, 저장·커밋·push는 서로 다른 단계입니다."
+      ]
+    },
+    {
+      "id": "tools-bonus"
+    }
+  ],
+  "steps": [
+    {
+      "id": "ide-vscode-setup"
+    },
+    {
+      "id": "ide-vscode-code"
+    },
+    {
+      "id": "ide-vscode-extensions"
+    },
+    {
+      "id": "tools-01"
+    },
+    {
+      "id": "tools-02"
+    },
+    {
+      "id": "tools-03"
+    },
+    {
+      "id": "ide-shortcut-practice"
+    },
+    {
+      "id": "tools-05",
+      "description": "같은 원본 폴더에서 README를 저장하고 VS Code 소스 제어와 통합 터미널로 변경을 확인한 뒤 GitHub 원격 화면과 비교합니다.",
+      "code": "원본 폴더 README.md 한 줄 수정 → Ctrl+S → Markdown 미리보기\nSource Control → README.md Diff 확인\npwd  # Windows PowerShell: Get-Location\ngit status --short\ngit diff README.md\nGitHub 저장소 새로고침 → 원격 README 확인",
+      "output": "로컬 README의 변경은 소스 제어와 git diff에서 보입니다. GitHub에는 원격에 올라간 내용이 보이며 저장만으로 자동 반영되지 않습니다."
+    }
+  ]
+};

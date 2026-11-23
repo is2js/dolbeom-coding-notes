@@ -9,6 +9,7 @@ import {
   previousIdePreviewBindingsDefault,
   previousIdePreviewFallbackDefault,
   previousIdeExternalTerminalDefault,
+  previousIdeGitUiDefault,
 } from './previous-ide-setup-screenshots-default.js';
 import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
@@ -281,6 +282,7 @@ export function upgradeNineDefaults(value, baseCourse) {
       previousIdePreviewBindingsDefault,
       previousIdePreviewFallbackDefault,
       previousIdeExternalTerminalDefault,
+      previousIdeGitUiDefault,
     );
     if (id === 'github') baselines.push(previousGithubFirstPushDefault);
     if (id === 'markdown') baselines.push(

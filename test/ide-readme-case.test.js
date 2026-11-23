@@ -8,6 +8,7 @@ import {
   previousIdePreviewBindingsDefault,
   previousIdePreviewFallbackDefault,
   previousIdeExternalTerminalDefault,
+  previousIdeGitUiDefault,
 } from '../src/previous-ide-setup-screenshots-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
@@ -25,6 +26,26 @@ test('IDE case presents the supplied README screenshot before the subsequent dif
   assert.match(lesson.case.body, /소스 제어와 Diff 화면은 이어지는 실제 시연/);
   assert.ok(lesson.case.body.indexOf('Ctrl+S') < lesson.case.body.indexOf('소스 제어(Source Control)'));
   assert.match(lesson.presentation.caseSummary, /소스 제어.*Diff/);
+});
+
+test('README source control walkthrough updates untouched saved text and keeps authored edits', () => {
+  const section = lesson.sections.find(item => item.id === 'codex-context');
+  assert.match(section.body, /git diff README\.md[\s\S]*스테이징하고 커밋·전송하기[\s\S]*GitHub에서 방금 올린 내용 보기/);
+  assert.match(section.body, /동기화는 원격 변경을 먼저 가져온 뒤 내 커밋을 push/);
+  const asset = readFileSync(new URL('../public/assets/course/ide-vscode-readme-stage-commit-sync.png', import.meta.url));
+  assert.deepEqual([...asset.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  const draft = structuredClone(course);
+  const saved = draft.lessons.find(item => item.id === 'ide');
+  const savedSection = saved.sections.find(item => item.id === section.id);
+  Object.assign(savedSection, previousIdeGitUiDefault.sections.find(item => item.id === section.id));
+  Object.assign(saved.steps.find(item => item.id === 'tools-05'), previousIdeGitUiDefault.steps.find(item => item.id === 'tools-05'));
+  const migrate = () => upgradeNineDefaults(draft, course).lessons.find(item => item.id === 'ide');
+  assert.equal(migrate().sections.find(item => item.id === section.id).body, section.body);
+  assert.equal(migrate().steps.find(item => item.id === 'tools-05').code, lesson.steps.find(item => item.id === 'tools-05').code);
+  savedSection.body += '\n\n강사의 추가 메모';
+  assert.equal(migrate().sections.find(item => item.id === section.id).body, savedSection.body);
+  const removedStep = saved.steps.pop();
+  assert.equal(migrate().steps.some(item => item.id === removedStep.id), false);
 });
 
 test('the VS Code installation walkthrough includes four extension images and Prettier settings in order', () => {

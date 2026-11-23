@@ -1600,11 +1600,11 @@
           "title": "README 한 줄 수정으로 VS Code·Git·GitHub 연결하기",
           "minutes": 7,
           "optional": false,
-          "body": "원본 README 한 줄을 고치고 **미리보기 → 소스 제어 → 터미널 → GitHub**에서 비교합니다.\n\n### 1. 원본 폴더와 저장소 확인\n\nREADME를 push했던 `git-practice` 폴더를 열고 **보기 → 터미널**을 선택합니다.\n\n```powershell\npwd\ngit status --short\ngit remote -v\n```\n\n위치가 `~/git-practice`이고 `origin`이 내 GitHub 저장소인지 확인합니다. `pwd`는 Windows PowerShell의 `Get-Location` 기본 별칭이며, cmd는 인수 없는 `cd`, macOS/Linux는 `pwd`를 사용합니다. 연습할 변경이 이미 있다면 그 내용을 그대로 확인해도 됩니다.\n\n### 2. 한 줄 바꾸고 변경 비교\n\n`README.md`에 **“이 문서는 Git 연습을 소개합니다.”**를 추가해 `Ctrl+S`로 저장합니다. `Ctrl+Shift+V`로 미리보기를 열고, 왼쪽 **소스 제어**에서 `README.md`를 클릭해 추가된 줄을 찾습니다.\n\n```powershell\ngit status --short\ngit diff README.md\n```\n\n`git status --short`는 바뀐 파일, `git diff README.md`는 스테이징하기 전의 줄별 차이를 보여 줍니다. 이미 스테이징했다면 소스 제어의 스테이징 목록에서 비교합니다.\n\n### 3. GitHub에서 마지막으로 올린 내용 보기\n\n원격 저장소의 README를 새로고침하고 방금 바꾼 문장이 어느 화면에 보이는지 비교합니다.\n\n**저장**은 파일에 쓰기, **커밋**은 Git 기록에 남기기, **push**는 그 기록을 GitHub에 보내기입니다. 다음 주제에서는 같은 폴더에 웹 카드를 만듭니다.",
+          "body": "원본 README 한 줄을 고치고 **미리보기 → 소스 제어 → 터미널 → GitHub**에서 비교합니다.\n\n### 1. 원본 폴더와 저장소 확인\n\nREADME를 push했던 `git-practice` 폴더를 열고 **보기 → 터미널**을 선택합니다.\n\n```powershell\npwd\ngit status --short\ngit remote -v\n```\n\n위치가 `~/git-practice`이고 `origin`이 내 GitHub 저장소인지 확인합니다. `pwd`는 Windows PowerShell의 `Get-Location` 기본 별칭이며, cmd는 인수 없는 `cd`, macOS/Linux는 `pwd`를 사용합니다. 연습할 변경이 이미 있다면 그 내용을 그대로 확인해도 됩니다.\n\n### 2. 한 줄 바꾸고 변경 비교\n\n`README.md`에 **“이 문서는 Git 연습을 소개합니다.”**를 추가해 `Ctrl+S`로 저장합니다. `Ctrl+Shift+V`로 미리보기를 열고, 왼쪽 **소스 제어**에서 `README.md`를 클릭해 추가된 줄을 찾습니다.\n\n```powershell\ngit status --short\ngit diff README.md\n```\n\n`git status --short`는 바뀐 파일, `git diff README.md`는 스테이징하기 전의 줄별 차이를 보여 줍니다. 이미 스테이징했다면 소스 제어의 스테이징 목록에서 비교합니다.\n\n### 3. VS Code에서 스테이징하고 커밋·전송하기\n\n![VS Code 소스 제어에서 README의 + 버튼으로 스테이징하고 커밋 메시지와 체크 버튼으로 커밋한 뒤 동기화 버튼으로 GitHub에 보내는 강사의 화면](./assets/course/ide-vscode-readme-stage-commit-sync.png)\n\n화면은 강사의 복제본에서 촬영했습니다. 실습은 앞에서 연 원본 `git-practice` 폴더에서 이어갑니다.\n\n1. 소스 제어 **변경 사항**에서 `README.md` 오른쪽의 **+**를 눌러 스테이징합니다. 파일이 **스테이징된 변경 사항**으로 이동하면 다음 커밋에 담을 준비가 된 것입니다.\n2. 위쪽 메시지 입력란에 `README 소개 문장 추가`처럼 변경 내용을 적고 **체크(✓) 버튼** 또는 **커밋**을 누릅니다. 커밋은 내 컴퓨터에 기록됩니다.\n3. 화면처럼 파란색 **변경 내용 동기화** 버튼에 `1↑`이 표시되면 로컬 커밋 한 개가 전송을 기다린다는 뜻입니다. 버튼을 누르고 확인 창이 뜨면 안내를 읽고 진행합니다. 동기화는 원격 변경을 먼저 가져온 뒤 내 커밋을 push합니다. [VS Code 원격 저장소 안내](https://code.visualstudio.com/docs/sourcecontrol/repos-remotes#_sync-changes)\n\n원격 내용을 가져오지 않고 push만 하려면 소스 제어의 **… → Push(푸시)**를 선택합니다. 로그인 창이 뜨면 앞에서 사용한 GitHub 계정으로 로그인합니다. 화면의 버튼 이름이나 위치는 VS Code 버전에 따라 달라질 수 있습니다.\n\n### 4. GitHub에서 방금 올린 내용 보기\n\n내 GitHub 저장소의 README를 새로고침해 방금 전송한 문장이 보이는지 확인합니다.\n\n**저장**은 파일에 쓰기, **커밋**은 Git 기록에 남기기, **push**는 그 기록을 GitHub에 보내기입니다. 다음 주제에서는 같은 폴더에 웹 카드를 만듭니다.",
           "presentationPoints": [
-            "같은 복제본을 확인하고 README 한 줄을 저장해 Markdown 미리보기를 봅니다.",
-            "소스 제어 Diff와 터미널 git status·git diff에서 같은 변경을 확인합니다.",
-            "GitHub에는 원격에 올라간 내용이 보이며, 저장·커밋·push는 서로 다른 단계입니다."
+            "원본 저장소의 README를 수정·저장하고 미리보기와 Diff를 확인합니다.",
+            "소스 제어의 +로 스테이징하고 메시지와 ✓로 커밋합니다.",
+            "동기화 또는 Push로 GitHub에 전송하고 원격 README를 확인합니다."
           ]
         },
         {
@@ -1747,11 +1747,11 @@
         {
           "id": "tools-05",
           "title": "README 수정부터 GitHub 비교까지 한 화면에서 보기",
-          "description": "같은 원본 폴더에서 README를 저장하고 VS Code 소스 제어와 통합 터미널로 변경을 확인한 뒤 GitHub 원격 화면과 비교합니다.",
+          "description": "같은 원본 폴더에서 README를 저장하고 Diff 확인 → 스테이징 → 커밋 → GitHub 전송을 VS Code에서 진행합니다.",
           "scene": "terminal",
-          "code": "원본 폴더 README.md 한 줄 수정 → Ctrl+S → Markdown 미리보기\nSource Control → README.md Diff 확인\npwd  # Windows PowerShell: Get-Location\ngit status --short\ngit diff README.md\nGitHub 저장소 새로고침 → 원격 README 확인",
+          "code": "원본 폴더 README.md 한 줄 수정 → Ctrl+S → Markdown 미리보기\nSource Control → README.md Diff 확인\npwd  # Windows PowerShell: Get-Location\ngit status --short\ngit diff README.md\nREADME.md + → 메시지 작성 → ✓ 커밋 → 동기화 또는 Push\nGitHub 저장소 새로고침 → 원격 README 확인",
           "language": "text",
-          "output": "로컬 README의 변경은 소스 제어와 git diff에서 보입니다. GitHub에는 원격에 올라간 내용이 보이며 저장만으로 자동 반영되지 않습니다.",
+          "output": "소스 제어에서 README의 변경을 스테이징하고 커밋한 뒤 GitHub에 전송해 원격 README에서 확인합니다.",
           "focus": "terminal",
           "fileName": "VS Code · 원본 메모 프로젝트",
           "files": [

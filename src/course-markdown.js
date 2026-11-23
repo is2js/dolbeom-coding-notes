@@ -73,8 +73,8 @@ export function renderCourseInline(value) {
   return sanitizeCourseMarkup(courseMarked.parseInline(value || '', { gfm: true }));
 }
 
-// Only case media gets the viewer affordance; ordinary lesson images and editor
-// previews retain their existing behavior. Build buttons after sanitization.
+// Case and selected lesson media get the viewer affordance. Ordinary lesson
+// images and editor previews stay plain. Build buttons after sanitization.
 export function renderCourseCaseMarkdown(value) {
   const template = document.createElement('template');
   template.innerHTML = renderCourseMarkdown(value);

@@ -1,5 +1,7 @@
 .case-image-trigger { display: block; position: relative; width: 100%; padding: 0; border: 0; background: transparent; text-align: left; cursor: zoom-in; }
 .case-image-trigger img { width: 100%; }
+.lesson-guide-images .case-image-trigger { width: fit-content; max-width: 100%; }
+.lesson-guide-images .case-image-trigger img { width: auto; max-height: 360px; object-fit: contain; }
 .case-image-trigger-label { display: inline-block; margin-top: 6px; color: #315d52; font-size: 12px; font-weight: 700; }
 .case-image-trigger:focus-visible, .case-image-viewer :is(button, [tabindex]):focus-visible { outline: 3px solid #c69349; outline-offset: 3px; }
 .case-image-viewer { width: calc(100vw - 24px); max-width: 1880px; height: calc(100dvh - 24px); max-height: none; margin: auto; padding: 0; border: 1px solid #a6b8aa; border-radius: 10px; background: #eee9dc; color: #26394a; box-shadow: 0 24px 90px #101c24aa; overflow: hidden; }

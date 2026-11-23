@@ -79,11 +79,9 @@ test('integrated IDE scene separates local editing from the last pushed GitHub v
 
 test('VS Code setup artwork returns to the original project and README',()=>{
   const scene = sectionScenes['tools-vscode-setup'];
-  assert.match(scene.description, /공식.*User Setup.*git-practice.*README\.md/);
-  assert.match(scene.svg, /User Setup 설치/);
-  assert.match(scene.svg, /git-practice/);
-  assert.doesNotMatch(scene.svg, /git-practice-clone/);
-  assert.match(scene.svg, /README\.md/);
+  assert.match(scene.description, /원본 git-practice.*VS Code.*README\.md/);
+  for (const label of ['원본 실습 폴더', '탐색기', 'git-practice', 'README.md', 'code .']) assert.ok(scene.svg.includes(label));
+  assert.doesNotMatch(scene.svg, /git-practice-clone|User Setup|System Setup/);
 });
 
 test('Markdown scenes connect plan syntax to rendered content and separate local image storage from GitHub push',()=>{

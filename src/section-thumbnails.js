@@ -34,7 +34,7 @@ const scenes = {
   'markdown-code': sheet(24, 28, 'MD', cream) + tile(73, 41, 'N', clay) + tile(107, 58, '◇', sage),
   'codex-bonus': sheet(26, 33, '#') + sheet(66, 27, '✓', sage) + tile(105, 59, '↶', gold),
   'tools-map': screen(25, 26, 73, 43, 'diff') + keybed(103, 72, 6),
-  'tools-vscode-setup': sheet(25, 26, '↓', blue) + link(62, 48, 21) + screen(89, 33, 47, 42, 'editor'),
+  'tools-vscode-setup': sheet(24, 29, 'MD', sage) + folder(19, 55, 37) + link(60, 58, 22) + screen(84, 25, 55, 41, 'editor'),
   'tools-vscode': screen(22, 19, 72, 46, 'editor') + tile(104, 54, '⌕', blue),
   'tools-shortcuts-practice': keybed(52, 52, 6) + screen(81, 27, 54, 41, 'editor'),
   'tools-pycharm': screen(20, 28, 64, 45, 'editor') + tile(87, 48, 'Py', blue) + tile(116, 62, '↵', gold),

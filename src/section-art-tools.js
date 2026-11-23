@@ -267,27 +267,40 @@ function pipeScene() {
 
 function vscodeSetupScene() {
   const id = 'section-tools-vscode-setup';
-  const download = point(.35, 4.65);
-  const end = point(4.95, .6);
+  const [folderX, folderY] = point(.25, 4.45);
+  const fileRow = (y, name) =>
+    box(22, y - 11, 8, 10, c.ivory, 1, '#7c9387', 1.2)
+    + code(36, y, name, ink, 13);
+
   return stage(id,
-    deck(id, .35, 4.65, 1.04, .94)
-    + deck(id, .85, .82, 1.28, 1.16, { fill: '#e7ead3' })
-    + deck(id, 4.95, .6, 1.22, 1.13)
-    + route(id, [[.35,3.69],[.35,1.76],[.85,1.76]], blueRail)
-    + route(id, [[1.85,.82],[3.9,.82]], { ...amberRail, delay: 1.2 })
-    + page(download[0]-35, download[1]-101, 70, 94, { angle: -6 })
-    + at(download[0], download[1]-72, oval(0, 0, 21, 19, '#e3ecd4', '#77947b', 1.5)
-      + line('M0-10v18m-7-7L0 8 7 1', c.green, 2.8))
-    + label(download[0], 450, '공식 다운로드', { size: 16, weight: 690 })
-    + monitor(id, .85, .82, 197, 129, 'Windows',
-      box(13, 48, 170, 40, '#e3ead4', 5, 'none') + tick(32, 67, .8)
-      + label(110, 73, 'User Setup 설치', { size: 15, weight: 700 })
-      + glow(id, 12, 47, 172, 42, .5)
-      + line('M19 106h63m8 0h43', '#8fa08a', 2.5), { rise: 22 })
-    + folder(end[0]-63, end[1]-92, 125, 83, c.honey,
-      page(38, -22, 67, 85, { angle: 7 }))
-    + tag(end[0], end[1]-36, 104, 'README.md', { mono: true, size: 14 })
-    + tag(end[0], end[1]+52, 146, 'git-practice', { mono: true, size: 14 }));
+    label(380, 109, '원본 폴더에서 README 열기', { size: 25, weight: 720 })
+    + deck(id, .25, 4.45, 1.34, 1.03, { fill: '#f4e8cd' })
+    + deck(id, 4.5, 1.2, 1.66, 1.25, { fill: '#e7ead3' })
+    + route(id, [[.96,4.45],[2.48,4.45],[2.48,2.22],[3.53,2.22]], blueRail)
+    + folder(folderX - 72, folderY - 74, 144, 77, c.honey,
+      page(33, -37, 69, 85, { angle: -9 })
+      + page(63, -26, 55, 70, { angle: 8, fill: '#e5edd7' }))
+    + tag(folderX, folderY - 11, 124, 'git-practice', { mono: true, size: 15 })
+    + label(folderX, 462, '원본 실습 폴더', { size: 16, weight: 690 })
+    + tag(331, 462, 113, 'code .', { color: c.sage, mono: true, textColor: c.green })
+    + monitor(id, 4.5, 1.2, 338, 221, 'VS Code',
+      box(11, 37, 137, 123, '#e9ecda', 5, 'none')
+      + label(22, 56, '탐색기', { anchor: 'start', size: 14, weight: 700 })
+      + line('M20 66l4 4 4-4', c.green, 1.9)
+      + code(33, 74, 'git-practice', c.green, 13)
+      + box(17, 82, 125, 23, '#cbdcc5', 4, 'none')
+      + fileRow(98, 'README.md')
+      + fileRow(120, 'note.txt')
+      + fileRow(142, 'branch-note.txt')
+      + box(155, 38, 170, 26, '#ebdfc4', 5, 'none')
+      + code(164, 55, 'README.md', c.green, 14)
+      + code(164, 87, '# Git 연습 메모', ink, 15)
+      + line('M164 103h147m-147 12h121m-121 12h137', '#97a595', 2.1)
+      + glow(id, 17, 82, 125, 23, .8)
+      + box(11, 166, 315, 43, c.dark, 5, 'none')
+      + label(22, 183, '터미널', { anchor: 'start', size: 12, color: terminalInk })
+      + code(22, 200, '> pwd', '#f1d48c', 13), { rise: 34 })
+    + label(526, 496, '왼쪽 탐색기에서 README.md 선택', { size: 16, weight: 690 }));
 }
 
 function errorReportScene() {
@@ -319,8 +332,8 @@ function errorReportScene() {
 
 export const toolSectionScenes = {
   'tools-vscode-setup': {
-    title:'VS Code 설치와 기본 설정',
-    description:'공식 Windows 다운로드에서 User Setup 설치 파일을 받고 옵션을 확인해 설치한 뒤, 원래 작업 폴더인 git-practice를 열어 같은 README.md를 확인합니다.',
+    title:'VS Code에서 원본 실습 폴더 열기',
+    description:'원본 git-practice 폴더를 code .으로 VS Code에서 열고, 왼쪽 탐색기에서 README.md를 선택합니다. 편집기 아래에는 통합 터미널이 보입니다.',
     svg:vscodeSetupScene(),
   },
   'terminal-example': {

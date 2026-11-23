@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { courseMarked } from '../src/course-markdown-engine.js';
 import { upgradeNineDefaults } from '../src/course-storage.js';
-import { previousWebFileOrderDefault } from '../src/previous-web-file-order-default.js';
+import { previousWebFileOrderDefault, previousWebRecapDefault } from '../src/previous-web-file-order-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const lesson = course.lessons.find(item => item.id === 'web-coding');
@@ -22,6 +22,22 @@ test('CSS and JavaScript are created and linked before their examples, matching 
   assert.equal(cssExample.replace(/\n\s*\n/g, '\n'), asset('style.css').replace(/\n\s*\n/g, '\n'));
   assert.equal(jsExample, asset('script.js'));
   assert.match(asset('index.html'), /<link rel="stylesheet" href="style\.css">[\s\S]*<script defer src="script\.js"><\/script>/);
+});
+
+test('the web coding recap updates untouched defaults while preserving user edits', () => {
+  const draft = structuredClone(course);
+  const saved = draft.lessons.find(item => item.id === lesson.id);
+  saved.closing = previousWebRecapDefault.closing;
+  saved.checklist = structuredClone(previousWebRecapDefault.checklist);
+  saved.presentation.returnSummary = previousWebRecapDefault.presentation.returnSummary;
+  const migrate = () => upgradeNineDefaults(draft, course).lessons.find(item => item.id === lesson.id);
+  assert.equal(migrate().closing, lesson.closing);
+  assert.deepEqual(migrate().checklist, lesson.checklist);
+  assert.equal(migrate().presentation.returnSummary, lesson.presentation.returnSummary);
+  saved.closing = '강사의 직접 작성한 정리';
+  assert.equal(migrate().closing, saved.closing);
+  const removed = saved.steps.pop();
+  assert.equal(migrate().steps.some(item => item.id === removed.id), false);
 });
 
 test('previous saved defaults upgrade while edited lesson text and removed steps survive', () => {

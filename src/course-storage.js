@@ -4,7 +4,7 @@ import { previousEightDefault, previousEightCourseMetadata } from './previous-ei
 import { previousNineDefault } from './previous-nine-default.js';
 import { previousLiveWebDefault } from './previous-live-web-default.js';
 import { previousIdeToolsDefault } from './previous-ide-tools-default.js';
-import { previousWebFileOrderDefault } from './previous-web-file-order-default.js';
+import { previousWebFileOrderDefault, previousWebRecapDefault } from './previous-web-file-order-default.js';
 import {
   previousIdeSetupScreenshotsDefault,
   previousIdePreviewBindingsDefault,
@@ -278,7 +278,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     // any release update without replacing the author's edited fields.
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
-    if (id === 'web-coding') baselines.push(previousWebFileOrderDefault);
+    if (id === 'web-coding') baselines.push(previousWebFileOrderDefault, previousWebRecapDefault);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'ide') baselines.push(
       previousIdeSetupScreenshotsDefault,

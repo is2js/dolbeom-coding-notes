@@ -2002,11 +2002,12 @@
         }
       ],
       "checklist": [
-        "git-practice 안의 카드 폴더와 VS Code에서 저장한 파일 위치를 확인할 수 있다.",
-        "HTML 구조·CSS 모양·JavaScript 버튼 동작의 차이를 설명할 수 있다.",
-        "같은 카드를 브라우저에서 열고 수정 결과를 확인할 수 있다."
+        "index.html에서 제목·설명·버튼의 내용과 구조를 만들고 브라우저에서 확인할 수 있다.",
+        "style.css를 만들고 HTML에 연결한 뒤 선택자로 색과 여백을 바꿀 수 있다.",
+        "script.js를 만들고 HTML에 연결한 뒤 클릭으로 설명을 펼치고 접을 수 있다.",
+        "VS Code에서 같은 카드 폴더의 파일을 저장하고 Live Server로 결과를 확인할 수 있다."
       ],
-      "closing": "하나의 카드에서 HTML은 내용과 구조, CSS는 모양, JavaScript는 버튼 동작을 담당했습니다. 다음 주제에서는 같은 카드의 모양과 동작을 Tailwind CSS와 Alpine.js로 바꿔 봅니다.",
+      "closing": "같은 강의 카드에 HTML로 내용과 구조를 만들고, CSS로 모양을 꾸민 뒤 JavaScript로 버튼 동작을 더했습니다. 다음 주제에서는 이 카드를 Tailwind CSS와 Alpine.js로 표현합니다.",
       "references": [
         {
           "title": "VS Code HTML 편집",
@@ -2030,7 +2031,7 @@
           "expectedResult": "하나의 Git 카드가 HTML 구조, CSS 모양과 JavaScript 버튼 동작을 차례로 갖춥니다.",
           "durationMinutes": 6
         },
-        "returnSummary": "HTML·CSS·JavaScript로 만든 카드를 다음 주제에서 Tailwind CSS와 Alpine.js로 다시 표현합니다."
+        "returnSummary": "HTML로 카드의 내용과 구조를 만들고, CSS 파일을 연결해 모양을 꾸민 뒤 JavaScript 파일을 연결해 버튼 동작을 더했습니다. 다음 주제에서 같은 카드를 Tailwind CSS와 Alpine.js로 바꿉니다."
       }
     },
     {

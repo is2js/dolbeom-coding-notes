@@ -50,3 +50,39 @@ export const previousWebFileOrderDefault = {
     }
   }
 };
+
+// Published web coding recap before the HTML, CSS and JavaScript review.
+export const previousWebRecapDefault = {
+  "id": "web-coding",
+  "sections": [
+    {
+      "id": "tools-html"
+    },
+    {
+      "id": "tools-css"
+    },
+    {
+      "id": "tools-javascript"
+    }
+  ],
+  "steps": [
+    {
+      "id": "html-practice"
+    },
+    {
+      "id": "css-practice"
+    },
+    {
+      "id": "javascript-practice"
+    }
+  ],
+  "closing": "하나의 카드에서 HTML은 내용과 구조, CSS는 모양, JavaScript는 버튼 동작을 담당했습니다. 다음 주제에서는 같은 카드의 모양과 동작을 Tailwind CSS와 Alpine.js로 바꿔 봅니다.",
+  "checklist": [
+    "git-practice 안의 카드 폴더와 VS Code에서 저장한 파일 위치를 확인할 수 있다.",
+    "HTML 구조·CSS 모양·JavaScript 버튼 동작의 차이를 설명할 수 있다.",
+    "같은 카드를 브라우저에서 열고 수정 결과를 확인할 수 있다."
+  ],
+  "presentation": {
+    "returnSummary": "HTML·CSS·JavaScript로 만든 카드를 다음 주제에서 Tailwind CSS와 Alpine.js로 다시 표현합니다."
+  }
+};

@@ -12,6 +12,7 @@ const authoredMediaSources = new Set([
   './assets/course/diagrams/css-declaration.svg',
   './assets/course/diagrams/javascript-flow.svg',
   './assets/course/frontend-vite-terminal.gif',
+  './assets/course/buja-map-case.gif',
 ]);
 // Course media is bundled with the app; remote sources and path traversal are not allowed.
 export function isCourseImageSource(src) {

@@ -275,7 +275,7 @@ Alpine.data('courseApp', () => ({
   get learningCue() {
     const page = this.learningPage;
     if (page?.section?.id === 'terminal-example') return 'PowerShell과 Windows Terminal 설치가 먼저 필요합니다.';
-    if (page?.kind === 'case' && (this.caseRepositoryUrl || ['markdown', 'ide'].includes(this.lessonId))) return '';
+    if (page?.kind === 'case' && (this.caseRepositoryUrl || ['markdown', 'ide', 'web-tools'].includes(this.lessonId))) return '';
     if (page?.kind === 'recap' && ['github', 'web-coding'].includes(this.lessonId)) return '';
     if (page?.kind === 'case' && this.lessonId === 'git') {
       return 'Git은 파일의 변경 기록을 남기는 도구입니다. 무엇이 바뀌었는지 비교하고 예전 버전도 다시 볼 수 있습니다.';

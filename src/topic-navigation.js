@@ -86,7 +86,7 @@ export const topicNavigationMethods = {
     return ({ intro: '강의 목표', case: '시작 사례', section: '본문', demo: '시연 예고', live: '실전 시연', recap: '핵심 정리' })[page.kind] || '본문';
   },
   navigationPageThumbnail(page) {
-    if (page.kind === 'case' && this.lessonId === 'github') return this.sectionThumbnail('github-case', this.lessonId);
+    if (page.kind === 'case' && ['github', 'web-tools'].includes(this.lessonId)) return this.sectionThumbnail(`${this.lessonId}-case`, this.lessonId);
     return page.kind === 'section' ? this.sectionThumbnail(page.section?.id, this.lessonId) : this.topicThumbnail(this.lessonId);
   },
   selectNavigationPage(id) {

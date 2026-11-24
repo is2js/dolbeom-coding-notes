@@ -27,6 +27,21 @@ test('case image viewer opens the clicked local image, then restores focus', () 
   assert.equal(app.caseImageSrc, '');
 });
 
+test('fit mode resets for every image and width fit returns the viewport to the top', () => {
+  const { app, calls, event } = fixture('./assets/course/buja-map-case.gif');
+  assert.equal(app.openCaseImageFromEvent(event), true);
+  assert.equal(app.caseImageWidthFit, false);
+  app.setCaseImageWidthFit(true);
+  assert.equal(app.caseImageWidthFit, true);
+  assert.equal(calls.scrolled, 2);
+  app.setCaseImageWidthFit(false);
+  assert.equal(app.caseImageWidthFit, false);
+  app.setCaseImageWidthFit(true);
+  app.closeCaseImageViewer();
+  assert.equal(app.openCaseImageFromEvent(event), true);
+  assert.equal(app.caseImageWidthFit, false);
+});
+
 test('rejects remote, traversing and non-case media and does not focus detached triggers', () => {
   for (const src of ['https://example.com/a.png', './assets/course/../a.png', 'javascript:alert(1)']) {
     const { app, event } = fixture(src);

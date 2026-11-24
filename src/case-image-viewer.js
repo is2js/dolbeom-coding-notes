@@ -1,7 +1,7 @@
 import { isCourseImageSource } from './course-markdown.js';
 
 export function caseImageViewerState() {
-  return { caseImageOpen: false, caseImageSrc: '', caseImageAlt: '', caseImageTrigger: null, caseImageHome: null };
+  return { caseImageOpen: false, caseImageSrc: '', caseImageAlt: '', caseImageTrigger: null, caseImageHome: null, caseImageWidthFit: false };
 }
 
 export const caseImageViewerMethods = {
@@ -16,6 +16,7 @@ export const caseImageViewerMethods = {
     this.caseImageSrc = src;
     this.caseImageAlt = image.alt || '강의 사례 이미지';
     this.caseImageTrigger = button;
+    this.caseImageWidthFit = false;
     this.caseImageOpen = true;
     this.$nextTick(() => {
       if (!this.caseImageOpen) return;
@@ -28,6 +29,10 @@ export const caseImageViewerMethods = {
       this.$refs.caseImageViewport?.scrollTo(0, 0);
     });
     return true;
+  },
+  setCaseImageWidthFit(value) {
+    this.caseImageWidthFit = Boolean(value);
+    this.$nextTick(() => this.$refs.caseImageViewport?.scrollTo(0, 0));
   },
   closeCaseImageViewer({ restoreFocus = true } = {}) {
     const dialog = this.$refs.caseImageViewer;

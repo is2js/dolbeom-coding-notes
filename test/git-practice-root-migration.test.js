@@ -38,6 +38,7 @@ test('practice instructions keep the same folder and highlight the requested ste
   assert.match(js, /<mark>`defer`는 HTML을 읽은 뒤/);
   const vite=section(course,'web','web-http').body;
   assert.match(vite, /cd ~\/git-practice\n/);
-  assert.match(vite, /node server\.cjs/);
+  assert.match(vite, /npm install\nnpm run dev/);
+  assert.doesNotMatch(vite, /node server\.cjs/);
   assert.doesNotMatch(vite, /git-practice\/course-card\/03-javascript/);
 });

@@ -24,6 +24,7 @@ import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.
 import { previousViteVisualDefault } from './previous-vite-visual-default.js';
 import { previousViteLiveDefault } from './previous-vite-live-default.js';
 import { previousWebCdnViteDefault } from './previous-web-cdn-vite-default.js';
+import { previousWebPruneDefault } from './previous-web-prune-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
 import { previousJsonCardSection } from './previous-json-card-default.js';
 import { previousJsonPythonSections } from './previous-json-python-defaults.js';
@@ -307,7 +308,7 @@ export function upgradeNineDefaults(value, baseCourse) {
       { ...previousGithubClonePathDefault, ...previousMarkdownPromptCaseDefault },
       { ...previousGithubClonePathDefault, ...previousMarkdownPromptResultDefault },
     );
-    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault, previousWebCdnViteDefault);
+    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault, previousWebCdnViteDefault, previousWebPruneDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);

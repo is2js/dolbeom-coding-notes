@@ -13,7 +13,7 @@ const descriptions = {
   ide: '파일 탐색기에서 README.md를 열어 편집하고 Git에서 이전과 바뀐 내용을 비교하는 입체 작업 공간',
   'web-coding': 'HTML의 내용과 구조, CSS의 모양, JavaScript의 버튼 동작을 하나의 강의 카드와 브라우저 화면으로 연결합니다.',
   'web-tools': 'Tailwind CSS의 스타일 클래스와 Alpine.js의 상태 및 클릭 동작을 같은 강의 카드에 적용하는 입체 작업대',
-  'web-tools-case': '돌범의 부동산 지도에서 지역을 선택하는 화면과 Alpine.js, Tailwind CSS가 준비된 프로젝트를 보여 줍니다.',
+  'web-tools-case': '온라인 청첩장에서 질문의 답변을 펼치고 접는 모습과 부동산 지도에서 지역을 선택하는 화면을 나란히 보여 줍니다.',
   web: '브라우저가 npm run dev로 시작한 개발 서버에 화면 파일을 요청하고 HTML, CSS, JavaScript를 받아 표시하는 입체 모형',
   templates: '딕셔너리 또는 SQLite 데이터와 Jinja2 템플릿을 FastAPI 서버에서 HTML로 결합해 카드로 표시하는 입체 모형',
   'web-architecture': '왼쪽 브라우저가 오른쪽 서버로 요청을 보내고 서버의 응답을 받습니다. 서버는 필요한 경우 연결된 저장소에서 데이터를 읽습니다.',
@@ -27,7 +27,7 @@ export function illustrationDescription(id) { return descriptions[id] || descrip
 // Short visual captions keep the complete accessible descriptions available.
 export function illustrationCaption(id) {
   if (id === 'github-case') return 'GitHub의 프로젝트를 내 컴퓨터로 복제하기';
-  if (id === 'web-tools-case') return '돌범의 부동산 지도에서 지역 선택하기';
+  if (id === 'web-tools-case') return '청첩장 펼치기와 지도에서 지역 선택하기';
   return sectionScenes[String(id).replace(/^section-/, '')]?.title || illustrationDescription(id);
 }
 export function sectionIllustrationId(section, lessonId) {

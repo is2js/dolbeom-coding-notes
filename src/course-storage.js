@@ -17,6 +17,7 @@ import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault } from './previous-web-tools-map-case-default.js';
 import { previousWebToolsWeddingDefault } from './previous-web-tools-wedding-default.js';
 import { previousWebToolsAlpineCaseDefault } from './previous-web-tools-alpine-case-default.js';
+import { previousWebToolsHighlightsDefault } from './previous-web-tools-highlights-default.js';
 import { previousGitPracticeRootDefault } from './previous-git-practice-root-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
 import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.js';
@@ -207,7 +208,7 @@ function updateAuthoredTailwindCdn(lesson, latest) {
   const previous = previousCdnDefault['web-tools'].sections.find(item => item.id === 'frontend-css');
   if (typeof target?.body !== 'string' || typeof source?.body !== 'string' || target._cdnExamples202611 === true) return;
   const old = previous.body.split('\n\n'), next = source.body.split('\n\n');
-  const paragraph = (blocks, prefix) => blocks.find(block => block.startsWith(prefix));
+  const paragraph = (blocks, prefix) => blocks.find(block => block.replace(/<\/?mark>/g, '').startsWith(prefix));
   const pairs = [
     ['**Tailwind CSS**는', '**Tailwind CSS**는'],
     ['HTML 태그 안에서 모양을 지정', 'HTML 태그 안에서 모양을 지정'],
@@ -288,7 +289,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (previousGitPracticeRootDefault[id]) baselines.push(previousGitPracticeRootDefault[id]);
     if (id === 'web-coding') baselines.push(previousWebFileOrderDefault, previousWebRecapDefault);
-    if (id === 'web-tools') baselines.push(previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault, previousWebToolsWeddingDefault, previousWebToolsAlpineCaseDefault);
+    if (id === 'web-tools') baselines.push(previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault, previousWebToolsWeddingDefault, previousWebToolsAlpineCaseDefault, previousWebToolsHighlightsDefault);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'ide') baselines.push(
       previousIdeSetupScreenshotsDefault,

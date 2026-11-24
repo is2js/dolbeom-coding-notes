@@ -23,9 +23,11 @@ const scenes = {
     + `<circle cx="21" cy="29" r="12" fill="#34434c"/>
        <path transform="translate(13 21) scale(.69)" d="M8 21c-5 1-5-3-7-3m14 5v-4c0-1-.1-2-1-3 4 0 7-2 7-6 0-2-.5-3-2-4 .5-1 .5-3 0-4-2 0-3 1-4 2-2-.5-4-.5-6 0-1-1-2-2-4-2-.5 1-.5 3 0 4-1.5 1-2 2-2 4 0 4 3 6 7 6-1 1-1 2-1 3v4" stroke="#fff6df" stroke-width="1.7"/>`
     + link(67, 49, 25) + screen(96, 30, 41, 39) + folder(103, 57, 27),
-  'web-tools-case': screen(32, 20, 82, 52, 'card', sage)
-    + `<path d="M82 41c-6 0-10 4-10 10 0 7 10 14 10 14s10-7 10-14c0-6-4-10-10-10Z" fill="${teal}" stroke="#37474c" stroke-width="1.6"/><circle cx="82" cy="51" r="3" fill="${cream}" stroke="none"/>`
-    + tile(102, 64, 'JS', gold),
+  'web-tools-case': screen(65, 22, 65, 47, 'card', sage)
+    + `<path d="M98 38c-5 0-8 4-8 8 0 6 8 11 8 11s8-5 8-11c0-4-3-8-8-8Z" fill="${teal}" stroke="#37474c" stroke-width="1.6"/><circle cx="98" cy="46" r="2.5" fill="${cream}" stroke="none"/>
+       <rect x="24" y="22" width="31" height="55" rx="5" fill="#f8ebe3" stroke="#37474c" stroke-width="2"/>
+       <path d="M39.5 39c-3-5-9-1-7 3 1 3 7 6 7 6s6-3 7-6c2-4-4-8-7-3Z" fill="#d89487" stroke="none"/>
+       <path d="M29 55h21M29 61h15" fill="none" stroke="#789a84" stroke-width="2" stroke-linecap="round"/>`,
   'github-clone': rack(27, 25) + link(61, 48, 35) + folder(102, 55, 31),
   'github-roles': folder(18, 40, 36) + link(59, 49, 32) + rack(105, 25) + tile(75, 75, '↔', gold),
   'git-bonus': sheet(25, 30, 'TXT') + screen(79, 30, 54, 47, 'terminal'),

@@ -15,6 +15,7 @@ import {
 } from './previous-ide-setup-screenshots-default.js';
 import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault } from './previous-web-tools-map-case-default.js';
+import { previousWebToolsWeddingDefault } from './previous-web-tools-wedding-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
 import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.js';
 import { previousViteVisualDefault } from './previous-vite-visual-default.js';
@@ -280,7 +281,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (id === 'web-coding') baselines.push(previousWebFileOrderDefault, previousWebRecapDefault);
-    if (id === 'web-tools') baselines.push(previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault);
+    if (id === 'web-tools') baselines.push(previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault, previousWebToolsWeddingDefault);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'ide') baselines.push(
       previousIdeSetupScreenshotsDefault,

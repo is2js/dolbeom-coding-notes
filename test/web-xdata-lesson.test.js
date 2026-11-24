@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { upgradeNineDefaults } from '../src/course-storage.js';
 import { previousWebXDataDefault } from '../src/previous-web-xdata-default.js';
+import { previousWebXDataIndexDefault } from '../src/previous-web-xdata-index-default.js';
 
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const web = data => data.lessons.find(item => item.id === 'web');
@@ -25,7 +26,31 @@ test('the runnable example and lesson use the same direct x-data array', () => {
   assert.match(main, /x-text="open \? '설명 접기' : '설명 보기'"/);
   assert.match(main, /:aria-controls="'detail-' \+ index"/);
   assert.match(main, /:id="'detail-' \+ index"/);
-  assert.match(body, /127\.0\.0\.1:5173\/alpine-data-practice\.html/);
+  assert.doesNotMatch(body, /alpine-data-practice\.html|복사본 준비/);
+  assert.match(body, /git-practice\/index\.html/);
+  assert.match(body, /127\.0\.0\.1:5173\//);
+  assert.match(section(course, 'web-json-card').presentationPoints.join(' '), /index\.html/);
+  const step = web(course).steps.find(item => item.id === 'web-json-practice');
+  assert.equal(step.fileName, 'git-practice/index.html');
+  assert.deepEqual(step.files, ['git-practice/index.html']);
+});
+
+test('previous copy-based lesson updates unchanged fields without overwriting author edits', () => {
+  const saved = structuredClone(course);
+  const lesson = web(saved);
+  const oldSection = previousWebXDataIndexDefault.sections.find(item => item.id === 'web-json-card');
+  const oldStep = previousWebXDataIndexDefault.steps.find(item => item.id === 'web-json-practice');
+  Object.assign(section(saved, 'web-json-card'), structuredClone(oldSection));
+  Object.assign(lesson.steps.find(item => item.id === oldStep.id), structuredClone(oldStep));
+  const migrated = upgradeNineDefaults(saved, course);
+  assert.equal(section(migrated, 'web-json-card').body, section(course, 'web-json-card').body);
+  assert.deepEqual(section(migrated, 'web-json-card').presentationPoints, section(course, 'web-json-card').presentationPoints);
+  assert.equal(web(migrated).steps.find(item => item.id === oldStep.id).fileName, 'git-practice/index.html');
+  assert.deepEqual(upgradeNineDefaults(migrated, course), migrated);
+  section(saved, 'web-json-card').body += '\n\n강사가 직접 추가한 문장';
+  assert.equal(section(upgradeNineDefaults(saved, course), 'web-json-card').body, section(saved, 'web-json-card').body);
+  lesson.sections = lesson.sections.filter(item => item.id !== 'web-http');
+  assert.ok(!web(upgradeNineDefaults(saved, course)).sections.some(item => item.id === 'web-http'));
 });
 
 test('the next-lesson preview separates browser state, FastAPI and SQLite', () => {

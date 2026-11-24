@@ -30,12 +30,16 @@ test('data lessons distinguish JSON in HTML, FastAPI dictionary, SQLite and serv
   assert.match(jinja.svg,/HTML 생성/);
 });
 
-test('future lesson illustration separates current HTML JSON practice and planned data sources',()=>{
+test('future lesson illustration separates current Alpine data practice and planned data sources',()=>{
   const current = sectionScenes['web-json-card'];
   const future = sectionScenes['web-future-backend'];
-  assert.match(current.svg, /JSON\.parse/);
-  for (const phrase of ['이번 강의', '후속 강의 · 준비 중', 'HTML · JSON', 'Alpine.js', 'Python', '딕셔너리', 'SQLite']) assert.ok(future.svg.includes(phrase), phrase);
+  for (const phrase of ['x-data', 'lessons: [', 'x-for', '윈도우 터미널', 'Git']) assert.ok(current.svg.includes(phrase), phrase);
+  assert.doesNotMatch(current.svg, /JSON\.parse/);
+  assert.match(current.description, /x-data.*배열.*x-for.*두 장/);
+  for (const phrase of ['이번 강의', '후속 강의', 'x-data · lessons', 'FastAPI · 딕셔너리', 'SQLite', 'JSON 응답', 'Alpine.js 카드', 'FastAPI · DB 조회']) assert.ok(future.svg.includes(phrase), phrase);
+  assert.doesNotMatch(future.description, /HTML 안 JSON/);
   assert.match(future.description, /후속 강의.*Python.*SQLite/);
+  assert.match(future.description, /FastAPI.*SQLite를 조회해 JSON으로 응답.*Alpine/);
 });
 
 test('frontend and backend illustrations distinguish the server used in each step',()=>{

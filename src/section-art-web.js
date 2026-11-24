@@ -540,20 +540,21 @@ function htmlJsonCard() {
 
 function frontendJsonCards() {
   const p = 'sa-web-json-card';
-  return frame(p, 'JSON을 읽어 강의 카드로 표시하기', `
-    ${center(380, 66, 'JSON을 읽어 강의 카드로 표시하기', 25, color.ink)}
+  return frame(p, 'x-data로 강의 카드 만들기', `
+    ${center(380, 66, 'x-data로 강의 카드 만들기', 25, color.ink)}
     ${documentPage(68, 175, 193, 172, {
-      label: 'HTML 안의 JSON',
-      body: box(80, 222, 167, 37, color.ochre, 6, color.edge, 1.2)
-        + code(90, 245, '"윈도우 터미널"', 15, color.ink)
-        + box(80, 269, 167, 37, color.mint, 6, color.edge, 1.2)
-        + code(90, 292, '"Git"', 15, color.ink),
+      label: 'HTML · Alpine.js',
+      body: code(83, 222, 'x-data', 17, color.teal)
+        + code(83, 245, 'lessons: [', 14, color.ink)
+        + code(93, 269, '윈도우 터미널', 14, color.ink)
+        + code(93, 292, 'Git', 14, color.ink)
+        + code(83, 315, ']', 14, color.ink),
     })}
     ${flow(p, 268, 258, 308, 258, {turn:-1})}
     ${box(311, 226, 139, 74, color.shade, 10, color.edge, 1.4)}
     ${box(306, 218, 139, 74, color.lilac, 10)}
-    ${center(375, 247, 'Alpine.js', 19, color.ink)}
-    ${code(326, 272, 'JSON.parse()', 14, color.ink)}
+    ${center(375, 247, 'x-for', 19, color.ink)}
+    ${center(375, 272, '카드 반복', 14, color.ink)}
     ${flow(p, 452, 258, 489, 258, {turn:-1, delay:1.2})}
     ${standingWindow(491, 133, 198, 243, {
       title: '브라우저',
@@ -561,35 +562,70 @@ function frontendJsonCards() {
         + card(508, 271, 164, 84, {title:'Git'})
         + pulse(p, shape('M520 295h25', 'none', color.teal, 2.4), 1.9),
     })}
-  `, 'JSON 데이터 두 개가 브라우저의 카드 두 장으로 표시됩니다');
+  `, 'x-data의 항목을 반복해 카드 두 장으로 표시합니다');
 }
 
 function futureBackendSteps() {
   const p = 'sa-web-future-backend';
-  return frame(p, '같은 카드, 다음에 배울 데이터', `
-    ${captionChip(161, 115, '이번 강의', 112, color.mint)}
-    ${captionChip(489, 115, '후속 강의 · 준비 중', 185, color.ochre)}
-    ${documentPage(74, 160, 152, 172, {
-      label: 'HTML · JSON',
-      tone: color.paper,
-      body: code(91, 220, '{ "title": "Git" }', 13, color.ink)
-        + box(89, 245, 120, 40, color.mint, 6, color.edge, 1.2)
-        + center(149, 270, 'Alpine.js', 14, color.ink),
-    })}
-    ${documentPage(307, 160, 148, 172, {
-      label: 'Python',
-      tone: color.mint,
-      body: code(321, 220, '{ "title": "Git" }', 13, color.ink)
-        + center(381, 270, '딕셔너리', 15, color.ink),
-    })}
-    ${cylinder(561, 185, 105, 135, color.lilac)}
-    ${center(615, 224, 'SQLite', 16, color.ink)}
-    ${flow(p, 235, 235, 301, 235, {turn:-1})}
-    ${flow(p, 465, 235, 550, 235, {second:true, delay:1.15, turn:-1})}
-    ${center(152, 429, 'HTML 안의 데이터', 15)}
-    ${center(381, 429, '서버의 데이터', 15)}
-    ${center(614, 429, 'DB에 저장', 15)}
-  `, '후속 강의에서 데이터의 보관 방식을 단계별로 바꿔 봅니다');
+  const arrow = (start, end, y, delay = 0) => {
+    const route = `M${start} ${y}H${end}`;
+    return `<path d='${route}' fill='none' stroke='${color.teal}' stroke-width='2.4' stroke-linecap='round' marker-end='url(#${p}-forward)'/>
+      <circle class='art-motion ${p}-packet' r='4' opacity='0' fill='${color.gold}' style='offset-path:path("${route}");animation-delay:${delay}s'/>`;
+  };
+  const miniature = (x, y, contents) => svgGroup(contents, `translate(${x} ${y}) scale(.44)`);
+  const dataPage = (x, y) => miniature(x, y, documentPage(0, 0, 110, 88, {
+    label:'x-data', tone:color.mint,
+    body: code(14, 55, '[ { ... } ]', 17, color.teal),
+  }));
+  const server = (x, y) => miniature(x, y, rack(0, 20, 80, 96, color.mint));
+  const jsonPage = (x, y) => miniature(x, y, documentPage(0, 0, 84, 88, {
+    label:'JSON', tone:color.ochre,
+    body: code(20, 60, '{ ... }', 18, color.teal),
+  }));
+  const database = (x, y) => miniature(x, y, cylinder(0, 17, 76, 97, color.lilac));
+  const browser = (x, y) => miniature(x, y, standingWindow(0, 0, 130, 90, {
+    title:'Alpine.js', tone:color.blue,
+    body: box(12, 37, 106, 40, color.mint, 6, color.teal, 1.5)
+      + bars(22, 47, [58, 42], color.teal, 11, 3),
+  }));
+  return frame(p, '데이터가 카드가 되는 세 단계', `
+    ${center(380, 62, '데이터가 카드가 되는 세 단계', 25, color.ink)}
+
+    ${center(53, 140, '01', 19, color.teal)}
+    ${center(53, 160, '이번 강의', 12, color.teal)}
+    ${dataPage(183, 101)}
+    ${arrow(254, 500, 145)}
+    ${browser(514, 101)}
+    ${center(206, 190, 'x-data · lessons', 15, color.ink)}
+    ${center(543, 190, 'Alpine.js 카드', 15, color.ink)}
+
+    ${center(53, 250, '02', 19, color.gold)}
+    ${center(53, 270, '후속 강의', 12, color.gold)}
+    ${server(132, 208)}
+    ${arrow(197, 311, 255, .4)}
+    ${jsonPage(328, 210)}
+    ${arrow(389, 499, 255, .8)}
+    ${browser(514, 210)}
+    ${center(154, 300, 'FastAPI · 딕셔너리', 14, color.ink)}
+    ${center(348, 300, 'JSON 응답', 15, color.ink)}
+    ${center(543, 300, 'Alpine.js 카드', 15, color.ink)}
+
+    ${center(53, 360, '03', 19, color.gold)}
+    ${center(53, 380, '후속 강의', 12, color.gold)}
+    ${database(100, 318)}
+    ${arrow(155, 224, 365, 1.2)}
+    ${server(239, 318)}
+    ${arrow(303, 372, 365, 1.6)}
+    ${jsonPage(389, 320)}
+    ${arrow(450, 499, 365, 2)}
+    ${browser(514, 320)}
+    ${center(117, 410, 'SQLite', 15, color.ink)}
+    ${center(258, 410, 'FastAPI · DB 조회', 14, color.ink)}
+    ${center(409, 410, 'JSON 응답', 15, color.ink)}
+    ${center(543, 410, 'Alpine.js 카드', 15, color.ink)}
+
+    ${center(380, 456, '서버가 데이터를 읽어 응답하고 브라우저가 카드로 표시합니다', 15)}
+  `, '서버의 데이터와 데이터베이스는 후속 강의에서 다룹니다');
 }
 
 function pythonDictionaryApi() {
@@ -761,8 +797,8 @@ export const webSectionScenes = {
   'web-http': {title:'Live Server와 Vite, npm 명령 이해하기',description:'같은 강의 카드를 두 화면에 나란히 보여 줍니다. 실습에서는 VS Code Live Server를 사용하며 Vite는 명령만 읽어 보는 별도 선택지입니다.',svg:webResponsibilities()},
   'web-html': {title:'브라우저와 서버: 프론트엔드와 백엔드 비교',description:'프론트엔드의 React와 Vue, 백엔드의 Python FastAPI·Flask·Django와 Java Spring을 선택지로 구분하며 브라우저 요청과 서버 응답을 비교합니다.',svg:serverToBrowser()},
   'backend-html-json': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'HTML에 적은 JSON을 브라우저에서 JSON.parse로 읽고 강의 카드에 표시합니다.',svg:htmlJsonCard()},
-  'web-json-card': {title:'HTML 안의 JSON으로 카드 데이터 표현하기',description:'왼쪽 HTML에 담긴 윈도우 터미널과 Git 데이터 두 개를 Alpine.js가 JSON.parse로 읽습니다. 오른쪽 브라우저에 각 데이터가 별도 카드로 표시됩니다.',svg:frontendJsonCards()},
-  'web-future-backend': {title:'다음 강의 미리보기: 백엔드와 데이터',description:'이번 강의의 HTML 안 JSON과 Alpine.js 카드에서 출발해, 후속 강의에서 Python 딕셔너리와 SQLite 데이터베이스로 데이터 보관 방식을 단계별로 바꾸는 학습 순서입니다.',svg:futureBackendSteps()},
+  'web-json-card': {title:'Alpine.js의 x-data로 카드 데이터 표현하기',description:'HTML의 x-data에 윈도우 터미널과 Git 카드 데이터를 배열로 선언하고, x-for로 반복해 브라우저에 두 장의 카드로 표시합니다.',svg:frontendJsonCards()},
+  'web-future-backend': {title:'다음 강의 미리보기: 백엔드와 데이터',description:'이번 강의는 Alpine.js x-data에서 카드 데이터를 표시합니다. 후속 강의에서는 FastAPI가 Python 딕셔너리를 JSON으로 응답하거나 SQLite를 조회해 JSON으로 응답하고, 브라우저의 Alpine.js가 카드로 표시합니다.',svg:futureBackendSteps()},
   'backend-python': {title:'FastAPI의 Python 데이터 가져오기',description:'같은 FastAPI 주소에서 정적 화면과 API를 제공하고 Python 딕셔너리 목록을 JSON으로 보내 브라우저가 fetch로 읽습니다.',svg:pythonDictionaryApi()},
   'backend-sqlite': {title:'SQLite 데이터베이스의 카드 가져오기',description:'FastAPI가 SQLite 데이터베이스의 행을 조회해 JSON으로 응답하고 브라우저가 카드에 표시합니다.',svg:sqliteApi()},
   'web-jinja': {title:'Jinja2 템플릿에 DB 데이터 넣기',description:'FastAPI가 DB 데이터와 Jinja2 템플릿을 서버에서 결합해 같은 서버 주소로 HTML을 제공하고 브라우저가 화면으로 표시합니다.',svg:templateEngines()},

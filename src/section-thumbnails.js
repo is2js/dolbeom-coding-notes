@@ -52,11 +52,27 @@ const scenes = {
   'web-http': screen(14, 30, 51, 43, 'card', sage) + screen(88, 31, 51, 43, 'card', blue) + tile(68, 61, '≠', gold),
   'web-html': screen(13, 31, 44, 44) + rack(117, 25) + link(64, 45, 41) + link(105, 62, -41, '#ad723b'),
   'backend-html-json': sheet(22, 27, '{}', clay) + link(60, 49, 27) + screen(92, 38, 46, 39),
-  'web-json-card': sheet(16, 32, '{}', clay) + link(51, 55, 29)
+  'web-json-card': sheet(16, 32, 'x', clay) + link(51, 55, 29)
     + `<path d="M88 31l48 10v42l-48 -10Z" fill="${cream}" stroke-width="1.8"/>
        <path d="M93 41l37 8v10l-37 -8Z" fill="${gold}"/>
        <path d="M93 57l37 8v10l-37 -8Z" fill="${sage}"/>`,
-  'web-future-backend': sheet(15, 31, '{}', clay) + link(48, 48, 16) + tile(70, 43, '{}', sage) + link(92, 48, 16) + disk(120, 39),
+  // Three flows: local Alpine data, server JSON, then DB via server JSON.
+  'web-future-backend': `<g stroke="#37474c" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="12" y="10" width="28" height="18" rx="3" fill="${sage}"/>
+    <path d="M47 19h52m-5-4 5 4-5 4" fill="none" stroke="${teal}"/>
+    <rect x="108" y="10" width="35" height="18" rx="3" fill="${cream}"/>
+    <rect x="12" y="40" width="28" height="18" rx="3" fill="${sage}"/>
+    <path d="M47 49h11m-4-4 4 4-4 4M88 49h11m-4-4 4 4-4 4" fill="none" stroke="${teal}"/>
+    <rect x="64" y="40" width="18" height="18" rx="3" fill="${gold}"/>
+    <rect x="108" y="40" width="35" height="18" rx="3" fill="${cream}"/>
+    <path d="M12 77v13c0 5 18 5 18 0V77" fill="${blue}"/>
+    <ellipse cx="21" cy="77" rx="9" ry="4" fill="${cream}"/>
+    <path d="M34 83h7m-3-3 3 3-3 3M70 83h5m-3-3 3 3-3 3M98 83h4m-3-3 3 3-3 3" fill="none" stroke="${teal}"/>
+    <rect x="45" y="74" width="21" height="18" rx="3" fill="${sage}"/>
+    <rect x="79" y="74" width="16" height="18" rx="3" fill="${gold}"/>
+    <rect x="108" y="74" width="35" height="18" rx="3" fill="${cream}"/>
+    <path d="M114 16h22m-22 30h22m-22 34h22" stroke="${teal}"/>
+  </g>`,
   'backend-python': rack(23, 26, blue) + tile(62, 40, '{}', sage) + screen(97, 36, 43, 41),
   'backend-sqlite': disk(28, 39) + rack(64, 24) + screen(100, 41, 41, 39),
   'web-bonus': screen(24, 23, 69, 42, 'editor') + tile(100, 40, '/', blue) + tile(113, 62, '#', gold),

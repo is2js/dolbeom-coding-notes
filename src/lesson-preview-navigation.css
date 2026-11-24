@@ -3,12 +3,8 @@
 }
 
 /* Topic folders live in the rail while the short section strip stays in view. */
-.is-design-preview .lesson-flow-workspace .topic-picker-anchor {
+.is-design-preview .lesson-flow-workspace .topic-navigation {
   display: none;
-}
-
-.is-design-preview .lesson-flow-workspace .topic-navigation-actions {
-  margin-inline-start: auto;
 }
 
 .is-design-preview .lesson-flow-workspace .section-slide {

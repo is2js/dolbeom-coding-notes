@@ -453,7 +453,7 @@ Alpine.data('courseApp', () => ({
     if(location.hash !== address) location.hash=address.slice(1);
     else this.readRoute();
     safeWrite(localStorage,LAST_KEY,id);
-    this.$nextTick(()=>{if(changedTopic)window.scrollTo({top:0,behavior:'instant'});else document.querySelector('.topic-navigation')?.scrollIntoView({block:'start',behavior:'instant'});});
+    this.$nextTick(()=>{if(changedTopic)window.scrollTo({top:0,behavior:'instant'});else document.querySelector('.lesson-flow-workspace .section-navigation')?.scrollIntoView({block:'start',behavior:'instant'});});
   },
   async goHome(view='map') {
     const editing=this.route === 'editor';

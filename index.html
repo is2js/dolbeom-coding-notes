@@ -114,6 +114,10 @@
 
     <div class="workspace" :inert="previewOutlineOverlay" x-show="route !== 'present'">
       <div class="site-update-bar">
+        <div class="topic-navigation-actions site-lesson-actions" x-show="route === 'learn' && course && !loading" role="group" aria-label="발표 화면 설정">
+          <button type="button" class="topic-presentation-entry" @click="openPresentation(lessonId,learningPageId)" aria-label="현재 위치에서 발표 모드 열기 (P)" aria-keyshortcuts="P" title="발표 모드 단축키: P"><span x-html="icon('play')"></span><span>이 위치에서 발표 <kbd>P</kbd></span></button>
+          <button type="button" class="topic-presentation-entry" @click="togglePresentationFullscreen()" :aria-label="fullscreenActive ? '전체화면 해제 (F)' : '전체화면 (F)'" :aria-pressed="fullscreenActive" aria-keyshortcuts="F" title="전체화면 켜기·끄기: F"><span x-html="icon(fullscreenActive ? 'close' : 'expand')"></span><span><span x-text="fullscreenActive ? '전체화면 해제' : '전체화면'"></span> <kbd>F</kbd></span></button>
+        </div>
         <p class="site-update" title="현재 사이트를 빌드한 시각 · 한국 표준시"><span>업데이트</span><time :datetime="siteUpdatedAt" x-text="siteUpdatedLabel"></time></p>
       </div>
       <header class="masthead" x-show="route !== 'editor'">

@@ -9,22 +9,21 @@ import { isCourseImageSource } from '../src/course-markdown.js';
 const course = JSON.parse(readFileSync(new URL('../public/data/course.json', import.meta.url), 'utf8'));
 const lesson = course.lessons.find(item => item.id === 'web-tools');
 
-test('the real map case describes Alpine, Tailwind and the CDN-to-build transition', () => {
+test('the real cases introduce the wedding CDN first and the Alpine-powered map second', () => {
   assert.equal(lesson.case.kind, 'real');
+  assert.match(lesson.case.body, /https:\/\/wedding\.chojaeseong\.com\//);
   assert.match(lesson.case.body, /https:\/\/is2js\.github\.io\/buja-clone\//);
-  assert.match(lesson.case.body, /직접 작성한 CSS 클래스의 비중이 큽니다/);
-  assert.match(lesson.case.body, /Play CDN.*학습·시연용/);
+  assert.ok(lesson.case.body.indexOf('wedding.chojaeseong.com') < lesson.case.body.indexOf('buja-map-case.gif'));
+  assert.match(lesson.case.body, /답변을 펼치고 접는 동작/);
+  assert.doesNotMatch(lesson.case.body, /Vite|Tailwind CSS가 연결된 위치/);
   const blocks = courseMarked.lexer(lesson.case.body).filter(token => token.type === 'code');
-  assert.match(blocks.find(token => token.lang === 'html').text, /@click="setArea\(item\.code\)"/);
+  assert.ok(blocks.some(token => token.lang === 'html' && /alpinejs@3\.x\.x\/dist\/cdn\.min\.js/.test(token.text)));
+  assert.ok(blocks.some(token => token.lang === 'html' && /@click="setArea\(item\.code\)"/.test(token.text)));
   assert.doesNotMatch(lesson.case.body, /x-data|github\.com\/is2js\/buja-clone/);
-  assert.match(lesson.case.body, /<mark>수업에서는 설치 없이[\s\S]*빌드 구성을 요청할 수 있습니다\.<\/mark>/);
   const gif = './assets/course/buja-map-case.gif';
   assert.ok(isCourseImageSource(gif));
-  assert.equal(courseMarked.lexer(lesson.case.body)[0].tokens[0].href, gif);
+  assert.ok(courseMarked.lexer(lesson.case.body).some(token => token.tokens?.some(child => child.href === gif)));
   assert.equal(readFileSync(new URL(`../public/${gif.slice(2)}`, import.meta.url)).subarray(0, 6).toString(), 'GIF89a');
-  assert.ok(blocks.some(token => token.text === "import Alpine from 'alpinejs';"));
-  assert.ok(blocks.some(token => token.text === 'Alpine.start();'));
-  assert.match(blocks.find(token => token.lang === 'css').text, /@tailwind base;[\s\S]*@tailwind utilities;/);
 });
 
 test('saved map case updates only unedited fields and preserves removed steps', () => {

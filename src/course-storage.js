@@ -16,6 +16,8 @@ import {
 import { previousCdnDefault } from './previous-cdn-default.js';
 import { previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault } from './previous-web-tools-map-case-default.js';
 import { previousWebToolsWeddingDefault } from './previous-web-tools-wedding-default.js';
+import { previousWebToolsAlpineCaseDefault } from './previous-web-tools-alpine-case-default.js';
+import { previousGitPracticeRootDefault } from './previous-git-practice-root-default.js';
 import { previousPythonSetupDefault } from './previous-python-setup-default.js';
 import { previousFastapiRoutesDefault } from './previous-fastapi-routes-default.js';
 import { previousViteVisualDefault } from './previous-vite-visual-default.js';
@@ -219,7 +221,11 @@ function updateAuthoredTailwindCdn(lesson, latest) {
   const replacements = pairs.map(([before, after]) => [paragraph(old, before), paragraph(next, after)]);
   if (replacements.some(([before, after]) => !before || !after)) return;
   const oldIntro = paragraph(old, '이 예제는 수업용으로 **미리 생성한 Tailwind CSS 3 파일**');
-  const newIntro = paragraph(next, '이 예제는 HTML에서 Tailwind CSS 3의 **Play CDN**');
+  // This partial migration applies to older authored text. Use the published
+  // CDN-era wording as its baseline even when the current lesson no longer
+  // contains that introduction, so surrounding author edits remain intact.
+  const cdnEraBody = previousGitPracticeRootDefault['web-tools'].sections.find(item => item.id === 'frontend-css')?.body;
+  const newIntro = paragraph(cdnEraBody?.split('\n\n') || [], '이 예제는 HTML에서 Tailwind CSS 3의 **Play CDN**');
   const oldPrefix = oldIntro?.split('[강의노트 저장소]')[0];
   const newPrefix = newIntro?.split('[강의노트 저장소]')[0];
   const blocks = target.body.split('\n\n').map(block => {
@@ -280,8 +286,9 @@ export function upgradeNineDefaults(value, baseCourse) {
     // any release update without replacing the author's edited fields.
     const baselines = [previous];
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
+    if (previousGitPracticeRootDefault[id]) baselines.push(previousGitPracticeRootDefault[id]);
     if (id === 'web-coding') baselines.push(previousWebFileOrderDefault, previousWebRecapDefault);
-    if (id === 'web-tools') baselines.push(previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault, previousWebToolsWeddingDefault);
+    if (id === 'web-tools') baselines.push(previousWebToolsMapCaseDefault, previousWebToolsMapGifDefault, previousWebToolsWeddingDefault, previousWebToolsAlpineCaseDefault);
     if (id === 'git') baselines.push(previousGitHighlightsDefault);
     if (id === 'ide') baselines.push(
       previousIdeSetupScreenshotsDefault,

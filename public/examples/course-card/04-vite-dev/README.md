@@ -1,8 +1,8 @@
 # 강의 카드 Vite 개발 서버 예제
 
-앞에서 만든 `03-javascript` 카드의 HTML·CSS·JavaScript를 그대로 복사하고, 개발 서버 실행 설정만 추가한 예제입니다. 정적 카드가 브라우저에서 어떻게 보이는지 먼저 확인한 뒤, 이 폴더를 별도 연습 위치에 복사해서 실행합니다. 이 예제는 FastAPI 백엔드를 실행하거나 GitHub Pages에 서버를 배포하지 않습니다.
+앞에서 만든 강의 카드의 HTML·CSS·JavaScript에 개발 서버 실행 설정을 추가한 참고 예제입니다. 수업에서는 앞서 작업하던 `git-practice` 폴더에서 카드를 만들고 Vite 설정을 추가합니다. 기존 파일이 있다면 먼저 확인하고 덮어쓰지 마세요. 이 예제는 FastAPI 백엔드를 실행하거나 GitHub Pages에 서버를 배포하지 않습니다.
 
-1. Node.js와 npm을 설치하고, 복사한 폴더를 VS Code에서 연 뒤 통합 터미널에서 위치와 버전을 확인합니다. PowerShell에서 `pwd`는 `Get-Location`, `ls`는 `Get-ChildItem` 기본 별칭입니다.
+1. Node.js와 npm을 설치하고, `git-practice` 폴더를 VS Code에서 연 뒤 통합 터미널에서 위치와 버전을 확인합니다. PowerShell에서 `pwd`는 `Get-Location`, `ls`는 `Get-ChildItem` 기본 별칭입니다.
 
    ```powershell
    pwd
@@ -11,7 +11,7 @@
    npm --version
    ```
 
-2. 이 폴더의 `package.json`에서 `scripts.dev`를 읽은 뒤 패키지 설치가 완료되면 개발 서버를 실행합니다.
+2. `git-practice`의 `package.json`에서 `scripts.dev`를 읽은 뒤 패키지 설치가 완료되면 개발 서버를 실행합니다.
 
    ```powershell
    npm install

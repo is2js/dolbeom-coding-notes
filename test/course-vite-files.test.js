@@ -28,6 +28,7 @@ test('frontend lesson introduces the example structure and explains the actual p
     assert.ok(!body.includes('**`' + name + '`:'), name + ' should not be explained separately');
   }
   assert.match(body, /같은 강의 카드에서 Vite를 직접 실행하기/);
-  assert.match(body, /git-practice\/course-card\/03-javascript/);
+  assert.match(body, /cd ~\/git-practice\n/);
+  assert.doesNotMatch(body, /git-practice\/course-card\/03-javascript/);
   assert.match(body, /node --version/);
 });

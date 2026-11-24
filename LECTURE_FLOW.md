@@ -52,7 +52,7 @@ Git의 다섯 본편 절은 총 45분입니다. 앞에서 만든 메모와 연�
 
 IDE에서는 VS Code Windows User Setup·PATH·새 터미널과 복제본 폴더 열기를 확인합니다. 표시 언어·글자 크기·줄바꿈·서식은 선택 사항과 기본 기능을 구분하며 설정합니다. 본문에서 Microsoft 한국어팩의 식별자·설치·언어 적용을 따라가고, Live Server는 카드 실습에 사용하고 Prettier는 선택 확장으로 소개합니다. 정확한 확장 ID와 실행·종료·서식 설정을 확인합니다. 내장 Markdown·HTML·CSS·JavaScript 기능으로 첫 실습을 진행할 수 있으며, 확장 모두를 8분 안에 의무 설치하지 않습니다. PyCharm은 Python 중심 IDE로 간략히 비교하며 강사의 VSCode Keymap 적용 화면만 보여줍니다. 해당 플러그인은 VS Code 기본 단축키를 가깝게 제공하지만 사용자 지정 키를 자동 추출하거나 동기화하지는 않습니다. 이어지는 웹 코딩 주제의 HTML·CSS·JavaScript 실습은 수업용 강의 카드 예제입니다. 작은 설명·자체 도해·코드·한 가지 수정과 확인 순서로 읽고, VS Code Live Server로 결과를 확인합니다. 확장이 없다면 정적 파일을 직접 열어 새로고침해도 됩니다. CSS 카드 여백은 비교 후 24px로 돌려 뒤의 템플릿 예제와 맞춥니다. 다음 주제에서는 같은 카드를 Tailwind CSS·Alpine.js로 비교합니다. 프론트엔드 주제에서 Live Server와 Vite를 비교하고 npm 명령은 사례로 설명하며, 데이터·백엔드 주제에서 HTML JSON → FastAPI 딕셔너리 API → SQLite API → Jinja 서버 렌더링을 차례로 확인합니다. FastAPI가 화면과 API를 함께 제공하므로 이 예제는 FastAPI 주소로 열고 Live Server를 따로 켤 필요가 없습니다.
 
-시연 준비용 자료는 [공통 강의 카드 안내](public/examples/course-card/README.md), [단계별 정적 예제](public/examples/course-card/index.html), [브라우저 완성 화면](http://127.0.0.1:5188/examples/course-card/03-javascript/index.html)입니다. VS Code에서 HTML → CSS → JavaScript의 단계별 결과를 비교합니다. 처음부터 만드는 수업에서는 기존 파일을 덮어쓰지 않도록 별도의 연습 폴더에서 시작합니다. 서버 템플릿 예제는 README의 별도 준비 조건을 확인합니다. GitHub Pages는 정적 파일을 제공하고 FastAPI 서버를 실행하지 않습니다.
+시연 준비용 자료는 [공통 강의 카드 안내](public/examples/course-card/README.md), [단계별 정적 예제](public/examples/course-card/index.html), [브라우저 완성 화면](http://127.0.0.1:5188/examples/course-card/03-javascript/index.html)입니다. VS Code에서 HTML → CSS → JavaScript의 단계별 결과를 비교합니다. 수업에서는 앞서 사용한 `git-practice` 폴더에서 이어서 만들고 기존 파일은 먼저 확인합니다. 서버 템플릿 예제는 README의 별도 준비 조건을 확인합니다. GitHub Pages는 정적 파일을 제공하고 FastAPI 서버를 실행하지 않습니다.
 
 ## 바로잡은 용어와 개념
 

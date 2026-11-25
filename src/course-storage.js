@@ -30,6 +30,7 @@ import { previousWebNpmIntroDefault } from './previous-web-npm-intro-default.js'
 import { previousWebNpmIgnoreDefault } from './previous-web-npm-ignore-default.js';
 import { previousWebXDataDefault } from './previous-web-xdata-default.js';
 import { previousWebXDataIndexDefault } from './previous-web-xdata-index-default.js';
+import { previousWebHighlightsDefault } from './previous-web-highlights-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
 import { previousJsonCardSection } from './previous-json-card-default.js';
 import { previousJsonPythonSections } from './previous-json-python-defaults.js';
@@ -313,12 +314,22 @@ export function upgradeNineDefaults(value, baseCourse) {
       { ...previousGithubClonePathDefault, ...previousMarkdownPromptCaseDefault },
       { ...previousGithubClonePathDefault, ...previousMarkdownPromptResultDefault },
     );
-    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault, previousWebCdnViteDefault, previousWebPruneDefault, previousWebNodeSetupDefault, previousWebNpmIntroDefault, previousWebNpmIgnoreDefault, previousWebXDataDefault, previousWebXDataIndexDefault);
+    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault, previousWebCdnViteDefault, previousWebPruneDefault, previousWebNodeSetupDefault, previousWebNpmIntroDefault, previousWebNpmIgnoreDefault, previousWebXDataDefault, previousWebXDataIndexDefault, previousWebHighlightsDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);
     if (id === 'templates') baselines.push(previousFastapiRoutesDefault);
     const merged = baselines.reduce((lesson, baseline) => mergeLesson(lesson, baseline, latest), current);
+    if (id === 'web') {
+      // These sections were introduced together. Seeing either one means this
+      // draft knows the pair; an absent sibling is a deliberate removal, not
+      // new content to append while applying an older published baseline.
+      const pair = ['web-json-card', 'web-future-backend'];
+      const present = new Set(current.sections.map(section => section.id));
+      if (pair.some(sectionId => present.has(sectionId))) {
+        merged.sections = merged.sections.filter(section => !pair.includes(section.id) || present.has(section.id));
+      }
+    }
     if (id === 'git') {
       const { case: previousCase, presentation: previousPresentation } = previousGitCodexCaseDefault;
       merged.case = mergeUnchanged(merged.case, previousCase, latest.case);

@@ -31,6 +31,7 @@ import { previousWebNpmIgnoreDefault } from './previous-web-npm-ignore-default.j
 import { previousWebXDataDefault } from './previous-web-xdata-default.js';
 import { previousWebXDataIndexDefault } from './previous-web-xdata-index-default.js';
 import { previousWebHighlightsDefault } from './previous-web-highlights-default.js';
+import { previousWebProgressiveDefault } from './previous-web-progressive-default.js';
 import { previousPracticeFlowDefault } from './previous-practice-flow-default.js';
 import { previousJsonCardSection } from './previous-json-card-default.js';
 import { previousJsonPythonSections } from './previous-json-python-defaults.js';
@@ -314,7 +315,7 @@ export function upgradeNineDefaults(value, baseCourse) {
       { ...previousGithubClonePathDefault, ...previousMarkdownPromptCaseDefault },
       { ...previousGithubClonePathDefault, ...previousMarkdownPromptResultDefault },
     );
-    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault, previousWebCdnViteDefault, previousWebPruneDefault, previousWebNodeSetupDefault, previousWebNpmIntroDefault, previousWebNpmIgnoreDefault, previousWebXDataDefault, previousWebXDataIndexDefault, previousWebHighlightsDefault);
+    if (id === 'web') baselines.push(previousLiveWebDefault, previousViteVisualDefault, previousViteLiveDefault, previousWebCdnViteDefault, previousWebPruneDefault, previousWebNodeSetupDefault, previousWebNpmIntroDefault, previousWebNpmIgnoreDefault, previousWebXDataDefault, previousWebXDataIndexDefault, previousWebHighlightsDefault, previousWebProgressiveDefault);
     if (id === 'web') baselines.push(previousBackendPreview.find(lesson => lesson.id === id));
     if (previousCdnDefault[id]) baselines.push(previousCdnDefault[id]);
     if (previousPythonSetupDefault[id]) baselines.push(previousPythonSetupDefault[id]);

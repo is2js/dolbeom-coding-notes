@@ -52,7 +52,7 @@ const scenes = {
   'web-http': screen(14, 30, 51, 43, 'card', sage) + screen(88, 31, 51, 43, 'card', blue) + tile(68, 61, '≠', gold),
   'web-html': screen(13, 31, 44, 44) + rack(117, 25) + link(64, 45, 41) + link(105, 62, -41, '#ad723b'),
   'backend-html-json': sheet(22, 27, '{}', clay) + link(60, 49, 27) + screen(92, 38, 46, 39),
-  'web-json-card': sheet(16, 32, 'x', clay) + link(51, 55, 29)
+  'web-json-card': sheet(16, 32, '1', clay) + link(51, 55, 29)
     + `<path d="M88 31l48 10v42l-48 -10Z" fill="${cream}" stroke-width="1.8"/>
        <path d="M93 41l37 8v10l-37 -8Z" fill="${gold}"/>
        <path d="M93 57l37 8v10l-37 -8Z" fill="${sage}"/>`,

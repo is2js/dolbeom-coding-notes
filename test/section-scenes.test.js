@@ -33,7 +33,8 @@ test('data lessons distinguish JSON in HTML, FastAPI dictionary, SQLite and serv
 test('future lesson illustration separates current Alpine data practice and planned data sources',()=>{
   const current = sectionScenes['web-json-card'];
   const future = sectionScenes['web-future-backend'];
-  for (const phrase of ['x-data', 'lessons: [', 'x-for', '윈도우 터미널', 'Git']) assert.ok(current.svg.includes(phrase), phrase);
+  for (const phrase of ['x-data', 'lesson: {', 'lessons: [', 'x-text', 'x-for', '윈도우 터미널', 'Git']) assert.ok(current.svg.includes(phrase), phrase);
+  assert.ok(current.svg.indexOf('lesson: {') < current.svg.indexOf('lessons: ['), '하나의 데이터 다음에 배열을 표시합니다');
   assert.doesNotMatch(current.svg, /JSON\.parse/);
   assert.match(current.description, /x-data.*배열.*x-for.*두 장/);
   for (const phrase of ['이번 강의', '후속 강의', 'x-data · lessons', 'FastAPI · 딕셔너리', 'SQLite', 'JSON 응답', 'Alpine.js 카드', 'FastAPI · DB 조회']) assert.ok(future.svg.includes(phrase), phrase);

@@ -68,11 +68,11 @@
           "title": "Terminal 설정: 탭·분할 단축키 연습",
           "minutes": 6,
           "optional": false,
-          "body": "### 1. 기본 단축키 확인\n\n**`Ctrl+,` → 작업(Actions)**에서 내 키를 확인합니다. <mark>● 파란색으로 표시된 기본 키</mark>는 강사가 다른 키로 지정해 사용하는 동작입니다.\n\n| 할 일 | 기본 설정 예시 |\n| --- | --- |\n| 설정 열기 | `Ctrl+,` |\n| 새 탭 열기 | `Ctrl+Shift+T` |\n| 다음 / 이전 탭 | `Ctrl+Tab` / `Ctrl+Shift+Tab` |\n| 특정 번호 탭으로 이동 | `Ctrl+Alt+1~8`, `Ctrl+Alt+9`는 마지막 탭 |\n| 오른쪽 / 아래로 현재 창 복제해 분할 | <mark>● Alt+Shift++ / Alt+Shift+-</mark> |\n| 인접 분할 창으로 포커스 이동 | <mark>● Alt+방향키</mark> |\n| 현재 분할 창 닫기 | <mark>● Ctrl+Shift+W</mark> |\n\n`Ctrl+Shift+1~9`로는 프로필의 **새 탭을 열고**, `Ctrl+Alt+1~9`로는 **이미 열린 탭으로 이동**합니다.\n\n### 2. 강사의 키와 비교\n\n| 할 일 | 강사 설정 | 비교할 기본 키 |\n| --- | --- | --- |\n| 오른쪽 / 아래 분할 | `Ctrl+Shift+\\` / `Ctrl+Shift+-` | `Alt+Shift++` / `Alt+Shift+-` |\n| 인접 분할 창으로 포커스 이동 | `Ctrl+Alt+방향키` | `Alt+방향키` |\n| 현재 분할 창 닫기 | `Ctrl+W` | `Ctrl+Shift+W` |\n\n`Ctrl+Shift+\\`는 백슬래시 키를 누릅니다. 키보드에는 원화 기호처럼 보일 수 있습니다. `Ctrl+Alt+←`는 강사 설정에서 왼쪽 창으로, 기본 설정에서 직전에 이용한 창으로 이동합니다. 키를 바꾸기 전 **작업**에서 겹치는 동작을 확인합니다.\n\n### 3. 내 키로 바꾸고 연습하기\n\n**작업 → 원하는 동작 → 편집 → 새 키 입력 → 저장** 순서입니다. 기본 키로도 연습할 수 있습니다.\n\n1. <mark>**탭 열기와 전환.** `Ctrl+Shift+T`로 탭을 열고 `Ctrl+Tab`으로 오갑니다.</mark>\n2. <mark>**오른쪽·아래로 분할.** 기본 `Alt+Shift++` / `Alt+Shift+-` 또는 강사 `Ctrl+Shift+\\` / `Ctrl+Shift+-`를 사용합니다.</mark>\n3. <mark>**분할 창 이동.** 기본 `Alt+방향키` 또는 강사 `Ctrl+Alt+방향키`로 옮긴 뒤 각 창에서 `pwd` 또는 `Get-Location`을 확인합니다.</mark>\n4. <mark>**연습 창 닫기.** 기본 `Ctrl+Shift+W` 또는 강사 `Ctrl+W`를 누릅니다.</mark> 분할 창이 하나면 탭이 닫힐 수 있으니 실행 중인 작업을 확인합니다.\n\n[Microsoft 단축키 안내](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/actions) · [분할 창 안내](https://learn.microsoft.com/en-us/windows/terminal/panes)",
+          "body": "### 1. 기본 단축키 확인\n\n**`Ctrl+,` → 작업(Actions)**에서 내 키를 확인합니다. <mark>● 파란색으로 표시된 기본 키</mark>는 강사가 비슷한 작업을 다른 키로 사용하는 항목입니다.\n\n| 할 일 | 기본 설정 예시 |\n| --- | --- |\n| 설정 열기 | `Ctrl+,` |\n| 새 탭 열기 | `Ctrl+Shift+T` |\n| 다음 / 이전 탭 | `Ctrl+Tab` / `Ctrl+Shift+Tab` |\n| 특정 번호 탭으로 이동 | `Ctrl+Alt+1~8`, `Ctrl+Alt+9`는 마지막 탭 |\n| 기본 프로필로 오른쪽 / 아래 분할 | <mark>● Alt+Shift++ / Alt+Shift+-</mark> |\n| 인접 분할 창으로 포커스 이동 | `Alt+방향키` |\n| 현재 분할 창 닫기 | <mark>● Ctrl+Shift+W</mark> |\n\n`Ctrl+Shift+1~9`로는 프로필의 **새 탭을 열고**, `Ctrl+Alt+1~9`로는 **이미 열린 탭으로 이동**합니다.\n\n### 2. 강사의 키와 비교\n\n| 할 일 | 강사 설정 | 비교할 기본 키 |\n| --- | --- | --- |\n| 창 복제, Split Down (가로 분할) | `Ctrl+Shift+-` | `Alt+Shift+-` |\n| 창 복제, Split Right (세로 분할) | `Ctrl+Shift+\\` | `Alt+Shift++` |\n| 현재 분할 창 닫기 | `Ctrl+W` | `Ctrl+Shift+W` |\n\n`Ctrl+Shift+\\`는 백슬래시 키를 누릅니다. 키보드에는 원화 기호처럼 보일 수 있습니다. **Split Down은 아래에 새 창을 만드는 가로 분할**, **Split Right는 오른쪽에 새 창을 만드는 세로 분할**입니다.\n\n강사의 키는 현재 창을 복제해 분할합니다. 비교한 기본 키는 같은 방향으로 **기본 프로필의 새 창**을 엽니다. 현재 사용 중인 셸이 기본 프로필과 다르면 새 창이 다르게 열릴 수 있습니다. 키를 바꾸기 전 **작업**에서 내 설정과 겹치는 동작을 확인합니다.\n\n### 3. 내 키로 바꾸고 연습하기\n\n**작업 → 원하는 동작 → 편집 → 새 키 입력 → 저장** 순서입니다. 기본 키로도 연습할 수 있습니다.\n\n1. <mark>**탭 열기와 전환.** `Ctrl+Shift+T`로 탭을 열고 `Ctrl+Tab`으로 오갑니다.</mark>\n2. <mark>**오른쪽·아래로 분할.** 기본 `Alt+Shift++` / `Alt+Shift+-` 또는 강사 `Ctrl+Shift+\\` / `Ctrl+Shift+-`를 사용합니다.</mark> 기본은 기본 프로필을 열고 강사 키는 현재 창을 복제합니다.\n3. <mark>**분할 창 이동.** 기본 `Alt+방향키`로 옮긴 뒤 각 창에서 `pwd` 또는 `Get-Location`을 확인합니다.</mark>\n4. <mark>**연습 창 닫기.** 기본 `Ctrl+Shift+W` 또는 강사 `Ctrl+W`를 누릅니다.</mark> 분할 창이 하나면 탭이 닫힐 수 있으니 실행 중인 작업을 확인합니다.\n\n[Microsoft 단축키 안내](https://learn.microsoft.com/en-us/windows/terminal/customize-settings/actions) · [분할 창 안내](https://learn.microsoft.com/en-us/windows/terminal/panes)",
           "presentationPoints": [
             "<mark>**탭**은 `Ctrl+Shift+T`로 열고 `Ctrl+Tab`으로 전환합니다.</mark>",
             "<mark>**분할**은 강사 `Ctrl+Shift+\\` / `Ctrl+Shift+-`로 연습합니다.</mark>",
-            "<mark>**창 이동·닫기**는 강사 `Ctrl+Alt+방향키`와 `Ctrl+W`입니다.</mark>"
+            "<mark>**창 이동**은 기본 `Alt+방향키`, **닫기**는 강사 `Ctrl+W`로 연습합니다.</mark>"
           ]
         },
         {
@@ -201,11 +201,11 @@
         {
           "id": "terminal-07",
           "title": "분할 창·포커스 이동 뒤 체크리스트 정리하기",
-          "description": "강사의 사용자 지정 분할·포커스 키를 공식 기본 키와 비교하고 작업 설정에서 확인한 뒤 연습합니다.",
+          "description": "강사의 사용자 지정 창 복제·분할 키를 기본 분할과 비교하고 기본 포커스 이동 키를 연습합니다.",
           "scene": "terminal",
-          "code": "작업에서 오른쪽·아래 분할 및 포커스 이동 키 확인\n기본 Alt+Shift++ / Alt+Shift+- → 오른쪽 / 아래 분할\n강사 Ctrl+Shift+\\ / Ctrl+Shift+- → 오른쪽 / 아래 분할\n기본 Alt+방향키 / 강사 Ctrl+Alt+방향키 → 포커스 이동\n기본 Ctrl+Shift+W / 강사 Ctrl+W → 현재 연습용 창 닫기\n각 분할 창의 pwd 또는 Get-Location 확인",
+          "code": "작업에서 분할과 포커스 이동 키 확인\n기본 Alt+Shift++ / Alt+Shift+- → 기본 프로필로 오른쪽 / 아래 분할\n강사 Ctrl+Shift+\\ / Ctrl+Shift+- → 현재 창 복제, 오른쪽 / 아래 분할\n기본 Alt+방향키 → 인접 창으로 포커스 이동\n기본 Ctrl+Shift+W / 강사 Ctrl+W → 현재 연습용 창 닫기\n각 분할 창의 pwd 또는 Get-Location 확인",
           "language": "text",
-          "output": "예상 예시:\n같은 탭에 두 개의 분할 창이 보이고 선택한 창의 테두리가 바뀝니다.\n사용자 키를 추가해도 다른 기본 키가 모두 삭제되는 것은 아닙니다. Ctrl+Alt+Left는 기본 직전 창 이동과 강사의 왼쪽 이동이 충돌하므로 실제 설정을 확인합니다.",
+          "output": "예상 예시:\n같은 탭에 분할 창이 보이고 선택한 창의 테두리가 바뀝니다.\n기본 분할은 기본 프로필을 열고 강사 키는 현재 창을 복제합니다. 작업에서 내 키 설정을 확인합니다.",
           "focus": "terminal",
           "fileName": "Windows Terminal · 분할 창",
           "files": []

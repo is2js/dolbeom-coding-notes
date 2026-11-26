@@ -38,6 +38,7 @@ import { previousJsonPythonSections } from './previous-json-python-defaults.js';
 import { previousBackendPreview } from './previous-backend-preview-default.js';
 import { previousLessonNoteBodies } from './previous-lesson-note-bodies.js';
 import { previousTerminalHighlightsDefault } from './previous-terminal-highlights-default.js';
+import { previousTerminalDuplicateSplitDefault } from './previous-terminal-duplicate-split-default.js';
 import { previousGitCodexCaseDefault } from './previous-git-codex-case-default.js';
 import { previousGitHighlightsDefault } from './previous-git-highlights-default.js';
 import { previousGithubHighlightsDefault } from './previous-github-highlights-default.js';
@@ -295,6 +296,7 @@ export function upgradeNineDefaults(value, baseCourse) {
     // Apply each published baseline independently so untouched fields from
     // any release update without replacing the author's edited fields.
     const baselines = [previous];
+    if (id === 'terminal') baselines.push(previousTerminalDuplicateSplitDefault);
     if (previousPracticeFlowDefault[id]) baselines.push(previousPracticeFlowDefault[id]);
     if (previousGitPracticeRootDefault[id]) baselines.push(previousGitPracticeRootDefault[id]);
     if (id === 'web-coding') baselines.push(previousWebFileOrderDefault, previousWebRecapDefault);

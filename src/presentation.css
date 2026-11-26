@@ -81,6 +81,8 @@
 .presentation-goals li { padding: 8px 0; gap: 14px; }
 .presentation-goals li > span { padding-top: 5px; }
 .presentation-goals p { font-size: clamp(16px,1.25vw,22px); line-height: 1.45; }
+.presentation-goals p > strong, .presentation-goals p > small { display: block; }
+.presentation-goals p > small { margin-top: 4px; color: #63766b; font-size: .82em; line-height: 1.45; }
 @media (min-width: 1000px) {
   .presentation-layout.is-goals { grid-template-columns: minmax(220px,.48fr) minmax(0,1.52fr); gap: clamp(24px,3vw,56px); padding-top: 12px; }
   .is-goals .presentation-figure.is-goal-preview { height: min(36vh,270px); min-height: 220px; }

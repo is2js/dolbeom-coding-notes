@@ -48,7 +48,7 @@
 
   <section class="intro-outcomes" aria-labelledby="intro-outcomes-title">
     <div><span class="intro-kicker">AFTER THIS COURSE</span><h2 id="intro-outcomes-title">수강 후 할 수 있는 일</h2><p>AI가 만든 프로젝트를 받았을 때, 무엇을 어디에서 확인해야 할지 차근차근 알아봅니다.</p></div>
-    <ol><li><strong>폴더와 파일을 찾습니다.</strong><span>탐색기와 터미널에서 같은 작업 위치를 확인합니다.</span></li><li><strong>변경과 기록을 살펴봅니다.</strong><span>Codex가 수정한 내용과 Git·GitHub의 역할을 구분합니다.</span></li><li><strong>문서와 화면을 읽습니다.</strong><span>README를 확인하고 강의 카드의 구조·모양·동작을 알아봅니다.</span></li></ol>
+    <ol><template x-for="(outcome, index) in courseOutcomes" :key="index"><li><strong x-text="outcome.title"></strong><span x-text="outcome.description"></span></li></template></ol>
   </section>
 
   <section class="intro-path" aria-labelledby="intro-path-title">

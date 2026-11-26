@@ -16,6 +16,7 @@ import presentationHtml from './presentation.html?raw';
 import demoHtml from './demo.html?raw';
 import lessonHtml from './lesson.html?raw';
 import homeHtml from './home.html?raw';
+import { courseOutcomes } from './course-outcomes.js';
 import { introTypewriter } from './intro-typewriter.js';
 import { topicThumbnail } from './topic-thumbnails.js';
 import { sectionThumbnail } from './section-thumbnails.js';
@@ -133,7 +134,7 @@ Alpine.data('markdownPractice', markdownPractice);
 Alpine.data('courseApp', () => ({
   ...presenterState(), ...presenterMethods, ...learningState(), ...learningMethods,
   ...topicNavigationState(), ...topicNavigationMethods, ...artViewerState(), ...artViewerMethods, ...caseImageViewerState(), ...caseImageViewerMethods,
-  loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null,
+  loading: true, error: '', course: null, baseCourse: null, editor: null, legacyDraft: null, courseOutcomes,
   siteUpdatedAt: __SITE_UPDATED_AT__, siteUpdatedLabel: formatSiteUpdatedAt(__SITE_UPDATED_AT__),
   canEditCourse,
   route: 'learn', lessonId: 'terminal', view: 'map', infoTab: 'case', stepIndex: 0,

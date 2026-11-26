@@ -39,7 +39,7 @@
       <section class="presentation-copy" :class="{ 'is-live': presentationPage?.kind === 'live' }">
         <div class="presentation-title-row"><h1 id="presentation-title" tabindex="-1" x-text="presentationTitle()"></h1><span class="presentation-demo-badge" x-show="presentationPage?.kind === 'live'">실전 시연</span></div>
 
-        <template x-if="presentationPage?.kind === 'intro'"><div><ol class="presentation-points presentation-goals"><template x-for="(objective,index) in lesson.objectives" :key="`${lesson.id}-goal-${index}`"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p x-html="markdownInline(objective)"></p></li></template></ol><p class="presentation-goal-note">연습 폴더에서 확인한 내용을 다음 강의로 이어갑니다.</p></div></template>
+        <template x-if="presentationPage?.kind === 'intro'"><div><ol class="presentation-points presentation-goals"><template x-for="(outcome,index) in courseOutcomes" :key="index"><li><span x-text="String(index + 1).padStart(2,'0')"></span><p><strong x-text="outcome.title"></strong><small x-text="outcome.description"></small></p></li></template></ol><p class="presentation-goal-note">연습 폴더에서 확인한 내용을 다음 강의로 이어갑니다.</p></div></template>
 
         <template x-if="presentationPage?.kind === 'case'"><div class="presentation-case">
           <span class="presentation-case-label" x-show="!caseRepositoryUrl" x-text="lesson.case.kind === 'real' ? '돌범의 실제 개발 사례' : '교체용 가상 사례 · 실제 대화 아님'"></span>
